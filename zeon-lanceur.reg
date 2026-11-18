@@ -1,0 +1,8 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\zeon]
+@="URL:Zeon"
+"URL Protocol"=""
+
+[HKEY_CURRENT_USER\Software\Classes\zeon\shell\open\command]
+@="\"D:\\ScanTrad\\Scanlation\\ScanTradStudio\\dist\\Zeon\\Zeon.exe\""
