@@ -231,6 +231,40 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 @media (max-width: 1100px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) { .trio { grid-template-columns: 1fr; } .rrow { grid-template-columns: 1fr auto; } .rrow .bars { grid-column: 1 / -1; order: 3; } }
 
+
+.slink { color: inherit; text-decoration: none; } .slink:hover { color: var(--blue-t); text-decoration: underline; }
+.fh { display: flex; gap: 28px; padding: 24px; align-items: flex-start; }
+.fh .cv.big { width: 190px; height: 285px; border-radius: 12px; font-size: 64px; flex: none; border: 1px solid #27272a; }
+.fh-b { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.fh-b h1 { margin: 0; font-size: 30px; line-height: 1.15; }
+.crumb { color: var(--z400); font-size: 13px; width: fit-content; } .crumb:hover { color: var(--text); }
+.fh-names { margin: 0; color: var(--z300); font-size: 18px; } .fh-names i { color: var(--z400); }
+.fh-chips, .gchips { display: flex; flex-wrap: wrap; gap: 6px; }
+.gchip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: #0d0d10; color: var(--z300); }
+.gchip.now { background: rgba(74,222,128,.1); color: #4ade80; border-color: transparent; } .gchip.old { background: rgba(161,161,170,.12); color: var(--z400); border-color: transparent; }
+.gchip.pub { background: rgba(77,127,255,.12); color: var(--blue-t); border-color: transparent; } .gchip.plain { color: var(--z400); }
+.fh-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.kv { display: grid; gap: 2px; } .kvr { display: grid; grid-template-columns: 140px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.kvr:last-child { border-bottom: 0; } .kvr > span { color: var(--z400); font-size: 13px; } .kvr small { color: var(--z600); }
+.kvr .gchip { margin: 0 4px 4px 0; }
+.synfull { margin: 0; color: var(--z300); line-height: 1.7; font-size: 14px; }
+details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; color: var(--z400); font-size: 13px; margin-bottom: 8px; }
+.sub2 { margin: 10px 0 6px; }
+.chl { display: grid; gap: 0; } .chr { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.chr:last-child { border-bottom: 0; } .chr span { color: var(--z400); font-size: 13px; }
+.prog { height: 8px; border-radius: 999px; background: #131316; overflow: hidden; } .prog i { display: block; height: 100%; background: #4d7fff; border-radius: 999px; }
+.progt { margin: 10px 0 0; color: var(--z400); font-size: 13px; } .progt b { color: var(--text); }
+.mbars { display: flex; align-items: flex-end; gap: 4px; height: 100px; } .mb { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+.mb i { display: block; width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; background: #4d7fff; opacity: .85; } .mb:hover i { opacity: 1; }
+.liens-f { display: grid; gap: 8px; } .lf { display: flex; flex-direction: row; align-items: center; gap: 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; transition: background .15s, border-color .15s; }
+.lf:hover { background: var(--hover); border-color: #27272a; } .lf small { color: var(--z400); } .lt { display: flex; flex-direction: column; min-width: 0; }
+.lg-ico { display: inline-flex; flex: none; } .lg-ico svg { display: block; }
+.fh-acts .btn { gap: 8px; padding: 6px 14px 6px 8px; }
+.sims { display: grid; gap: 10px; } .sim { display: flex; gap: 12px; align-items: center; } .sim .cv { width: 40px; height: 60px; border-radius: 6px; flex: none; font-size: 16px; }
+.sim-t { display: flex; flex-direction: column; min-width: 0; } .sim-t small { color: var(--z400); }
+.liees { margin-top: 14px; font-size: 13px; color: var(--z400); } .liees small { color: var(--z600); }
+@media (max-width: 700px) { .fh { flex-direction: column; } .fh .cv.big { width: 140px; height: 210px; } .kvr { grid-template-columns: 1fr; gap: 2px; } }
+
 @media (max-width: 1023px) {
   .side { position: static; width: auto; flex-direction: row; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
   .side-head { border-bottom: 0; padding: 0 16px; height: 56px; }
@@ -344,6 +378,8 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
     <div class="head"><div><h1>Glossaires</h1><p class="sub">Noms, termes et personnages, tenus à jour pour garder une traduction cohérente.</p></div></div>
     <div class="cards" id="gloss"></div>
   </section>
+
+  <section id="fiche"><div id="fiche-in"></div></section>
 
   <section id="liens">
     <div class="head"><div><h1>Liens</h1></div></div>
@@ -554,7 +590,7 @@ function statsAccueil() {
   const tp = Object.entries(per).sort((a, b) => b[1].n - a[1].n).slice(0, 8), mt = tp.length ? tp[0][1].n : 1;
   const tw = $("top");
   tw.append(el("div", "ptitle", "<b>90 derniers jours</b><span>chapitres par série</span>"));
-  tp.forEach(([t, o]) => { const s = SERIES.find(x => x.title === t); const row = el("div", "rrow"); const nm = el("span", "rn"); nm.append(rolesNode(Object.keys(o.r)), document.createTextNode(" " + t));
+  tp.forEach(([t, o]) => { const s = SERIES.find(x => x.title === t); const row = el("div", "rrow"); const nm = el("span", "rn"); nm.append(rolesNode(Object.keys(o.r)), document.createTextNode(" "), s ? lienSerie(s, "slink", t) : document.createTextNode(t));
     row.append(nm, el("span", "bars", '<i class="b2" style="width:' + (o.n / mt * 100) + '%"></i>'), el("span", "rv", "<b>" + o.n + "</b> ch.")); tw.append(row); });
   $("stats-note").textContent = (blocN ? nb(blocN) + " chapitres copiés en bloc n'ont pas de date fiable : ils comptent dans les totaux, pas dans les graphiques. " : "") + "Les dates sont celles des fichiers (Drive, dossiers locaux, archives) ; le rôle est celui de la série.";
 }
@@ -580,7 +616,7 @@ function carteSerie(s, passee) {
   const c = h("article", "panel scard");
   c.append(cover(s));
   const b = h("div", "sbody");
-  b.append(h("h3", "", s.title));
+  const h3 = h("h3"); h3.append(lienSerie(s, "slink", s.title)); b.append(h3);
   const l = h("div", "sline");
   equipesDe(s).forEach((n, i, a) => {
     const t = h("span", "steam"); t.append(dot(n), document.createTextNode(n)); l.append(t);
@@ -681,7 +717,7 @@ function blocEquipe(e, seulement) {
   if (mine.length) {
     const g = h("div", "tl-series");
     mine.forEach(s => {
-      const r = h("div", "tl-s"); const n = h("span", "", s.title); n.title = s.title;
+      const r = h("div", "tl-s"); const n = h("span"); n.append(lienSerie(s, "slink", s.title)); n.title = s.title;
       r.append(n, rolesNode(s.roles)); g.append(r);
     });
     it.append(g);
@@ -715,27 +751,222 @@ GLOSSAIRES.forEach(g => {
 });
 LIENS.forEach(o => { $("links").append(o.url ? bouton(o.url, o.name, "btn ghost") : h("span", "btn off", o.name + " · lien à ajouter")); });
 
+/* ---------- Fiche détaillée d'une série ---------- */
+function slugS(t) { return String(t).normalize("NFKD").toLowerCase().replace(/[’']/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""); }
+const parSlug = {}; SERIES.forEach(s => { parSlug[slugS(s.title)] = s; });
+function lienSerie(s, cls, texte) { const a = h("a", cls || "slink", texte === undefined ? s.title : texte); a.href = "#serie/" + slugS(s.title); return a; }
+const esc = (x) => String(x == null ? "" : x).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const GENRES_FR = { "Action": "Action", "Adventure": "Aventure", "Comedy": "Comédie", "Drama": "Drame", "Fantasy": "Fantastique", "Martial Arts": "Arts martiaux", "Shounen": "Shōnen", "Seinen": "Seinen", "Shoujo": "Shōjo", "Josei": "Josei", "Romance": "Romance", "Harem": "Harem", "Mature": "Mature", "Adult": "Adulte", "Ecchi": "Ecchi", "Smut": "Érotique", "Hentai": "Hentai", "Psychological": "Psychologique", "Sci-fi": "Science-fiction", "Slice of Life": "Tranche de vie", "Supernatural": "Surnaturel", "Mystery": "Mystère", "Horror": "Horreur", "Tragedy": "Tragédie", "School Life": "Vie scolaire", "Historical": "Historique", "Sports": "Sport", "Gender Bender": "Changement de genre", "Yaoi": "Yaoi", "Yuri": "Yuri", "Doujinshi": "Doujinshi", "Lolicon": "Lolicon", "Shotacon": "Shotacon" };
+const fg = (g) => GENRES_FR[g] || g;
+const dateLongue = (iso) => new Date(iso.slice(0, 10) + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+/* Un seul site coréen : celui de l'éditeur d'origine indiqué par MangaUpdates (Naver ou Kakao) */
+function siteCoreen(inf, ko) {
+  if (!ko) return null;
+  for (const e of (inf.editeurs || [])) {
+    const x = e.toLowerCase(), q = encodeURIComponent(ko);
+    if (x.indexOf("naver") >= 0) return { nom: "Naver Comics", url: "https://comic.naver.com/search?keyword=" + q };
+    if (x.indexOf("daum") >= 0 || x === "kw webtoon" || (x.indexOf("kakao") >= 0 && x.indexOf("webtoon") >= 0)) return { nom: "Kakao Webtoon", url: "https://webtoon.kakao.com/search?keyword=" + q };
+    if (x.indexOf("kakao") >= 0) return { nom: "KakaoPage", url: "https://page.kakao.com/search/result?keyword=" + q };
+  }
+  return null;
+}
+function glossaireDe(s) { if (s.glossaire) return s.glossaire; const g = GLOSSAIRES.find(x => x.url && slugS(x.name) === slugS(s.title)); return g ? g.url : ""; }
+function evenementsDe(s) {
+  const ST = window.HUB.STATS; if (!ST || !ST.evenements) return [];
+  return ST.evenements.map(x => x.split("|")).filter(p => p[1] === s.title).map(p => ({ iso: p[0], r: p[2], n: p[3], bloc: p[4] === "b" }));
+}
+const E = (tag, cls, html) => { const e = h(tag, cls); if (html !== undefined) e.innerHTML = html; return e; };
+function panneau(titre, sous, ...contenu) { const p = E("div", "panel pad"); p.append(E("div", "ptitle", "<b>" + esc(titre) + "</b>" + (sous ? "<span>" + esc(sous) + "</span>" : ""))); contenu.forEach(c => c && p.append(c)); return p; }
+function lignes(rows) {
+  const d = E("div", "kv");
+  rows.filter(r => r[1] !== "" && r[1] != null).forEach(([k, v, raw]) => d.append(E("div", "kvr", "<span>" + esc(k) + "</span><div>" + (raw ? v : esc(v)) + "</div>")));
+  return d.children.length ? d : E("p", "tl-empty", "Pas encore d'information.");
+}
+const chips = (xs, cls) => xs.map(x => '<span class="gchip ' + (cls || "") + '">' + esc(x) + "</span>").join("");
+
+/* Pastilles SVG par type de lien (stylisées, aux couleurs de chaque service) */
+const LOGOS = {
+  poseidon: ["#1d4ed8", '<path d="M16 6v20M10 8v6a6 6 0 0 0 12 0V8M16 6l-2 3M16 6l2 3" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  ortega: ["#be185d", '<circle cx="16" cy="16" r="6.5" stroke="#fff" stroke-width="3" fill="none"/>'],
+  asura: ["#7c3aed", '<path d="M9 24l7-16 7 16M12 18.5h8" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  flame: ["#ea580c", '<path d="M16 5c1 4.5 5.5 6.5 5.5 11.5a5.5 5.5 0 0 1-11 0c0-2.2 1-3.6 2.2-4.8.2 2 1.2 3 2.3 3.2C14.6 11.5 14.6 8 16 5z" fill="#fff"/>'],
+  vortex: ["#0891b2", '<path d="M9 9l7 15 7-15" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  mu: ["#1e3a8a", '<text x="16" y="21" text-anchor="middle" font-family="Fira Sans,Arial,sans-serif" font-weight="700" font-size="12.5" fill="#fff">MU</text>'],
+  naver: ["#03c75a", '<path d="M10.5 24V8h3.5l5 7.6V8h3.5v16H19l-5-7.6V24z" fill="#fff"/>'],
+  kakao: ["#fee500", '<path d="M16 8c-5.5 0-10 3.4-10 7.7 0 2.8 1.8 5.2 4.6 6.5l-1 3.6 4.2-2.6c.7.1 1.4.2 2.2.2 5.5 0 10-3.4 10-7.7S21.5 8 16 8z" fill="#191919"/>'],
+  glossaire: ["#0f766e", '<path d="M7 9h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H7zM25 9h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/>'],
+  lire: ["#3f3f46", '<path d="M10 8h11a2 2 0 0 1 2 2v14H12a2 2 0 0 1-2-2zM10 22a2 2 0 0 1 2-2h11" stroke="#fff" stroke-width="2" fill="none" stroke-linejoin="round"/>']
+};
+function typeLien(url, label) {
+  const u = (url || "").toLowerCase(), l = (label || "").toLowerCase();
+  if (l.indexOf("glossaire") >= 0) return "glossaire";
+  if (u.indexOf("mangaupdates") >= 0) return "mu";
+  if (u.indexOf("naver") >= 0) return "naver";
+  if (u.indexOf("kakao") >= 0) return "kakao";
+  for (const k of ["poseidon", "ortega", "asura", "flame", "vortex"]) if (u.indexOf(k) >= 0) return k;
+  return "lire";
+}
+function logo(kind, px) {
+  const L = LOGOS[kind] || LOGOS.lire;
+  return '<span class="lg-ico" style="width:' + px + "px;height:" + px + 'px"><svg viewBox="0 0 32 32" width="' + px + '" height="' + px + '" aria-hidden="true"><rect width="32" height="32" rx="8" fill="' + L[0] + '"/>' + L[1] + "</svg></span>";
+}
+
+const nrm0 = (x) => slugS(String(x || "").replace(/<[^>]+>/g, ""));
+function rendreFiche(s) {
+  const box = $("fiche-in"); box.replaceChildren();
+  const inf0 = s.infos || {}, noms0 = inf0.noms || {}, evs = evenementsDe(s);
+  const inf = Object.assign({}, inf0, {
+    auteurs: s.auteur ? [s.auteur] : (inf0.auteurs || []), artistes: s.illustrateur ? [s.illustrateur] : (inf0.artistes || []),
+    mu: s.mu_url ? Object.assign({}, inf0.mu || {}, { url: s.mu_url }) : inf0.mu
+  });
+  const noms = Object.assign({}, noms0, { ko: s.nom_ko ? [s.nom_ko] : (noms0.ko || []), fr: s.nom_fr ? [s.nom_fr] : (noms0.fr || []) });
+  const ko = (noms.ko || [])[0] || "", fr = (noms.fr || [])[0] || "";
+  const equipes = equipesDe(s), passee = periode(s) === "historique";
+
+  /* ---- en-tête */
+  const head = E("div", "panel fh");
+  const cv = cover(s); cv.classList.add("big");
+  const corps = E("div", "fh-b");
+  const retour = h("a", "crumb", "← " + (passee ? "Séries passées" : "Séries en cours")); retour.href = passee ? "#p-series" : "#a-series";
+  corps.append(retour, E("h1", "", esc(s.title)));
+  if (ko || fr) corps.append(E("p", "fh-names", [ko ? '<span lang="ko">' + esc(ko) + "</span>" : "", fr ? "<i>" + esc(fr) + "</i>" : ""].filter(Boolean).join(" · ")));
+  const ch = E("div", "fh-chips");
+  ch.append(E("span", "gchip", esc(s.type || "")), E("span", "gchip " + (passee ? "old" : "now"), passee ? "passée" : "en cours chez moi"));
+  equipes.forEach((n, i) => { const t = E("span", "gchip"); t.append(dot(n), document.createTextNode(" " + n)); ch.append(t); });
+  if (s.status) ch.append(E("span", "gchip", esc(s.status.toLowerCase())));
+  if (inf.termine === true) ch.append(E("span", "gchip", "VO terminée")); else if (inf.termine === false) ch.append(E("span", "gchip", "VO en cours"));
+  corps.append(ch);
+  const acts = E("div", "fh-acts");
+  const bt = (url, label, cls) => { if (!url) return; const a = h("a", "btn " + (cls || "")); a.innerHTML = logo(typeLien(url, label), 20) + "<span>" + esc(label) + "</span>"; a.href = url; if (/^https?:/.test(url)) { a.target = "_blank"; a.rel = "noopener"; } acts.append(a); };
+  bt(s.url, "Lire la série");
+  const frUrl = s.url_fr && s.url_fr !== s.url ? s.url_fr : "";
+  bt(frUrl, "Version française", "ghost");
+  bt(glossaireDe(s), "Glossaire", "ghost");
+  bt(inf.mu && inf.mu.url, "MangaUpdates", "ghost");
+  const sc = siteCoreen(inf, ko);
+  if (sc) bt(sc.url, sc.nom, "ghost");
+  corps.append(acts);
+  head.append(cv, corps); box.append(head);
+
+  /* ---- synopsis + noms */
+  const g1 = E("div", "grid2");
+  g1.append(panneau("Synopsis", "en français", s.synopsis ? E("p", "synfull", esc(s.synopsis)) : E("p", "tl-empty", "Pas de synopsis pour l'instant.")));
+  const NOMS = [["Français", fr ? (noms.fr || []).join(" / ") : "", false], ["Anglais", s.title, false], ["Coréen", (noms.ko || []).map(x => '<span lang="ko">' + esc(x) + "</span>").join(" / "), true]];
+  const autres = (noms.autres || []);
+  if (s.titre_fr && !NOMS.some(n => nrm0(n[1]) === nrm0(s.titre_fr))) NOMS.push(["Titre chez Poséidon", s.titre_fr, false]);
+  const pn = panneau("Noms", "dans toutes les langues", lignes(NOMS.map(([k, v, raw]) => [k, v || (k === "Français" ? "pas de titre français connu" : ""), raw])));
+  if (autres.length) pn.append(E("details", "autres", "<summary>Autres noms (" + autres.length + ")</summary><div class=\"gchips\">" + chips(autres, "plain") + "</div>"));
+  g1.append(pn); box.append(g1);
+
+  /* ---- informations + mon travail */
+  const g2 = E("div", "grid2");
+  const note = inf.mu && inf.mu.note ? "★ " + Number(inf.mu.note).toFixed(1).replace(".", ",") + " / 10" + (inf.mu.votes ? " · " + inf.mu.votes + " votes" : "") : "";
+  g2.append(panneau("Informations", "d'après MangaUpdates", lignes([
+    ["Auteur", (inf.auteurs || []).join(", ")], ["Illustrateur", (inf.artistes || []).join(", ")],
+    ["Éditeur d'origine", chips(inf.editeurs || [], "pub"), true], ["Éditeur anglais", chips(inf.editeurs_en || [], "plain"), true],
+    ["Année", inf.annee ? String(inf.annee) : ""], ["Type", inf.type_vo || ""],
+    ["Statut de la VO", inf.termine === true ? "Terminée" : inf.termine === false ? "En cours" : ""],
+    ["Chapitres de la VO", inf.chapitres_vo ? String(inf.chapitres_vo) : ""], ["Licence anglaise", inf.licence === true ? "Oui" : inf.licence === false ? "Non" : ""],
+    ["Note des lecteurs", note], ["Genres", chips((inf.genres || []).map(fg)), true], ["Tags", chips(inf.tags || [], "plain"), true]
+  ])));
+  const parRole = {}; evs.forEach(e => { parRole[e.r] = (parRole[e.r] || 0) + 1; });
+  const dates = evs.filter(e => !e.bloc).map(e => e.iso).sort();
+  const equipeTxt = equipes.map(n => esc(n) + (nomEquipe(n).dates ? " <small>(" + esc(nomEquipe(n).dates) + ")</small>" : "")).join(" → ");
+  g2.append(panneau("Mon travail", "sur cette série", lignes([
+    ["Mes rôles", (s.roles || []).map(r => '<span class="role r-' + (["TL", "ED", "CL", "CH", "QC"].includes(r) ? r : "autre") + '">' + esc(r) + "</span>").join(" "), true],
+    ["Équipes", equipeTxt, true],
+    ["Dernier chapitre", s.chapitre ? "Chapitre " + s.chapitre + (s.dernier ? " · " + dateLongue(s.dernier) : "") : (s.dernier ? "Activité le " + dateLongue(s.dernier) : "")],
+    ["Chapitres comptés", Object.keys(parRole).length ? Object.entries(parRole).map(([r, n]) => n + " en " + r).join(" · ") : ""],
+    ["Premier chapitre daté", dates.length ? dateLongue(dates[0]) : ""],
+    ["Dernier chapitre daté", dates.length ? dateLongue(dates[dates.length - 1]) : ""],
+    ["Statut", s.status || ""]
+  ])));
+  box.append(g2);
+
+  /* ---- derniers chapitres + rythme / avancement */
+  const g3 = E("div", "grid2");
+  const num = evs.filter(e => /^\d+$/.test(e.n)), roles = [...new Set(num.map(e => e.r))];
+  const pc = panneau("Derniers chapitres faits", "numéros les plus élevés");
+  if (!num.length) pc.append(E("p", "tl-empty", "Aucun fichier de chapitre trouvé pour cette série."));
+  roles.forEach(r => {
+    const l = num.filter(e => e.r === r).sort((a, b) => +b.n - +a.n).slice(0, 8);
+    if (roles.length > 1) pc.append(E("div", "sub2", '<span class="role r-' + (["TL", "ED", "CL", "CH", "QC"].includes(r) ? r : "autre") + '">' + esc(r) + "</span>"));
+    const ul = E("div", "chl");
+    l.forEach(e => ul.append(E("div", "chr", "<b>Chapitre " + esc(e.n) + "</b><span>" + (e.bloc ? "date inconnue" : dateLongue(e.iso)) + "</span>")));
+    pc.append(ul);
+  });
+  g3.append(pc);
+  const col = E("div", "stack");
+  // avancement par rapport à la VO
+  if (inf.chapitres_vo && s.chapitre) {
+    const plaus = s.chapitre <= inf.chapitres_vo * 1.1, pct = Math.min(100, Math.round(s.chapitre / inf.chapitres_vo * 100));
+    col.append(panneau("Avancement", "par rapport à la VO", plaus
+      ? E("div", "", '<div class="prog"><i style="width:' + pct + '%"></i></div><p class="progt"><b>Chapitre ' + s.chapitre + "</b> sur <b>" + inf.chapitres_vo + "</b> (" + pct + " %)</p>")
+      : E("p", "progt", "La VO compte <b>" + inf.chapitres_vo + "</b> chapitres ; ma numérotation (chapitre " + s.chapitre + ") ne suit pas la même échelle.")));
+  }
+  // rythme mensuel
+  const mois = {}; evs.filter(e => !e.bloc).forEach(e => { const k = e.iso.slice(0, 7); mois[k] = (mois[k] || 0) + 1; });
+  const ks = Object.keys(mois).sort();
+  if (ks.length) {
+    const deb = new Date(ks[0] + "-01T12:00:00"), fin = new Date(ks[ks.length - 1] + "-01T12:00:00"), serie = [];
+    for (let d = new Date(fin); d >= deb && serie.length < 24; d.setMonth(d.getMonth() - 1)) { const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); serie.unshift([k, mois[k] || 0]); }
+    const mx = Math.max(1, ...serie.map(x => x[1]));
+    const bars = E("div", "mbars"); serie.forEach(([k, n]) => bars.append(E("div", "mb", '<i style="height:' + Math.max(n ? 6 : 2, n / mx * 100) + '%" title="' + esc(new Date(k + "-15T12:00:00").toLocaleDateString("fr-FR", { month: "long", year: "numeric" })) + " : " + plural(n, "chapitre", "chapitres") + '"></i>')));
+    col.append(panneau("Rythme", "chapitres par mois", bars, E("div", "axis", "<span>" + esc(new Date(serie[0][0] + "-15T12:00:00").toLocaleDateString("fr-FR", { month: "short", year: "2-digit" })) + "</span><span>" + esc(new Date(serie[serie.length - 1][0] + "-15T12:00:00").toLocaleDateString("fr-FR", { month: "short", year: "2-digit" })) + "</span>")));
+  }
+  g3.append(col); box.append(g3);
+
+  /* ---- liens + dans la même veine */
+  const g4 = E("div", "grid2");
+  const L = E("div", "liens-f");
+  const addL = (url, label, note) => { if (!url) return; const a = E("a", "lf"); a.href = url; if (/^https?:/.test(url)) { a.target = "_blank"; a.rel = "noopener"; } a.innerHTML = logo(typeLien(url, label), 38) + '<span class="lt"><b>' + esc(label) + "</b><small>" + esc(note || "") + "</small></span>"; L.append(a); };
+  const siteDe = (u) => /poseidon/.test(u || "") ? "Poséidon Scans" : /ortega/.test(u || "") ? "Ortega Scans" : /asura/.test(u || "") ? "Asura Scans" : /flame/.test(u || "") ? "Flame Comics" : /vortex/.test(u || "") ? "Vortex Scans" : "";
+  const anglais = /asura|flame|vortex/.test(s.url || "");
+  addL(s.url, "Lire la série", siteDe(s.url) + (anglais ? " · version anglaise" : (siteDe(s.url) ? " · version française" : "")));
+  addL(frUrl, "Version française", siteDe(frUrl) + (s.titre_fr ? " · titre : « " + s.titre_fr + " »" : ""));
+  addL(glossaireDe(s), "Glossaire de la série", "noms, termes et personnages");
+  addL(inf.mu && inf.mu.url, "MangaUpdates", "fiche complète, éditeurs, recommandations");
+  if (sc) addL(sc.url, sc.nom, "éditeur d'origine · rechercher « " + ko + " »");
+  g4.append(panneau("Liens", "", L.children.length ? L : E("p", "tl-empty", "Aucun lien pour l'instant.")));
+  const gs = new Set((inf.genres || []).concat((inf.tags || []).slice(0, 8)));
+  const sim = SERIES.filter(x => x !== s).map(x => {
+    const y = x.infos || {}, c = (y.genres || []).concat((y.tags || []).slice(0, 8)).filter(t => gs.has(t)).length;
+    return [x, c + (equipes.includes(x.team) ? 1 : 0) + (x.type === s.type ? 1 : 0)];
+  }).filter(p => p[1] > 2).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const ls = E("div", "sims");
+  sim.forEach(([x]) => { const r = E("div", "sim"); const c = cover(x); r.append(c); const t = E("div", "sim-t"); t.append(lienSerie(x, "slink", x.title), E("small", "", esc(equipesDe(x).slice(-1)[0] + (x.chapitre ? " · ch. " + x.chapitre : "")))); r.append(t); ls.append(r); });
+  const liees = (inf.liees || []).filter(l => l.nom);
+  g4.append(panneau("Dans la même veine", "parmi mes séries", sim.length ? ls : E("p", "tl-empty", "Rien de comparable dans ma liste."),
+    liees.length ? E("div", "liees", "<span>Séries liées (MangaUpdates) :</span> " + liees.map(l => esc(l.nom) + (l.relation ? " <small>(" + esc(l.relation) + ")</small>" : "")).join(" · ")) : null));
+  box.append(g4);
+  if (!s.infos) box.append(E("p", "note", "Les informations détaillées de cette série n'ont pas encore été récupérées."));
+}
+
 /* ---------- Navigation ---------- */
-const ONGLETS = ["accueil", "a-series", "a-equipes", "a-outils", "glossaires", "p-parcours", "p-series", "p-outils", "liens"];
+const ONGLETS = ["accueil", "a-series", "a-equipes", "a-outils", "glossaires", "p-parcours", "p-series", "p-outils", "liens", "fiche"];
 function afficher(nom) {
-  const actif = ONGLETS.includes(nom) ? nom : "accueil";
+  let actif = ONGLETS.includes(nom) ? nom : "accueil", fiche = null;
+  if (nom.indexOf("serie/") === 0) { fiche = parSlug[nom.slice(6)] || null; actif = fiche ? "fiche" : "accueil"; }
+  else if (actif === "fiche") actif = "accueil";
+  const navId = fiche ? (periode(fiche) === "historique" ? "p-series" : "a-series") : actif;
   ONGLETS.forEach(id => {
     $(id).classList.toggle("on", id === actif);
     const a = document.querySelector('.nav a[href="#' + id + '"]');
-    if (a) { a.classList.toggle("on", id === actif); a.setAttribute("aria-current", id === actif ? "page" : "false"); }
+    if (a) { a.classList.toggle("on", id === navId); a.setAttribute("aria-current", id === navId ? "page" : "false"); }
   });
+  if (fiche) { rendreFiche(fiche); document.title = fiche.title + " · Hub scantrad iLoza"; } else document.title = "Hub scantrad iLoza";
   window.scrollTo(0, 0);
   return actif;
 }
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener("click", e => {
-    e.preventDefault();
-    const nom = afficher(a.getAttribute("href").slice(1));
-    try { history.replaceState(null, "", "#" + nom); } catch (err) {}
-  });
+document.addEventListener("click", e => {
+  const a = e.target.closest && e.target.closest('a[href^="#"]');
+  if (!a || e.ctrlKey || e.metaKey || e.shiftKey || e.button === 1) return;
+  e.preventDefault();
+  const nom = a.getAttribute("href").slice(1);
+  if (("#" + nom) === location.hash) afficher(nom); else location.hash = nom;       // un nouvel historique : le bouton Retour fonctionne
 });
-window.addEventListener("hashchange", () => afficher(location.hash.slice(1)));
-afficher(location.hash.slice(1));
+window.addEventListener("hashchange", () => afficher(decodeURIComponent(location.hash.slice(1))));
+afficher(decodeURIComponent(location.hash.slice(1)));
 </script>
 </body>
 </html>

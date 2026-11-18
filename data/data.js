@@ -81,7 +81,73 @@ window.HUB = {
       ],
       "dernier": "2026-11-15",
       "synopsis": "« Une fenêtre du système… ? Qu’est-ce qui se passe ici…» [Synchroniser l’histoire du point de vue de Han Siha] Je suis devenu Han Siha, un petit méchant dans le roman fantastique sombre que j’ai aimé une fois. Pourquoi ça devait être Han Siha ?! Il n’a aucun talent pour la magie et se fait tuer par les protagonistes au début de l’histoire ! Je dois survivre, quoi qu’il arrive !",
-      "chapitre": 50
+      "chapitre": 50,
+      "infos": {
+        "mu": {
+          "id": 50699844874,
+          "url": "https://www.mangaupdates.com/series/nahdmoa/the-academy-s-genius-tamer",
+          "note": 6.28,
+          "votes": 49
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "아카데미의 천재 테이머"
+          ],
+          "autres": [
+            "Academy's Genius Tamer",
+            "The Genius Tamer of the Academy",
+            "アカデミーの天才テイマーになりました",
+            "学院里的天才驯兽师"
+          ]
+        },
+        "auteurs": [
+          "Iitaesan",
+          "Kang Seoul"
+        ],
+        "artistes": [
+          "Saeyan"
+        ],
+        "editeurs": [
+          "Daum",
+          "Jaedam Media",
+          "Kakao"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Romance",
+          "School Life",
+          "Shounen"
+        ],
+        "tags": [
+          "Academy",
+          "Brown-Haired Protagonist",
+          "Dragon/s",
+          "Isekai",
+          "Magic",
+          "Male Protagonist",
+          "Student/s",
+          "System",
+          "Tamed Monster/s",
+          "Taming",
+          "Transmigrated as the Villain/ess",
+          "Transmigrated into a Book World"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 83,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-academys-genius-tamer",
+      "titre_fr": "The Academy's Genius Tamer"
     },
     {
       "title": "Sand Mage of the Burnt Desert",
@@ -99,7 +165,67 @@ window.HUB = {
       ],
       "dernier": "2026-10-17",
       "synopsis": "« Mon nom est Zeon, et mon arme est l’intégralité du désert. » La Terre a subi une terraformation. En conséquence, les océans se sont évaporés, et les terres se sont transformées en sable. Sur cette Terre désertifiée, Zeon est devenu l’unique Mage de Sable.",
-      "chapitre": 33
+      "chapitre": 33,
+      "infos": {
+        "mu": {
+          "id": 6188984582,
+          "url": "https://www.mangaupdates.com/series/2ucrf2e/sand-mage-of-the-burnt-desert",
+          "note": 6.67,
+          "votes": 56
+        },
+        "noms": {
+          "fr": [
+            "Le Sandmancien du Désert Brûlant"
+          ],
+          "ko": [
+            "불탄 사막의 모래술사",
+            "열사의 모래술사"
+          ],
+          "autres": [
+            "Mago De Areia No Deserto",
+            "Sandmancer of the Scorched Desert",
+            "Ta Chính Là Pháp Sư Bóng Ma Trên Sa Mạc",
+            "The Sand Mage of the Scorched Desert",
+            "The Scorched Desert's Sand Mage",
+            "燃烧沙漠的术士",
+            "終末の砂世界で、俺だけが砂を支配する",
+            "Desert Sandmancer",
+            "The Sand Sorcerer of the Burnt Desert",
+            "Sand Wizard of the Burnt Desert"
+          ]
+        },
+        "auteurs": [
+          "Hamel",
+          "Woogack"
+        ],
+        "artistes": [
+          "MikaShiki"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "STUDIO SOZO"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Mystery"
+        ],
+        "tags": [
+          "Awakener/s",
+          "Desert",
+          "Sci-fi Elements"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 33,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/sand-mage-of-the-burnt-desert-2043"
     },
     {
       "title": "The Genius Blacksmith's Game",
@@ -117,7 +243,67 @@ window.HUB = {
       ],
       "dernier": "2026-10-24",
       "synopsis": "Le dernier forgeron et maître artisan au monde. Ses mains ont été brûlées dans l'incendie de sa forge, le rendant incapable de continuer à exercer son métier. Mais alors, un jeu en réalité virtuelle, Ares, vient frapper à la porte de Hyun-soo. [Artefact irréparable.]",
-      "chapitre": 77
+      "chapitre": 77,
+      "infos": {
+        "mu": {
+          "id": 44012366153,
+          "url": "https://www.mangaupdates.com/series/k7vtr2h/the-genius-blacksmith-s-game",
+          "note": 6.16,
+          "votes": 39
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "천재 대장장이의 게임"
+          ],
+          "autres": [
+            "Thợ Rèn Thiên Tài Khuấy Đảo Làng Game",
+            "ช่างตีเหล็กคนสุดท้ายออนไลน์",
+            "天才鍛冶師は技術で無双する"
+          ]
+        },
+        "auteurs": [
+          "Park Min-Gyu"
+        ],
+        "artistes": [
+          "Yes Works"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "YESWORKS"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Black-Haired Male Lead",
+          "Black-Haired Protagonist",
+          "Blacksmith/s",
+          "Burns",
+          "Father/s",
+          "Full Color",
+          "Injury/ies",
+          "Male Protagonist",
+          "Scarred Male Lead",
+          "Scarred Protagonist",
+          "Trauma",
+          "Traumatic Past"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 77,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/genius-blacksmiths-game"
     },
     {
       "title": "Only I Have an EX-Grade Summon",
@@ -127,7 +313,7 @@ window.HUB = {
       "roles": [
         "TL"
       ],
-      "url": "https://asurascans.com/comics/only-i-have-an-ex-grade-summon-7ba78ec7",
+      "url": "https://poseidon-scans.net/serie/solo-ex-rank-summoner",
       "cover": "covers/only-i-have-an-ex-grade-summon.webp",
       "periode": "actuel",
       "teams": [
@@ -135,7 +321,70 @@ window.HUB = {
       ],
       "dernier": "2026-11-15",
       "synopsis": "Après trois ans de coma à la suite d'un accident de la route, il se réveille dans un monde où un certain jeu est devenu réalité. Ici, systèmes et invocations sont la norme, et pour gravir la « Tour des Épreuves », il faut trouver le « Dieu Ji-nu ». Mais… Dieu Ji-nu ? C'est lui.",
-      "chapitre": 46
+      "chapitre": 46,
+      "infos": {
+        "mu": {
+          "id": 44727485433,
+          "url": "https://www.mangaupdates.com/series/kjpl8mx/only-i-have-an-ex-grade-summon",
+          "note": 7.08,
+          "votes": 47
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "나 혼자 EX급 소환수"
+          ],
+          "autres": [
+            "Chỉ Mình Tôi Có Vật Triệu Hồi Cấp Tối Thượng",
+            "I Alone Am an EX-Class Summoner",
+            "I Alone Have an EX-Rank Summon",
+            "Solo EX-Rank Summoner",
+            "Only I Have an EX Class Summon",
+            "EX-Grade Summon",
+            "I'm the Only One with an EX-Rank Summon",
+            "I Am the Only EX-Class Summoner",
+            "Naman EX-geup Sohwasu",
+            "Chỉ Tôi Có Linh Thú Hạng EX"
+          ]
+        },
+        "auteurs": [
+          "Im Je-yeol"
+        ],
+        "artistes": [
+          "Studio Innus"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "KW Webtoon",
+          "kwbooks"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Mystery"
+        ],
+        "tags": [
+          "Dungeon/s",
+          "Dungeon/s Exploring",
+          "Game Elements",
+          "Male Protagonist",
+          "Summoned Creatures",
+          "Summoner/s",
+          "Summoning/s",
+          "Tower/s"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 46,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/solo-ex-rank-summoner",
+      "titre_fr": "Solo EX-Rank Summoner"
     },
     {
       "title": "The World After The End",
@@ -155,7 +404,84 @@ window.HUB = {
       ],
       "dernier": "2026-11-18",
       "synopsis": "Lorsque l’apocalypse a éclaté, Jaehwan a été convoqué par la « Tour des cauchemars ». Il décide alors d’atteindre le sommet de la tour en joignant ses forces avec ses compagnons afin d’arrêter la destruction de l’humanité. En plein combat au sein de la tour, une mystérieuse pierre apparaît devant eux : celle-ci offre à son utilisateur la possibilité de retourner dans le passé.",
-      "chapitre": 259
+      "chapitre": 259,
+      "infos": {
+        "mu": {
+          "id": 39426575272,
+          "url": "https://www.mangaupdates.com/series/i41kc6g/the-world-after-the-fall",
+          "note": 7.31,
+          "votes": 342
+        },
+        "noms": {
+          "fr": [
+            "Le Monde Après la Chute"
+          ],
+          "ko": [
+            "멸망 이후의 세계",
+            "滅亡以後의世界"
+          ],
+          "autres": [
+            "Düşüşten Sonraki Dünya",
+            "El mundo después del cataclismo",
+            "El mundo después del fin",
+            "El mundo después del final",
+            "Myeolmang Ihuui Segye",
+            "The Post-Destruction World",
+            "The World After Destruction",
+            "Мир после падения",
+            "Світ після кінця",
+            "หลังวันสิ้นโลก"
+          ]
+        },
+        "auteurs": [
+          "sing N song"
+        ],
+        "artistes": [
+          "Undead Gamja"
+        ],
+        "editeurs": [
+          "3B2S",
+          "Naver",
+          "REDICE"
+        ],
+        "editeurs_en": [
+          "Ize Press",
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy"
+        ],
+        "tags": [
+          "Fantasy World",
+          "Full Color",
+          "Strong Male Lead",
+          "Webtoon/Webcomic",
+          "Game Elements",
+          "Level System",
+          "Male Protagonist",
+          "Strong-Willed Protagonist",
+          "Tower Climbing",
+          "Apocalypse",
+          "Based on a Novel",
+          "God/s"
+        ],
+        "annee": 2022,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 259,
+        "liees": [
+          {
+            "nom": "Omniscient Reader",
+            "relation": "Other"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-world-after-the-fall",
+      "titre_fr": "The World After the Fall"
     },
     {
       "title": "Logging Out Is Too Hard",
@@ -173,7 +499,57 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "Kim Woojin s’est retrouvé piégé dans le jeu de réalité virtuelle « Evil Tale ». Au plus profond du désespoir, alors même que son existence dans le monde réel avait été effacée, il tomba enfin sur une fenêtre de déconnexion et cliqua dessus… Mais au lieu de retourner à la réalité, il se retrouva dans Evil Tale, 50 ans dans le futur — un monde au bord de la destruction !",
-      "chapitre": 21
+      "chapitre": 21,
+      "infos": {
+        "mu": {
+          "id": 53797428245,
+          "url": "https://www.mangaupdates.com/series/oppllat/logging-out-is-too-hard",
+          "note": 6.25,
+          "votes": 7
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "로그아웃이 너무 어렵다",
+            "로그아웃이 너무어렵다"
+          ],
+          "autres": [
+            "Rogeuausi Neomu Eoryeopda",
+            "Невозможно Покинуть Систему",
+            "Cerrar sesión es demasiado difícil"
+          ]
+        },
+        "auteurs": [
+          "Lee Hyung-seok",
+          "Storyboard Maker Studio"
+        ],
+        "artistes": [
+          "Toontori"
+        ],
+        "editeurs": [
+          "Kakao",
+          "Toontory",
+          "ToYou Dream"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Full Color",
+          "Isekai",
+          "Transported to Another World"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 21,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/logging-out-is-too-hard"
     },
     {
       "title": "Return of The Frozen Player",
@@ -191,7 +567,78 @@ window.HUB = {
       ],
       "dernier": "2026-11-14",
       "synopsis": "Cinq ans après que le monde ait changé, le dernier boss est apparu. (Le dernier Boss du district terrien, la Reine de Givre, est apparu.) Le dernier Boss ! Si on réussi à la vaincre, nos vies reviendraient à la normale ! Les cinq joueurs les plus forts du monde entier, dont Seo Jun-Ho, surnommé Specter, ont finalement vaincu la Reine de Givre… mais ils sont tombés dans un profond sommeil. 25 ans ont passé.",
-      "chapitre": 234
+      "chapitre": 234,
+      "infos": {
+        "mu": {
+          "id": 14166418753,
+          "url": "https://www.mangaupdates.com/series/6iabio1/the-frozen-player-returns",
+          "note": 7.39,
+          "votes": 289
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "얼어붙은 플레이어의 귀환"
+          ],
+          "autres": [
+            "Eoreobuteun Peulleieoui Gwihwan",
+            "O Retorno do Jogador Congelado",
+            "Возвращение замороженного игрока",
+            "การกลับมาของเพลเยอร์แช่แข็ง",
+            "冰封玩家归来",
+            "冰封玩家的归来",
+            "凍結したプレイヤーの帰還",
+            "闇夜英雄破冰而出"
+          ]
+        },
+        "auteurs": [
+          "JerryM"
+        ],
+        "artistes": [
+          "SilSil",
+          "Studio Inus"
+        ],
+        "editeurs": [
+          "CarroToon",
+          "Daum",
+          "Kakaopage"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Dungeon/s",
+          "Full Color",
+          "Game Elements",
+          "Guild/s",
+          "Level System",
+          "Male Protagonist",
+          "Time Skip",
+          "Time Skip in First Chapter/Prologue",
+          "Apocalypse",
+          "Monster/s",
+          "Murder/s",
+          "Murderer/s"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 234,
+        "liees": [
+          {
+            "nom": "The Frozen Player Returns (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/return-of-the-frozen-player"
     },
     {
       "title": "Return of the Mount Hua Sect",
@@ -210,7 +657,83 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "Cheong Myeong, un maître épéiste inégalable du clan Hwasan, perd ses alliés et sa vie dans une bataille contre le chef suprême des démons, Cheon Ma. Mais quand il ouvre ses yeux, il se retrouve réincarné 100 ans plus tard dans le corps d’un enfant mendiant.",
-      "chapitre": 187
+      "chapitre": 187,
+      "infos": {
+        "mu": {
+          "id": 27507453126,
+          "url": "https://www.mangaupdates.com/series/cmx86o6/return-of-the-blossoming-blade",
+          "note": 8.48,
+          "votes": 533
+        },
+        "noms": {
+          "fr": [
+            "Le retour du clan Hwasan"
+          ],
+          "ko": [
+            "화산귀환"
+          ],
+          "autres": [
+            "Die Rückkehr der Huashan-Sekte",
+            "El regreso de la secta del Monte Hua",
+            "El retorno de la hoja del Ciruelo",
+            "El retorno del Monte Hua",
+            "Hwasan Gwihwan",
+            "O retorno da seita do Monte Hua",
+            "Return of Sword Master",
+            "Return of the Flowery Mountain Sect",
+            "Return of the Huashan Sect",
+            "Return of the Sword Master (LICO)"
+          ]
+        },
+        "auteurs": [
+          "Biga"
+        ],
+        "artistes": [
+          "LICO"
+        ],
+        "editeurs": [
+          "Atempo Media",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Martial Arts",
+          "Shounen"
+        ],
+        "tags": [
+          "Cultivation",
+          "Martial Artist/s",
+          "Reincarnated in the Future",
+          "Murim",
+          "Sect/s",
+          "Based on a Novel",
+          "Alcohol",
+          "Arrogant Male Lead",
+          "Debt/s",
+          "Comedic Facial Expressions",
+          "Wuxia",
+          "Age Progression"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 188,
+        "liees": [
+          {
+            "nom": "Return of the Mount Hua Sect (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/return-of-the-mount-hua-sect"
     },
     {
       "title": "Solo Swordmaster",
@@ -228,7 +751,63 @@ window.HUB = {
       ],
       "synopsis": "À une époque où tout le monde puise sa force dans les Constellations, un seul homme croit encore en l’épée. Dans un monde où les compétences sont devenues la mesure de la force, un homme a atteint les sommets avec pour seule arme son épée… Le dernier maître de l’épée, Limón Asphelder.",
       "chapitre": 13,
-      "dernier": "2026-10-01"
+      "dernier": "2026-10-01",
+      "infos": {
+        "mu": {
+          "id": 60927629679,
+          "url": "https://www.mangaupdates.com/series/rzmqjxr/solo-swordmaster",
+          "note": 6.06,
+          "votes": 19
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "나 혼자 소드 마스터",
+            "나 혼자 소드마스터"
+          ],
+          "autres": [
+            "I'm the Only Sword Master",
+            "Solo Sword Master",
+            "The Lone Sword Master",
+            "Pendekar Pedang Tunggal",
+            "俺だけソードマスター",
+            "Na Honja Sodeu Maseuteo",
+            "Mestre da Espada Solitário",
+            "我独自剑圣",
+            "Soy el Único Maestro de la Espada",
+            "Yalnız Kılıç Ustası"
+          ]
+        },
+        "auteurs": [
+          "Kwak Do-Woo",
+          "Mu Yeongja",
+          "Yang Min-Seok"
+        ],
+        "artistes": [
+          "Baek Jeon",
+          "Yong"
+        ],
+        "editeurs": [
+          "Kakao",
+          "Rise Multimedia"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen",
+          "Supernatural"
+        ],
+        "tags": [],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 27,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/solo-swordmaster"
     },
     {
       "title": "Moby Dick",
@@ -246,7 +825,62 @@ window.HUB = {
       ],
       "dernier": "2026-11-12",
       "synopsis": "Un jour, Hoonsang, complètement fauché, reçoit une carte de visite suspecte qui lui promet une nouvelle vie à Bannam-dong, une ville inconnue surnommée la ville de l’infidélité, ainsi qu’une somme d’argent considérable. “Tu seras un ‘cadeau’ pour les VIP. Offre-leur un plaisir qu’ils n’oublieront jamais.",
-      "chapitre": 111
+      "chapitre": 111,
+      "infos": {
+        "mu": {
+          "id": 40329920777,
+          "url": "https://www.mangaupdates.com/series/iize615/moby-dick-yansae",
+          "note": 7.8,
+          "votes": 112
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "모비딕"
+          ],
+          "autres": [
+            "慾海交鋒",
+            "Tái Sinh Làm Trai Bao"
+          ]
+        },
+        "auteurs": [
+          "Yansae"
+        ],
+        "artistes": [
+          "Yansae"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Seinen"
+        ],
+        "tags": [
+          "Big Penis",
+          "Multiple Sexual Partners",
+          "Big Breasts",
+          "Lactation",
+          "Paizuri/Titjob",
+          "Prostitution",
+          "Threesome",
+          "Anal Intercourse",
+          "Anal Toys",
+          "Big Ass",
+          "Blindfold",
+          "Full Color"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 89,
+        "liees": []
+      }
     },
     {
       "title": "Teacher's Efforts",
@@ -264,7 +898,67 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "Les professeurs se démènent pour envoyer Min Siyoon, le fils du président du groupe Illyu, dans une université prestigieuse ! Avec une prime d’un milliard de wons en jeu, la tâche n’est pas facile en raison du manque d’intérêt de Min Siyoon pour les études. Finalement, les professeurs commencent à mettre leur corps à contribution… « Siyoon, es-tu curieux… de savoir ce qu’il y a à en-dessous de cette culotte ? »",
-      "chapitre": 120
+      "chapitre": 120,
+      "infos": {
+        "mu": {
+          "id": 66216453981,
+          "url": "https://www.mangaupdates.com/series/uf3kevx/tutor-s-efforts-a-million-dollar-mission",
+          "note": 7.14,
+          "votes": 47
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "선생님의 노력"
+          ],
+          "autres": [
+            "Esfuerzo De Los Profesores",
+            "The Teachers' Effort",
+            "淫らな家庭教師～一億円の課外授業～",
+            "老师的亲密指导",
+            "老師的親密指導",
+            "頑張れ先生！ ～勉強は机の上とは限らない♥～"
+          ]
+        },
+        "auteurs": [
+          "Haron"
+        ],
+        "artistes": [
+          "NOKO"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "School Life",
+          "Seinen"
+        ],
+        "tags": [
+          "Netorare",
+          "Big Breasts",
+          "College Student Male Lead",
+          "21st Century",
+          "Adultery",
+          "Ahegao",
+          "Armpit Licking",
+          "Assertive Male Lead",
+          "Bathroom Intercourse",
+          "Beautiful Female Character/s",
+          "Big Ass",
+          "Big-Breasted Female Lead"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 33,
+        "liees": []
+      }
     },
     {
       "title": "Wireless Onahole",
@@ -282,7 +976,70 @@ window.HUB = {
       ],
       "dernier": "2026-11-14",
       "synopsis": "« L’onahole… a bougé ?! » Park Woojin, un étudiant en ingénierie, a acheté un onahole qui se synchronise avec les femmes qui l’entourent. Commençons par la déesse de notre école, Ahyoung… !",
-      "chapitre": 129
+      "chapitre": 129,
+      "infos": {
+        "mu": {
+          "id": 65464515534,
+          "url": "https://www.mangaupdates.com/series/u2nvrgu/synced-for-pleasure",
+          "note": 7.19,
+          "votes": 67
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "무선 연결 오나홀",
+            "무선 연결 오나홀로 따먹기"
+          ],
+          "autres": [
+            "Wireless Connection Onahole",
+            "リモートラブホール",
+            "飛機杯女神連線中",
+            "Synced For Pleasure"
+          ]
+        },
+        "auteurs": [
+          "Haru3Ttal",
+          "Kestrel Orc"
+        ],
+        "artistes": [
+          "Roly-Poly Toy"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Fantasy",
+          "Harem",
+          "School Life",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "First-Time Intercourse",
+          "Assertive Love Interest/s",
+          "Big Ass",
+          "Big Breasts",
+          "Cunning Female Lead",
+          "Heart Shaped Pupils",
+          "Inverted Nipples",
+          "Male Protagonist",
+          "Masturbation",
+          "Sci-fi Elements",
+          "Science Fantasy",
+          "Secret Identity"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 31,
+        "liees": []
+      }
     },
     {
       "title": "The Village's Special Law",
@@ -300,7 +1057,69 @@ window.HUB = {
       ],
       "dernier": "2025-07-27",
       "synopsis": "Joonhyun a toujours été méprisé dans son village rural. Il découvre alors l’existence d’un haut-parleur aux pouvoirs mystérieux. Dès qu’il l’utilise, les villageois commencent à l’approcher…",
-      "chapitre": 25
+      "chapitre": 25,
+      "infos": {
+        "mu": {
+          "id": 39134069175,
+          "url": "https://www.mangaupdates.com/series/hz7ex13/the-village-s-special-rule",
+          "note": 6.73,
+          "votes": 39
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "마을특별조례"
+          ],
+          "autres": [
+            "La Voz del Pueblo",
+            "Village Special Ordinance",
+            "Особый закон деревни",
+            "Сельский спецзакон",
+            "Специальный устав деревни",
+            "田舎娘。～町内放送には絶対従順！～",
+            "里長孫子開麥啦"
+          ]
+        },
+        "auteurs": [
+          "Abio4"
+        ],
+        "artistes": [
+          "Bolp"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "DAYcomics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Harem",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Abuse of Power",
+          "Big Ass",
+          "Big Breasts",
+          "Cheating/Infidelity",
+          "Dark/Tan-Skinned Female Lead",
+          "Elaborate Art Style",
+          "Full Color",
+          "Inferiority Complex",
+          "Inverted Nipples",
+          "Love Interest Change",
+          "Mind Control",
+          "Netori"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 1,
+        "liees": []
+      }
     },
     {
       "title": "The Professor's Secret Account",
@@ -318,7 +1137,68 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "Alors qu’elle enseigne à l’université, une professeure est confrontée à des événements inattendus. Elle crée un compte secret pour partager ses désirs cachés. Cependant, la situation s’aggrave et elle se retrouve impliquée dans une relation complexe avec un étudiant qui découvre son secret. Sans le savoir, cet étudiant se retrouve pris au piège dans le jeu risqué de la professeure.",
-      "chapitre": 58
+      "chapitre": 58,
+      "infos": {
+        "mu": {
+          "id": 56060589690,
+          "url": "https://www.mangaupdates.com/series/pr50zui/professor-s-alt-account",
+          "note": 6.97,
+          "votes": 23
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "여교수의 비밀계정"
+          ],
+          "autres": [
+            "El Relato Secreto De Una Profesora",
+            "The Female Professor's Secret Account",
+            "The Secret Account of the Female Professor",
+            "Tài Khoản Bí Mật Của Nữ Giáo Sư",
+            "Tài Khoản Ẩn Danh Của Nữ Giáo Sư",
+            "女教授的秘密账号"
+          ]
+        },
+        "auteurs": [
+          "Friends"
+        ],
+        "artistes": [
+          "Uniusae"
+        ],
+        "editeurs": [
+          "Lezhin"
+        ],
+        "editeurs_en": [
+          "Lezhin US"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Harem",
+          "School Life",
+          "Seinen"
+        ],
+        "tags": [
+          "Big Ass",
+          "Big Breasts",
+          "Beautiful Female Character/s",
+          "Big-Breasted Female Lead",
+          "Blackmail",
+          "Dominant Male Lead",
+          "Lingerie/s",
+          "Multiple Sexual Partners",
+          "Revenge",
+          "Sex Toy/s",
+          "Sexless Marriage",
+          "University Student Male Lead"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 55,
+        "liees": []
+      }
     },
     {
       "title": "Performance (Sex) Report",
@@ -336,7 +1216,70 @@ window.HUB = {
       ],
       "dernier": "2026-11-13",
       "synopsis": "Junhyeon découvre que ses collègues ont pris l’habitude de parier dans son dos. Déterminé à ne pas se laisser faire, il commence à riposter avec humour à leurs plaisanteries incessantes au bureau.",
-      "chapitre": 56
+      "chapitre": 56,
+      "infos": {
+        "mu": {
+          "id": 67933409677,
+          "url": "https://www.mangaupdates.com/series/v7hsqdp/performance-report",
+          "note": 6.69,
+          "votes": 13
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "성과보고 드립니다",
+            "性과 보고 드립니다"
+          ],
+          "autres": [
+            "I Report Regarding Gender",
+            "Seong gwa Bogo Deurimnida",
+            "俺以外は全員女性で、皆ヤりたがっている会社で働いてます",
+            "女同事太犯規",
+            "Enviando Mi Reporte",
+            "Informe de Rendimiento (Sexo)",
+            "Báo Cáo Hiệu Suất (Tình Dục)"
+          ]
+        },
+        "auteurs": [
+          "Abyo4"
+        ],
+        "artistes": [
+          "Baegji"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Comedy",
+          "Drama",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Adult Character/s",
+          "Assertive Love Interest/s",
+          "Bathroom Intercourse",
+          "Big Areolae",
+          "Big Ass",
+          "Big Breasts",
+          "Big Penis",
+          "Big-Breasted Female Lead",
+          "Blackmail",
+          "Boss-Subordinate Relationship",
+          "Chubby Character/s",
+          "Drunken Intercourse"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 55,
+        "liees": []
+      }
     },
     {
       "title": "Love Quest",
@@ -354,7 +1297,70 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "Même dans une entreprise de jeux vidéo où les heures supplémentaires sont légion, nos sentiments ne peuvent être réprimés ! Voici l’histoire d’un bureau rempli de jeunes qui ne veulent pas choisir entre le travail et l’amour. C’est ainsi que de nombreux secrets vont commencer à se dévoiler dans cette vie de bureau !",
-      "chapitre": 40
+      "chapitre": 40,
+      "infos": {
+        "mu": {
+          "id": 16500730403,
+          "url": "https://www.mangaupdates.com/series/7kw3x2b/love-quest",
+          "note": 7.33,
+          "votes": 41
+        },
+        "noms": {
+          "fr": [
+            "Love Quest : En quête d’amour"
+          ],
+          "ko": [
+            "러브 퀘스트",
+            "러브퀘스트"
+          ],
+          "autres": [
+            "Busqueda de Amor",
+            "Búsqueda De Amor",
+            "Nhiệm Vụ Tình Yêu",
+            "ラブクエスト～平凡な日常に甘い刺激を～",
+            "戀愛版本更新中",
+            "Hành Trình Tình Yêu"
+          ]
+        },
+        "auteurs": [
+          "QRQ"
+        ],
+        "artistes": [
+          "QRQ"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Comedy",
+          "Drama",
+          "Harem",
+          "Mature",
+          "Romance",
+          "Seinen",
+          "Slice of Life",
+          "Smut"
+        ],
+        "tags": [
+          "Cool Protagonist",
+          "Feet",
+          "Office Worker/s",
+          "Toe Licking",
+          "Full Color",
+          "Handsome Male Lead",
+          "Stockings"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 40,
+        "liees": []
+      }
     },
     {
       "title": "Like Father Like Son",
@@ -372,7 +1378,35 @@ window.HUB = {
       ],
       "synopsis": "« Tu dois avoir une grosse bite comme ton père, non ? Montre-moi. » Han Seokdae est le détenteur du record mondial Guinness qui a choqué tout le monde en ayant la plus grosse bite du monde. Han Gyeol, son fils, risque de se faire déchirer son pantalon par des femmes curieuses qui croient aux rumeurs selon lesquelles « tel père, tel fils ».",
       "chapitre": 50,
-      "dernier": "2026-10-30"
+      "dernier": "2026-10-30",
+      "infos": {
+        "mu": null,
+        "noms": {
+          "fr": [],
+          "ko": [
+            "그아비에 그아들"
+          ],
+          "autres": [
+            "Tel Père",
+            "Tel Fils",
+            "Geuabie Geuadeul"
+          ]
+        },
+        "auteurs": [
+          "Volcano"
+        ],
+        "artistes": [],
+        "editeurs": [],
+        "editeurs_en": [],
+        "genres": [],
+        "tags": [],
+        "annee": null,
+        "type_vo": null,
+        "termine": null,
+        "licence": null,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "The Heavenly Demon Can't Live a Normal Life",
@@ -390,7 +1424,85 @@ window.HUB = {
       ],
       "synopsis": "« Serait-ce les cieux qui m'envoient en mission ? Ou bien serait-ce une punition divine ? » Junghyeok Baek, le démon suprême du Murim, se réincarne dans le corps de Roman Dimitri, le fils abruti d'un baron. Doté de ses connaissances en arts martiaux, il devra s'adapter à ce nouveau monde médiéval où vivent chevaliers et mages. Face à ce nouveau système de mana et à cette nouvelle vie, une seule voie s'ouvre à lui : celle de la suprématie.",
       "chapitre": 210,
-      "dernier": "2026-11-18"
+      "dernier": "2026-11-18",
+      "infos": {
+        "mu": {
+          "id": 36005686209,
+          "url": "https://www.mangaupdates.com/series/gjguta9/descended-from-divinity",
+          "note": 7.86,
+          "votes": 337
+        },
+        "noms": {
+          "fr": [
+            "Le Démon Céleste ne peut pas vivre une vie normale"
+          ],
+          "ko": [
+            "천마는 평범하게 살 수 없다",
+            "천마는 조용히 살고싶다"
+          ],
+          "autres": [
+            "Cheonmaneun Pyeongbeomhage Sal Su Eopda",
+            "El demonio celestial no puede llevar una vida normal",
+            "O Demônio Celestial não pode viver uma Vida Normal",
+            "The Reincarnation of the Dark Master",
+            "Реинкарнация тёмного магистра",
+            "Тэнгэрлэг Чөтгөр Энгийнээр Амьдарч Чадахгүй",
+            "มารสวรรค์จะมีชีวิตธรรมดาไม่ได้หรอก!",
+            "天魔に平凡な人生はない",
+            "天魔的不凡重生",
+            "Небесный Демон хочет жить в тишине"
+          ]
+        },
+        "auteurs": [
+          "IronTiger",
+          "San Cheon",
+          "ZAINO"
+        ],
+        "artistes": [
+          "Altoran",
+          "Upu"
+        ],
+        "editeurs": [
+          "JC Media",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon",
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Cold Protagonist",
+          "Murim",
+          "Transmigration",
+          "Cold Male Lead",
+          "Webtoon/Webcomic",
+          "Male Protagonist",
+          "Smart Protagonist",
+          "Strong Male Lead",
+          "Strong Protagonist",
+          "Cruel Male Lead",
+          "Cruel Protagonist",
+          "European Ambience"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 212,
+        "liees": [
+          {
+            "nom": "Descended from Divinity (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-heavenly-demon-cant-live-a-normal-life"
     },
     {
       "title": "A Villain's Will to Survive",
@@ -407,7 +1519,88 @@ window.HUB = {
         "Poséidon Scans"
       ],
       "synopsis": "Le boss intermédiaire du jeu AAA que je développais au travail est un méchant qui est destiné à mourir 999 fois sur 1 000. Et Aujourd'hui, je suis devenu ce même boss. « Je suis destiné à mourir dans presque tous les scénarios. » Deculein mourra quoi qu'il arrive, comme un méchant doit le faire.",
-      "dernier": "2025-03-17"
+      "dernier": "2025-03-17",
+      "infos": {
+        "mu": {
+          "id": 53313153101,
+          "url": "https://www.mangaupdates.com/series/ohp9w7h/the-villain-s-survival-route",
+          "note": 7.27,
+          "votes": 231
+        },
+        "noms": {
+          "fr": [
+            "La Volonté de Survivre d'un Vilain"
+          ],
+          "ko": [
+            "악당은 살고 싶다",
+            "악당은 살고 싶다 (악살싶)",
+            "악당의 생존기"
+          ],
+          "autres": [
+            "The Villain Wants to Live",
+            "反派也想活下去",
+            "反派想要活着",
+            "悪党教授の生存攻略",
+            "The Villain's Survival Route",
+            "The Villain's Survival",
+            "Akdang-ui Saengjon-gi",
+            "Ý Chí Sinh Tồn Của Phản Diện",
+            "El Testamento de Supervivencia de un Villano",
+            "A Vontade de Sobreviver de um Villão"
+          ]
+        },
+        "auteurs": [
+          "Jee Gab Song"
+        ],
+        "artistes": [
+          "Momong"
+        ],
+        "editeurs": [
+          "DAON",
+          "Daum",
+          "Kakao",
+          "KWBOOKS"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Harem",
+          "School Life",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Adult Protagonist",
+          "Transmigrated as the Villain/ess",
+          "Academy",
+          "Defying Destiny/Fate",
+          "Teacher Protagonist",
+          "Transmigrated into a Game",
+          "Webtoon/Webcomic",
+          "Full Color",
+          "Half-Sibling/s",
+          "Handsome Male Lead",
+          "Hated Protagonist",
+          "Magic"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 72,
+        "liees": [
+          {
+            "nom": "A Villain's Will to Survive (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/a-villains-will-to-survive"
     },
     {
       "title": "Legend of the Reincarnated Demon God",
@@ -425,7 +1618,72 @@ window.HUB = {
       ],
       "synopsis": "Né avec un dantian en ruine, Yan Yunhui était considéré comme un moins que rien, constamment moqué pour son manque de puissance martiale. Pourtant, grâce à sa ruse et à sa maîtrise des esprits, il est devenu le redoutable « Grand Prêtre des Arts Démoniaques » et le vénéré « Roi des Esprits Errants », juste derrière le Maître du Culte des Démons Célestes.",
       "chapitre": 38,
-      "dernier": "2025-04-11"
+      "dernier": "2025-04-11",
+      "infos": {
+        "mu": {
+          "id": 30215136819,
+          "url": "https://www.mangaupdates.com/series/dvpb8s3/paragon-demon-revenant-saga",
+          "note": 6.57,
+          "votes": 75
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "환생마신전"
+          ],
+          "autres": [
+            "Chronicles of the Reincarnated Demon God",
+            "Chuyển Thế Ma Thần Ký",
+            "La leyenda del dios demonio reencarnado",
+            "転生魔神伝〜逆境を超えし覇王〜",
+            "重生魔神传",
+            "Paragon Demon: Revenant Saga"
+          ]
+        },
+        "auteurs": [
+          "GONE",
+          "Sadoyeon"
+        ],
+        "artistes": [
+          "Gojae"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "YESWORKS"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Assassination Attempt/s",
+          "Corruption",
+          "Cultivation",
+          "Family",
+          "Family Feud",
+          "Full Color",
+          "Jiangshi",
+          "Male Protagonist",
+          "Murim",
+          "Reincarnation",
+          "Revenge",
+          "Sister/s"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 58,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/legend-of-the-reincarnated-demon-god"
     },
     {
       "title": "The Legendary Hero is an Academy Honors Student",
@@ -443,7 +1701,66 @@ window.HUB = {
       ],
       "synopsis": "Cinq héros se sont opposés à Erebos, le mal primordial qui a mené le monde au bord de la destruction. Le guerrier Arron. Le forgeron divin, Dweno. La poète des étoiles, Luna. Le roi sage, Lysinas. Et enfin, le héros du début, Kyle-Moi. Cependant, lorsque je me suis réincarné, j’ai découvert que nous étions tous considérés comme de grands héros… Tout le monde, sauf moi.",
       "chapitre": 14,
-      "dernier": "2024-12-29"
+      "dernier": "2024-12-29",
+      "infos": {
+        "mu": {
+          "id": 67624939883,
+          "url": "https://www.mangaupdates.com/series/v2e55kb/the-legendary-hero-is-an-academy-honors-student",
+          "note": 6.75,
+          "votes": 101
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "전설급 영웅은 아카데미 우등생"
+          ],
+          "autres": [
+            "传说级英雄是学院优等生",
+            "転生した英雄はアカデミーの優等生"
+          ]
+        },
+        "auteurs": [
+          "Manseong (Contimaker Studio)",
+          "Yerona"
+        ],
+        "artistes": [
+          "Studio Inus"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "ToYou Dream"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Transported into the Future",
+          "Cousin-Cousin Relationship",
+          "Non-Harem with Many Females",
+          "Reincarnated in the Future",
+          "Academy",
+          "Cousin/s",
+          "European Ambience",
+          "Full Color",
+          "Hero/es",
+          "Jealousy",
+          "Male Protagonist",
+          "Monster/s"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 113,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-legendary-hero-is-an-academy-honors-student-2539"
     },
     {
       "title": "The Return of the Unrivaled Genius Ranker",
@@ -461,7 +1778,54 @@ window.HUB = {
       ],
       "synopsis": "Un jeu de réalité virtuelle qui a conquis le monde : God of Savior. Et le jeu qui en a posé les fondations : Deus Ex Machina: Ragnarok, plus connu sous le nom de Demrock. À son apogée trônait Kaiser, le joueur classé incontesté qui occupait la première place absolue.",
       "chapitre": 23,
-      "dernier": "2026-05-10"
+      "dernier": "2026-05-10",
+      "infos": {
+        "mu": {
+          "id": 75778834072,
+          "url": "https://www.mangaupdates.com/series/yt8rel4/return-of-the-all-time-genius-ranker",
+          "note": 5.88,
+          "votes": 21
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "역대급 천재 랭커의 귀환"
+          ],
+          "autres": [
+            "Ranker Thiên Tài Huyền Thoại Tái Xuất",
+            "The Return of a Legendary Genius Ranker",
+            "歴代級天才ランカーの帰還"
+          ]
+        },
+        "auteurs": [
+          "Baek Yeon-Bal",
+          "Geulnamu"
+        ],
+        "artistes": [
+          "Cheon Jin-Hee"
+        ],
+        "editeurs": [
+          "389",
+          "Daum",
+          "Inganhabgyeok",
+          "Kakao"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 45,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-return-of-the-unrivaled-genius-ranker"
     },
     {
       "title": "Tower",
@@ -478,7 +1842,27 @@ window.HUB = {
         "Poséidon Scans"
       ],
       "chapitre": 3,
-      "dernier": "2025-03-30"
+      "dernier": "2025-03-30",
+      "infos": {
+        "mu": null,
+        "noms": {
+          "fr": [],
+          "ko": [],
+          "autres": []
+        },
+        "auteurs": [],
+        "artistes": [],
+        "editeurs": [],
+        "editeurs_en": [],
+        "genres": [],
+        "tags": [],
+        "annee": null,
+        "type_vo": null,
+        "termine": null,
+        "licence": null,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Trait Hoarder",
@@ -496,7 +1880,68 @@ window.HUB = {
       ],
       "synopsis": "Kim Joonsoo, un joueur de free-to-play dans le jeu mobile « Arcane Seoul », possède le personnage du didacticiel, Warrior Kim ! Il doit survivre dans un monde sans pitié en tant que personnage de base. Tout ce dont il a besoin, c’est de sa connaissance du jeu en tant que ranker et de la capacité de Warrior Kim à changer de traits indéfiniment !",
       "chapitre": 17,
-      "dernier": "2025-01-08"
+      "dernier": "2025-01-08",
+      "infos": {
+        "mu": {
+          "id": 13611585557,
+          "url": "https://www.mangaupdates.com/series/693zimt/ultimate-tutorial-warrior",
+          "note": 6.37,
+          "votes": 114
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "특성 쌓는 김전사"
+          ],
+          "autres": [
+            "Kim Jeonsa Accumulates Characteristics",
+            "Warrior Kim Builds up His Characteristics",
+            "ノーマルキャラな俺、特性を集めて無双する",
+            "特性廢角金戰士",
+            "Ultimate Tutorial Warrior"
+          ]
+        },
+        "auteurs": [
+          "Lico",
+          "San Hocho"
+        ],
+        "artistes": [
+          "Studio Inners"
+        ],
+        "editeurs": [
+          "Naver"
+        ],
+        "editeurs_en": [
+          "Line Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Transmigrated into a Game",
+          "Game Elements",
+          "Male Protagonist",
+          "Monster/s",
+          "Monsters Invade Earth",
+          "Weak to Strong",
+          "Facial Expressions",
+          "Fantasy World",
+          "Skill/s",
+          "Unrealistic Fighting",
+          "Urban Fantasy",
+          "Axed/Cancelled/Discontinued"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 88,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/trait-hoarder"
     },
     {
       "title": "Ranker's Return",
@@ -512,7 +1957,69 @@ window.HUB = {
       "teams": [
         "Poséidon Scans"
       ],
-      "synopsis": "Les débuts du jeu en réalité virtuelle, Arena. Meleegod était le meilleur joueur, en haut du classement ! Mais, sur un coup de tête, il a quitté le jeu après avoir supprimé son compte. Afin de redorer le nom de sa famille, qui est en faillite, il retourne dans Arena ! « Souhaitez-vous créer un personnage ?"
+      "synopsis": "Les débuts du jeu en réalité virtuelle, Arena. Meleegod était le meilleur joueur, en haut du classement ! Mais, sur un coup de tête, il a quitté le jeu après avoir supprimé son compte. Afin de redorer le nom de sa famille, qui est en faillite, il retourne dans Arena ! « Souhaitez-vous créer un personnage ?",
+      "infos": {
+        "mu": {
+          "id": 47318115009,
+          "url": "https://www.mangaupdates.com/series/lqjzf7l/ranker-s-return",
+          "note": 6.55,
+          "votes": 37
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "랭커의 귀환"
+          ],
+          "autres": []
+        },
+        "auteurs": [
+          "Yeong Biram"
+        ],
+        "artistes": [
+          "Sugchwi"
+        ],
+        "editeurs": [
+          "Daon",
+          "Kakao"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Animal Sidekick",
+          "Competent Male Lead",
+          "Competent Protagonist",
+          "Conspiracy/ies",
+          "Full Color",
+          "Game RPG Character/Role",
+          "Game/s",
+          "Helpful Character/s",
+          "Male Protagonist",
+          "Money",
+          "Money Problems",
+          "Rich to Poor"
+        ],
+        "annee": 2019,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 24,
+        "liees": [
+          {
+            "nom": "Ranker's Return (Novel)",
+            "relation": "Adapted From"
+          },
+          {
+            "nom": "Ranker's Return (2021)",
+            "relation": "Alternate Version"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/rankers-return"
     },
     {
       "title": "Return of The Unrivaled Spear Knight",
@@ -528,7 +2035,86 @@ window.HUB = {
       "teams": [
         "Poséidon Scans"
       ],
-      "synopsis": "Le lancier invaincu. Joshua est revenu en enfance! Et maintenant l’histoire de sa vengeance épique commence Une étoile brillante issue d’une maison du Duché qui a complètement brisé la logique commune selon laquelle un chevalier doit utiliser une épée. Le grand héros qui a mis fin à la longue guerre civile de l’empire. Son nom était << Joshua Sanders »."
+      "synopsis": "Le lancier invaincu. Joshua est revenu en enfance! Et maintenant l’histoire de sa vengeance épique commence Une étoile brillante issue d’une maison du Duché qui a complètement brisé la logique commune selon laquelle un chevalier doit utiliser une épée. Le grand héros qui a mis fin à la longue guerre civile de l’empire. Son nom était << Joshua Sanders ».",
+      "infos": {
+        "mu": {
+          "id": 37845185027,
+          "url": "https://www.mangaupdates.com/series/hdw1nnn/the-legendary-spearman-returns",
+          "note": 6.56,
+          "votes": 254
+        },
+        "noms": {
+          "fr": [
+            "Le retour du lancier légendaire",
+            "Le Retour du Chevalier à la Lance Inégalé"
+          ],
+          "ko": [
+            "역대급 창기사의 회귀",
+            "무적의 창기사 회귀하다"
+          ],
+          "autres": [
+            "El retorno del legendario caballero de la lanza",
+            "Kembalinya Kesatria Tombak Legendaris",
+            "Reincarnation of the Unrivaled Spear Knight",
+            "Retorno do lendário cavaleiro da lança",
+            "Return of the Greatest Lancer",
+            "Return of the Legendary Spear Knight",
+            "Sự Trở Lại Của Hiệp Sĩ Giáo",
+            "Возвращение величайшего лансера всех времен",
+            "Возмездие величайшего копейщика",
+            "การกลับมาของอัศวินผู้ใช้หอกแห่งยุค"
+          ]
+        },
+        "auteurs": [
+          "Jo Husang",
+          "Joe Teacher"
+        ],
+        "artistes": [
+          "Studio Inus"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "Rok Media"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Harem",
+          "Shounen"
+        ],
+        "tags": [
+          "Betrayal",
+          "Regression",
+          "Revenge",
+          "Magic",
+          "Corruption",
+          "European Ambience",
+          "Full Color",
+          "Nobility/Aristocracy",
+          "Discrimination",
+          "Knight/s",
+          "Politics Involving Royalty",
+          "Strong Protagonist"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 223,
+        "liees": [
+          {
+            "nom": "The Legendary Spearman Returns (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/return-of-the-legendary-spear-knight",
+      "titre_fr": "Return of the Legendary Spear Knight"
     },
     {
       "title": "Capitalist Harem",
@@ -546,7 +2132,59 @@ window.HUB = {
       ],
       "dernier": "2026-11-12",
       "synopsis": "Cheolsu était un investisseur en cryptomonnaies qui avait touché le fond. Ne lui restait plus que le désespoir, mais une rencontre décisive avec une femme a bouleversé toute sa vie. Cependant, plus ils amassaient de richesses, plus ils se rapprochaient d’un choix dont aucun d’eux ne pourrait revenir en arrière…",
-      "chapitre": 20
+      "chapitre": 20,
+      "infos": {
+        "mu": {
+          "id": 69024148663,
+          "url": "https://www.mangaupdates.com/series/vpj71yv/capitalist-harem",
+          "note": 6.33,
+          "votes": 17
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "자본주의 하렘"
+          ],
+          "autres": [
+            "Capitalism Harem",
+            "Jabonjuui Harem",
+            "ワケアリ美女に嫌々抜いてもらったら人生逆転した話",
+            "一發致富"
+          ]
+        },
+        "auteurs": [
+          "Seupseuphukhuk",
+          "SUNGMIN"
+        ],
+        "artistes": [
+          "Hyuk (ii)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Harem",
+          "Mature",
+          "Romance",
+          "Seinen",
+          "Smut"
+        ],
+        "tags": [
+          "Prostitution",
+          "Based on a Novel",
+          "Foot Licking",
+          "Toe Sucking"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": 19,
+        "liees": []
+      }
     },
     {
       "title": "Heart-Pounding S-Matching",
@@ -564,7 +2202,61 @@ window.HUB = {
       ],
       "dernier": "2026-11-17",
       "synopsis": "« Acceptez-vous que vos données personnelles soient collectées afin de vous trouver le partenaire idéal ? » Nous vivons dans un monde où même les rencontres amoureuses sont gérées par l’IA ! Pour se rapprocher de la fille qui lui plaît, il installe l’application « S-Matching », même s’il n’y trouve pas vraiment d’intérêt. « Votre partenaire idéal a été trouvé.",
-      "chapitre": 26
+      "chapitre": 26,
+      "infos": {
+        "mu": {
+          "id": 14322844669,
+          "url": "https://www.mangaupdates.com/series/6kvg9od/heart-pounding-s-matching",
+          "note": 6.47,
+          "votes": 13
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "두근 두근 S매칭"
+          ],
+          "autres": [
+            "Emparejamiento S de Citas",
+            "Pit-a-Pat S-Matching",
+            "S-Matching: Heartbeats of Love",
+            "Tum Tum S-Matching",
+            "理想型演算法",
+            "S Love Matchmaking"
+          ]
+        },
+        "auteurs": [
+          "Yagyeong"
+        ],
+        "artistes": [
+          "Chen Nyang (청냥)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Romance",
+          "School Life",
+          "Seinen"
+        ],
+        "tags": [
+          "Armpit Licking",
+          "Beautiful Female Character/s",
+          "Big Breasts",
+          "Cheating/Infidelity",
+          "Feet",
+          "Footjob",
+          "Plain-Looking Male Lead"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": false,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Milf Hunting In Another World",
@@ -582,7 +2274,74 @@ window.HUB = {
       ],
       "synopsis": "Après que ses relations intimes avec d’autres MILFS ont été découvertes, Taeyang s’est échappé dans un autre monde. Partager un lit avec une MILF de première classe avec un corps incroyable ?! Bon appétit~ ! Taeyang pourra-t-il créer son propre harem dans ce monde en toute sécurité ?",
       "chapitre": 145,
-      "dernier": "2026-11-17"
+      "dernier": "2026-11-17",
+      "infos": {
+        "mu": {
+          "id": 46816680363,
+          "url": "https://www.mangaupdates.com/series/li9fxrf/milf-hunter-in-another-world",
+          "note": 7.8,
+          "votes": 152
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "이세계 밀프 헌터"
+          ],
+          "autres": [
+            "Cazador de milfs de otro mundo",
+            "Cazador De Milfs En Otro Mundo",
+            "Different World Milf Hunter",
+            "MILP Hunter From Another World",
+            "人妻獵人",
+            "Isekai Milf Hunter",
+            "Milf Hunter in Another World",
+            "Полювання на МІЛФ в іншому світі",
+            "Săn MILF Ở Thế Giới Khác",
+            "Chinh Phạt MILF Ở Thế Giới Khác"
+          ]
+        },
+        "auteurs": [
+          "ohogoe",
+          "Yoann"
+        ],
+        "artistes": [
+          "ERO404"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "TopToon Global"
+        ],
+        "genres": [
+          "Action",
+          "Adult",
+          "Adventure",
+          "Fantasy",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Cheating Wife",
+          "Milf/s",
+          "Caught in the Act",
+          "Beautiful Female Lead",
+          "Big Breasts",
+          "Big Penis",
+          "Black-Haired Male Lead",
+          "Confident Male Lead",
+          "Full Color",
+          "Multiple Sexual Partners",
+          "Multiple Worlds",
+          "Netori"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 122,
+        "liees": []
+      }
     },
     {
       "title": "But You're the Same Age as My Daughter",
@@ -600,7 +2359,73 @@ window.HUB = {
       ],
       "synopsis": "Suyeon, une mère célibataire qui tient un magasin de plats d’accompagnement tout en élevant sa fille Seolha, découvre les sentiments de Hyunwoo, un employé à temps partiel au visage un peu sévère.",
       "chapitre": 23,
-      "dernier": "2025-04-11"
+      "dernier": "2025-04-11",
+      "infos": {
+        "mu": {
+          "id": 39150718883,
+          "url": "https://www.mangaupdates.com/series/hzhbs0z/her-rejuvenation",
+          "note": 6.98,
+          "votes": 51
+        },
+        "noms": {
+          "fr": [
+            "Pero, ¿¡Tienes la misma edad que mi hija?!"
+          ],
+          "ko": [
+            "딸이 너랑 동갑인데?!"
+          ],
+          "autres": [
+            "Der Jungbrunnen",
+            "Jeunesse Retrouvée",
+            "O Gostinho da Juventude",
+            "Su rejuvenecimiento",
+            "Troppo grande per te!",
+            "หัวใจฉันปั่นป่วนอีกครั้ง",
+            "店長, 大好きです！",
+            "戀上年上的她",
+            "我女兒和你同齡!？"
+          ]
+        },
+        "auteurs": [
+          "Kkan"
+        ],
+        "artistes": [
+          "MOAI (III)"
+        ],
+        "editeurs": [
+          "Toomics"
+        ],
+        "editeurs_en": [
+          "Toomics"
+        ],
+        "genres": [
+          "Adult",
+          "Comedy",
+          "Harem",
+          "Romance",
+          "Seinen"
+        ],
+        "tags": [
+          "Male Lead Falls in Love First",
+          "Milf/s",
+          "Adult Female Lead",
+          "Age Gap",
+          "Beauty Mark",
+          "Big Ass",
+          "Big Breasts",
+          "Big-Breasted Female Lead",
+          "Female Lead with Child/ren",
+          "Harem Ending",
+          "Older Female Lead",
+          "Older Female Younger Male"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Human Scum",
@@ -618,7 +2443,70 @@ window.HUB = {
       ],
       "synopsis": "Pour une raison inconnue, l’humanité a péri.] Dans un monde où les gens blessent et tuent leur propre famille sans hésitation, la survie et les désirs sont tout ce qui reste, et ceux qui ont réussi à survivre peuvent choisir leur propre ‘capacité’. Souffrant de graves insomnies, Sungcheol choisit [Sommeil]… et commence à chasser les femmes la nuit pour les endormir et les agresser !",
       "chapitre": 16,
-      "dernier": "2025-04-14"
+      "dernier": "2025-04-14",
+      "infos": {
+        "mu": {
+          "id": 23530899366,
+          "url": "https://www.mangaupdates.com/series/at5ou5i/human-trash",
+          "note": 6.81,
+          "votes": 43
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "인간말종"
+          ],
+          "autres": [
+            "Der letzte Mensch",
+            "Escoria Humana",
+            "末日鵰堡",
+            "Déchet Humain",
+            "Human Trash"
+          ]
+        },
+        "auteurs": [
+          "Defiler",
+          "Neneb"
+        ],
+        "artistes": [
+          "Dokta"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Adventure",
+          "Drama",
+          "Harem",
+          "Mature",
+          "Seinen"
+        ],
+        "tags": [
+          "Based on a Novel",
+          "Beautiful Female Character/s",
+          "Big Breasts",
+          "Bondage",
+          "Evil Protagonist",
+          "Fight/s",
+          "First-Time Intercourse",
+          "Murder/s",
+          "Nakadashi / Creampie",
+          "Post-Apocalyptic",
+          "Random Plot",
+          "Rape"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Hypnotist Security Guard",
@@ -636,7 +2524,71 @@ window.HUB = {
       ],
       "synopsis": "Un agent de sécurité opprimé se lance dans une quête de pouvoir et de domination, utilisant l’hypnose pour transformer sa vie.",
       "chapitre": 89,
-      "dernier": "2026-06-22"
+      "dernier": "2026-06-22",
+      "infos": {
+        "mu": {
+          "id": 6511602968,
+          "url": "https://www.mangaupdates.com/series/2zou908/hypnotist-security-guard",
+          "note": 6.82,
+          "votes": 29
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "최면경비원"
+          ],
+          "autres": [
+            "El guardia hipnotizador",
+            "Hypnotic Guard",
+            "Hypnotic Security Guard",
+            "L'Hypnotiseur",
+            "O Segurança da Hipnose",
+            "Portinaio Ipnotizzante",
+            "Wachmann der Hypnose",
+            "Гипнотизирующий охранник",
+            "มือถือสะกดจิต พลิกชีวิตผู้ตกอับ",
+            "スマホで人生一発逆転!?"
+          ]
+        },
+        "auteurs": [
+          "One Dollar"
+        ],
+        "artistes": [
+          "Roasted Duck"
+        ],
+        "editeurs": [
+          "Toomics"
+        ],
+        "editeurs_en": [
+          "Toomics"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Hypnotism/Hypnosis",
+          "Villain Protagonist",
+          "Adult Male Lead",
+          "Adult Protagonist",
+          "App/s",
+          "Big Breasts",
+          "Bisexual Character/s",
+          "Bisexual Female Lead",
+          "Cheating/Infidelity",
+          "Dubious Consent",
+          "Evil Protagonist",
+          "Fellatio/Blowjob"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 107,
+        "liees": []
+      }
     },
     {
       "title": "My Eyes Now See Desire",
@@ -654,7 +2606,67 @@ window.HUB = {
       ],
       "synopsis": "Un jour, Taejin a commencé à voir les désirs des autres. Le premier désir que Taejin a rencontré l’a choqué, car il venait de sa tante qui l’avait élevé comme sa mère… « J’aimerais que Taejin me voie comme une femme… »",
       "chapitre": 25,
-      "dernier": "2025-04-13"
+      "dernier": "2025-04-13",
+      "infos": {
+        "mu": {
+          "id": 32972647606,
+          "url": "https://www.mangaupdates.com/series/f5b29py/i-see-your-desire",
+          "note": 7.11,
+          "votes": 51
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "욕망을 보는 눈을 얻었다"
+          ],
+          "autres": [
+            "Gaining an Eye For Desire",
+            "I Got Eyes to See Desire",
+            "溢れる愛欲を視た",
+            "私密视角",
+            "I See Your Desire"
+          ]
+        },
+        "auteurs": [
+          "Ttingjini",
+          "Yegeobam"
+        ],
+        "artistes": [
+          "Domi (II)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "DAYcomics"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Beautiful Female Character/s",
+          "Full Color",
+          "Heart Shaped Pupils",
+          "Mysterious Power/s",
+          "Abuse of Power",
+          "Aunt-Nephew Relationship",
+          "Bathroom Intercourse",
+          "Big Penis",
+          "Big-Breasted Female Lead",
+          "Blackmail",
+          "Breastfeeding",
+          "Bullied Female Lead"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 49,
+        "liees": []
+      }
     },
     {
       "title": "My Girlfriend Was Already Fully Trained",
@@ -672,7 +2684,70 @@ window.HUB = {
       ],
       "synopsis": "« Je n’aurais pas dû fouiller dans le téléphone de ma copine ce jour-là. » Un ami m’avait rapporté une rumeur étrange concernant ma copine, Hayoung. « J’ai vu Hayoung sortir d’un motel… avec un autre homme. » J’ai fait la sourde oreille à ce qu’ils disaient, pensant qu’ils avaient dû se tromper sur ce qu’ils avaient vu. Cependant, une partie de moi se méfiait d’elle.",
       "chapitre": 22,
-      "dernier": "2026-05-08"
+      "dernier": "2026-05-08",
+      "infos": {
+        "mu": {
+          "id": 26106448818,
+          "url": "https://www.mangaupdates.com/series/bzr3stu/my-girlfriend-s-corruption",
+          "note": 5.86,
+          "votes": 23
+        },
+        "noms": {
+          "fr": [
+            "Ma Copine Était déjà bien Dressée"
+          ],
+          "ko": [
+            "내 여자친구는 이미 조교완료 되었다"
+          ],
+          "autres": [
+            "Mi Novia Ya Ha Sido Completamente Entrenada",
+            "My Girlfriend Has Already Completed the Assistant Training",
+            "My Girlfriend Has Already Done Teaching",
+            "My Girlfriend Is Already Trained",
+            "俺は知らない彼女の顔",
+            "女友不能說的事",
+            "My Girlfriend's Corruption"
+          ]
+        },
+        "auteurs": [
+          "Jinaganeun Geumtaeyang",
+          "Kong Shimi"
+        ],
+        "artistes": [
+          "Doya (II)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Seinen"
+        ],
+        "tags": [
+          "Netorare",
+          "Blackmail",
+          "Bondage",
+          "Cheating Girlfriend",
+          "Cuckold",
+          "Double/Multiple Penetration",
+          "Filmed Intercourse",
+          "Humiliation",
+          "Mind Break",
+          "Naive Male Lead",
+          "Sex Slave/s",
+          "Sex Toy/s"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Teacher Yunji",
@@ -690,7 +2765,68 @@ window.HUB = {
       ],
       "synopsis": "La nouvelle prof innocente, « Yunji », veut être une bonne prof pour tout le monde, mais elle finit par se laisser aller à ce que tout le monde veut.",
       "chapitre": 31,
-      "dernier": "2026-03-15"
+      "dernier": "2026-03-15",
+      "infos": {
+        "mu": {
+          "id": 39878801488,
+          "url": "https://www.mangaupdates.com/series/ibit45s/julie-at-the-prep-academy",
+          "note": 6.44,
+          "votes": 22
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "여교사 윤지"
+          ],
+          "autres": [
+            "Teacher Yoon Ji",
+            "Teacher Yoonji",
+            "女教師屈服日誌",
+            "羞恥課堂",
+            "Julie At The Prep Academy"
+          ]
+        },
+        "auteurs": [
+          "doublehand",
+          "Romantic Mackerel"
+        ],
+        "artistes": [
+          "Yataiger"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "DAYcomics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "School Life",
+          "Seinen"
+        ],
+        "tags": [
+          "Dumb Female Lead",
+          "Attempted Rape",
+          "Based on a Novel",
+          "BDSM",
+          "Big Ass",
+          "Big Breasts",
+          "Big Penis",
+          "Blackmail",
+          "Blindfold",
+          "Bondage",
+          "Breastfeeding",
+          "Bukkake"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "The Massage Club",
@@ -708,7 +2844,66 @@ window.HUB = {
       ],
       "synopsis": "Seo Minjae, qui a récemment soigné son hyperhidrose dans une clinique mystérieuse, possède désormais un étrange pouvoir que personne ne sait vraiment expliquer.",
       "chapitre": 20,
-      "dernier": "2025-04-16"
+      "dernier": "2025-04-16",
+      "infos": {
+        "mu": {
+          "id": 41114387726,
+          "url": "https://www.mangaupdates.com/series/ivyg0lq/insatiable-massage-club",
+          "note": 6.67,
+          "votes": 29
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "마사지 동아리"
+          ],
+          "autres": [
+            "Magical Massage",
+            "Массажный клуб",
+            "สัมผัสสวาท กระชากไฟรัก",
+            "マッサージサークル〜触れただけで絶頂に導くゴットハンド〜",
+            "按摩社團"
+          ]
+        },
+        "auteurs": [
+          "Hutari"
+        ],
+        "artistes": [
+          "Bgassist"
+        ],
+        "editeurs": [
+          "Lezhin"
+        ],
+        "editeurs_en": [
+          "Lezhin US"
+        ],
+        "genres": [
+          "Adult",
+          "Harem",
+          "Mature",
+          "Seinen"
+        ],
+        "tags": [
+          "Baseball",
+          "BDSM",
+          "Beach",
+          "Beautiful Female Character/s",
+          "Big Breasts",
+          "Bikini",
+          "Borderline H",
+          "Caught in the Act",
+          "Childhood Friend/s",
+          "Club/s",
+          "Crush/es",
+          "Drunk/s"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 38,
+        "liees": []
+      }
     },
     {
       "title": "The Regressed Man",
@@ -726,7 +2921,67 @@ window.HUB = {
       ],
       "synopsis": "Kang Sunho se réveille après avoir perdu connaissance dans un accident. « Salut ! Il est temps pour ton extraction de sperme u003c3 » Alors, dans ce monde… les hommes sont rares ?! Les femmes qui essaient de me séduire et qui me supplient de les baiser… Puisque j’en suis arrivé là, merci pour le repas !!!",
       "chapitre": 6,
-      "dernier": "2025-06-27"
+      "dernier": "2025-06-27",
+      "infos": {
+        "mu": {
+          "id": 5026211399,
+          "url": "https://www.mangaupdates.com/series/2b4h5jb/men-are-rare",
+          "note": 7.23,
+          "votes": 33
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "남자가 희귀함",
+            "남자가희귀함"
+          ],
+          "autres": [
+            "The Reincarnated Man",
+            "回帰したら搾精されてます!?",
+            "男人配額制"
+          ]
+        },
+        "auteurs": [
+          "Daraeng"
+        ],
+        "artistes": [
+          "MALPOI"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Fantasy",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Reversed Gender Roles",
+          "Role Reversal",
+          "Adult Character/s",
+          "Assertive Love Interest/s",
+          "Assertive Male Lead",
+          "Bathroom Intercourse",
+          "Beautiful Female Character/s",
+          "Big Ass",
+          "Big Breasts",
+          "Drunken Intercourse",
+          "Elaborate Art Style",
+          "First-Time Intercourse"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 73,
+        "liees": []
+      }
     },
     {
       "title": "Yogurt Delivery Lady",
@@ -744,7 +2999,69 @@ window.HUB = {
       ],
       "synopsis": "La rumeur dit qu’il y a une vendeuse de yaourt qui mange le yaourt des hommes dans une résidence près d’une université. Pour vérifier la rumeur, Junwoo demande à Sohee, la dame du yaourt qu’il aime secrètement : « Ahjumma, je veux que tu me manges le yaourt. »",
       "chapitre": 25,
-      "dernier": "2025-04-20"
+      "dernier": "2025-04-20",
+      "infos": {
+        "mu": {
+          "id": 50591581400,
+          "url": "https://www.mangaupdates.com/series/n8ox61k/yogurt-lady",
+          "note": 6.62,
+          "votes": 29
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "요구르트 아줌마"
+          ],
+          "autres": [
+            "A Yogurt Lady",
+            "Delicias Prohibidas",
+            "Yogurt Ajumma",
+            "Yogurt Ladies",
+            "癢樂多阿姨",
+            "La Livreuse de Yaourt"
+          ]
+        },
+        "auteurs": [
+          "Gongshim",
+          "SaraJin"
+        ],
+        "artistes": [
+          "ttwook"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "School Life",
+          "Seinen"
+        ],
+        "tags": [
+          "Blackmail",
+          "Character Who Bullies the One They Love",
+          "Cheating Male Lead",
+          "Cheating/Infidelity",
+          "Cunning Male Lead",
+          "Dishonest Protagonist",
+          "Dysfunctional Family/ies",
+          "Female Bully/ies",
+          "Lying Protagonist",
+          "Masochist/s",
+          "Milf/s",
+          "Mother and Daughter"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 26,
+        "liees": []
+      }
     },
     {
       "title": "You Watch Stuff Like That",
@@ -762,7 +3079,68 @@ window.HUB = {
       ],
       "synopsis": "Jinwoo, un nerd qui découvre les fantasmes sexuels qui pourraient ruiner sa vie universitaire, et Chaeyoung, la fille la plus populaire, finissent par se connaître mieux que prévu. Une comédie romantique insolite et chaotique commence, où les deux extrêmes s’attirent et affrontent ensemble les défis de l’université et de l’amour. « Est-ce que tu aimes ce genre de chose ? … J’aime les choses comme ça ♥ »",
       "chapitre": 36,
-      "dernier": "2025-04-13"
+      "dernier": "2025-04-13",
+      "infos": {
+        "mu": {
+          "id": 58915301483,
+          "url": "https://www.mangaupdates.com/series/r2cndkb/are-you-into-that-kind-of-thing",
+          "note": 6.82,
+          "votes": 29
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "너, 그런 거 보니?",
+            "너",
+            "그런 거 보니"
+          ],
+          "autres": [
+            "Have You Seen That?",
+            "俺たちのラブコメはエロ漫画より激しく!?",
+            "女神都在看這些?",
+            "Are You Into That Kind Of Thing?"
+          ]
+        },
+        "auteurs": [
+          "Mang Moong Ming"
+        ],
+        "artistes": [
+          "MAYO (III)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Day Comics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Comedy",
+          "Romance",
+          "Seinen"
+        ],
+        "tags": [
+          "Ambiguous Relationship/s",
+          "Anal Fingering",
+          "Anal Toys",
+          "Arrogant Female Lead",
+          "BDSM",
+          "Big Areolae",
+          "Big Ass",
+          "Big Breasts",
+          "Big Penis",
+          "Big-Breasted Female Lead",
+          "Caught in the Act",
+          "Cheating Male Lead"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Money Games",
@@ -778,7 +3156,62 @@ window.HUB = {
       "teams": [
         "Ortega Scans"
       ],
-      "synopsis": "Manjae travaille plus assidûment que personne dans une entreprise à majorité féminine."
+      "synopsis": "Manjae travaille plus assidûment que personne dans une entreprise à majorité féminine.",
+      "infos": {
+        "mu": {
+          "id": 47197248674,
+          "url": "https://www.mangaupdates.com/series/lok0u5e/the-money-game",
+          "note": 6.36,
+          "votes": 15
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "돈놀이"
+          ],
+          "autres": [
+            "Juego del Dinero",
+            "Manipulación Financiera",
+            "Money Game (Woong Eung)",
+            "Money Play",
+            "เกมการเงิน",
+            "マネーゲーム～返済はカラダで～",
+            "慾債"
+          ]
+        },
+        "auteurs": [
+          "Appeal"
+        ],
+        "artistes": [
+          "Eungwung"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Seinen"
+        ],
+        "tags": [
+          "Big Breasts",
+          "Feet",
+          "Footjob",
+          "Full Color",
+          "Office Intercourse",
+          "Office Lady/ies",
+          "Office Worker/s"
+        ],
+        "annee": 2026,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "I Became an Apartment Security Manager",
@@ -794,7 +3227,69 @@ window.HUB = {
       "teams": [
         "Ortega Scans"
       ],
-      "synopsis": "\"Dormez avec les femmes vivant dans ce bâtiment, que ce soit par le chantage, la séduction ou même la force.\" Lee Han accepte l'offre douce mais dangereuse qui pourrait bouleverser sa vie misérable... \"Apartment 301, la femme mariée Su-Jin Han. J'ai besoin de trouver la faiblesse de cette femme rapidement ! »"
+      "synopsis": "\"Dormez avec les femmes vivant dans ce bâtiment, que ce soit par le chantage, la séduction ou même la force.\" Lee Han accepte l'offre douce mais dangereuse qui pourrait bouleverser sa vie misérable... \"Apartment 301, la femme mariée Su-Jin Han. J'ai besoin de trouver la faiblesse de cette femme rapidement ! »",
+      "infos": {
+        "mu": {
+          "id": 24567532054,
+          "url": "https://www.mangaupdates.com/series/baavh1y/i-became-an-apartment-manager",
+          "note": 6.82,
+          "votes": 35
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "아파트 관리인이 되었다"
+          ],
+          "autres": [
+            "Apateu Gwalliini Doeeotda",
+            "Became an Apartment Manager",
+            "I Became the Apartment Manager",
+            "Me Convertí En Administrador De Un Apartamento",
+            "ヤリマンションの管理人",
+            "獵艷管理員 / 猎艳管理员"
+          ]
+        },
+        "auteurs": [
+          "Bibik",
+          "Maemi (II)"
+        ],
+        "artistes": [
+          "Beluga (II)"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "DAYcomics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Big Breasts",
+          "Adult Character/s",
+          "Ahegao",
+          "Anal Fingering",
+          "Arrogant Female Lead",
+          "Beautiful Female Character/s",
+          "Big Ass",
+          "Big Penis",
+          "Cheating while on a Phone Call",
+          "Cheating/Infidelity",
+          "Elaborate Art Style",
+          "Filmed Intercourse"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 69,
+        "liees": []
+      }
     },
     {
       "title": "The Father-In-Law Fucks Them All",
@@ -810,7 +3305,72 @@ window.HUB = {
       "teams": [
         "Ortega Scans"
       ],
-      "synopsis": "« Président… s’il vous plaît, donnez-moi aussi la semence du tout puissant ♥ » Je n’ai rien reçu de mes parents, mais j’ai travaillé plus dur que quiconque pour bâtir mon propre royaume dans ma ville natale. J’ai finalement décidé de me calmer, de quitter la direction et de laisser l’entreprise à mes fils pour pouvoir passer le reste de ma vie en paix…"
+      "synopsis": "« Président… s’il vous plaît, donnez-moi aussi la semence du tout puissant ♥ » Je n’ai rien reçu de mes parents, mais j’ai travaillé plus dur que quiconque pour bâtir mon propre royaume dans ma ville natale. J’ai finalement décidé de me calmer, de quitter la direction et de laisser l’entreprise à mes fils pour pouvoir passer le reste de ma vie en paix…",
+      "infos": {
+        "mu": {
+          "id": 64120172027,
+          "url": "https://www.mangaupdates.com/series/tgfhtdn/father-in-law-fucks-everyone",
+          "note": 6.79,
+          "votes": 26
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "시아버지가 다 따먹음"
+          ],
+          "autres": [
+            "Bố Chồng Chịch Tất Cả",
+            "Bố Chồng Thịt Hết",
+            "Bố Chồng Tôi Địt Hết Bọn Họ",
+            "Bố Vợ Địt Hết Bọn Họ",
+            "El Suegro En Medio de Todas",
+            "Father Is Eating All",
+            "The Father-in-Law Eats All",
+            "พ่อตาฟาดเรียบ",
+            "พ่อสามีขอเหมา",
+            "嫁をむさぼる"
+          ]
+        },
+        "auteurs": [
+          "King Size"
+        ],
+        "artistes": [
+          "Chalna"
+        ],
+        "editeurs": [
+          "Toptoon"
+        ],
+        "editeurs_en": [
+          "DAYcomics",
+          "Toptoon Global"
+        ],
+        "genres": [
+          "Adult",
+          "Drama",
+          "Harem",
+          "Seinen"
+        ],
+        "tags": [
+          "Big Breasts",
+          "Cheating Wife",
+          "Daughter-in-Law",
+          "Dilf/s",
+          "Father Protagonist",
+          "Middle-Aged Protagonist",
+          "Protagonist with Sexual Experience",
+          "Widow / Widower",
+          "Bad Parent/s",
+          "Big Ass",
+          "Dominant Male Lead",
+          "Father-in-law"
+        ],
+        "annee": 2025,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 13,
+        "liees": []
+      }
     },
     {
       "title": "Your Eternal Lies",
@@ -823,7 +3383,71 @@ window.HUB = {
       "periode": "historique",
       "teams": [
         "PhénixScans"
-      ]
+      ],
+      "infos": {
+        "mu": {
+          "id": 38098226732,
+          "url": "https://www.mangaupdates.com/series/hi2p7vw/your-eternal-lies",
+          "note": 8.41,
+          "votes": 332
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "영원한 너의 거짓말"
+          ],
+          "autres": [
+            "Tes mensonges éternels",
+            "Tus eternas mentiras",
+            "Твоя вечная ложь",
+            "Чиний өнө мөнхийн худал",
+            "入狱的谎言美人",
+            "永遠なる君の嘘",
+            "永遠的謊言"
+          ]
+        },
+        "auteurs": [
+          "jeonhoochi"
+        ],
+        "artistes": [
+          "Kkomak"
+        ],
+        "editeurs": [
+          "Orange D",
+          "Ridibooks"
+        ],
+        "editeurs_en": [
+          "Manta"
+        ],
+        "genres": [
+          "Drama",
+          "Fantasy",
+          "Mystery",
+          "Psychological",
+          "Romance",
+          "Shoujo"
+        ],
+        "tags": [
+          "Criminal/s",
+          "European Ambience",
+          "Pilot/s",
+          "Witch/es",
+          "Abused Female Lead",
+          "Blonde-Haired Female Lead",
+          "Escape/s",
+          "Post-Traumatic Stress Disorder",
+          "Post-War",
+          "Full Color",
+          "Moral Dilemma",
+          "Orphan/s"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 30,
+        "liees": []
+      }
     },
     {
       "title": "The Reincarnated Assassin is a Genius Swordsman",
@@ -837,7 +3461,85 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Une ombre. Raonn était un assassin à la botte du cruel Lord Deluce, jusqu’au jour où il parvint à se soustraire à son emprise… pour être brutalement massacré en retour. Réincarné en joli bébé blond, Raonn n’a qu’un objectif : se venger de Deluce grâce au cercle de feu, une puissante technique de maître épéiste."
+      "synopsis": "Une ombre. Raonn était un assassin à la botte du cruel Lord Deluce, jusqu’au jour où il parvint à se soustraire à son emprise… pour être brutalement massacré en retour. Réincarné en joli bébé blond, Raonn n’a qu’un objectif : se venger de Deluce grâce au cercle de feu, une puissante technique de maître épéiste.",
+      "infos": {
+        "mu": {
+          "id": 60225852049,
+          "url": "https://www.mangaupdates.com/series/ro0x0up/the-reincarnated-assassin-is-a-swordmaster",
+          "note": 6.63,
+          "votes": 172
+        },
+        "noms": {
+          "fr": [
+            "L'assassin et le maître épéiste",
+            "L'Assassin Réincarné est un Génie de l'Épée"
+          ],
+          "ko": [
+            "환생한 암살자는 검술 천재",
+            "전생 암살자는 천재 검사"
+          ],
+          "autres": [
+            "El asesino que reencarnó como un genio espadachín",
+            "ชีวิตใหม่ของนักฆ่าคือจอมดาบอัจฉริยะ",
+            "刺客的劍術天才轉生錄",
+            "転生した暗殺者は剣術の天才",
+            "重生刺客是天才剑士",
+            "The Reincarnated Assassin Is a Swordmaster",
+            "Jeonsang Amsaljaneun Cheonjae Geomsa",
+            "Sát Thủ Chuyển Sinh Là Một Thiên Tài Kiếm Thuật",
+            "El Asesino Reencarnado es un Genio Espadacin",
+            "O Assassino Reencarnado é um Gênio Espadachim"
+          ]
+        },
+        "auteurs": [
+          "Daon Studio",
+          "Gulant",
+          "VOKE"
+        ],
+        "artistes": [
+          "Tess"
+        ],
+        "editeurs": [
+          "Daon Webtoon",
+          "Daum",
+          "Kakao"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Age Progression",
+          "Full Color",
+          "Male Protagonist",
+          "Revenge",
+          "Nobility/Aristocracy",
+          "Training",
+          "Blonde-Haired Protagonist",
+          "Competitive Atmosphere",
+          "European Ambience",
+          "Magic",
+          "Magical/Spiritual Power Ranking",
+          "Red-Eyed Protagonist"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 100,
+        "liees": [
+          {
+            "nom": "The Reincarnated Assassin Is a Swordmaster (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-reincarnated-assassin-is-a-genius-swordsman"
     },
     {
       "title": "The Regressed Son of a Duke is an Assassin",
@@ -851,7 +3553,82 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Cyan Vert, le meilleur assassin du continent, trouve une mort pitoyable après avoir été trahi par son propre frère, à qui il avait fait confiance toute sa vie. Si on me donnait une autre chance, je la vivrais différemment. Je ne ferais confiance qu’à moi-même et j’accomplirais toutes les choses que je veux par moi-même, sans servir personne d’autre que moi. C’est ainsi que j’ai obtenu une seconde chance dans la vie."
+      "synopsis": "Cyan Vert, le meilleur assassin du continent, trouve une mort pitoyable après avoir été trahi par son propre frère, à qui il avait fait confiance toute sa vie. Si on me donnait une autre chance, je la vivrais différemment. Je ne ferais confiance qu’à moi-même et j’accomplirais toutes les choses que je veux par moi-même, sans servir personne d’autre que moi. C’est ainsi que j’ai obtenu une seconde chance dans la vie.",
+      "infos": {
+        "mu": {
+          "id": 5895054205,
+          "url": "https://www.mangaupdates.com/series/2phrgxp/the-reborn-young-lord-is-an-assassin",
+          "note": 7.01,
+          "votes": 241
+        },
+        "noms": {
+          "fr": [
+            "Le Fils Régressé du Duc est un Assassin"
+          ],
+          "ko": [
+            "회귀한 공작가의 막내도련님은 암살자",
+            "회귀한 공작가의 차남은 암살자"
+          ],
+          "autres": [
+            "El asesino que retornó como el hijo del Duque",
+            "El joven señor renacido es un asesino",
+            "El pibe que retorna como el hijo menor",
+            "Hoegwihan Gongjakgaui Mangnaedoryeonnimeun Amsalja",
+            "The Regressed Youngest Son of the Duke Is an Assassin",
+            "Вернувшийся младший сын герцога",
+            "Регрессировавший сын герцога",
+            "ลูกชายคนเล็กของดยุกคือมือสังหาร",
+            "公爵家的重生暗杀者",
+            "回帰した公爵家の末息子は暗殺者"
+          ]
+        },
+        "auteurs": [
+          "CoffeeLime",
+          "Swing Bat"
+        ],
+        "artistes": [
+          "Swing Bat"
+        ],
+        "editeurs": [
+          "Naver",
+          "Redice Studio"
+        ],
+        "editeurs_en": [
+          "LINE WEBTOON"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Academy",
+          "Betrayal",
+          "Full Color",
+          "Regressor Protagonist",
+          "Webtoon/Webcomic",
+          "Abusive Family Member/s",
+          "Male Protagonist",
+          "Nobility/Aristocracy",
+          "Revenge",
+          "Scheming Character/s",
+          "Black-Eyed Male Lead",
+          "Black-Eyed Protagonist"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 149,
+        "liees": [
+          {
+            "nom": "The Reborn Young Lord Is an Assassin (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-regressed-son-of-a-duke-is-an-assassin"
     },
     {
       "title": "The Indomitable Martial King",
@@ -865,7 +3642,82 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Un monde où les humains vendent et achètent des espèces d’un autre monde comme esclaves. Le grand mage Rifenhardt est traité comme le roi des démons pour avoir aidé les espèces d’un autre monde. Un groupe de héros arrive pour faire tomber le Roi des démons ! Rifenhardt réussit à blesser gravement les héros, mais il risque la mort aux mains du ROI MARTIAL ??? Tesslon… « Sort de régression spatio-temporelle »."
+      "synopsis": "Un monde où les humains vendent et achètent des espèces d’un autre monde comme esclaves. Le grand mage Rifenhardt est traité comme le roi des démons pour avoir aidé les espèces d’un autre monde. Un groupe de héros arrive pour faire tomber le Roi des démons ! Rifenhardt réussit à blesser gravement les héros, mais il risque la mort aux mains du ROI MARTIAL ??? Tesslon… « Sort de régression spatio-temporelle ».",
+      "infos": {
+        "mu": {
+          "id": 55536067196,
+          "url": "https://www.mangaupdates.com/series/pigqnp8/the-reincarnated-king-of-fists",
+          "note": 7.42,
+          "votes": 195
+        },
+        "noms": {
+          "fr": [
+            "Le Roi Martial Indomptable"
+          ],
+          "ko": [
+            "권왕전생",
+            "불굴의 무왕",
+            "불굴의 패왕"
+          ],
+          "autres": [
+            "O Rei Marcial Indomável",
+            "Time Slip of Fist King",
+            "ملك فنون يقصر القتال الذي",
+            "拳王に転生した最強大魔導士",
+            "拳王轉生",
+            "拳王转世",
+            "The Reincarnated King of Fists",
+            "Return of The Martial King",
+            "Bulgurui Muwang",
+            "Vị Vua Võ Thuật Bất Khuất"
+          ]
+        },
+        "auteurs": [
+          "Badmoon (REDICE STUDIO)",
+          "YIM Kyungbae"
+        ],
+        "artistes": [
+          "YANG Kyung il"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "Redice Studio"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Fantasy",
+          "Martial Arts",
+          "Shounen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Badass Male Lead",
+          "Muscular Protagonist",
+          "Male Protagonist",
+          "Comedic Undertone",
+          "Slavery",
+          "Discrimination",
+          "Fighter Protagonist",
+          "Kind Male Lead",
+          "Naive Protagonist",
+          "Sexual Abuse",
+          "Sexual Violence",
+          "Based on a Novel"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 160,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-indomitable-martial-king"
     },
     {
       "title": "Talent Drug Devouring",
@@ -878,7 +3730,27 @@ window.HUB = {
       "periode": "historique",
       "teams": [
         "PhénixScans"
-      ]
+      ],
+      "infos": {
+        "mu": null,
+        "noms": {
+          "fr": [],
+          "ko": [],
+          "autres": []
+        },
+        "auteurs": [],
+        "artistes": [],
+        "editeurs": [],
+        "editeurs_en": [],
+        "genres": [],
+        "tags": [],
+        "annee": null,
+        "type_vo": null,
+        "termine": null,
+        "licence": null,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Survival Story of a Sword King in a Fantasy World",
@@ -892,7 +3764,84 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Hanbin Ryu, tout juste libéré du service militaire et sans but dans la vie, est soudain transporté dans un autre monde."
+      "synopsis": "Hanbin Ryu, tout juste libéré du service militaire et sans but dans la vie, est soudain transporté dans un autre monde.",
+      "infos": {
+        "mu": {
+          "id": 55302214008,
+          "url": "https://www.mangaupdates.com/series/pelidfc/latna-saga-survival-of-a-sword-king",
+          "note": 7.61,
+          "votes": 429
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "이계 검왕 생존기",
+            "이계검왕생존기"
+          ],
+          "autres": [
+            "A Sword King’s Fantasy World Survival Story",
+            "Igye Geomwang Saengjongi",
+            "Isekai Kenou Seizon-ki",
+            "Las flipantes aventuras del rey de la espada en otro mundo",
+            "Latna Saga: A Jornada do Rei Espadachim",
+            "Otherworldly Sword King's Survival Records",
+            "Registros de supervivencia del Rey de la Espada del Otro Mundo",
+            "Rey de la espada",
+            "Survival Story of a Sword King",
+            "The Survival Record of the Sword King in Another World"
+          ]
+        },
+        "auteurs": [
+          "SOON-Q",
+          "YKB"
+        ],
+        "artistes": [
+          "SOON-Q",
+          "Studio Khit"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "Red Dog Culture House"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Overpowered Protagonist",
+          "Full Color",
+          "Game Elements",
+          "Webtoon/Webcomic",
+          "Level System",
+          "Magic",
+          "Monster/s",
+          "Muscular Male Lead",
+          "Overpowered Male Lead",
+          "Transported to Another World",
+          "Dragon/s",
+          "Dungeon/s"
+        ],
+        "annee": 2019,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 255,
+        "liees": [
+          {
+            "nom": "Survival Story of a Sword King (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/latna-saga-survival-of-a-sword-king",
+      "titre_fr": "Latna Saga : Survival of a Sword King"
     },
     {
       "title": "Star-Embracing Swordmaster",
@@ -906,7 +3855,75 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Vlad est un jeune vagabond du bidonville de Soara qui admire les chevaliers depuis toujours. Sa vie bascule le jour où une voix commence à résonner dans sa tête après avoir été frappé par un éclair noir, et où le chevalier de la lune bleue apparaît soudainement devant lui."
+      "synopsis": "Vlad est un jeune vagabond du bidonville de Soara qui admire les chevaliers depuis toujours. Sa vie bascule le jour où une voix commence à résonner dans sa tête après avoir été frappé par un éclair noir, et où le chevalier de la lune bleue apparaît soudainement devant lui.",
+      "infos": {
+        "mu": {
+          "id": 27558584427,
+          "url": "https://www.mangaupdates.com/series/cnro3u3/the-stellar-swordmaster",
+          "note": 8.22,
+          "votes": 311
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "별을 품은 소드마스터"
+          ],
+          "autres": [
+            "Byeol eul Pumeun Swordmaster",
+            "El maestro de la espada acogedor de estrellas",
+            "Maestro de espadas estelar",
+            "Star-Fostered Swordmaster",
+            "ยอดนักดาบผู้โอบอุ้มดารา",
+            "星剑大师",
+            "星剣のソードマスター",
+            "星耀劍士",
+            "Byeoreul Pumeun Swordmaster",
+            "The Stellar Swordmaster"
+          ]
+        },
+        "auteurs": [
+          "Hong Daeui",
+          "Q10"
+        ],
+        "artistes": [
+          "Juno"
+        ],
+        "editeurs": [
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Martial Arts",
+          "Shounen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Young Protagonist",
+          "Full Color",
+          "Male Protagonist",
+          "Revenge",
+          "Slum/s",
+          "Sword/s",
+          "Swordsman/men",
+          "Knight/s",
+          "Religion",
+          "Young Male Lead",
+          "Based on a Novel",
+          "Curse/s"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 146,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/star-embracing-swordmaster"
     },
     {
       "title": "Solo Leveling Ragnarok",
@@ -920,7 +3937,93 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Une autre histoire de Daul, l’auteur de [Infinite Reset] et [Dungeon Reset] ! [Solo Leveling : Ragnarok] Seong Sooho vivait comme un étudiant ordinaire jusqu’au moment où, avant sa mort, son héritage unique, qui était en sommeil, s’est réveillé ! « Lève-toi. » Un chasseur qui défie et commande la mort. Surveillez sa croissance et ses montées en niveau !"
+      "synopsis": "Une autre histoire de Daul, l’auteur de [Infinite Reset] et [Dungeon Reset] ! [Solo Leveling : Ragnarok] Seong Sooho vivait comme un étudiant ordinaire jusqu’au moment où, avant sa mort, son héritage unique, qui était en sommeil, s’est réveillé ! « Lève-toi. » Un chasseur qui défie et commande la mort. Surveillez sa croissance et ses montées en niveau !",
+      "infos": {
+        "mu": {
+          "id": 47955563021,
+          "url": "https://www.mangaupdates.com/series/m13i58t/solo-leveling-ragnarok",
+          "note": 7.47,
+          "votes": 156
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "나 혼자만 레벨업 : 라그나로크"
+          ],
+          "autres": [
+            "I Alone Level Up: Ragnarok",
+            "Na Honjaman Level Up: Ragnarok",
+            "Na Honjaman Rebereop: Ragnarok",
+            "Only I Level Up: Ragnarok",
+            "Ore dake Level Up na Ken: Ragnarok",
+            "Поднятие уровня в одиночку: Рагнарёк",
+            "俺だけレベルアップな件〜ラグナロク〜",
+            "我独自升级 ：诸神黄昏",
+            "我独自升级：诸神黄昏",
+            "Na Honjaman Rebeleop : Rageunarokeu"
+          ]
+        },
+        "auteurs": [
+          "Dangdo (REDICE STUDIO)",
+          "Daul"
+        ],
+        "artistes": [
+          "Jin (REDICE STUDIO)",
+          "REDICE STUDIO"
+        ],
+        "editeurs": [
+          "Daum",
+          "DNC Webtoon",
+          "Kakao"
+        ],
+        "editeurs_en": [
+          "Ize Press",
+          "MangaPlaza",
+          "Manta",
+          "Tapas",
+          "Tappytoon",
+          "Webnovel"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "School Life",
+          "Shounen"
+        ],
+        "tags": [
+          "Based on a Novel",
+          "Character Growth",
+          "Cheat Skill/s",
+          "Confident Male Lead",
+          "Dungeon/s",
+          "Dungeon/s Exploring",
+          "Full Color",
+          "Game Elements",
+          "Hidden Power/s",
+          "Necromancer/s",
+          "Ranking System",
+          "Weak to Strong"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 73,
+        "liees": [
+          {
+            "nom": "Solo Leveling: Ragnarok (Novel)",
+            "relation": "Adapted From"
+          },
+          {
+            "nom": "Solo Leveling",
+            "relation": "Prequel"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/solo-leveling-ragnarok"
     },
     {
       "title": "Sleeping Ranker",
@@ -934,7 +4037,71 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "« On fait une pause d’environ 30 secondes ? Je ne suis pas en train d’imaginer des choses, n’est-ce pas ? » « …Oui. » Après 15 heures de chasse, Hyunsung a demandé à se reposer un moment, et au bout de 30 secondes, il a dû se relever et recommencer à chasser. En fait, Hyunsung a une compétence spéciale."
+      "synopsis": "« On fait une pause d’environ 30 secondes ? Je ne suis pas en train d’imaginer des choses, n’est-ce pas ? » « …Oui. » Après 15 heures de chasse, Hyunsung a demandé à se reposer un moment, et au bout de 30 secondes, il a dû se relever et recommencer à chasser. En fait, Hyunsung a une compétence spéciale.",
+      "infos": {
+        "mu": {
+          "id": 46253154585,
+          "url": "https://www.mangaupdates.com/series/l8xxmhl/the-slumbering-ranker",
+          "note": 6.7,
+          "votes": 139
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "잠만 자도 랭커"
+          ],
+          "autres": [
+            "Even if I Sleep, I Rank",
+            "Ranker, Even if I Sleep",
+            "แรงเกอร์จอมนิทรา",
+            "眠りのチートランカー",
+            "躺平也能登顶",
+            "The Slumbering Ranker"
+          ]
+        },
+        "auteurs": [
+          "WarLuck"
+        ],
+        "artistes": [
+          "Cheon Jinhui"
+        ],
+        "editeurs": [
+          "Daon",
+          "Daum",
+          "KakaoPage"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Martial Arts",
+          "Shounen"
+        ],
+        "tags": [
+          "Ranking System",
+          "Sleepwalking",
+          "Virtual Game World",
+          "Virtual Reality",
+          "Brother and Sister",
+          "Dead Family Member/s",
+          "Dead Parent/s",
+          "Male Protagonist",
+          "Overpowered Protagonist",
+          "Sleeping",
+          "VRMMORPG",
+          "Special Ability/ies"
+        ],
+        "annee": 2022,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 130,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/sleeping-ranker"
     },
     {
       "title": "Reformation of the Deathbeat Noble",
@@ -948,7 +4115,78 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Après avoir assisté impuissant à la mort de sa mère, le jeune Airen Parreira profite du sommeil pour échapper à la dure réalité, ce qui lui vaut le surnom de « Seigneur paresseux ». Pourtant, malgré ce que les autres disent de lui, Airen n’a pas l’intention de changer ses habitudes. Mais la vie de ce dernier va prendre un tout autre tournant lorsqu’un jour il se réveille d’un rêve sur un mystérieux épéiste."
+      "synopsis": "Après avoir assisté impuissant à la mort de sa mère, le jeune Airen Parreira profite du sommeil pour échapper à la dure réalité, ce qui lui vaut le surnom de « Seigneur paresseux ». Pourtant, malgré ce que les autres disent de lui, Airen n’a pas l’intention de changer ses habitudes. Mais la vie de ce dernier va prendre un tout autre tournant lorsqu’un jour il se réveille d’un rêve sur un mystérieux épéiste.",
+      "infos": {
+        "mu": {
+          "id": 43476221806,
+          "url": "https://www.mangaupdates.com/series/jz0mbfy/the-lazy-lord-masters-the-sword",
+          "note": 7.69,
+          "votes": 375
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "나태 공자, 노력 천재 되다"
+          ],
+          "autres": [
+            "Der faule Lord meistert die Schwertkunst",
+            "Natae Gongja, Nolyeog Cheonjae Doeda",
+            "Reformation of the Deadbeat Noble",
+            "The Lazy Prince Becomes a Genius",
+            "ชีวิตพลิกผันของลอร์ดผู้เกียจคร้าน",
+            "怠惰公子、努力の天才になる"
+          ]
+        },
+        "auteurs": [
+          "doip",
+          "Second Star"
+        ],
+        "artistes": [
+          "Dodomoon"
+        ],
+        "editeurs": [
+          "JC Media",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon",
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Hard-Working Protagonist",
+          "Loving Family",
+          "Overcoming Adversity",
+          "Time Progression",
+          "Cat/s",
+          "Character Growth",
+          "Full Color",
+          "Multiple Couples",
+          "Special Ability/ies",
+          "Special Technique",
+          "Sword/s",
+          "Talking Animal/s"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 168,
+        "liees": [
+          {
+            "nom": "The Lazy Lord Masters the Sword (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/reformation-of-the-deadbeat-noble",
+      "titre_fr": "Reformation of the Deadbeat Noble"
     },
     {
       "title": "Reaper of the Drifting Moon",
@@ -962,7 +4200,92 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Il est au plus profond du Jianghu. Gardez les yeux bien ouverts, si vous ne souhaitez pas être emporté dans les abysses. Séquestré, affamé, empoisonné, roué de coups, forcé de tuer pour quelques miettes… Depuis qu’il a été kidnappé à l’âge de 7 ans, Pyo Wol vit en enfer. Mais qu’attendent de lui ses ravisseurs ? Qu’il meure ? Qu’il les supplie ?"
+      "synopsis": "Il est au plus profond du Jianghu. Gardez les yeux bien ouverts, si vous ne souhaitez pas être emporté dans les abysses. Séquestré, affamé, empoisonné, roué de coups, forcé de tuer pour quelques miettes… Depuis qu’il a été kidnappé à l’âge de 7 ans, Pyo Wol vit en enfer. Mais qu’attendent de lui ses ravisseurs ? Qu’il meure ? Qu’il les supplie ?",
+      "infos": {
+        "mu": {
+          "id": 49838489832,
+          "url": "https://www.mangaupdates.com/series/mw8jsvc/the-reaper-inkyo",
+          "note": 7.75,
+          "votes": 292
+        },
+        "noms": {
+          "fr": [
+            "L'Espadon de la Lune Dérivante"
+          ],
+          "ko": [
+            "사신표월",
+            "표월"
+          ],
+          "autres": [
+            "Ceifador da lua cheia",
+            "Death God of the Drifting Moon",
+            "Grim Reaper's Floating Moon",
+            "La faucheuse de la lune errante",
+            "La parca de la muerte lunar",
+            "Sasinpyowol",
+            "Tử thần phiêu nguyệt",
+            "Жнець Блукаючого Мiсяця",
+            "فرشته مرگ ماه سرگردان",
+            "ملك الموت للقمر المنجرف"
+          ]
+        },
+        "auteurs": [
+          "Mogin",
+          "Woo-Gak"
+        ],
+        "artistes": [
+          "INKYO"
+        ],
+        "editeurs": [
+          "Daily Books",
+          "Daum",
+          "KakaoPage",
+          "Redice Studio"
+        ],
+        "editeurs_en": [
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Martial Arts",
+          "Mature",
+          "Shounen",
+          "Supernatural",
+          "Tragedy"
+        ],
+        "tags": [
+          "Assassin/s",
+          "Kill or Be Killed Situation",
+          "Androgynous Protagonist",
+          "Kidnapping/s",
+          "Survival",
+          "Survival of the Fittest",
+          "Training",
+          "Age Progression",
+          "Murim",
+          "Sexually Active Protagonist",
+          "Abduction",
+          "Appearance Changes"
+        ],
+        "annee": 2022,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 134,
+        "liees": [
+          {
+            "nom": "Lee Gwak, the Warrior",
+            "relation": "Prequel"
+          },
+          {
+            "nom": "Fist Demon of Mount Hua",
+            "relation": "Prequel"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/reaper-of-the-drifting-moon"
     },
     {
       "title": "I'm Not That Kind of Talent",
@@ -976,7 +4299,85 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Déon Hart est un malade qui vomit du sang chaque fois qu'il est stressé. Mais d'une manière ou d'une autre, il a été perçu à tort comme quelqu'un de surpuissant, faisant de lui un être craint par tout le monde. À son plus grand désarroi, il est devenu le commandant le plus fiable de l'armée n°0 du roi des démons... \" Hein ? Moi ? Je ne suis pas si talentueux ! Bon, il est plus que temps de déserter ! \""
+      "synopsis": "Déon Hart est un malade qui vomit du sang chaque fois qu'il est stressé. Mais d'une manière ou d'une autre, il a été perçu à tort comme quelqu'un de surpuissant, faisant de lui un être craint par tout le monde. À son plus grand désarroi, il est devenu le commandant le plus fiable de l'armée n°0 du roi des démons... \" Hein ? Moi ? Je ne suis pas si talentueux ! Bon, il est plus que temps de déserter ! \"",
+      "infos": {
+        "mu": {
+          "id": 23042912592,
+          "url": "https://www.mangaupdates.com/series/al35l5c/i-m-not-that-kind-of-talent",
+          "note": 7.23,
+          "votes": 163
+        },
+        "noms": {
+          "fr": [
+            "Je ne suis pas celui que vous croyez"
+          ],
+          "ko": [
+            "저 그런 인재 아닙니다"
+          ],
+          "autres": [
+            "I'm Not That Kind of Person",
+            "Não tenho o talento que dizem!",
+            "Ta Không Tài Giỏi Đến Vậy Đâu",
+            "The Tricky Double Life of a Demon Commander",
+            "Би тийм чадварлаг биш",
+            "ผมไม่ได้เก่งอย่างที่คิด",
+            "そんな人材じゃありません",
+            "我不是那种人才",
+            "我不是那種人才"
+          ]
+        },
+        "auteurs": [
+          "Denphy",
+          "Emong"
+        ],
+        "artistes": [
+          "Meona",
+          "Midnight Studio"
+        ],
+        "editeurs": [
+          "CNC Revolution",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "Line Webtoon",
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Mature",
+          "Seinen",
+          "Tragedy"
+        ],
+        "tags": [
+          "Albino",
+          "Misunderstanding/s",
+          "Split Personality",
+          "Alter Ego",
+          "Abused Protagonist",
+          "Comedic Misunderstanding/s",
+          "Demon/s",
+          "Human in Monster/Nonhuman Environment",
+          "Male Protagonist",
+          "Battle/s",
+          "Demon Lord/King",
+          "Red-Eyed Protagonist"
+        ],
+        "annee": 2022,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 31,
+        "liees": [
+          {
+            "nom": "I'm Not That Kind of Talent (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/im-not-that-kind-of-talent"
     },
     {
       "title": "Eternally Regressing Knight",
@@ -990,7 +4391,81 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Rêvant de devenir chevalier, Enclide, s’acharne pendant des années et devient chef d’escouade. Cependant, il est loin d’atteindre son but par son manque de talent. Un jour, il rencontre un adversaire particulier qui le tue « sans effort ». Or, au lieu de mourir, Enclide répète le même jour."
+      "synopsis": "Rêvant de devenir chevalier, Enclide, s’acharne pendant des années et devient chef d’escouade. Cependant, il est loin d’atteindre son but par son manque de talent. Un jour, il rencontre un adversaire particulier qui le tue « sans effort ». Or, au lieu de mourir, Enclide répète le même jour.",
+      "infos": {
+        "mu": {
+          "id": 35590700362,
+          "url": "https://www.mangaupdates.com/series/gcls85m/the-knight-only-lives-today",
+          "note": 8.64,
+          "votes": 425
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "오늘만 사는 기사"
+          ],
+          "autres": [
+            "A Knight Who Eternally Regresses",
+            "Caballero en eterna regresión",
+            "Der Ritter lebt nur heute",
+            "O cavaleiro em eterna regressão",
+            "Oneul-man Saneun Gisa",
+            "Лицар, який живе одним днем",
+            "อัศวินวันเดียว",
+            "今日騎士",
+            "只活今天的轮回骑士",
+            "死に戻り騎士は今日も生きる"
+          ]
+        },
+        "auteurs": [
+          "Kanara",
+          "Li Hyeon Min",
+          "SOULPUNG"
+        ],
+        "artistes": [
+          "IAN"
+        ],
+        "editeurs": [
+          "JQ Comics",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "Line Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Harem",
+          "Mystery",
+          "Psychological",
+          "Shounen",
+          "Supernatural",
+          "Tragedy"
+        ],
+        "tags": [
+          "Hard-Working Protagonist",
+          "Time Loop",
+          "Determined Male Lead",
+          "Weak to Strong",
+          "Battle/s",
+          "Fantasy World",
+          "Male Protagonist",
+          "Soldier/s",
+          "Time Rewind",
+          "European Ambience",
+          "Based on a Novel",
+          "Black-Haired Protagonist"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 112,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/eternally-regressing-knight"
     },
     {
       "title": "Broken Constellation",
@@ -1004,7 +4479,81 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Un simple humain devenu dieu, le « Crépuscule des Dieux ». Devenu tristement célèbre comme Dieu maléfique, il perd tout : sa Constellation, sa foi et son statut, et sa divinité est coupée. C'est alors que Thanatos, maître des Enfers, lui tend la main. Il décide de revivre sous les traits du joueur « Lee Changseon » pour se venger des dieux qui l'ont précipité aux Enfers."
+      "synopsis": "Un simple humain devenu dieu, le « Crépuscule des Dieux ». Devenu tristement célèbre comme Dieu maléfique, il perd tout : sa Constellation, sa foi et son statut, et sa divinité est coupée. C'est alors que Thanatos, maître des Enfers, lui tend la main. Il décide de revivre sous les traits du joueur « Lee Changseon » pour se venger des dieux qui l'ont précipité aux Enfers.",
+      "infos": {
+        "mu": {
+          "id": 59508337221,
+          "url": "https://www.mangaupdates.com/series/rc5q6v9/the-divine-twilight-s-return",
+          "note": 7.06,
+          "votes": 169
+        },
+        "noms": {
+          "fr": [
+            "Le Retour de la constellation brisée"
+          ],
+          "ko": [
+            "부서진 성좌의 회귀"
+          ],
+          "autres": [
+            "Return of the Broken Constellation",
+            "Return of the Shattered Constellation",
+            "การหวนคืนของกลุ่มดาวที่แตกสลาย",
+            "ラグナロク～壊れた星座の回帰～",
+            "破碎圣座的回归",
+            "破碎星座的回归",
+            "The Divine Twilight's Return"
+          ]
+        },
+        "auteurs": [
+          "Sadoyeon"
+        ],
+        "artistes": [
+          "Fleximind",
+          "YANG Kyung-Il"
+        ],
+        "editeurs": [
+          "Daum",
+          "Dreamtoon",
+          "fleximind2",
+          "KakaoPage"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Full Color",
+          "God/s",
+          "21st Century",
+          "Betrayal",
+          "Demon/s",
+          "Dungeon/s",
+          "Dungeon/s Exploring",
+          "Game Elements",
+          "God/Deity Male Lead",
+          "Level System",
+          "Magic",
+          "Monster/s"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 120,
+        "liees": [
+          {
+            "nom": "The Divine Twilight's Return (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/return-of-the-broken-constellation",
+      "titre_fr": "Return of the Broken Constellation"
     },
     {
       "title": "Archmage Transcending Through Regression",
@@ -1018,7 +4567,78 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "Mikhail Walpurgis, le seul archimage du 9e cercle au monde, est tombé au combat à cause d’un héros inutile lors de l’invasion du Dieu Démon. Il réussi l’exploit de lancer un dernier sort magique de niveau avancé dit « l’Inversion du temps » et retourne 20 dans le passé. « Je ne commettrai pas la même erreur."
+      "synopsis": "Mikhail Walpurgis, le seul archimage du 9e cercle au monde, est tombé au combat à cause d’un héros inutile lors de l’invasion du Dieu Démon. Il réussi l’exploit de lancer un dernier sort magique de niveau avancé dit « l’Inversion du temps » et retourne 20 dans le passé. « Je ne commettrai pas la même erreur.",
+      "infos": {
+        "mu": {
+          "id": 48409718158,
+          "url": "https://www.mangaupdates.com/series/m8lw9la/the-great-wizard-transcendent",
+          "note": 7.13,
+          "votes": 147
+        },
+        "noms": {
+          "fr": [
+            "L'archimage transcende par revenir en le temps",
+            "La transcendance du grand mage"
+          ],
+          "ko": [
+            "회귀로 초월하는 대마도사"
+          ],
+          "autres": [
+            "Archmage Who Transcends by Returning",
+            "Arquimago transcendido pela regressão",
+            "El archimago que trascendiendo a través de la regresión",
+            "Ma pháp sư vĩ đại hồi quy",
+            "Sil baştan büyücü",
+            "Архимаг, преодолевающий регрессию",
+            "回帰して世界を変える大魔法使い",
+            "超越时间的大魔导士",
+            "逆轉時光的大魔導士",
+            "The Great Wizard Transcendent"
+          ]
+        },
+        "auteurs": [
+          "Hanbit Nuri",
+          "Hong Chang Joo"
+        ],
+        "artistes": [
+          "Mul Jang Gu"
+        ],
+        "editeurs": [
+          "Daum",
+          "KakaoPage",
+          "Seoul Media Comics"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Based on a Novel",
+          "Demon Lord/King",
+          "Demon/s",
+          "European Ambience",
+          "Full Color",
+          "Hero/es",
+          "Knight/s",
+          "Mage/s",
+          "Male Protagonist",
+          "Nobility/Aristocracy",
+          "Prophecy/ies",
+          "Prophet/s"
+        ],
+        "annee": 2022,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 161,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/archmage-transcending-through-regression"
     },
     {
       "title": "Monarch of Death",
@@ -1032,7 +4652,80 @@ window.HUB = {
       "teams": [
         "PhénixScans"
       ],
-      "synopsis": "« Que faire d'un corps réduit à des os ? » Karnak est devenu roi de la mort grâce aux secrets interdits de la nécromancie, mais il regrette les plaisirs de la chair. Après de longues recherches, il réussit un sort de régression et retourne dans le passé avec son bras droit, Baros. « Euh… jeune maître, je crois que le passé a changé. » Voici le projet du roi de la mort pour redresser sa vie tordue !"
+      "synopsis": "« Que faire d'un corps réduit à des os ? » Karnak est devenu roi de la mort grâce aux secrets interdits de la nécromancie, mais il regrette les plaisirs de la chair. Après de longues recherches, il réussit un sort de régression et retourne dans le passé avec son bras droit, Baros. « Euh… jeune maître, je crois que le passé a changé. » Voici le projet du roi de la mort pour redresser sa vie tordue !",
+      "infos": {
+        "mu": {
+          "id": 26616671544,
+          "url": "https://www.mangaupdates.com/series/c86vn7c/the-necromancer-lord-karnak",
+          "note": 6.52,
+          "votes": 44
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "사령왕 카르나크"
+          ],
+          "autres": [
+            "Carnac the King of Dead Spirits",
+            "Death King Karnak",
+            "Karnak, Monarch of Death",
+            "Karnak: O Monarca da Morte",
+            "The King of Dead Souls",
+            "คาร์นัค ราชาแห่งความตาย",
+            "死灵王卡纳克",
+            "死霊王カルナック、今度は人生謳歌します",
+            "死靈王卡爾納克",
+            "The Necromancer Lord, Karnak"
+          ]
+        },
+        "auteurs": [
+          "Julan",
+          "Lim Kyung-Bae"
+        ],
+        "artistes": [
+          "Studio Inus"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "Rok Media"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Comedic Undertone",
+          "Necromancer/s",
+          "Regression",
+          "Friendship",
+          "Full Color",
+          "Protagonist Strong from the Start",
+          "Scheming Protagonist",
+          "Strong Male Lead",
+          "Black-Haired Male Lead",
+          "Black-Haired Protagonist",
+          "Blonde-Haired Character/s",
+          "Dead Family Member/s"
+        ],
+        "annee": 2024,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 40,
+        "liees": [
+          {
+            "nom": "Karnak, Monarch of Death (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      }
     },
     {
       "title": "Jungle Juice",
@@ -1050,7 +4743,71 @@ window.HUB = {
       ],
       "synopsis": "Suchan Jang est un étudiant extraordinaire au sommet de la chaîne alimentaire sociale. Mais sous cette façade parfaite, il cache une paire d’ailes d’insectes qui ont soudainement poussé lorsqu’il a utilisé un mystérieux insecticide appelé « Jungle Juice ».",
       "chapitre": 97,
-      "dernier": "2023-12-21"
+      "dernier": "2023-12-21",
+      "infos": {
+        "mu": {
+          "id": 53668180174,
+          "url": "https://www.mangaupdates.com/series/onkncum/jungle-juice",
+          "note": 7.29,
+          "votes": 141
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "정글쥬스"
+          ],
+          "autres": [
+            "Jugo de la jungla",
+            "Orman Suyu",
+            "Zumo de la selva",
+            "ジャングルジュース",
+            "丛林果汁",
+            "叢林果汁"
+          ]
+        },
+        "auteurs": [
+          "HYEONG EUN"
+        ],
+        "artistes": [
+          "JUDER"
+        ],
+        "editeurs": [
+          "Naver",
+          "YLAB"
+        ],
+        "editeurs_en": [
+          "Ize Press",
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Fantasy",
+          "Sci-fi",
+          "Shounen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Webtoon/Webcomic",
+          "Full Color",
+          "Insect/s",
+          "Secret Identity",
+          "Secret World",
+          "Secret/s",
+          "Hidden Location",
+          "Human Becomes Nonhuman",
+          "Secret Ability",
+          "Super Power/s",
+          "Supernatural Element/s",
+          "University/Post-Secondary Student/s"
+        ],
+        "annee": 2020,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 225,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/jungle-juice-7407"
     },
     {
       "title": "Star Instructor Master Baek",
@@ -1068,7 +4825,79 @@ window.HUB = {
       ],
       "synopsis": "Autrefois le meilleur instructeur du Blood Cult, Suryong Baek est tué et se réveille dans le corps de quelqu’un qui enseigne les arts martiaux dans une petite académie rurale. Son nouveau corps est peut-être faible, mais il sait comment le réparer, et ce n’est pas la première fois qu’il se retrouve dans un corps qui ne peut pas accéder à son pouvoir intérieur.",
       "chapitre": 61,
-      "dernier": "2023-06-05"
+      "dernier": "2023-06-05",
+      "infos": {
+        "mu": {
+          "id": 31271042750,
+          "url": "https://www.mangaupdates.com/series/ed5yz0e/best-teacher-baek",
+          "note": 7.45,
+          "votes": 137
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "일타강사 백사부"
+          ],
+          "autres": [
+            "Instructor estelar, Maestro Baek",
+            "Maestro Baek, el instructor estrella",
+            "Master Baek, the One Hit Teacher",
+            "Number One Star Instructor Master Baek",
+            "Oficial de una aldea rural",
+            "One Hit Teacher, Master Baek",
+            "一star講師百師傅",
+            "武功教官ペク師匠",
+            "绝世名师百师父",
+            "頂尖名師百師傅"
+          ]
+        },
+        "auteurs": [
+          "Ganjjajang",
+          "Rhy-Me",
+          "S.J LEE",
+          "Team the Zeke"
+        ],
+        "artistes": [
+          "Drawways",
+          "ORIBORI"
+        ],
+        "editeurs": [
+          "JC Media",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Martial Arts",
+          "Shounen"
+        ],
+        "tags": [
+          "Memories of Past Life",
+          "Murim",
+          "Bromance",
+          "Full Color",
+          "Male Protagonist",
+          "Webtoon/Webcomic",
+          "Based on a Novel",
+          "Cultivation",
+          "Overprotective Father",
+          "Transmigration",
+          "Comedic Facial Expressions",
+          "Doting Family Member/s"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 168,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/star-instructor-master-baek"
     },
     {
       "title": "World's Apocalypse Online",
@@ -1085,7 +4914,27 @@ window.HUB = {
         "FlameScans"
       ],
       "chapitre": 74,
-      "dernier": "2023-06-30"
+      "dernier": "2023-06-30",
+      "infos": {
+        "mu": null,
+        "noms": {
+          "fr": [],
+          "ko": [],
+          "autres": []
+        },
+        "auteurs": [],
+        "artistes": [],
+        "editeurs": [],
+        "editeurs_en": [],
+        "genres": [],
+        "tags": [],
+        "annee": null,
+        "type_vo": null,
+        "termine": null,
+        "licence": null,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "Heavenly Grand Archive's Young Master",
@@ -1103,7 +4952,80 @@ window.HUB = {
       ],
       "synopsis": "Un jour, l’âme du charmant et imposant chef de l’Alliance Murim, Hu Gong, possède soudainement le corps d’un jeune homme endurci. Le nom de ce jeune homme est Beom Hang. Il est le jeune maître de la « Grande Archive Céleste », l’une des trois archives majeures du Jianghu, mais c’est une piètre excuse pour une personne.",
       "chapitre": 11,
-      "dernier": "2023-05-17"
+      "dernier": "2023-05-17",
+      "infos": {
+        "mu": {
+          "id": 28848041818,
+          "url": "https://www.mangaupdates.com/series/d93dniy/cheonhwa-archive-s-young-master",
+          "note": 7.32,
+          "votes": 171
+        },
+        "noms": {
+          "fr": [
+            "Le Jeune Maître du Grand Archive Céleste"
+          ],
+          "ko": [
+            "천화서고 대공자",
+            "천류영의 영주님",
+            "천류영영주"
+          ],
+          "autres": [
+            "El Gran Archivo Divino",
+            "El joven maestro del Gran Archivo Celestial",
+            "O Jovem Mestre do Grande Arquivo Celestial",
+            "天华书库大公子",
+            "天華書庫の大公子",
+            "天華書庫大公子",
+            "Cheonhwa Archive's Young Master",
+            "Young Master of the Heavenly Grand Archive",
+            "Master of the Heavenly Grand Archive",
+            "Cheonryuyeong-ui Yeongjunim"
+          ]
+        },
+        "auteurs": [
+          "128",
+          "Kim Hyun-Young"
+        ],
+        "artistes": [
+          "Midnight Studio"
+        ],
+        "editeurs": [
+          "C&C Revolution Co., Ltd.",
+          "Midnight Studio",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Comedy",
+          "Historical",
+          "Martial Arts",
+          "Seinen"
+        ],
+        "tags": [
+          "Body Swap/s",
+          "Strong to Weak",
+          "Suicide/s",
+          "Weak to Strong",
+          "Ancient Era",
+          "Body Control",
+          "Body Horror",
+          "Body Modification",
+          "Comedic Undertone",
+          "Cultivation",
+          "Full Color",
+          "Illusions"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 191,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/heavenly-grand-archives-young-master"
     },
     {
       "title": "Leveling Up with Skills",
@@ -1121,7 +5043,75 @@ window.HUB = {
       ],
       "synopsis": "Quatre options ont été présentées à l’humanité en danger face à des monstres mystérieux qui ont dévoré l’humanité en 2020. Les joueurs qui ont terminé les labyrinthes dans chaque mode doivent retourner sur Terre et se préparer à l’invasion des anciens dieux !",
       "chapitre": 5,
-      "dernier": "2023-06-15"
+      "dernier": "2023-06-15",
+      "infos": {
+        "mu": {
+          "id": 62165182260,
+          "url": "https://www.mangaupdates.com/series/sk3jlmc/skill-master-levels-up",
+          "note": 7,
+          "votes": 112
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "스킬빨로 레벨업"
+          ],
+          "autres": [
+            "2周目プレイヤー、最高難易度を無双してレベルアップ",
+            "Ascension Through Skills",
+            "Level up With Skills",
+            "Levelling up Through Skills",
+            "Skill Masters Level up",
+            "เลเวลอัปด้วยสกิลขั้นเทพ",
+            "スキルアローンモードでレベルアップ",
+            "獨行技能王",
+            "这一世我要当独行玩家"
+          ]
+        },
+        "auteurs": [
+          "Palan Yeong"
+        ],
+        "artistes": [
+          "Runbel"
+        ],
+        "editeurs": [
+          "Daum",
+          "GOLEM FACTORY",
+          "Kakao",
+          "Whomor Inc."
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Fantasy",
+          "Seinen"
+        ],
+        "tags": [
+          "Game Elements",
+          "Based on a Novel",
+          "Full Color",
+          "Level System",
+          "Male Protagonist",
+          "Webtoon/Webcomic",
+          "Determined Male Lead",
+          "Determined Protagonist",
+          "God/s",
+          "Invasion/s",
+          "Monster/s",
+          "Skill/s"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 168,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/level-up-with-skills",
+      "titre_fr": "Level up with Skills"
     },
     {
       "title": "Solo Max Level Newbie",
@@ -1140,7 +5130,88 @@ window.HUB = {
       ],
       "synopsis": "Jinhyuk, un « Nutuber » spécialisé dans les jeux vidéo, est la seule personne à avoir vu la fin du jeu [Tower of Trials]. Quand la popularité du jeu décline, il peine à vivre de sa chaîne. Alors qu'il s'apprête à arrêter, le jeu devient réalité, et Jinhyuk, qui en connaît le moindre détail, prend le dessus plus vite que quiconque. « Je vais vous montrer ce qu'est un vrai pro. »",
       "chapitre": 98,
-      "dernier": "2023-05-19"
+      "dernier": "2023-05-19",
+      "infos": {
+        "mu": {
+          "id": 66833512843,
+          "url": "https://www.mangaupdates.com/series/upay4jv/i-m-the-max-level-newbie",
+          "note": 7.51,
+          "votes": 390
+        },
+        "noms": {
+          "fr": [
+            "Le Novice de Niveau Max en Solo"
+          ],
+          "ko": [
+            "나 혼자 만렙 뉴비",
+            "나혼자만렙뉴비"
+          ],
+          "autres": [
+            "I Am the Top Ranker Newbie",
+            "I'm the Only Max-Leveled Newbie",
+            "Na Honja Mallep Newbie",
+            "Người Chơi Mới Cấp Tối Đa",
+            "Novato Solo a Nivel Máximo",
+            "Нуб максимального уровня",
+            "ผู้เล่นหน้าใหม่เลเวลแมกซ์",
+            "俺だけレベルMAXなビギナー",
+            "我独自满级新手",
+            "满级新手"
+          ]
+        },
+        "auteurs": [
+          "Maslow",
+          "Redice",
+          "WAN.Z"
+        ],
+        "artistes": [
+          "Swing Bat"
+        ],
+        "editeurs": [
+          "Naver",
+          "Redice Studio"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon",
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Fantasy",
+          "Harem",
+          "Shounen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Game Elements",
+          "Competent Male Lead",
+          "Full Color",
+          "Overpowered Male Lead",
+          "Overpowered Protagonist",
+          "Tower Climbing",
+          "Level System",
+          "Male Protagonist",
+          "Tower/s",
+          "Adult Protagonist",
+          "Webtoon/Webcomic",
+          "Adult Male Lead"
+        ],
+        "annee": 2021,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 285,
+        "liees": [
+          {
+            "nom": "I'm the Max-Level Newbie (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/im-the-max-level-newbie",
+      "titre_fr": "I'm the Max-Level Newbie"
     },
     {
       "title": "Surviving The Game As a Barbarian",
@@ -1158,7 +5229,87 @@ window.HUB = {
       ],
       "synopsis": "Après une dizaine d’années passées à geeker sur Dungeon and Stone, je me retrouve soudainement projeté dans le jeu et deviens un barbare ! Par chance, c’est une des races les plus puissantes… mais pourquoi le jeu est en mode difficile dès le début ? Heureusement, je devrais m’en sortir avec mes connaissances et quelques compagnons… mais personne ne veut de moi !",
       "chapitre": 3,
-      "dernier": "2023-05-21"
+      "dernier": "2023-05-21",
+      "infos": {
+        "mu": {
+          "id": 47777182673,
+          "url": "https://www.mangaupdates.com/series/ly5au35/surviving-the-game-as-a-barbarian",
+          "note": 8.15,
+          "votes": 361
+        },
+        "noms": {
+          "fr": [
+            "Survivre dans le Jeu en tant que Barbare"
+          ],
+          "ko": [
+            "게임 속 바바리안으로 살아남기"
+          ],
+          "autres": [
+            "Als Barbar im Spiel Überleben",
+            "Geim Sok Babarianeuro Saranamgi",
+            "Sobreviviendo al juego como un bárbaro",
+            "Sobreviviendo en el Juego como un bárbaro",
+            "Surviving as a Barbarian in the Game",
+            "เอาชีวิตรอดในเกมฉบับคนเถื่อน",
+            "化身野蛮人在异界生存",
+            "變成蠻族！遊戲生存戰",
+            "転生したらバーバリアンになった",
+            "Barbarian Quest in Game"
+          ]
+        },
+        "auteurs": [
+          "HAN Taesu",
+          "JUNG Yoonkang",
+          "Team the Jick"
+        ],
+        "artistes": [
+          "MIDNIGHT STUDIO"
+        ],
+        "editeurs": [
+          "CNC Revolution Co., Ltd.",
+          "MIDNIGHT STUDIO",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon",
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Drama",
+          "Fantasy",
+          "Seinen",
+          "Supernatural"
+        ],
+        "tags": [
+          "Weak to Strong",
+          "Adventurer/s",
+          "Barbarian/s",
+          "Based on a Novel",
+          "Dungeon/s Exploring",
+          "Fantasy World",
+          "Kill or Be Killed Situation",
+          "Muscular Protagonist",
+          "Observant Male Lead",
+          "Badass Male Lead",
+          "Blood and Gore",
+          "Dungeon/s"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 169,
+        "liees": [
+          {
+            "nom": "Surviving the Game as a Barbarian (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/surviving-the-game-as-a-barbarian"
     },
     {
       "title": "Terminally-ill Genius Dark Knight",
@@ -1176,7 +5327,82 @@ window.HUB = {
       ],
       "synopsis": "« Inner Lunatic » est un RPG réputé pour sa difficulté auquel Yoo Chan est accro. Malade en phase terminale, il se réveille dans le jeu qui devient une cruelle réalité. Il doit à présent survivre dans la peau de Nox, le boss du premier acte. Malgré des talents de génie, il se retrouve de nouveau avec une maladie mortelle.",
       "chapitre": 14,
-      "dernier": "2023-07-05"
+      "dernier": "2023-07-05",
+      "infos": {
+        "mu": {
+          "id": 77084457305,
+          "url": "https://www.mangaupdates.com/series/zeu3fx5/time-limited-genius-dark-knight",
+          "note": 6.73,
+          "votes": 201
+        },
+        "noms": {
+          "fr": [
+            "Le Génie Chevalier Noir en Phase Terminale"
+          ],
+          "ko": [
+            "시한부 천재 암흑기사"
+          ],
+          "autres": [
+            "Terminally-Ill Dark Knight",
+            "Time Limited Genius Dark Knight",
+            "อัศวินดำล่าท้าเวลา",
+            "余命宣告された天才暗黒騎士",
+            "絕症天才暗黑騎士",
+            "身患绝症的天才暗黑骑士",
+            "Terminally-Ill Dark Knight (French)",
+            "Sihanbu Cheonjae Amheukgisa",
+            "Kỵ Sĩ Bóng Đêm Thiên Tài Gần Kề Cái Chết",
+            "El Genio Caballero Oscuro Enfermo Terminal"
+          ]
+        },
+        "auteurs": [
+          "FANTERA",
+          "Jung Seon-yul"
+        ],
+        "artistes": [
+          "Nagi (II)"
+        ],
+        "editeurs": [
+          "Naver",
+          "STUDIO JSY"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Sick Protagonist",
+          "Game Elements",
+          "Terminal Illness",
+          "Transmigrated as the Villain/ess",
+          "Transmigrated into a Game",
+          "Bad Reputation",
+          "Full Color",
+          "Dying Protagonist",
+          "European Ambience",
+          "Lost Memories",
+          "Male Protagonist",
+          "Skill/s"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 173,
+        "liees": [
+          {
+            "nom": "The Necromancer Family's Young Heir",
+            "relation": "Prequel"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/terminally-ill-genius-dark-knight"
     },
     {
       "title": "The Genius Assassin Who Takes it All",
@@ -1196,7 +5422,70 @@ window.HUB = {
       ],
       "synopsis": "J’ai transmigré dans le novel que j’ai écrit. Pour changer la fin destinée à la destruction, je dois incarner le méchant ‘Shin Kanghu’ et devenir plus fort que le héros.",
       "chapitre": 37,
-      "dernier": "2024-07-06"
+      "dernier": "2024-07-06",
+      "infos": {
+        "mu": {
+          "id": 13524990424,
+          "url": "https://www.mangaupdates.com/series/67ofheg/the-genius-assassin-who-takes-it-all",
+          "note": 6.44,
+          "votes": 94
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "혼자 다 해 먹는 천재 암살자"
+          ],
+          "autres": [
+            "Honja Da Hae Meongneun Cheonjae Amsalja",
+            "The Genius Assassin Who Eats All By Himself",
+            "The Genius Assassin Who Eats Everything",
+            "The Genius Assassin Who Eats Everything Alone",
+            "全靠自己的暗杀天才",
+            "悪役作家はチート暗殺者",
+            "自導自演的天才暗殺者"
+          ]
+        },
+        "auteurs": [
+          "MOZO"
+        ],
+        "artistes": [
+          "Studio Sigma"
+        ],
+        "editeurs": [
+          "MJet Family Co., Ltd.",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Capable Protagonist",
+          "Full Color",
+          "Isekai",
+          "Male Protagonist",
+          "Reincarnated as the Villain/ess",
+          "Reincarnated in a Book World",
+          "Reincarnation",
+          "Webtoon/Webcomic",
+          "Absorbing Powers/Abilities",
+          "Selfish Male Lead",
+          "Selfish Protagonist"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 70,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-genius-assassin-who-takes-it-all"
     },
     {
       "title": "The Count's Youngest Son is A Player",
@@ -1215,7 +5504,71 @@ window.HUB = {
       ],
       "synopsis": "[Activation du système de bêta fermée. Nombre actuel d’utilisateurs : 1]. Bae DoHyun a perdu la vie à cause du plan diabolique des grandes guildes. Il est ensuite devenu le personnage principal d’un jeu encore en version bêta. Il s’est réincarné en Raul, le plus jeune fils de la famille Rich.",
       "chapitre": 39,
-      "dernier": "2024-06-02"
+      "dernier": "2024-06-02",
+      "infos": {
+        "mu": {
+          "id": 73818503597,
+          "url": "https://www.mangaupdates.com/series/xwtmpwt/the-count-s-youngest-son-is-a-gamer",
+          "note": 6.28,
+          "votes": 88
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "백작가 막내아들은 플레이어"
+          ],
+          "autres": [
+            "De jugador a NPC legendario",
+            "El hijo menor del Conde es un jugador",
+            "The Youngest of the Count Is Actually a Player",
+            "The Youngest Son of the Count Is a Player",
+            "伯爵家の末息子は最強プレイヤー"
+          ]
+        },
+        "auteurs": [
+          "Mystic J",
+          "Pinball"
+        ],
+        "artistes": [
+          "Konsonan"
+        ],
+        "editeurs": [
+          "Daum",
+          "JS Contents",
+          "Kakao"
+        ],
+        "editeurs_en": [
+          "Tappytoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Blonde-Haired Male Lead",
+          "Game World",
+          "NPC/s",
+          "Strong Male Lead",
+          "Count/Countess",
+          "Family",
+          "Father/s",
+          "Game Elements",
+          "Game RPG Character/Role",
+          "Male Protagonist",
+          "Reincarnated in a Game World",
+          "Academy"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 183,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/the-counts-youngest-son-is-a-player"
     },
     {
       "title": "Weapon Maker",
@@ -1233,7 +5586,68 @@ window.HUB = {
       ],
       "synopsis": "Shin Joonseoh est un soutien de rang D, traité comme un simple manœuvre à cause de son manque de mana, malgré son rare pouvoir de « Création ». Recruté par la nouvelle guilde Dawon, il part pour son premier raid, mais des monstres inattendus le mettent en danger de mort. Au moment d'accepter la fin, il reçoit un pouvoir inconnu : l'« Héritage » des souvenirs d'une vie passée où il n'a pas pu empêcher la fin du monde. Armé de cette expérience, il se lance pour sauver le monde.",
       "chapitre": 20,
-      "dernier": "2023-12-21"
+      "dernier": "2023-12-21",
+      "infos": {
+        "mu": {
+          "id": 20213636119,
+          "url": "https://www.mangaupdates.com/series/9aaodg7/weapon-creator",
+          "note": 5.84,
+          "votes": 81
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "웨폰 크리에이터"
+          ],
+          "autres": [
+            "Criador de Armas",
+            "Weapon Forger",
+            "武器锻造者",
+            "Weapon Creator"
+          ]
+        },
+        "auteurs": [
+          "Seo Tae-Rang"
+        ],
+        "artistes": [
+          "Kang Jae"
+        ],
+        "editeurs": [
+          "Cheongpung Contents Studio",
+          "Naver"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Full Color",
+          "Game RPG Character/Role",
+          "Sudden Acquisition of Power/s",
+          "Awakener/s",
+          "Guild/s",
+          "Hiding Power/s",
+          "Male Protagonist",
+          "Memories of Past Life",
+          "Monster/s",
+          "Skill/s",
+          "System",
+          "Big Breasts"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 77,
+        "liees": []
+      },
+      "url_fr": "https://poseidon-scans.net/serie/weapon-creator",
+      "titre_fr": "Weapon Creator"
     },
     {
       "title": "Academy Genius Swordmaster",
@@ -1251,7 +5665,83 @@ window.HUB = {
       ],
       "synopsis": "Grièvement blessé après un combat épique contre trois géants, Ronan, l’un des rares survivants de l’armée impériale, partage une victoire amère avec sa commandante, la générale Adéchan. Leur soulagement est de courte durée quand une nouvelle menace apparaît à l’horizon: une armée de géants se profile dans le ciel.",
       "chapitre": 58,
-      "dernier": "2024-07-24"
+      "dernier": "2024-07-24",
+      "infos": {
+        "mu": {
+          "id": 40767254486,
+          "url": "https://www.mangaupdates.com/series/iq7rqvq/the-academy-s-genius-swordsman",
+          "note": 7.19,
+          "votes": 255
+        },
+        "noms": {
+          "fr": [
+            "L'épéiste prodige de l'académie"
+          ],
+          "ko": [
+            "아카데미의 천재칼잡이"
+          ],
+          "autres": [
+            "Academy Cheonjaekaljabi",
+            "Academy Genius Swordsman",
+            "Academy's Genius Swordmaster",
+            "Academy's Genius Swordsman",
+            "Der geniale Schwertkämpfer der Akademie",
+            "El increíble maestro de la espada",
+            "El maestro de la espada genio de la academia",
+            "El maestro genio de la espada de la academia",
+            "アカデミーの天才剣士",
+            "學院天才劍客"
+          ]
+        },
+        "auteurs": [
+          "C.H",
+          "SeoGwando"
+        ],
+        "artistes": [
+          "C.H"
+        ],
+        "editeurs": [
+          "Bluepic",
+          "Naver",
+          "Story Production"
+        ],
+        "editeurs_en": [
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Full Color",
+          "Male Protagonist",
+          "Protagonist Strong from the Start",
+          "Time Rewind",
+          "Webtoon/Webcomic",
+          "Academy",
+          "Monster/s",
+          "Murder/s",
+          "Regression",
+          "Strong Male Lead",
+          "Strong Protagonist",
+          "Swordsman/men"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 163,
+        "liees": [
+          {
+            "nom": "Academy's Genius Swordsman (Novel)",
+            "relation": "Adapted From"
+          }
+        ]
+      },
+      "url_fr": "https://poseidon-scans.net/serie/academys-genius-swordmaster",
+      "titre_fr": "Academy's Genius Swordmaster"
     },
     {
       "title": "Can't I Only Be a Normal Student",
@@ -1269,7 +5759,27 @@ window.HUB = {
         "Starbound Scans"
       ],
       "chapitre": 11,
-      "dernier": "2024-02-22"
+      "dernier": "2024-02-22",
+      "infos": {
+        "mu": null,
+        "noms": {
+          "fr": [],
+          "ko": [],
+          "autres": []
+        },
+        "auteurs": [],
+        "artistes": [],
+        "editeurs": [],
+        "editeurs_en": [],
+        "genres": [],
+        "tags": [],
+        "annee": null,
+        "type_vo": null,
+        "termine": null,
+        "licence": null,
+        "chapitres_vo": null,
+        "liees": []
+      }
     },
     {
       "title": "God's Webnovel",
@@ -1286,7 +5796,67 @@ window.HUB = {
         "RaijinScans"
       ],
       "chapitre": 12,
-      "dernier": "2023-06-22"
+      "dernier": "2023-06-22",
+      "infos": {
+        "mu": {
+          "id": 43826864888,
+          "url": "https://www.mangaupdates.com/series/k4tdtdk/god-s-web-novel",
+          "note": 6.17,
+          "votes": 27
+        },
+        "noms": {
+          "fr": [],
+          "ko": [
+            "신이 쓰는 웹소설"
+          ],
+          "autres": [
+            "神はウェブ小説を綴る",
+            "神写的网文",
+            "與神共筆"
+          ]
+        },
+        "auteurs": [
+          "NA Min-Chae",
+          "Next Level Studio"
+        ],
+        "artistes": [
+          "Next Level Studio"
+        ],
+        "editeurs": [
+          "Daum",
+          "Kakao",
+          "Next Level Studio"
+        ],
+        "editeurs_en": [
+          "Tapas"
+        ],
+        "genres": [
+          "Action",
+          "Drama",
+          "Fantasy",
+          "Shounen"
+        ],
+        "tags": [
+          "Absurdity",
+          "Character Aware of Author/Being Fiction",
+          "Cliché/s",
+          "God/s",
+          "Sudden Ambience Shift",
+          "Webtoon/Webcomic",
+          "Author/s",
+          "Based on a Novel",
+          "Full Color",
+          "Male Protagonist",
+          "Martial Artist/s",
+          "Murim"
+        ],
+        "annee": 2023,
+        "type_vo": "Manhwa",
+        "termine": true,
+        "licence": true,
+        "chapitres_vo": 38,
+        "liees": []
+      }
     }
   ],
   "OUTILS": [
@@ -1366,13 +5936,13 @@ window.HUB = {
     {
       "name": "Sand Mage of the Burnt Desert",
       "text": "Plus de 2 200 personnages, lieux et créatures, pour garder une traduction cohérente.",
-      "url": "",
+      "url": "glossaires/sand-mage-of-the-burnt-desert.html",
       "cover": "covers/sand-mage-of-the-burnt-desert.webp"
     },
     {
       "name": "Only I Have an EX-Grade Summon",
       "text": "Noms et termes de la série, mis à jour au fil des chapitres.",
-      "url": "",
+      "url": "glossaires/only-i-have-an-ex-grade-summon.html",
       "cover": "covers/only-i-have-an-ex-grade-summon.webp"
     },
     {
