@@ -179,6 +179,15 @@ td.mute { color: var(--z300); }
       <div class="chips" id="l-chips" hidden></div>
       <div class="panel scroll"><table><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
     </section>
+    <section id="stats-view" hidden>
+      <div class="head"><div><h1>Statistiques</h1><p class="sub" id="st-sub"></p></div></div>
+      <div class="panel card" style="max-width:760px">
+        <h2>Actualiser depuis tes dossiers</h2>
+        <p class="help">Le bouton lit le dossier <b>[Cloud]</b> de ton ordinateur (<code>D:\ScanTrad\Scanlation\[Cloud]</code>), ajoute les chapitres qui ne sont pas encore comptés, puis tu cliques sur <b>Publier</b>. Le navigateur ne fait que <b>lire</b> les noms et dates des fichiers : rien n'est envoyé ni modifié. Au premier clic, choisis le dossier <b>[Cloud]</b> ; il sera retenu ensuite.</p>
+        <div class="tools"><button class="btn" type="button" id="st-run">Actualiser les statistiques</button><button class="btn ghost" type="button" id="st-pick">Choisir un autre dossier</button></div>
+        <pre id="st-out" class="help" style="white-space:pre-wrap;margin:16px 0 0;font-family:inherit"></pre>
+      </div>
+    </section>
     <section id="edit-view" hidden>
       <button class="back" type="button" id="e-top-back">&larr; Retour à la liste</button>
       <div class="head"><div><h1 id="e-title"></h1><p class="sub" id="e-sub"></p></div></div>
@@ -359,6 +368,7 @@ function renderNav() {
   };
   Object.keys(COLS).forEach(k => add(k, COLS[k].nav, COLS[k].group));
   add("SITE", "Textes du site", "Site");
+  add("STATS", "Statistiques", "Site");
 }
 function renderBar() {
   const d = dirty();
@@ -367,8 +377,10 @@ function renderBar() {
 }
 function renderAll() {
   renderNav(); renderBar();
-  $("list-view").hidden = !!editing || section === "SITE";
-  $("edit-view").hidden = !editing && section !== "SITE";
+  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS";
+  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS";
+  $("stats-view").hidden = section !== "STATS";
+  if (section === "STATS") { editing = null; renderStats(); return; }
   if (section === "SITE" && !editing) startEdit("SITE", 0);
   else if (editing) renderEdit(); else renderList();
 }
@@ -530,6 +542,102 @@ function saveEdit() {
   if (wasSite) { toast("Textes enregistrés. Clique sur Publier pour les envoyer."); section = "SERIES"; }
   renderAll();
 }
+
+/* ---------- Statistiques : lecture du dossier [Cloud] (navigateur Chrome / Edge) ---------- */
+/*STATS-BEGIN*/
+const ROLES_ORDRE = ["TL", "CH", "CL", "ED"];
+const EXCLUS = ["novel", "raw", "anglaise", "english"];   // sous-dossiers qui ne sont pas ton travail
+function nrm(s) { return s.normalize("NFKD").toLowerCase().replace(/[’']/g, "").replace(/\b(the|a|an)\b/g, " ").replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim(); }
+function sim(a, b) {
+  a = nrm(a); b = nrm(b);
+  if (!a || !b) return 0; if (a === b) return 1;
+  const m = a.length, n = b.length; let prev = Array.from({ length: n + 1 }, (_, j) => j);
+  for (let i = 1; i <= m; i++) { const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; }
+  return 1 - prev[n] / Math.max(m, n);
+}
+function matchSerie(nom, series) {
+  let best = null, bs = 0;
+  series.forEach(s => { const v = sim(nom, s.title); if (v > bs) { bs = v; best = s; } });
+  return bs >= 0.85 ? best : null;
+}
+function chapNum(name) {
+  let n = name.replace(/\(\s*\d+\s*\)/g, " ").replace(/stitched|checked|copie de/gi, " ");
+  const m = n.match(/chap(?:t|itre)?\s*0*(\d{1,4})/i) || n.match(/(\d{1,4})(?!\d)/);
+  return m ? (m[1].replace(/^0+/, "") || "0") : null;
+}
+function roleDe(s) { const r = s.roles || []; return ROLES_ORDRE.find(x => r.includes(x)) || r[0] || "TL"; }
+function isoLocal(ms) { const d = new Date(ms), p = (x) => String(x).padStart(2, "0"); return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T" + p(d.getHours()) + ":" + p(d.getMinutes()); }
+async function walkDocx(dir, serie, found) {
+  for await (const [name, h] of dir.entries()) {
+    if (h.kind === "directory") { if (!EXCLUS.some(w => name.toLowerCase().includes(w))) await walkDocx(h, serie, found); continue; }
+    if (!/\.docx$/i.test(name) || name.startsWith("~$")) continue;
+    const n = chapNum(name); if (n === null) continue;
+    const f = await h.getFile(), k = serie.title + "|" + roleDe(serie) + "|" + n;
+    if (!found.has(k) || f.lastModified < found.get(k)) found.set(k, f.lastModified);
+  }
+}
+async function scanCloud(root, series) {
+  const found = new Map(), ignores = []; let equipes = 0;
+  for await (const [tn, th] of root.entries()) {
+    if (th.kind !== "directory") continue; equipes++;
+    for await (const [sn, sh] of th.entries()) {
+      if (sh.kind !== "directory") continue;
+      const s = matchSerie(sn, series);
+      if (!s) { ignores.push(sn); continue; }
+      let base = sh; try { base = await sh.getDirectoryHandle("Chapitres [Manhwa]"); } catch (e) { /* dossier absent : on lit toute la série */ }
+      await walkDocx(base, s, found);
+    }
+  }
+  return { found, ignores, equipes };
+}
+/* ajoute à STATS les chapitres qui n'y sont pas encore ; renvoie la liste des ajouts */
+function fusionner(stats, found) {
+  const connus = new Set(stats.evenements.map(e => e.split("|").slice(1, 4).join("|")));
+  const neufs = [...found].filter(([k]) => !connus.has(k)).map(([k, ms]) => ({ k, ms })).sort((a, b) => a.ms - b.ms);
+  const grp = {}; neufs.forEach(e => { const g = e.k.split("|").slice(0, 2).join("|") + "|" + Math.floor(e.ms / 300000); grp[g] = (grp[g] || 0) + 1; });
+  const ajouts = neufs.map(e => { const bloc = grp[e.k.split("|").slice(0, 2).join("|") + "|" + Math.floor(e.ms / 300000)] >= 4; return isoLocal(e.ms) + "|" + e.k + (bloc ? "|b" : ""); });
+  stats.evenements = stats.evenements.concat(ajouts).sort();
+  return ajouts;
+}
+/*STATS-END*/
+
+let cloudHandle = null;
+function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open("scantrad-hub", 1); r.onupgradeneeded = () => r.result.createObjectStore("kv"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function kvGet(k) { try { const db = await idbOpen(); return await new Promise(res => { const q = db.transaction("kv").objectStore("kv").get(k); q.onsuccess = () => res(q.result); q.onerror = () => res(null); }); } catch (e) { return null; } }
+async function kvSet(k, v) { try { const db = await idbOpen(); await new Promise(res => { const tx = db.transaction("kv", "readwrite"); tx.objectStore("kv").put(v, k); tx.oncomplete = () => res(); tx.onerror = () => res(); }); } catch (e) { /* mémorisation facultative */ } }
+
+function renderStats() {
+  const st = data.STATS, n = st && st.evenements ? st.evenements.length : 0;
+  const blocs = n ? st.evenements.filter(e => e.endsWith("|b")).length : 0;
+  $("st-sub").textContent = n ? n + " chapitres · mises à jour le " + new Date(st.maj + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) + (blocs ? " · dont " + blocs + " copiés en bloc" : "") : "Aucune statistique pour l'instant.";
+  const ok = !!window.showDirectoryPicker;
+  $("st-run").disabled = !ok; $("st-pick").disabled = !ok;
+  if (!ok) $("st-out").textContent = "Ce navigateur ne peut pas lire un dossier de ton ordinateur. Ouvre l'admin avec Chrome ou Edge.";
+}
+async function runStats(choisir) {
+  const out = $("st-out"), btn = $("st-run"); out.textContent = ""; btn.disabled = true;
+  try {
+    let dir = choisir ? null : (cloudHandle || await kvGet("cloud"));
+    if (dir) { try { if ((await dir.requestPermission({ mode: "read" })) !== "granted") dir = null; } catch (e) { dir = null; } }
+    if (!dir) { dir = await window.showDirectoryPicker({ id: "scantrad-cloud", mode: "read" }); await kvSet("cloud", dir); }
+    cloudHandle = dir;
+    out.textContent = "Lecture du dossier « " + dir.name + " »…";
+    const r = await scanCloud(dir, data.SERIES);
+    if (!r.equipes || !r.found.size) { out.textContent = "Aucun chapitre trouvé dans « " + dir.name + " ». Choisis le dossier [Cloud] (celui qui contient « Poséidon Scans » et « Ortega Scans »)."; return; }
+    data.STATS = data.STATS || { evenements: [] }; data.STATS.evenements = data.STATS.evenements || [];
+    const ajouts = fusionner(data.STATS, r.found);
+    const d = new Date(), p = (x) => String(x).padStart(2, "0");
+    data.STATS.maj = d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+    const parSerie = {}; ajouts.forEach(a => { const f = a.split("|"); (parSerie[f[1] + " (" + f[2] + ")"] = parSerie[f[1] + " (" + f[2] + ")"] || []).push(f[3]); });
+    const lignes = Object.entries(parSerie).map(([k, v]) => k + " : +" + v.length + " (ch. " + v.slice(0, 6).join(", ") + (v.length > 6 ? "…" : "") + ")");
+    out.textContent = (ajouts.length ? ajouts.length + " nouveau(x) chapitre(s) ajouté(s)." : "Déjà à jour : aucun nouveau chapitre.") + " " + r.found.size + " chapitres lus." + (lignes.length ? "\n" + lignes.join("\n") : "") + (ajouts.length ? "\n\nClique sur Publier (en haut) pour mettre le site à jour." : "") + (r.ignores.length ? "\n\nDossiers ignorés (série inconnue) : " + r.ignores.join(", ") : "");
+    renderStats(); renderBar();
+  } catch (e) {
+    out.textContent = e && e.name === "AbortError" ? "Aucun dossier choisi." : "Impossible de lire le dossier : " + (e && e.message ? e.message : e);
+  } finally { btn.disabled = !window.showDirectoryPicker; }
+}
+$("st-run").onclick = () => runStats(false);
+$("st-pick").onclick = () => runStats(true);
 
 /* ---------- Démarrage ---------- */
 function showLogin(msg) {

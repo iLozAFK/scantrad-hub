@@ -172,6 +172,65 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 .sbtn svg { width: 14px; height: 14px; }
 @media (max-width: 560px) { .scards { grid-template-columns: 1fr; } .scard .cv { width: 72px; height: 108px; } }
 
+
+.maj { font-size: 12px; color: var(--z400); border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.tile { padding: 16px 20px; display: flex; flex-direction: column; gap: 2px; }
+.tile span { font-size: 12px; font-weight: 600; letter-spacing: .02em; color: var(--z400); text-transform: uppercase; }
+.tile b { font-size: 30px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.tile small { font-size: 12px; color: var(--z400); }
+.up { color: #4ade80; font-weight: 600; } .down { color: #f87171; font-weight: 600; }
+.sech { margin: 36px 0 2px; font-size: 18px; }
+.sech-sub { margin: 0 0 14px; color: var(--z400); font-size: 13px; }
+.pad { padding: 18px 22px; }
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.sech-sub + .grid2, .sech + .panel { margin-top: 0; }
+.ptitle { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.ptitle b { font-size: 14px; } .ptitle span { color: var(--z400); font-size: 12px; }
+.legend { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-top: 12px; font-size: 12px; color: var(--z400); }
+.legend b { color: var(--text); }
+.hm-wrap { overflow-x: auto; padding-bottom: 4px; }
+.hm-in { display: grid; grid-template-columns: 30px minmax(640px, 1fr); grid-template-rows: auto auto; gap: 4px 6px; }
+.hm-m { display: grid; grid-template-columns: repeat(53, minmax(0, 1fr)); font-size: 11px; color: var(--z600); height: 14px; }
+.hm-m span { white-space: nowrap; overflow: visible; }
+.hm-l { display: grid; grid-template-rows: repeat(7, 1fr); font-size: 10px; color: var(--z600); gap: 3px; align-items: center; }
+.hm { display: grid; grid-template-rows: repeat(7, auto); grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; }
+.c { display: block; aspect-ratio: 1; border-radius: 3px; background: #131316; min-width: 8px; }
+.c.fut { background: transparent; }
+.c.l1 { background: rgba(77,127,255,.25); } .c.l2 { background: rgba(77,127,255,.45); }
+.c.l3 { background: rgba(77,127,255,.7); } .c.l4 { background: #4d7fff; }
+.c:not(.fut):hover { outline: 1px solid #a1a1aa; }
+.lv { display: inline-flex; align-items: center; gap: 3px; } .lv .c { width: 11px; aspect-ratio: 1; min-width: 0; }
+.svgw svg { width: 100%; height: 150px; display: block; }
+.axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--z600); margin-top: 4px; }
+.hb { display: grid; grid-template-columns: 26px repeat(24, minmax(0, 1fr)); gap: 3px; align-items: center; }
+.hb .hh { font-size: 10px; color: var(--z600); text-align: left; height: 12px; white-space: nowrap; }
+.hb .hl { font-size: 10px; color: var(--z600); }
+.hb .c { min-width: 0; border-radius: 2px; }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.trio div { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+.trio span { display: block; font-size: 11px; color: var(--z400); } .trio b { font-size: 14px; }
+.rrow { display: grid; grid-template-columns: minmax(120px, 36%) 1fr auto; gap: 12px; align-items: center; padding: 7px 0; }
+.rrow.off { opacity: .45; }
+.rn { display: flex; align-items: center; gap: 8px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bars { display: grid; gap: 3px; } .bars i { display: block; height: 5px; border-radius: 3px; background: #3b4a8f; min-width: 2px; }
+.bars i.b2 { background: #4d7fff; }
+.rv { text-align: right; font-size: 12px; color: var(--z400); white-space: nowrap; } .rv b { color: var(--text); font-size: 14px; } .rv small { display: block; font-size: 11px; color: var(--z600); }
+.lg { display: inline-flex; align-items: center; gap: 6px; } .lg i { width: 18px; height: 5px; border-radius: 3px; display: inline-block; }
+.lg .k1 { background: #3b4a8f; } .lg .k2 { background: #4d7fff; }
+.rec { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); }
+.rec:last-child { border-bottom: 0; } .rec b { display: block; font-weight: 600; } .rec small { color: var(--z400); font-size: 12px; }
+.rec > span { font-weight: 700; font-size: 16px; font-variant-numeric: tabular-nums; }
+.yrow { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding: 7px 0; }
+.yn { font-weight: 600; font-variant-numeric: tabular-nums; }
+.ybars { display: flex; gap: 2px; } .seg { display: block; height: 10px; border-radius: 3px; min-width: 2px; }
+.lg .seg { width: 14px; height: 8px; }
+.seg.s-TL { background: #8b7cf6; } .seg.s-CH { background: #ec6eaf; } .seg.s-CL { background: #f0966e; } .seg.s-ED { background: #3cc8a0; } .seg.s-QC { background: #fde047; }
+.note { margin: 14px 0 0; font-size: 12px; color: var(--z600); }
+.entry { margin-top: 4px; }
+@media (max-width: 1100px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .trio { grid-template-columns: 1fr; } .rrow { grid-template-columns: 1fr auto; } .rrow .bars { grid-column: 1 / -1; order: 3; } }
+
 @media (max-width: 1023px) {
   .side { position: static; width: auto; flex-direction: row; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
   .side-head { border-bottom: 0; padding: 0 16px; height: 56px; }
@@ -208,11 +267,33 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 
 <main>
   <section id="accueil">
-    <div class="head"><div><h1>Tableau de bord</h1><p class="sub" id="hero-text"></p></div></div>
-    <div class="stats" id="stats"></div>
-    <div class="entry">
-      <a class="panel" href="#a-series"><b>Aujourd'hui</b><span id="entry-now"></span></a>
-      <a class="panel" href="#p-parcours"><b>Passé</b><span id="entry-past"></span></a>
+    <div class="head"><div><h1>Tableau de bord</h1><p class="sub" id="hero-text"></p></div><span class="maj" id="maj"></span></div>
+    <div id="stats-home">
+      <div class="tiles" id="tiles"></div>
+      <div class="entry">
+        <a class="panel" href="#a-series"><b>Aujourd'hui</b><span id="entry-now"></span></a>
+        <a class="panel" href="#p-parcours"><b>Passé</b><span id="entry-past"></span></a>
+      </div>
+      <h2 class="sech">Activité</h2>
+      <p class="sech-sub">Chaque jour de l'année, et le rythme semaine après semaine.</p>
+      <div class="panel pad" id="year"></div>
+      <div class="grid2">
+        <div class="panel pad" id="rythme"></div>
+        <div class="panel pad" id="habitudes"></div>
+      </div>
+      <h2 class="sech">Rôles et records</h2>
+      <p class="sech-sub">Ce qui est fait, rôle par rôle, et les meilleures performances.</p>
+      <div class="grid2">
+        <div class="panel pad" id="roles"></div>
+        <div class="panel pad" id="records"></div>
+      </div>
+      <h2 class="sech">Au fil du temps</h2>
+      <p class="sech-sub">Année par année, et les séries du moment.</p>
+      <div class="grid2">
+        <div class="panel pad" id="annees"></div>
+        <div class="panel pad" id="top"></div>
+      </div>
+      <p class="note" id="stats-note"></p>
     </div>
   </section>
 
@@ -323,9 +404,161 @@ document.querySelectorAll("[data-i]").forEach(a => a.prepend(icon(a.dataset.i)))
 $("hero-text").textContent = SITE.text;
 $("foot-name").textContent = SITE.team;
 
-[[SERIES.length, "Séries au total"], [actuelles.length, "Séries en cours"], [EQUIPES.length, "Équipes"], [new Date().getFullYear() - SITE.depuis, "Ans de scantrad"]].forEach(([n, l]) => {
-  const d = h("div", "panel stat"); d.append(h("span", "", l), h("b", "", String(n))); $("stats").append(d);
-});
+/* ---------- Statistiques de l'accueil ---------- */
+function statsAccueil() {
+  const ST = window.HUB.STATS, box = $("stats-home");
+  if (!ST || !ST.evenements || !ST.evenements.length) { box.hidden = true; return; }
+  const MS = 864e5;
+  const at = (iso) => new Date(iso.slice(0, 10) + "T12:00:00");
+  const key = (d) => d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  const fr = (d, o) => d.toLocaleDateString("fr-FR", o);
+  const nb = (n) => n.toLocaleString("fr-FR");
+  const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  const tous = ST.evenements.map(x => { const [i, t, r, n, b] = x.split("|"); return { day: i.slice(0, 10), h: +i.slice(11, 13), dt: at(i), t, r, bloc: b === "b" }; });
+  const ev = tous.filter(e => !e.bloc), blocN = tous.length - ev.length;   // « bloc » : copie en masse, sans date fiable
+  const totR = {}; tous.forEach(e => { totR[e.r] = (totR[e.r] || 0) + 1; });
+  const ref = at(ST.maj);
+  const ago = (n) => new Date(ref.getTime() - n * MS);
+  const cnt = (a, b) => ev.filter(e => e.dt >= a && e.dt <= b).length;
+  const dayN = {}; ev.forEach(e => { dayN[e.day] = (dayN[e.day] || 0) + 1; });
+  const mondayOf = (d) => new Date(d.getTime() - ((d.getDay() + 6) % 7) * MS);
+  const el = (tag, cls, html) => { const e = h(tag, cls); if (html !== undefined) e.innerHTML = html; return e; };
+
+  $("maj").textContent = "Données au " + fr(ref, { day: "numeric", month: "long", year: "numeric" });
+  $("maj").title = ST.source || "";
+
+  /* séries consécutives */
+  const days = Object.keys(dayN).sort();
+  let rec = 0, recEnd = "", run = 0, prev = null;
+  days.forEach(k => {
+    const d = at(k);
+    run = prev && Math.round((d - prev) / MS) === 1 ? run + 1 : 1;
+    if (run > rec) { rec = run; recEnd = k; }
+    prev = d;
+  });
+  let cur = 0; for (let d = dayN[key(ref)] ? ref : ago(1); dayN[key(d)]; d = new Date(d.getTime() - MS)) cur++;
+
+  /* tuiles */
+  const l7 = cnt(ago(6), ref), l30 = cnt(ago(29), ref), p30 = cnt(ago(59), ago(30));
+  const delta = p30 ? Math.round((l30 - p30) / p30 * 100) : null;
+  const total = tous.length;
+  const series = new Set(tous.map(e => e.t)).size;
+  const tuiles = [
+    ["7 derniers jours", nb(l7), "chapitres"],
+    ["30 derniers jours", nb(l30), delta === null ? "chapitres" : '<span class="' + (delta >= 0 ? "up" : "down") + '">' + (delta >= 0 ? "▲ +" : "▼ ") + delta + " %</span> contre " + nb(p30) + " les 30 j d'avant"],
+    ["Depuis toujours", nb(total), "chapitres · " + series + " séries différentes"],
+    ["Série en cours", cur + " j", "record : " + rec + " j"],
+    ["Séries en cours", String(actuelles.length), "dans " + plural(equipesActives.length, "équipe", "équipes")],
+    ["Ans de scantrad", String(new Date().getFullYear() - SITE.depuis), "depuis " + SITE.depuis + " · " + plural(EQUIPES.length, "équipe", "équipes")]
+  ];
+  tuiles.forEach(([k, v, s]) => $("tiles").append(el("div", "panel tile", "<span>" + k + "</span><b>" + v + "</b><small>" + s + "</small>")));
+
+  /* calendrier sur un an */
+  const W = 53, start = new Date(mondayOf(ref).getTime() - (W - 1) * 7 * MS);
+  let yTotal = 0, yDays = 0;
+  const grid = el("div", "hm"), months = el("div", "hm-m"), labs = el("div", "hm-l");
+  ["lun.", "", "mer.", "", "ven.", "", "dim."].forEach(t => labs.append(el("span", "", t)));
+  let lastMonth = -1;
+  for (let c = 0; c < W; c++) {
+    const mon = new Date(start.getTime() + c * 7 * MS);
+    if (mon.getMonth() !== lastMonth) { const m = el("span", "", fr(mon, { month: "short" })); m.style.gridColumn = String(c + 1); months.append(m); lastMonth = mon.getMonth(); }
+    for (let r = 0; r < 7; r++) {
+      const d = new Date(mon.getTime() + r * MS), n = dayN[key(d)] || 0, c0 = el("i", "c" + (d > ref ? " fut" : ""));
+      if (d <= ref) {
+        const lv = n === 0 ? 0 : n === 1 ? 1 : n === 2 ? 2 : n <= 4 ? 3 : 4;
+        c0.className = "c l" + lv; c0.title = fr(d, { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + " · " + (n ? plural(n, "chapitre", "chapitres") : "aucun chapitre");
+        if (n) { yTotal += n; yDays++; }
+      }
+      grid.append(c0);
+    }
+  }
+  const y = $("year");
+  const wrap = el("div", "hm-wrap"); const inner = el("div", "hm-in");
+  inner.append(el("span"), months, labs, grid); wrap.append(inner);
+  y.append(el("div", "ptitle", "<b>Sur un an</b><span>" + yDays + " jours actifs sur 365</span>"), wrap);
+  const leg = el("div", "legend", "<span><b>" + nb(yTotal) + "</b> chapitres sur l'année, <b>" + (yDays ? (yTotal / yDays).toFixed(1).replace(".", ",") : "0") + "</b> par jour actif en moyenne</span><span class=\"lv\">moins <i class=\"c l0\"></i><i class=\"c l1\"></i><i class=\"c l2\"></i><i class=\"c l3\"></i><i class=\"c l4\"></i> plus</span>");
+  y.append(leg);
+
+  /* rythme : chapitres par semaine */
+  const N = 52, wk = new Array(N).fill(0), wStart = new Date(mondayOf(ref).getTime() - (N - 1) * 7 * MS);
+  ev.forEach(e => { const i = Math.floor((e.dt - wStart) / (7 * MS)); if (i >= 0 && i < N) wk[i]++; });
+  const mx = Math.max(1, ...wk), VW = 600, VH = 170, pad = 10;
+  const pts = wk.map((v, i) => [i / (N - 1) * VW, VH - pad - v / mx * (VH - 2 * pad - 6)]);
+  let dpath = "M" + pts[0][0] + "," + pts[0][1];
+  for (let i = 1; i < N; i++) { const dx = (pts[i][0] - pts[i - 1][0]) / 2; dpath += " C" + (pts[i - 1][0] + dx) + "," + pts[i - 1][1] + " " + (pts[i][0] - dx) + "," + pts[i][1] + " " + pts[i][0] + "," + pts[i][1]; }
+  const area = dpath + " L" + VW + "," + VH + " L0," + VH + " Z", lp = pts[N - 1];
+  const rt = $("rythme");
+  rt.append(el("div", "ptitle", "<b>Rythme</b><span>chapitres par semaine</span>"));
+  rt.append(el("div", "svgw", '<svg viewBox="0 0 ' + VW + " " + VH + '" preserveAspectRatio="none" role="img" aria-label="Chapitres par semaine sur 12 mois"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4d7fff" stop-opacity=".35"/><stop offset="1" stop-color="#4d7fff" stop-opacity="0"/></linearGradient></defs><path d="' + area + '" fill="url(#gA)"/><path d="' + dpath + '" fill="none" stroke="#4d7fff" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'));
+  rt.append(el("div", "axis", "<span>" + fr(wStart, { day: "numeric", month: "short" }) + "</span><span>" + fr(new Date(wStart.getTime() + 26 * 7 * MS), { day: "numeric", month: "short" }) + "</span><span>" + fr(ref, { day: "numeric", month: "short" }) + "</span>"));
+  rt.append(el("div", "legend", "<span>Pic : <b>" + mx + "</b> chapitres en une semaine</span>"));
+
+  /* habitudes : jour x heure (12 derniers mois) */
+  const hab = Array.from({ length: 7 }, () => new Array(24).fill(0)), y1 = ago(364);
+  const byDow = new Array(7).fill(0), byH = new Array(24).fill(0); let hn = 0, night = 0, wend = 0;
+  ev.filter(e => e.dt >= y1).forEach(e => { const dw = (e.dt.getDay() + 6) % 7; hab[dw][e.h]++; byDow[dw]++; byH[e.h]++; hn++; if (e.h < 6) night++; if (dw >= 5) wend++; });
+  const hmax = Math.max(1, ...hab.flat()), JOURS = ["lun.", "mar.", "mer.", "jeu.", "ven.", "sam.", "dim."], JF = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];
+  const hb = $("habitudes");
+  hb.append(el("div", "ptitle", "<b>Habitudes</b><span>12 derniers mois, heure de Paris</span>"));
+  const hg = el("div", "hb"); hg.append(el("span"));
+  for (let k = 0; k < 24; k++) hg.append(el("span", "hh", k % 6 === 0 ? String(k) : ""));
+  hab.forEach((row, dw) => { hg.append(el("span", "hl", JOURS[dw])); row.forEach((n, k) => { const c1 = el("i", "c l" + (n ? Math.min(4, Math.ceil(n / hmax * 4)) : 0)); c1.title = JF[dw] + " " + k + " h · " + plural(n, "chapitre", "chapitres"); hg.append(c1); }); });
+  hb.append(hg);
+  const best = (a) => a.indexOf(Math.max(...a)), bh = best(byH), pc = (n) => hn ? Math.round(n / hn * 100) + " %" : "–";
+  hb.append(el("div", "trio", '<div><span>Jour préféré</span><b>' + (hn ? JF[best(byDow)] : "–") + '</b></div><div><span>Heure de pointe</span><b>' + (hn ? bh + " h – " + ((bh + 1) % 24) + " h" : "–") + '</b></div><div><span>La nuit · le week-end</span><b>' + pc(night) + " · " + pc(wend) + "</b></div>"));
+
+  /* rôles */
+  const ROLES = [["TL", "Trad"], ["CH", "Check"], ["CL", "Clean"], ["ED", "Edit"], ["QC", "QC"]];
+  const t90 = {}; ev.filter(e => e.dt >= ago(89)).forEach(e => { t90[e.r] = (t90[e.r] || 0) + 1; });
+  const mxr = Math.max(1, ...ROLES.map(([r]) => totR[r] || 0));
+  const rl = $("roles");
+  rl.append(el("div", "ptitle", "<b>Rôles</b><span>ce qui est fait, rôle par rôle</span>"));
+  ROLES.forEach(([r, nom]) => {
+    const a = totR[r] || 0, b = t90[r] || 0;
+    const row = el("div", "rrow" + (a ? "" : " off"), '<span class="rn"><span class="role r-' + r + '">' + r + "</span>" + nom + '</span><span class="bars"><i style="width:' + (a / mxr * 100) + '%"></i><i class="b2" style="width:' + (b / mxr * 100) + '%"></i></span><span class="rv"><b>' + nb(a) + "</b> ch.<small>" + nb(b) + " sur 90 j</small></span>");
+    rl.append(row);
+  });
+  rl.append(el("div", "legend", '<span class="lg"><i class="k1"></i> depuis toujours</span><span class="lg"><i class="k2"></i> 90 derniers jours</span>'));
+
+  /* records */
+  const wkS = {}, moS = {};
+  ev.forEach(e => { const k1 = key(mondayOf(e.dt)); wkS[k1] = (wkS[k1] || 0) + 1; const k2 = e.day.slice(0, 7); moS[k2] = (moS[k2] || 0) + 1; });
+  const top = (o) => Object.entries(o).sort((a, b) => b[1] - a[1] || b[0].localeCompare(a[0]))[0];
+  const bd = top(dayN), bw = top(wkS), bm = top(moS), first = at(days[0]);
+  const mois = Math.max(0, (ref.getFullYear() - first.getFullYear()) * 12 + ref.getMonth() - first.getMonth());
+  const REC = [
+    ["Meilleure journée", fr(at(bd[0]), { day: "numeric", month: "long", year: "numeric" }), bd[1] + " ch."],
+    ["Meilleure semaine", "semaine du " + fr(at(bw[0]), { day: "numeric", month: "long", year: "numeric" }), bw[1] + " ch."],
+    ["Meilleur mois", cap(fr(at(bm[0] + "-15"), { month: "long", year: "numeric" })), bm[1] + " ch."],
+    ["Plus longue série", "jusqu'au " + fr(at(recEnd), { day: "numeric", month: "long", year: "numeric" }), rec + " j"],
+    ["Séries différentes", "au moins un chapitre rendu", String(series)],
+    ["Premier chapitre daté", fr(first, { day: "numeric", month: "long", year: "numeric" }), mois ? mois + " mois" : "ce mois-ci"]
+  ];
+  const rc = $("records");
+  rc.append(el("div", "ptitle", "<b>Records personnels</b><span>meilleurs moments</span>"));
+  REC.forEach(([a, b, c]) => rc.append(el("div", "rec", "<div><b>" + a + "</b><small>" + b + "</small></div><span>" + c + "</span>")));
+
+  /* au fil des années */
+  const an = {}; ev.forEach(e => { const y0 = e.day.slice(0, 4), o = an[y0] = an[y0] || {}; o[e.r] = (o[e.r] || 0) + 1; });
+  const yrs = Object.keys(an).sort(), sumY = (y0) => Object.values(an[y0]).reduce((a, b) => a + b, 0), myr = Math.max(1, ...yrs.map(sumY));
+  const pa = $("annees");
+  pa.append(el("div", "ptitle", "<b>Au fil des années</b><span>chapitres datés, par rôle</span>"));
+  yrs.slice().reverse().forEach(y0 => {
+    const segs = ["TL", "CH", "CL", "ED", "QC"].filter(r => an[y0][r]).map(r => '<i class="seg s-' + r + '" style="width:' + (an[y0][r] / myr * 100) + '%" title="' + r + " : " + an[y0][r] + '"></i>').join("");
+    pa.append(el("div", "yrow", '<span class="yn">' + y0 + '</span><span class="ybars">' + segs + '</span><span class="rv"><b>' + nb(sumY(y0)) + "</b> ch.</span>"));
+  });
+  pa.append(el("div", "legend", ["TL", "CH", "CL", "ED"].map(r => '<span class="lg"><i class="seg s-' + r + '"></i> ' + r + "</span>").join("")));
+
+  /* séries les plus actives (90 jours) */
+  const per = {}; ev.filter(e => e.dt >= ago(89)).forEach(e => { const o = per[e.t] = per[e.t] || { n: 0, r: {} }; o.n++; o.r[e.r] = 1; });
+  const tp = Object.entries(per).sort((a, b) => b[1].n - a[1].n).slice(0, 8), mt = tp.length ? tp[0][1].n : 1;
+  const tw = $("top");
+  tw.append(el("div", "ptitle", "<b>90 derniers jours</b><span>chapitres par série</span>"));
+  tp.forEach(([t, o]) => { const s = SERIES.find(x => x.title === t); const row = el("div", "rrow"); const nm = el("span", "rn"); nm.append(rolesNode(Object.keys(o.r)), document.createTextNode(" " + t));
+    row.append(nm, el("span", "bars", '<i class="b2" style="width:' + (o.n / mt * 100) + '%"></i>'), el("span", "rv", "<b>" + o.n + "</b> ch.")); tw.append(row); });
+  $("stats-note").textContent = (blocN ? nb(blocN) + " chapitres copiés en bloc n'ont pas de date fiable : ils comptent dans les totaux, pas dans les graphiques. " : "") + "Les dates sont celles des fichiers (Drive, dossiers locaux, archives) ; le rôle est celui de la série.";
+}
+statsAccueil();
 $("entry-now").textContent = plural(actuelles.length, "série", "séries") + ", " + plural(equipesActives.length, "équipe", "équipes") + " et " + plural(outilsActuels.length, "outil", "outils") + " au quotidien.";
 $("entry-past").textContent = plural(passees.length, "série", "séries") + " chez " + plural(equipesPassees.length, "ancienne équipe", "anciennes équipes") + ", " + plural(outilsPasses.length, "ancien outil", "anciens outils") + ".";
 
