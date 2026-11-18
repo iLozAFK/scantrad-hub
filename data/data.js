@@ -47,7 +47,8 @@ window.HUB = {
       "chapter": "",
       "roles": [
         "TL",
-        "QC"
+        "QC",
+        "CL"
       ],
       "url": "",
       "cover": "covers/academy-genius-tamer.webp"
@@ -55,7 +56,7 @@ window.HUB = {
     {
       "title": "Sand Mage of the Burnt Desert",
       "team": "Poséidon Scans",
-      "type": "Web novel",
+      "type": "Manhwa",
       "status": "En cours",
       "chapter": "630 chapitres",
       "roles": [
