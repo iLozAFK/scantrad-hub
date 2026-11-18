@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enrichit chaque série de data/data.js avec une clé `infos` (noms en plusieurs langues, créateurs, éditeurs d'origine,
+Enrichit chaque série de data/data.js avec une clé `infos` (noms en plusieurs langues (sans titre français : aucune série n'en a), créateurs, éditeurs d'origine,
 genres, tags, année, statut et nombre de chapitres de la VO, note...) à partir de :
   1. MangaUpdates (API publique)            -> source principale
   2. Ortega Scans (noms alternatifs, auteur) -> pour les séries Ortega
@@ -59,22 +59,6 @@ def curl(url, body=None):
 def jget(url, body=None):
     try: return json.loads(curl(url, body))
     except Exception: return {}
-
-FR_EX = {"le", "les", "du", "des", "au", "aux", "retour", "et", "dans", "qui", "que", "est", "je", "mon", "mes", "pour", "sur", "pas", "ne", "monde", "vie", "roi", "l", "d", "ma", "elle", "il", "une", "un", "la", "de", "en"}
-ES_EX = {"el", "los", "las", "del", "y", "con", "por", "regreso", "retorno", "secta", "su", "al", "es", "lo", "mi", "una", "mundo", "vida", "rey"}
-PT_EX = {"o", "os", "do", "da", "dos", "das", "seita", "uma", "um", "não", "com", "para", "retorno", "mundo", "vida", "rei"}
-EN_EX = {"the", "of", "and", "is", "to", "in", "my", "with", "for", "i", "from", "who", "that", "it"}
-FR_LETTRES = set("abcdefghijklmnopqrstuvwxyzàâäçéèêëîïôöùûüÿœæ")
-
-def is_fr(nom):
-    """Heuristique : nom latin, uniquement des lettres françaises, avec davantage de repères français que d'autres langues."""
-    low = nom.lower().replace("’", "'")
-    if any(c.isalpha() and c not in FR_LETTRES for c in low): return False          # coréen, vietnamien, cyrillique...
-    mots = [m for m in re.split(r"[\s'\-:!?.,]+", low) if m]
-    fr = sum(1 for m in mots if m in FR_EX) + (2 if re.search(r"[àâçéèêëîïôùûœ]", low) else 0)
-    exclusifs = sum(1 for m in mots if m in {"le", "les", "du", "des", "au", "aux", "retour", "et", "dans", "qui", "que", "est", "mon", "mes", "pour", "sur", "pas", "ne", "l", "d", "ma", "elle", "il"})
-    autres = sum(1 for m in mots if m in ES_EX or m in PT_EX or m in EN_EX)
-    return fr >= 2 and exclusifs >= 1 and fr > autres
 
 # ------------------------------------------------------------------ MangaUpdates
 def mu_detail(cache, sid):
@@ -169,8 +153,7 @@ def construire(s, cache):
     toutes = [a.get("title", "") for a in d.get("associated", [])] + ort["alt"] + asu["alt"]
     toutes = clean_list(toutes)
     ko = ko_propres([n for n in toutes if HANGUL.search(n)])
-    fr = [n for n in toutes if is_fr(n) and norm(n) != norm(titre) and not any(norm(n) == norm(x) for x in alias)]
-    autres = [n for n in toutes if n not in ko and n not in fr and norm(n) != norm(titre)]
+    autres = [n for n in toutes if n not in ko and norm(n) != norm(titre)]
     auteurs = [a["name"] for a in d.get("authors", []) if a.get("type") == "Author"]
     artistes = [a["name"] for a in d.get("authors", []) if a.get("type") == "Artist"]
     if not auteurs and (ort.get("auteur") or asu.get("auteur")): auteurs = [ort.get("auteur") or asu.get("auteur")]
@@ -178,7 +161,7 @@ def construire(s, cache):
     pubs = d.get("publishers", [])
     infos = {
         "mu": ({"id": d["series_id"], "url": d.get("url"), "note": d.get("bayesian_rating"), "votes": d.get("rating_votes")} if d.get("series_id") else None),
-        "noms": {"fr": fr[:3], "ko": ko[:3], "autres": autres[:10]},
+        "noms": {"ko": ko[:3], "autres": autres[:12]},
         "auteurs": clean_list(auteurs), "artistes": clean_list(artistes),
         "editeurs": clean_list([p["publisher_name"] for p in pubs if p.get("type") == "Original"]),
         "editeurs_en": clean_list([p["publisher_name"] for p in pubs if p.get("type") == "English"]),
@@ -208,7 +191,7 @@ def main():
         s["infos"] = infos
         if not ok: sans_mu.append(s["title"])
         n = infos["noms"]
-        print("%2d/%d %-46s %s  ko=%s fr=%s | %s" % (i, len(d["SERIES"]), s["title"][:46], "MU✓" if ok else "MU✗", n["ko"][:1], n["fr"][:1], (infos["auteurs"] or ["?"])[0]), flush=True)
+        print("%2d/%d %-46s %s  ko=%s | %s" % (i, len(d["SERIES"]), s["title"][:46], "MU✓" if ok else "MU✗", n["ko"][:1], (infos["auteurs"] or ["?"])[0]), flush=True)
         CACHE.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
         DATA.write_text("window.HUB = " + json.dumps(d, ensure_ascii=False, indent=2) + ";\n", encoding="utf-8", newline="\n")
     print("\nSans fiche MangaUpdates :", sans_mu or "aucune")

@@ -90,7 +90,6 @@ window.HUB = {
           "votes": 49
         },
         "noms": {
-          "fr": [],
           "ko": [
             "아카데미의 천재 테이머"
           ],
@@ -174,14 +173,12 @@ window.HUB = {
           "votes": 56
         },
         "noms": {
-          "fr": [
-            "Le Sandmancien du Désert Brûlant"
-          ],
           "ko": [
             "불탄 사막의 모래술사",
             "열사의 모래술사"
           ],
           "autres": [
+            "Le Sandmancien du Désert Brûlant",
             "Mago De Areia No Deserto",
             "Sandmancer of the Scorched Desert",
             "Ta Chính Là Pháp Sư Bóng Ma Trên Sa Mạc",
@@ -252,7 +249,6 @@ window.HUB = {
           "votes": 39
         },
         "noms": {
-          "fr": [],
           "ko": [
             "천재 대장장이의 게임"
           ],
@@ -330,7 +326,6 @@ window.HUB = {
           "votes": 47
         },
         "noms": {
-          "fr": [],
           "ko": [
             "나 혼자 EX급 소환수"
           ],
@@ -413,14 +408,12 @@ window.HUB = {
           "votes": 342
         },
         "noms": {
-          "fr": [
-            "Le Monde Après la Chute"
-          ],
           "ko": [
             "멸망 이후의 세계",
             "滅亡以後의世界"
           ],
           "autres": [
+            "Le Monde Après la Chute",
             "Düşüşten Sonraki Dünya",
             "El mundo después del cataclismo",
             "El mundo después del fin",
@@ -508,7 +501,6 @@ window.HUB = {
           "votes": 7
         },
         "noms": {
-          "fr": [],
           "ko": [
             "로그아웃이 너무 어렵다",
             "로그아웃이 너무어렵다"
@@ -576,7 +568,6 @@ window.HUB = {
           "votes": 289
         },
         "noms": {
-          "fr": [],
           "ko": [
             "얼어붙은 플레이어의 귀환"
           ],
@@ -666,13 +657,11 @@ window.HUB = {
           "votes": 533
         },
         "noms": {
-          "fr": [
-            "Le retour du clan Hwasan"
-          ],
           "ko": [
             "화산귀환"
           ],
           "autres": [
+            "Le retour du clan Hwasan",
             "Die Rückkehr der Huashan-Sekte",
             "El regreso de la secta del Monte Hua",
             "El retorno de la hoja del Ciruelo",
@@ -760,7 +749,6 @@ window.HUB = {
           "votes": 19
         },
         "noms": {
-          "fr": [],
           "ko": [
             "나 혼자 소드 마스터",
             "나 혼자 소드마스터"
@@ -834,7 +822,6 @@ window.HUB = {
           "votes": 112
         },
         "noms": {
-          "fr": [],
           "ko": [
             "모비딕"
           ],
@@ -907,7 +894,6 @@ window.HUB = {
           "votes": 47
         },
         "noms": {
-          "fr": [],
           "ko": [
             "선생님의 노력"
           ],
@@ -985,7 +971,6 @@ window.HUB = {
           "votes": 67
         },
         "noms": {
-          "fr": [],
           "ko": [
             "무선 연결 오나홀",
             "무선 연결 오나홀로 따먹기"
@@ -1066,7 +1051,6 @@ window.HUB = {
           "votes": 39
         },
         "noms": {
-          "fr": [],
           "ko": [
             "마을특별조례"
           ],
@@ -1146,7 +1130,6 @@ window.HUB = {
           "votes": 23
         },
         "noms": {
-          "fr": [],
           "ko": [
             "여교수의 비밀계정"
           ],
@@ -1225,7 +1208,6 @@ window.HUB = {
           "votes": 13
         },
         "noms": {
-          "fr": [],
           "ko": [
             "성과보고 드립니다",
             "性과 보고 드립니다"
@@ -1306,14 +1288,12 @@ window.HUB = {
           "votes": 41
         },
         "noms": {
-          "fr": [
-            "Love Quest : En quête d’amour"
-          ],
           "ko": [
             "러브 퀘스트",
             "러브퀘스트"
           ],
           "autres": [
+            "Love Quest : En quête d’amour",
             "Busqueda de Amor",
             "Búsqueda De Amor",
             "Nhiệm Vụ Tình Yêu",
@@ -1382,7 +1362,6 @@ window.HUB = {
       "infos": {
         "mu": null,
         "noms": {
-          "fr": [],
           "ko": [
             "그아비에 그아들"
           ],
@@ -1433,14 +1412,12 @@ window.HUB = {
           "votes": 337
         },
         "noms": {
-          "fr": [
-            "Le Démon Céleste ne peut pas vivre une vie normale"
-          ],
           "ko": [
             "천마는 평범하게 살 수 없다",
             "천마는 조용히 살고싶다"
           ],
           "autres": [
+            "Le Démon Céleste ne peut pas vivre une vie normale",
             "Cheonmaneun Pyeongbeomhage Sal Su Eopda",
             "El demonio celestial no puede llevar una vida normal",
             "O Demônio Celestial não pode viver uma Vida Normal",
@@ -1528,15 +1505,13 @@ window.HUB = {
           "votes": 231
         },
         "noms": {
-          "fr": [
-            "La Volonté de Survivre d'un Vilain"
-          ],
           "ko": [
             "악당은 살고 싶다",
             "악당은 살고 싶다 (악살싶)",
             "악당의 생존기"
           ],
           "autres": [
+            "La Volonté de Survivre d'un Vilain",
             "The Villain Wants to Live",
             "反派也想活下去",
             "反派想要活着",
@@ -1627,7 +1602,6 @@ window.HUB = {
           "votes": 75
         },
         "noms": {
-          "fr": [],
           "ko": [
             "환생마신전"
           ],
@@ -1710,7 +1684,6 @@ window.HUB = {
           "votes": 101
         },
         "noms": {
-          "fr": [],
           "ko": [
             "전설급 영웅은 아카데미 우등생"
           ],
@@ -1787,7 +1760,6 @@ window.HUB = {
           "votes": 21
         },
         "noms": {
-          "fr": [],
           "ko": [
             "역대급 천재 랭커의 귀환"
           ],
@@ -1846,7 +1818,6 @@ window.HUB = {
       "infos": {
         "mu": null,
         "noms": {
-          "fr": [],
           "ko": [],
           "autres": []
         },
@@ -1889,7 +1860,6 @@ window.HUB = {
           "votes": 114
         },
         "noms": {
-          "fr": [],
           "ko": [
             "특성 쌓는 김전사"
           ],
@@ -1966,7 +1936,6 @@ window.HUB = {
           "votes": 37
         },
         "noms": {
-          "fr": [],
           "ko": [
             "랭커의 귀환"
           ],
@@ -2044,15 +2013,13 @@ window.HUB = {
           "votes": 254
         },
         "noms": {
-          "fr": [
-            "Le retour du lancier légendaire",
-            "Le Retour du Chevalier à la Lance Inégalé"
-          ],
           "ko": [
             "역대급 창기사의 회귀",
             "무적의 창기사 회귀하다"
           ],
           "autres": [
+            "Le retour du lancier légendaire",
+            "Le Retour du Chevalier à la Lance Inégalé",
             "El retorno del legendario caballero de la lanza",
             "Kembalinya Kesatria Tombak Legendaris",
             "Reincarnation of the Unrivaled Spear Knight",
@@ -2141,7 +2108,6 @@ window.HUB = {
           "votes": 17
         },
         "noms": {
-          "fr": [],
           "ko": [
             "자본주의 하렘"
           ],
@@ -2211,7 +2177,6 @@ window.HUB = {
           "votes": 13
         },
         "noms": {
-          "fr": [],
           "ko": [
             "두근 두근 S매칭"
           ],
@@ -2283,7 +2248,6 @@ window.HUB = {
           "votes": 152
         },
         "noms": {
-          "fr": [],
           "ko": [
             "이세계 밀프 헌터"
           ],
@@ -2368,13 +2332,11 @@ window.HUB = {
           "votes": 51
         },
         "noms": {
-          "fr": [
-            "Pero, ¿¡Tienes la misma edad que mi hija?!"
-          ],
           "ko": [
             "딸이 너랑 동갑인데?!"
           ],
           "autres": [
+            "Pero, ¿¡Tienes la misma edad que mi hija?!",
             "Der Jungbrunnen",
             "Jeunesse Retrouvée",
             "O Gostinho da Juventude",
@@ -2452,7 +2414,6 @@ window.HUB = {
           "votes": 43
         },
         "noms": {
-          "fr": [],
           "ko": [
             "인간말종"
           ],
@@ -2533,7 +2494,6 @@ window.HUB = {
           "votes": 29
         },
         "noms": {
-          "fr": [],
           "ko": [
             "최면경비원"
           ],
@@ -2615,7 +2575,6 @@ window.HUB = {
           "votes": 51
         },
         "noms": {
-          "fr": [],
           "ko": [
             "욕망을 보는 눈을 얻었다"
           ],
@@ -2693,13 +2652,11 @@ window.HUB = {
           "votes": 23
         },
         "noms": {
-          "fr": [
-            "Ma Copine Était déjà bien Dressée"
-          ],
           "ko": [
             "내 여자친구는 이미 조교완료 되었다"
           ],
           "autres": [
+            "Ma Copine Était déjà bien Dressée",
             "Mi Novia Ya Ha Sido Completamente Entrenada",
             "My Girlfriend Has Already Completed the Assistant Training",
             "My Girlfriend Has Already Done Teaching",
@@ -2774,7 +2731,6 @@ window.HUB = {
           "votes": 22
         },
         "noms": {
-          "fr": [],
           "ko": [
             "여교사 윤지"
           ],
@@ -2853,7 +2809,6 @@ window.HUB = {
           "votes": 29
         },
         "noms": {
-          "fr": [],
           "ko": [
             "마사지 동아리"
           ],
@@ -2930,7 +2885,6 @@ window.HUB = {
           "votes": 33
         },
         "noms": {
-          "fr": [],
           "ko": [
             "남자가 희귀함",
             "남자가희귀함"
@@ -3008,7 +2962,6 @@ window.HUB = {
           "votes": 29
         },
         "noms": {
-          "fr": [],
           "ko": [
             "요구르트 아줌마"
           ],
@@ -3088,7 +3041,6 @@ window.HUB = {
           "votes": 29
         },
         "noms": {
-          "fr": [],
           "ko": [
             "너, 그런 거 보니?",
             "너",
@@ -3165,7 +3117,6 @@ window.HUB = {
           "votes": 15
         },
         "noms": {
-          "fr": [],
           "ko": [
             "돈놀이"
           ],
@@ -3236,7 +3187,6 @@ window.HUB = {
           "votes": 35
         },
         "noms": {
-          "fr": [],
           "ko": [
             "아파트 관리인이 되었다"
           ],
@@ -3314,7 +3264,6 @@ window.HUB = {
           "votes": 26
         },
         "noms": {
-          "fr": [],
           "ko": [
             "시아버지가 다 따먹음"
           ],
@@ -3392,7 +3341,6 @@ window.HUB = {
           "votes": 332
         },
         "noms": {
-          "fr": [],
           "ko": [
             "영원한 너의 거짓말"
           ],
@@ -3470,15 +3418,13 @@ window.HUB = {
           "votes": 172
         },
         "noms": {
-          "fr": [
-            "L'assassin et le maître épéiste",
-            "L'Assassin Réincarné est un Génie de l'Épée"
-          ],
           "ko": [
             "환생한 암살자는 검술 천재",
             "전생 암살자는 천재 검사"
           ],
           "autres": [
+            "L'assassin et le maître épéiste",
+            "L'Assassin Réincarné est un Génie de l'Épée",
             "El asesino que reencarnó como un genio espadachín",
             "ชีวิตใหม่ของนักฆ่าคือจอมดาบอัจฉริยะ",
             "刺客的劍術天才轉生錄",
@@ -3562,14 +3508,12 @@ window.HUB = {
           "votes": 241
         },
         "noms": {
-          "fr": [
-            "Le Fils Régressé du Duc est un Assassin"
-          ],
           "ko": [
             "회귀한 공작가의 막내도련님은 암살자",
             "회귀한 공작가의 차남은 암살자"
           ],
           "autres": [
+            "Le Fils Régressé du Duc est un Assassin",
             "El asesino que retornó como el hijo del Duque",
             "El joven señor renacido es un asesino",
             "El pibe que retorna como el hijo menor",
@@ -3651,15 +3595,13 @@ window.HUB = {
           "votes": 195
         },
         "noms": {
-          "fr": [
-            "Le Roi Martial Indomptable"
-          ],
           "ko": [
             "권왕전생",
             "불굴의 무왕",
             "불굴의 패왕"
           ],
           "autres": [
+            "Le Roi Martial Indomptable",
             "O Rei Marcial Indomável",
             "Time Slip of Fist King",
             "ملك فنون يقصر القتال الذي",
@@ -3734,7 +3676,6 @@ window.HUB = {
       "infos": {
         "mu": null,
         "noms": {
-          "fr": [],
           "ko": [],
           "autres": []
         },
@@ -3773,7 +3714,6 @@ window.HUB = {
           "votes": 429
         },
         "noms": {
-          "fr": [],
           "ko": [
             "이계 검왕 생존기",
             "이계검왕생존기"
@@ -3864,7 +3804,6 @@ window.HUB = {
           "votes": 311
         },
         "noms": {
-          "fr": [],
           "ko": [
             "별을 품은 소드마스터"
           ],
@@ -3946,7 +3885,6 @@ window.HUB = {
           "votes": 156
         },
         "noms": {
-          "fr": [],
           "ko": [
             "나 혼자만 레벨업 : 라그나로크"
           ],
@@ -4046,7 +3984,6 @@ window.HUB = {
           "votes": 139
         },
         "noms": {
-          "fr": [],
           "ko": [
             "잠만 자도 랭커"
           ],
@@ -4124,7 +4061,6 @@ window.HUB = {
           "votes": 375
         },
         "noms": {
-          "fr": [],
           "ko": [
             "나태 공자, 노력 천재 되다"
           ],
@@ -4209,14 +4145,12 @@ window.HUB = {
           "votes": 292
         },
         "noms": {
-          "fr": [
-            "L'Espadon de la Lune Dérivante"
-          ],
           "ko": [
             "사신표월",
             "표월"
           ],
           "autres": [
+            "L'Espadon de la Lune Dérivante",
             "Ceifador da lua cheia",
             "Death God of the Drifting Moon",
             "Grim Reaper's Floating Moon",
@@ -4308,13 +4242,11 @@ window.HUB = {
           "votes": 163
         },
         "noms": {
-          "fr": [
-            "Je ne suis pas celui que vous croyez"
-          ],
           "ko": [
             "저 그런 인재 아닙니다"
           ],
           "autres": [
+            "Je ne suis pas celui que vous croyez",
             "I'm Not That Kind of Person",
             "Não tenho o talento que dizem!",
             "Ta Không Tài Giỏi Đến Vậy Đâu",
@@ -4400,7 +4332,6 @@ window.HUB = {
           "votes": 425
         },
         "noms": {
-          "fr": [],
           "ko": [
             "오늘만 사는 기사"
           ],
@@ -4488,13 +4419,11 @@ window.HUB = {
           "votes": 169
         },
         "noms": {
-          "fr": [
-            "Le Retour de la constellation brisée"
-          ],
           "ko": [
             "부서진 성좌의 회귀"
           ],
           "autres": [
+            "Le Retour de la constellation brisée",
             "Return of the Broken Constellation",
             "Return of the Shattered Constellation",
             "การหวนคืนของกลุ่มดาวที่แตกสลาย",
@@ -4576,14 +4505,12 @@ window.HUB = {
           "votes": 147
         },
         "noms": {
-          "fr": [
-            "L'archimage transcende par revenir en le temps",
-            "La transcendance du grand mage"
-          ],
           "ko": [
             "회귀로 초월하는 대마도사"
           ],
           "autres": [
+            "L'archimage transcende par revenir en le temps",
+            "La transcendance du grand mage",
             "Archmage Who Transcends by Returning",
             "Arquimago transcendido pela regressão",
             "El archimago que trascendiendo a través de la regresión",
@@ -4661,7 +4588,6 @@ window.HUB = {
           "votes": 44
         },
         "noms": {
-          "fr": [],
           "ko": [
             "사령왕 카르나크"
           ],
@@ -4752,7 +4678,6 @@ window.HUB = {
           "votes": 141
         },
         "noms": {
-          "fr": [],
           "ko": [
             "정글쥬스"
           ],
@@ -4834,7 +4759,6 @@ window.HUB = {
           "votes": 137
         },
         "noms": {
-          "fr": [],
           "ko": [
             "일타강사 백사부"
           ],
@@ -4918,7 +4842,6 @@ window.HUB = {
       "infos": {
         "mu": null,
         "noms": {
-          "fr": [],
           "ko": [],
           "autres": []
         },
@@ -4961,15 +4884,13 @@ window.HUB = {
           "votes": 171
         },
         "noms": {
-          "fr": [
-            "Le Jeune Maître du Grand Archive Céleste"
-          ],
           "ko": [
             "천화서고 대공자",
             "천류영의 영주님",
             "천류영영주"
           ],
           "autres": [
+            "Le Jeune Maître du Grand Archive Céleste",
             "El Gran Archivo Divino",
             "El joven maestro del Gran Archivo Celestial",
             "O Jovem Mestre do Grande Arquivo Celestial",
@@ -5052,7 +4973,6 @@ window.HUB = {
           "votes": 112
         },
         "noms": {
-          "fr": [],
           "ko": [
             "스킬빨로 레벨업"
           ],
@@ -5139,14 +5059,12 @@ window.HUB = {
           "votes": 390
         },
         "noms": {
-          "fr": [
-            "Le Novice de Niveau Max en Solo"
-          ],
           "ko": [
             "나 혼자 만렙 뉴비",
             "나혼자만렙뉴비"
           ],
           "autres": [
+            "Le Novice de Niveau Max en Solo",
             "I Am the Top Ranker Newbie",
             "I'm the Only Max-Leveled Newbie",
             "Na Honja Mallep Newbie",
@@ -5238,13 +5156,11 @@ window.HUB = {
           "votes": 361
         },
         "noms": {
-          "fr": [
-            "Survivre dans le Jeu en tant que Barbare"
-          ],
           "ko": [
             "게임 속 바바리안으로 살아남기"
           ],
           "autres": [
+            "Survivre dans le Jeu en tant que Barbare",
             "Als Barbar im Spiel Überleben",
             "Geim Sok Babarianeuro Saranamgi",
             "Sobreviviendo al juego como un bárbaro",
@@ -5336,13 +5252,11 @@ window.HUB = {
           "votes": 201
         },
         "noms": {
-          "fr": [
-            "Le Génie Chevalier Noir en Phase Terminale"
-          ],
           "ko": [
             "시한부 천재 암흑기사"
           ],
           "autres": [
+            "Le Génie Chevalier Noir en Phase Terminale",
             "Terminally-Ill Dark Knight",
             "Time Limited Genius Dark Knight",
             "อัศวินดำล่าท้าเวลา",
@@ -5431,7 +5345,6 @@ window.HUB = {
           "votes": 94
         },
         "noms": {
-          "fr": [],
           "ko": [
             "혼자 다 해 먹는 천재 암살자"
           ],
@@ -5513,7 +5426,6 @@ window.HUB = {
           "votes": 88
         },
         "noms": {
-          "fr": [],
           "ko": [
             "백작가 막내아들은 플레이어"
           ],
@@ -5595,7 +5507,6 @@ window.HUB = {
           "votes": 81
         },
         "noms": {
-          "fr": [],
           "ko": [
             "웨폰 크리에이터"
           ],
@@ -5674,13 +5585,11 @@ window.HUB = {
           "votes": 255
         },
         "noms": {
-          "fr": [
-            "L'épéiste prodige de l'académie"
-          ],
           "ko": [
             "아카데미의 천재칼잡이"
           ],
           "autres": [
+            "L'épéiste prodige de l'académie",
             "Academy Cheonjaekaljabi",
             "Academy Genius Swordsman",
             "Academy's Genius Swordmaster",
@@ -5763,7 +5672,6 @@ window.HUB = {
       "infos": {
         "mu": null,
         "noms": {
-          "fr": [],
           "ko": [],
           "autres": []
         },
@@ -5805,7 +5713,6 @@ window.HUB = {
           "votes": 27
         },
         "noms": {
-          "fr": [],
           "ko": [
             "신이 쓰는 웹소설"
           ],
