@@ -84,6 +84,547 @@ td.mute { color: var(--z300); }
 .ic.del:hover { color: var(--red); }
 .ic.sure { color: #fff; background: #b91c1c; font-size: 12px; padding: 6px 10px; }
 
+.form { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; align-items: start; }
+.form.solo { grid-template-columns: minmax(0, 860px); }
+.side-card { position: sticky; top: 24px; }
+.card { padding: 24px; }
+.card h2 { padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid var(--line); }
+.fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+.fields .full { grid-column: 1 / -1; }
+.back { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px; padding: 0; border: 0; background: none; color: var(--z400); cursor: pointer; }
+.back:hover { color: var(--text); }
+.field { margin-bottom: 18px; }
+.field label, .field .l { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 500; }
+.field .err { margin-top: 4px; color: var(--red); font-size: 13px; }
+.chk { display: flex; flex-wrap: wrap; gap: 8px; }
+.chk button { border: 1px solid var(--line); background: var(--panel); border-radius: 999px; padding: 4px 14px; color: var(--z400); cursor: pointer; }
+.chk button[aria-pressed="true"] { background: rgba(15,46,181,.15); border-color: rgba(15,46,181,.5); color: var(--blue-t); }
+.drop { border: 1px dashed #3f3f46; border-radius: 8px; padding: 16px; text-align: center; color: var(--z400); cursor: pointer; }
+.drop.over, .drop:hover { border-color: var(--blue-t); color: var(--blue-t); }
+.big { width: 100%; max-width: 240px; height: auto; aspect-ratio: 2 / 3; margin: 0 auto 16px; border-radius: 8px; font-size: 56px; }
+.drop { font-size: 13px; }
+.foot { position: sticky; bottom: 0; z-index: 4; display: flex; justify-content: flex-end; gap: 12px; margin-top: 32px; padding: 16px 0; background: linear-gradient(to bottom, transparent, var(--bg) 35%); }
+
+.center { min-height: 100vh; display: grid; place-items: center; padding: 16px; }
+.login { width: min(440px, 100%); padding: 28px; }
+.login h1 { font-size: 20px; margin-bottom: 6px; }
+.help { color: var(--z400); font-size: 13px; margin: 0 0 18px; }
+.help ol { margin: 8px 0 0 18px; padding: 0; }
+.toast { position: fixed; right: 20px; bottom: 20px; max-width: 360px; padding: 12px 16px; border-radius: 8px; background: #18181b; border: 1px solid rgba(255,255,255,.1); z-index: 20; }
+.toast.err { border-color: rgba(248,113,113,.5); color: #fecaca; }
+
+@media (max-width: 1023px) {
+  .side { position: static; width: auto; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
+  .side-head { border-bottom: 0; height: 56px; padding: 0 16px; }
+  .nav { display: flex; overflow-x: auto; padding: 0; flex: 1; }
+  .nav button { width: auto; white-space: nowrap; margin: 0 2px; padding: 8px 10px; }
+  .lbl { display: none; }
+  .side-foot { border-top: 0; display: flex; padding: 0 8px; }
+  .side-foot a, .side-foot button { width: auto; margin: 0; }
+  main { margin-left: 0; padding-top: 24px; }
+  .form { grid-template-columns: minmax(0, 1fr); }
+  .side-card { position: static; }
+  .fields { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="center" id="login-view" hidden>
+  <form class="panel login" id="login-form" autocomplete="off">
+    <h1>Admin du hub scantrad</h1>
+    <div class="help">
+      Connecte-toi avec ton dépôt GitHub. Le jeton reste dans ce navigateur et ne sert qu'à lire et écrire les fichiers du site.
+      <ol>
+        <li>GitHub, Settings, Developer settings, Fine-grained tokens.</li>
+        <li>Accès au seul dépôt du hub, permission Contents : Read and write.</li>
+      </ol>
+    </div>
+    <div class="field"><label for="f-repo">Dépôt</label><input type="text" id="f-repo" placeholder="iLozAFK/scantrad-hub" required></div>
+    <div class="field"><label for="f-branch">Branche</label><input type="text" id="f-branch" value="main" required></div>
+    <div class="field"><label for="f-token">Jeton GitHub</label><input type="password" id="f-token" placeholder="github_pat_..." required></div>
+    <div class="err" id="login-err" style="color:var(--red);margin-bottom:12px" hidden></div>
+    <button class="btn" type="submit" id="login-btn">Se connecter</button>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <aside class="side">
+    <div class="side-head"><div class="logo">i</div><span>Admin</span></div>
+    <nav class="nav" id="nav" aria-label="Sections"></nav>
+    <div class="side-foot">
+      <a href="../" target="_blank" rel="noopener"><span data-i="ext"></span>Voir le site</a>
+      <button type="button" class="out" id="logout"><span data-i="out"></span>Déconnexion</button>
+    </div>
+  </aside>
+  <main>
+    <div class="bar" id="bar" hidden>
+      <b id="bar-txt"></b><span class="sp"></span>
+      <button class="btn ghost" type="button" id="bar-cancel">Annuler tout</button>
+      <button class="btn" type="button" id="bar-publish">Publier</button>
+    </div>
+    <section id="list-view">
+      <div class="head">
+        <div><h1 id="l-title"></h1><p class="sub" id="l-sub"></p></div>
+        <div class="tools">
+          <div class="search" id="l-search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" id="q" placeholder="Rechercher..." aria-label="Rechercher"></div>
+          <button class="btn" type="button" id="l-add">Ajouter</button>
+        </div>
+      </div>
+      <div class="panel scroll"><table><thead id="t-head"></thead><tbody id="t-body"></tbody></table></div>
+    </section>
+    <section id="edit-view" hidden>
+      <button class="back" type="button" id="e-top-back">&larr; Retour à la liste</button>
+      <div class="head"><div><h1 id="e-title"></h1><p class="sub" id="e-sub"></p></div></div>
+      <div class="form" id="e-form"></div>
+      <div class="foot"><button class="btn ghost" type="button" id="e-back">Retour</button><button class="btn" type="button" id="e-save">Enregistrer</button></div>
+    </section>
+  </main>
+</div>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+const LS = "scantrad-hub-admin";
+const STATUTS = ["En cours", "À venir", "En pause", "Terminées"];
+const ROLES = ["TL", "QC", "CL", "ED", "Resp."];
+const TYPES = ["Manhwa", "Manhua", "Manga", "Webtoon", "Web novel"];
+const PILL = { "En cours": "s-cours", "À venir": "s-venir", "En pause": "s-pause", "Terminées": "s-fin" };
+const ICONS = {
+  ext: '<path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>',
+  out: '<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>',
+  edit: '<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+  trash: '<path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>'
+};
+
+const $ = (id) => document.getElementById(id);
+function h(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; }
+function icon(name) { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 24 24"); s.setAttribute("class", "i"); s.setAttribute("aria-hidden", "true"); s.innerHTML = ICONS[name]; return s; }
+function hue(s) { let n = 0; for (const c of s) n = (n * 31 + c.charCodeAt(0)) % 360; return n; }
+function slug(s) { return (s || "image").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "image"; }
+function toast(msg, err) { const t = $("toast"); t.textContent = msg; t.className = "toast" + (err ? " err" : ""); t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => { t.hidden = true; }, err ? 7000 : 4000); }
+
+let cfg = null, data = null, snapshot = "", pending = {}, section = "SERIES", editing = null, query = "";
+
+/* ---------- Définition des sections ---------- */
+const COLS = {
+  SERIES: {
+    nav: "Séries", one: "série", art: "une", key: "title", group: "Contenu",
+    fields: [
+      { k: "title", l: "Titre", t: "text", req: true, full: true },
+      { k: "team", l: "Équipe", t: "select", opts: () => data.EQUIPES.map(e => e.name) },
+      { k: "type", l: "Type", t: "select", opts: () => TYPES },
+      { k: "status", l: "Statut", t: "select", opts: () => STATUTS },
+      { k: "chapter", l: "Info (chapitre, source...)", t: "text" },
+      { k: "roles", l: "Rôles", t: "multi", opts: () => ROLES, full: true },
+      { k: "url", l: "Lien de lecture", t: "text", ph: "https://...", full: true },
+      { k: "cover", l: "Couverture", t: "image" }
+    ],
+    cols: [["Cover", s => coverNode(s.cover, s.title)], ["Titre", s => s.title, "strong"], ["Type", s => (s.type || "").toUpperCase(), "mute"], ["Statut", s => pill(s.status)], ["Équipe", s => s.team, "mute"], ["Rôles", s => roles(s.roles)]],
+    blank: () => ({ title: "", team: data.EQUIPES[0] ? data.EQUIPES[0].name : "", type: "Manhwa", status: "En cours", chapter: "", roles: ["TL"], url: "", cover: "" })
+  },
+  EQUIPES: {
+    nav: "Équipes", one: "équipe", art: "une", key: "name", group: "Contenu",
+    fields: [
+      { k: "name", l: "Nom", t: "text", req: true, full: true },
+      { k: "dates", l: "Période", t: "text", ph: "Depuis juin 2025" },
+      { k: "n", l: "Nombre de séries", t: "text", ph: "20 séries" },
+      { k: "url", l: "Site de l'équipe", t: "text", ph: "https://...", full: true }
+    ],
+    cols: [["Équipe", e => e.name, "strong"], ["Période", e => e.dates, "mute"], ["Séries", e => e.n, "mute"], ["Site", e => e.url, "mute"]],
+    blank: () => ({ name: "", dates: "", n: "", url: "" })
+  },
+  GLOSSAIRES: {
+    nav: "Glossaires", one: "glossaire", art: "un", key: "name", group: "Contenu",
+    fields: [
+      { k: "name", l: "Titre", t: "text", req: true, full: true },
+      { k: "text", l: "Description", t: "area" },
+      { k: "url", l: "Lien du glossaire", t: "text", ph: "https://...", full: true },
+      { k: "cover", l: "Couverture", t: "image" }
+    ],
+    cols: [["Cover", g => coverNode(g.cover, g.name)], ["Titre", g => g.name, "strong"], ["Lien", g => g.url, "mute"]],
+    blank: () => ({ name: "", text: "", url: "", cover: "" })
+  },
+  OUTILS: {
+    nav: "Outils", one: "outil", art: "un", key: "name", group: "Outils",
+    fields: [
+      { k: "name", l: "Nom", t: "text", req: true },
+      { k: "tag", l: "Étiquette", t: "text", ph: "App web, Discord..." },
+      { k: "text", l: "Description", t: "area" },
+      { k: "url", l: "Lien", t: "text", ph: "https://... ou zeon://open" },
+      { k: "label", l: "Texte du bouton", t: "text", ph: "Ouvrir" }
+    ],
+    cols: [["Nom", o => o.name, "strong"], ["Étiquette", o => o.tag, "mute"], ["Lien", o => o.url, "mute"]],
+    blank: () => ({ name: "", tag: "", text: "", url: "", label: "" })
+  },
+  LIENS: {
+    nav: "Liens", one: "lien", art: "un", key: "name", group: "Outils",
+    fields: [
+      { k: "name", l: "Nom", t: "text", req: true, full: true },
+      { k: "url", l: "Adresse", t: "text", ph: "https://...", full: true }
+    ],
+    cols: [["Nom", l => l.name, "strong"], ["Adresse", l => l.url, "mute"]],
+    blank: () => ({ name: "", url: "" })
+  }
+};
+const SITE_FIELDS = [
+  { k: "kicker", l: "Accroche", t: "text" },
+  { k: "depuis", l: "Dans la scantrad depuis (année)", t: "number" },
+  { k: "text", l: "Texte d'accueil", t: "area" },
+  { k: "team", l: "Équipe actuelle (lien en bas de la barre)", t: "text" },
+  { k: "foot", l: "Pied de page", t: "text" }
+];
+
+function pill(s) { const p = h("span", "pill " + (PILL[s] || "s-venir"), (s || "").toLowerCase()); return p; }
+function roles(r) { const w = h("span"); (r || []).forEach(x => w.append(h("span", "role", x))); return w; }
+function coverSrc(path) { if (!path) return ""; return pending[path] ? pending[path].dataUrl : "../" + path; }
+function coverNode(path, title, cls) {
+  const d = h("div", "cv" + (cls ? " " + cls : ""));
+  const src = coverSrc(path);
+  const fb = () => { d.textContent = (title || "?").trim().charAt(0).toUpperCase(); d.style.background = "hsl(" + hue(title || "?") + " 35% 22%)"; };
+  if (src) { const im = h("img"); im.alt = ""; im.src = src; im.onerror = () => { im.remove(); fb(); }; d.append(im); } else fb();
+  return d;
+}
+
+/* ---------- GitHub ---------- */
+function b64enc(str) { return btoa(unescape(encodeURIComponent(str))); }
+function b64dec(b) { return decodeURIComponent(escape(atob(b.replace(/\n/g, "")))); }
+async function gh(path, opts) {
+  const url = "https://api.github.com/repos/" + cfg.repo + "/contents/" + path.split("/").map(encodeURIComponent).join("/");
+  const res = await fetch(url + (opts && opts.method === "PUT" ? "" : "?ref=" + encodeURIComponent(cfg.branch)), Object.assign({}, opts, {
+    headers: { Authorization: "Bearer " + cfg.token, Accept: "application/vnd.github+json", "Content-Type": "application/json" }
+  }));
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    let m = ""; try { m = (await res.json()).message; } catch (e) {}
+    if (res.status === 401) throw new Error("Jeton refusé. Vérifie qu'il est valide et qu'il n'a pas expiré.");
+    if (res.status === 403) throw new Error("Accès refusé" + (m ? " : " + m : "") + ". Le jeton doit avoir Contents : Read and write sur ce dépôt.");
+    throw new Error("GitHub a répondu " + res.status + (m ? " : " + m : ""));
+  }
+  return res.json();
+}
+async function loadData() {
+  const f = await gh("data/data.js");
+  if (!f) throw new Error("Fichier data/data.js introuvable. Vérifie le dépôt et la branche.");
+  const t = b64dec(f.content);
+  data = JSON.parse(t.slice(t.indexOf("{"), t.lastIndexOf("}") + 1));
+  snapshot = JSON.stringify(data); pending = {};
+}
+function usedCovers() { const s = new Set(); data.SERIES.forEach(x => x.cover && s.add(x.cover)); data.GLOSSAIRES.forEach(x => x.cover && s.add(x.cover)); return s; }
+async function publish() {
+  const btn = $("bar-publish"); btn.disabled = true; btn.textContent = "Publication...";
+  try {
+    const used = usedCovers();
+    for (const [p, v] of Object.entries(pending)) {
+      if (!used.has(p)) continue;
+      const ex = await gh(p);
+      await gh(p, { method: "PUT", body: JSON.stringify({ message: "Couverture " + p, content: v.b64, branch: cfg.branch, sha: ex ? ex.sha : undefined }) });
+    }
+    const ex = await gh("data/data.js");
+    const text = "window.HUB = " + JSON.stringify(data, null, 2) + ";\n";
+    await gh("data/data.js", { method: "PUT", body: JSON.stringify({ message: "Mise à jour du hub depuis l'admin", content: b64enc(text), branch: cfg.branch, sha: ex ? ex.sha : undefined }) });
+    snapshot = JSON.stringify(data); pending = {};
+    toast("Publié. Le site se met à jour dans environ une minute.");
+  } catch (e) { toast(e.message, true); }
+  btn.disabled = false; btn.textContent = "Publier"; renderAll();
+}
+
+/* ---------- Rendu ---------- */
+function dirty() { return JSON.stringify(data) !== snapshot || Object.keys(pending).length > 0; }
+function renderNav() {
+  const nav = $("nav"); nav.replaceChildren();
+  let last = "";
+  const add = (key, label, group) => {
+    if (group !== last) { nav.append(h("p", "lbl", group)); last = group; }
+    const b = h("button", "", label); b.type = "button";
+    if (section === key && !editing) b.setAttribute("aria-current", "page");
+    b.onclick = () => { section = key; editing = null; query = ""; $("q").value = ""; renderAll(); };
+    nav.append(b);
+  };
+  Object.keys(COLS).forEach(k => add(k, COLS[k].nav, COLS[k].group));
+  add("SITE", "Textes du site", "Site");
+}
+function renderBar() {
+  const d = dirty();
+  $("bar").hidden = !d;
+  if (d) $("bar-txt").textContent = "Modifications non publiées. Elles ne sont sur le site qu'après avoir cliqué sur Publier.";
+}
+function renderAll() {
+  renderNav(); renderBar();
+  $("list-view").hidden = !!editing || section === "SITE";
+  $("edit-view").hidden = !editing && section !== "SITE";
+  if (section === "SITE" && !editing) startEdit("SITE", 0);
+  else if (editing) renderEdit(); else renderList();
+}
+function renderList() {
+  const c = COLS[section], list = data[section];
+  $("l-title").textContent = c.nav;
+  $("l-sub").textContent = list.length + (list.length > 1 ? " éléments" : " élément");
+  $("l-add").textContent = "Ajouter " + c.art + " " + c.one;
+  $("l-add").onclick = () => startEdit(section, -1);
+  const head = $("t-head"); head.replaceChildren();
+  const tr = h("tr"); c.cols.forEach(col => tr.append(h("th", "", col[0]))); tr.append(h("th", "r", "Actions")); head.append(tr);
+  const body = $("t-body"); body.replaceChildren();
+  const q = query.trim().toLowerCase();
+  let shown = 0;
+  list.forEach((item, i) => {
+    if (q && !String(item[c.key] || "").toLowerCase().includes(q)) return;
+    shown++;
+    const r = h("tr");
+    c.cols.forEach(col => { const td = h("td", col[2] || ""); const v = col[1](item); if (v instanceof Node) td.append(v); else td.textContent = v == null ? "" : v; r.append(td); });
+    const act = h("td", "r"); const w = h("span", "act");
+    const ed = h("button", "ic"); ed.type = "button"; ed.title = "Modifier"; ed.setAttribute("aria-label", "Modifier"); ed.append(icon("edit")); ed.onclick = () => startEdit(section, i);
+    const del = h("button", "ic del"); del.type = "button"; del.title = "Supprimer"; del.setAttribute("aria-label", "Supprimer"); del.append(icon("trash"));
+    del.onclick = () => {
+      if (del.classList.contains("sure")) { list.splice(i, 1); renderAll(); return; }
+      del.classList.add("sure"); del.replaceChildren(document.createTextNode("Confirmer"));
+      setTimeout(() => { if (del.isConnected) { del.classList.remove("sure"); del.replaceChildren(icon("trash")); } }, 3000);
+    };
+    w.append(ed, del); act.append(w); r.append(act); body.append(r);
+  });
+  if (!shown) { const r = h("tr"); const td = h("td", "empty", list.length ? "Rien ne correspond à ta recherche." : "Rien ici pour l'instant."); td.colSpan = c.cols.length + 1; r.append(td); body.append(r); }
+}
+
+/* ---------- Édition ---------- */
+function startEdit(sec, index) {
+  section = sec;
+  if (sec === "SITE") editing = { index: 0, draft: JSON.parse(JSON.stringify(data.SITE)), isSite: true };
+  else editing = { index, draft: index >= 0 ? JSON.parse(JSON.stringify(data[sec][index])) : COLS[sec].blank(), isSite: false };
+  renderAll();
+}
+function fieldsOf() { return editing.isSite ? SITE_FIELDS : COLS[section].fields; }
+function renderEdit() {
+  const isNew = !editing.isSite && editing.index < 0;
+  const c = editing.isSite ? { nav: "Textes du site", one: "" } : COLS[section];
+  $("e-title").textContent = editing.isSite ? "Textes du site" : (isNew ? "Ajouter" : "Modifier") + " " + c.art + " " + c.one;
+  $("e-sub").textContent = editing.isSite ? "Accueil et pied de page." : (isNew ? "Les champs marqués d'un astérisque sont obligatoires." : (editing.draft[c.key] || ""));
+  $("e-save").textContent = isNew ? "Ajouter" : "Mettre à jour";
+  $("e-back").hidden = editing.isSite; $("e-top-back").hidden = editing.isSite;
+  const form = $("e-form"); form.replaceChildren();
+  const info = h("div", "panel card"); info.append(h("h2", "", "Informations"));
+  const grid = h("div", "fields"); info.append(grid);
+  let imgField = null;
+  fieldsOf().forEach(f => {
+    if (f.t === "image") { imgField = f; return; }
+    const w = h("div", "field" + (f.full || f.t === "area" || editing.isSite ? " full" : "")); const id = "fld-" + f.k;
+    const lab = h("label", "", f.l + (f.req ? " *" : "")); lab.htmlFor = id; if (f.t === "multi") { lab.removeAttribute("for"); lab.className = "l"; }
+    w.append(lab);
+    const v = editing.draft[f.k];
+    if (f.t === "text" || f.t === "number") {
+      const i = h("input"); i.type = f.t === "number" ? "number" : "text"; i.id = id; i.value = v == null ? "" : v; if (f.ph) i.placeholder = f.ph;
+      i.oninput = () => { editing.draft[f.k] = f.t === "number" ? (i.value === "" ? "" : parseInt(i.value, 10)) : i.value; };
+      w.append(i);
+    } else if (f.t === "area") {
+      const i = h("textarea"); i.id = id; i.value = v || ""; i.oninput = () => { editing.draft[f.k] = i.value; }; w.append(i);
+    } else if (f.t === "select") {
+      const s = h("select"); s.id = id;
+      const opts = f.opts().slice(); if (v && !opts.includes(v)) opts.push(v);
+      opts.forEach(o => { const op = h("option", "", o); op.value = o; if (o === v) op.selected = true; s.append(op); });
+      s.onchange = () => { editing.draft[f.k] = s.value; }; w.append(s);
+    } else if (f.t === "multi") {
+      const g = h("div", "chk");
+      f.opts().forEach(o => {
+        const b = h("button", "", o); b.type = "button"; b.setAttribute("aria-pressed", String((v || []).includes(o)));
+        b.onclick = () => { const a = editing.draft[f.k] || []; const k = a.indexOf(o); if (k >= 0) a.splice(k, 1); else a.push(o); editing.draft[f.k] = a; b.setAttribute("aria-pressed", String(k < 0)); };
+        g.append(b);
+      }); w.append(g);
+    }
+    if (f.req) { const e = h("div", "err"); e.id = "err-" + f.k; e.hidden = true; e.textContent = "Ce champ est obligatoire."; w.append(e); }
+    grid.append(w);
+  });
+  form.className = "form" + (imgField ? "" : " solo");
+  if (imgField) {
+    const cv = h("div", "panel card side-card"); cv.append(h("h2", "", "Couverture"));
+    const prev = h("div"); const drawPrev = () => { prev.replaceChildren(coverNode(editing.draft.cover, editing.draft[COLS[section].key], "big")); };
+    drawPrev(); cv.append(prev);
+    const input = h("input"); input.type = "file"; input.accept = "image/*"; input.hidden = true;
+    const drop = h("div", "drop", "Choisir ou glisser une image"); drop.tabIndex = 0; drop.setAttribute("role", "button");
+    const take = async (file) => {
+      if (!file || !file.type.startsWith("image/")) { toast("Ce fichier n'est pas une image.", true); return; }
+      try {
+        const r = await toCover(file);
+        const base = slug(editing.draft[COLS[section].key]) + "-" + Date.now().toString(36);
+        const path = "covers/" + base + "." + r.ext;
+        pending[path] = { b64: r.b64, dataUrl: r.dataUrl };
+        editing.draft.cover = path; drawPrev();
+      } catch (e) { toast("Impossible de lire cette image.", true); }
+    };
+    drop.onclick = () => input.click();
+    drop.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } };
+    drop.ondragover = (e) => { e.preventDefault(); drop.classList.add("over"); };
+    drop.ondragleave = () => drop.classList.remove("over");
+    drop.ondrop = (e) => { e.preventDefault(); drop.classList.remove("over"); take(e.dataTransfer.files[0]); };
+    input.onchange = () => take(input.files[0]);
+    cv.append(drop, input);
+    const rm = h("button", "btn ghost", "Retirer la couverture"); rm.type = "button"; rm.style.marginTop = "12px";
+    rm.onclick = () => { editing.draft.cover = ""; drawPrev(); };
+    cv.append(rm); form.append(cv);
+  }
+  form.append(info);
+}
+function toCover(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image(), u = URL.createObjectURL(file);
+    img.onload = () => {
+      const W = 300, H = 450, c = document.createElement("canvas"); c.width = W; c.height = H;
+      const ctx = c.getContext("2d"), r = Math.max(W / img.width, H / img.height), w = img.width * r, hh = img.height * r;
+      ctx.fillStyle = "#000"; ctx.fillRect(0, 0, W, H);
+      ctx.drawImage(img, (W - w) / 2, (H - hh) * 0.3, w, hh);
+      let dataUrl = c.toDataURL("image/webp", 0.82), ext = "webp";
+      if (!dataUrl.startsWith("data:image/webp")) { dataUrl = c.toDataURL("image/jpeg", 0.85); ext = "jpg"; }
+      URL.revokeObjectURL(u);
+      resolve({ dataUrl, ext, b64: dataUrl.split(",")[1] });
+    };
+    img.onerror = () => { URL.revokeObjectURL(u); reject(new Error("image")); };
+    img.src = u;
+  });
+}
+function saveEdit() {
+  let ok = true;
+  fieldsOf().forEach(f => {
+    if (!f.req) return;
+    const bad = !String(editing.draft[f.k] || "").trim();
+    const e = $("err-" + f.k); if (e) e.hidden = !bad; if (bad) ok = false;
+  });
+  if (!ok) { toast("Remplis les champs obligatoires.", true); return; }
+  if (editing.isSite) data.SITE = Object.assign({}, data.SITE, editing.draft);
+  else if (editing.index >= 0) data[section][editing.index] = editing.draft;
+  else data[section].push(editing.draft);
+  const wasSite = editing.isSite;
+  editing = null;
+  if (wasSite) { toast("Textes enregistrés. Clique sur Publier pour les envoyer."); section = "SERIES"; }
+  renderAll();
+}
+
+/* ---------- Démarrage ---------- */
+function showLogin(msg) {
+  $("app").hidden = true; $("login-view").hidden = false;
+  const e = $("login-err"); e.hidden = !msg; e.textContent = msg || "";
+  if (cfg) { $("f-repo").value = cfg.repo; $("f-branch").value = cfg.branch; }
+}
+async function start() {
+  $("login-view").hidden = true; $("app").hidden = false;
+  document.querySelectorAll("[data-i]").forEach(s => { s.replaceChildren(icon(s.dataset.i)); s.style.display = "inline-flex"; });
+  renderAll();
+}
+$("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = $("login-btn"); btn.disabled = true; btn.textContent = "Connexion...";
+  cfg = { repo: $("f-repo").value.trim().replace(/^https?:\/\/github\.com\//, "").replace(/\.git$/, ""), branch: $("f-branch").value.trim() || "main", token: $("f-token").value.trim() };
+  try { await loadData(); localStorage.setItem(LS, JSON.stringify(cfg)); $("f-token").value = ""; await start(); }
+  catch (err) { cfg.token = ""; showLogin(err.message || "Connexion impossible."); }
+  btn.disabled = false; btn.textContent = "Se connecter";
+});
+$("logout").onclick = () => { try { localStorage.removeItem(LS); } catch (e) {} cfg = null; data = null; showLogin(""); };
+$("bar-publish").onclick = publish;
+$("bar-cancel").onclick = async () => {
+  if (!$("bar-cancel").dataset.sure) { $("bar-cancel").dataset.sure = "1"; $("bar-cancel").textContent = "Confirmer l'annulation"; setTimeout(() => { $("bar-cancel").dataset.sure = ""; $("bar-cancel").textContent = "Annuler tout"; }, 3000); return; }
+  $("bar-cancel").dataset.sure = ""; $("bar-cancel").textContent = "Annuler tout";
+  try { editing = null; await loadData(); renderAll(); toast("Modifications annulées."); } catch (e) { toast(e.message, true); }
+};
+$("e-back").onclick = () => { editing = null; renderAll(); };
+$("e-top-back").onclick = () => { if (!editing.isSite) { editing = null; renderAll(); } };
+$("e-save").onclick = saveEdit;
+$("q").addEventListener("input", (e) => { query = e.target.value; renderList(); });
+window.addEventListener("beforeunload", (e) => { if (data && dirty()) { e.preventDefault(); e.returnValue = ""; } });
+
+(async function init() {
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LS) || "null"); } catch (e) {}
+  if (saved && saved.token) {
+    cfg = saved;
+    try { await loadData(); await start(); return; } catch (e) { showLogin(e.message); return; }
+  }
+  showLogin("");
+})();
+</script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin hub scantrad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #030303; --panel: #0a0a0a; --line: #1a1a1a; --hover: #111111; --text: #ffffff;
+  --z300: #d4d4d8; --z400: #a1a1aa; --z600: #52525b; --blue: #0f2eb5; --blue-t: #4d7fff; --red: #f87171;
+  --font: "Fira Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font-family: inherit; font-size: 14px; color: var(--text); }
+:focus-visible { outline: 2px solid var(--blue-t); outline-offset: 2px; border-radius: 6px; }
+[hidden] { display: none !important; }
+svg.i { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+.side { position: fixed; inset: 0 auto 0 0; width: 256px; background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; z-index: 5; }
+.side-head { height: 64px; display: flex; align-items: center; gap: 10px; padding: 0 24px; border-bottom: 1px solid var(--line); font-size: 18px; font-weight: 700; }
+.logo { width: 32px; height: 32px; border-radius: 8px; background: var(--blue); display: grid; place-items: center; font-weight: 700; }
+.nav { flex: 1; overflow-y: auto; padding: 12px 0; }
+.lbl { margin: 0; padding: 16px 24px 6px; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--z600); }
+.nav button, .side-foot a, .side-foot button { display: flex; align-items: center; gap: 12px; width: calc(100% - 24px); margin: 0 12px; padding: 8px 12px; border: 0; border-radius: 8px; background: transparent; font-weight: 500; color: var(--z400); cursor: pointer; text-align: left; }
+.nav button:hover, .side-foot a:hover, .side-foot button:hover { color: var(--text); background: rgba(255,255,255,.05); }
+.nav button[aria-current="page"] { background: rgba(15,46,181,.15); color: var(--blue-t); }
+.side-foot { padding: 12px 0; border-top: 1px solid var(--line); display: grid; gap: 4px; }
+.side-foot .out { color: var(--red); }
+
+main { margin-left: 256px; min-height: 100vh; padding: 32px clamp(16px, 2.2vw, 32px) 80px; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 24px; border: 1px solid rgba(15,46,181,.5); background: rgba(15,46,181,.1); border-radius: 8px; }
+.bar b { font-weight: 600; }
+.bar .sp { flex: 1; }
+.head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+h1 { margin: 0; font-size: 24px; font-weight: 700; }
+h2 { margin: 0 0 16px; font-size: 16px; font-weight: 600; }
+.sub { margin: 4px 0 0; color: var(--z400); }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px; border: 1px solid transparent; background: var(--blue); color: #fff; font-weight: 500; cursor: pointer; }
+.btn:hover { background: rgba(15,46,181,.9); }
+.btn.ghost { background: var(--panel); border-color: var(--line); color: var(--z300); }
+.btn.ghost:hover { background: var(--hover); color: var(--text); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+.search { position: relative; min-width: 260px; }
+.search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--z400); width: 16px; height: 16px; }
+input[type="text"], input[type="password"], input[type="number"], input[type="search"], select, textarea {
+  width: 100%; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+.search input { padding-left: 38px; }
+input::placeholder, textarea::placeholder { color: var(--z400); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue); }
+textarea { resize: vertical; min-height: 84px; }
+select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, #a1a1aa 50%), linear-gradient(135deg, #a1a1aa 50%, transparent 50%); background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
+
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+.scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 720px; }
+th { text-align: left; padding: 12px 24px; font-size: 12px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--z400); border-bottom: 1px solid var(--line); }
+td { padding: 12px 24px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: middle; }
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover { background: var(--hover); }
+th.r, td.r { text-align: right; }
+td.strong { font-weight: 500; max-width: 420px; overflow: hidden; text-overflow: ellipsis; }
+td.mute { color: var(--z300); }
+.empty { padding: 32px; text-align: center; color: var(--z400); }
+.cv { width: 48px; height: 64px; border-radius: 6px; overflow: hidden; border: 1px solid #3f3f46; display: grid; place-items: center; font-weight: 600; font-size: 18px; color: rgba(255,255,255,.85); }
+.cv img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pill { display: inline-block; padding: 0 8px; font-size: 12px; line-height: 20px; font-weight: 600; border-radius: 999px; }
+.s-cours { background: rgba(74,222,128,.1); color: #4ade80; }
+.s-pause { background: rgba(251,191,36,.1); color: #fbbf24; }
+.s-fin { background: rgba(77,127,255,.12); color: var(--blue-t); }
+.s-venir { background: rgba(161,161,170,.12); color: var(--z400); }
+.role { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; margin-right: 6px; background: rgba(161,161,170,.14); color: var(--z300); }
+.act { display: inline-flex; gap: 4px; }
+.ic { display: inline-flex; padding: 6px; border: 0; background: transparent; border-radius: 6px; color: var(--z400); cursor: pointer; }
+.ic:hover { color: var(--text); background: #27272a; }
+.ic.del:hover { color: var(--red); }
+.ic.sure { color: #fff; background: #b91c1c; font-size: 12px; padding: 6px 10px; }
+
 .form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .card { padding: 24px; }
 .field { margin-bottom: 18px; }
