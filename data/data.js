@@ -21,7 +21,7 @@ window.HUB = {
     },
     {
       "name": "Ortega Scans",
-      "dates": "Depuis août 2024",
+      "dates": "Depuis décembre 2024",
       "n": "Environ 15 séries",
       "url": ""
     },
