@@ -86,7 +86,8 @@ th.r, td.r { text-align: right; }
 .roles { display: inline-flex; gap: 6px; }
 .role { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
 .r-TL { background: rgba(124,108,246,.15); color: #b3a9ff; }
-.r-QC { background: rgba(236,110,175,.14); color: #f2a0cc; }
+.r-CH { background: rgba(236,110,175,.14); color: #f2a0cc; }
+.r-QC { background: rgba(250,204,21,.14); color: #fde047; }
 .r-CL { background: rgba(240,150,110,.14); color: #f5b394; }
 .r-ED { background: rgba(60,200,160,.14); color: #6fe0bd; }
 .r-autre { background: rgba(161,161,170,.14); color: var(--z300); }
@@ -119,12 +120,65 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 .btn.ghost:hover { background: var(--hover); }
 .links { display: flex; flex-wrap: wrap; gap: 12px; }
 
+
+.entry { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.entry a.panel { padding: 20px 24px; display: block; transition: background .15s, border-color .15s; }
+.entry a.panel:hover { background: var(--hover); border-color: #27272a; }
+.entry b { display: block; font-size: 16px; margin-bottom: 4px; }
+.entry span { color: var(--z400); }
+.stack { display: grid; gap: 16px; }
+.tl-item.flat::before { display: none; }
+.tl { position: relative; display: grid; gap: 16px; padding-left: 28px; }
+.tl::before { content: ""; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: var(--line); }
+.tl-item { position: relative; padding: 20px 24px; }
+.tl-item::before { content: ""; position: absolute; left: -26px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: var(--panel); border: 2px solid #3f3f46; }
+.tl-item.now::before { background: var(--blue-t); border-color: var(--blue-t); }
+.tl-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 14px; }
+.tl-head h3 { margin: 0; font-size: 16px; font-weight: 600; }
+.tl-head .mute { font-size: 13px; }
+.tl-head .sp { flex: 1; }
+.tl-series { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 6px 24px; }
+.tl-s { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+.tl-s span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tl-empty { color: var(--z600); font-size: 13px; }
+.pill.s-old { background: rgba(161,161,170,.12); color: var(--z400); }
+
+
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex: none; }
+.chip { display: inline-flex; align-items: center; gap: 8px; }
+.seg { display: inline-flex; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; color: var(--z400); padding: 5px 14px; border-radius: 7px; cursor: pointer; font-weight: 500; }
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: rgba(15,46,181,.2); color: var(--blue-t); }
+.sgroup { margin-bottom: 32px; }
+.ghead { display: flex; align-items: center; gap: 10px; padding: 0 2px 12px; }
+.ghead h2 { margin: 0; font-size: 16px; font-weight: 600; }
+.ghead .gsub, .ghead .gn { color: var(--z400); font-size: 13px; }
+.ghead .rule { flex: 1; height: 1px; background: var(--line); }
+.scards { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 14px; }
+.scard { display: flex; gap: 16px; padding: 14px; transition: background .15s, border-color .15s; }
+.scard:hover { background: var(--hover); border-color: #27272a; }
+.scard .cv { width: 88px; height: 132px; border-radius: 8px; flex: none; font-size: 28px; border: 1px solid #27272a; }
+.sbody { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.sbody h3 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.sline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; color: var(--z400); font-size: 13px; }
+.steam { display: inline-flex; align-items: center; gap: 6px; color: var(--z300); }
+.sarrow, .sep { color: var(--z600); }
+.syn { margin: 2px 0 0; color: var(--z400); font-size: 13px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+.sfoot { margin-top: auto; padding-top: 6px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sfoot .sp { flex: 1; }
+.sdate { color: var(--z600); font-size: 12px; }
+.sbtn { padding: 5px 12px; font-size: 13px; align-self: auto; }
+.sbtn svg { width: 14px; height: 14px; }
+@media (max-width: 560px) { .scards { grid-template-columns: 1fr; } .scard .cv { width: 72px; height: 108px; } }
+
 @media (max-width: 1023px) {
   .side { position: static; width: auto; flex-direction: row; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
   .side-head { border-bottom: 0; padding: 0 16px; height: 56px; }
   .nav { display: flex; padding: 0; overflow-x: auto; }
   .lbl, .side-foot { display: none; }
   .nav a { margin: 0 2px; white-space: nowrap; padding: 8px 10px; }
+  .nav a[href^="#p-"]::after { content: " (passé)"; color: var(--z600); font-weight: 400; }
   main { margin-left: 0; padding-top: 24px; }
   .search { min-width: 0; flex: 1 1 220px; }
 }
@@ -137,12 +191,16 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
   <nav class="nav" aria-label="Navigation principale">
     <p class="lbl">Général</p>
     <a href="#accueil" data-i="home">Accueil</a>
-    <p class="lbl">Contenu</p>
-    <a href="#series" data-i="book">Séries</a>
+    <p class="lbl">Aujourd'hui</p>
+    <a href="#a-series" data-i="book">Séries</a>
+    <a href="#a-equipes" data-i="users">Équipes</a>
+    <a href="#a-outils" data-i="tool">Outils</a>
     <a href="#glossaires" data-i="open">Glossaires</a>
-    <p class="lbl">Outils</p>
-    <a href="#outils" data-i="tool">Outils</a>
-    <p class="lbl">Liens</p>
+    <p class="lbl">Passé</p>
+    <a href="#p-parcours" data-i="clock">Parcours</a>
+    <a href="#p-series" data-i="book">Séries</a>
+    <a href="#p-outils" data-i="tool">Outils</a>
+    <p class="lbl">Ressources</p>
     <a href="#liens" data-i="link">Liens</a>
   </nav>
   <div class="side-foot"><a id="foot-link" href="https://poseidon-scans.net" target="_blank" rel="noopener" data-i="ext"><span id="foot-name"></span></a></div>
@@ -152,31 +210,58 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
   <section id="accueil">
     <div class="head"><div><h1>Tableau de bord</h1><p class="sub" id="hero-text"></p></div></div>
     <div class="stats" id="stats"></div>
-    <h2>Équipes</h2>
-    <div class="panel scroll"><table style="min-width:520px"><thead><tr><th>Équipe</th><th>Période</th><th>Séries</th><th class="r">Site</th></tr></thead><tbody id="teams"></tbody></table></div>
+    <div class="entry">
+      <a class="panel" href="#a-series"><b>Aujourd'hui</b><span id="entry-now"></span></a>
+      <a class="panel" href="#p-parcours"><b>Passé</b><span id="entry-past"></span></a>
+    </div>
   </section>
 
-  <section id="series">
+  <section id="a-series">
     <div class="head">
-      <div><h1>Séries</h1><p class="sub">TL : traduction, QC : check, CL : clean, ED : édition, Resp. : responsable.</p></div>
+      <div><h1 id="a-h1"></h1><p class="sub">TL : traduction, CH : check, QC : quality check, CL : clean, ED : édition.</p></div>
       <div class="tools">
-        <label class="sw"><button type="button" role="switch" aria-checked="false" id="sw-pos" aria-label="Séries Poséidon seulement"></button><span>Séries Poséidon</span></label>
-        <div class="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="q" type="search" placeholder="Rechercher une série..." aria-label="Rechercher une série"></div>
+        <div class="seg" id="a-sort" role="group" aria-label="Tri"></div>
+        <div class="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="a-q" type="search" placeholder="Rechercher une série..." aria-label="Rechercher une série"></div>
       </div>
     </div>
-    <div class="chips" id="chips"></div>
-    <div class="panel scroll"><table><thead><tr><th>Cover</th><th>Titre</th><th>Type</th><th>Statut</th><th>Équipe</th><th>Rôles</th><th class="r">Lien</th></tr></thead><tbody id="rows"></tbody></table></div>
-    <div class="pager" id="pager"></div>
+    <div class="chips" id="a-chips"></div>
+    <div id="a-out"></div>
+  </section>
+
+  <section id="a-equipes">
+    <div class="head"><div><h1>Équipes</h1><p class="sub">Les équipes avec lesquelles je travaille en ce moment.</p></div></div>
+    <div class="stack" id="a-teams"></div>
+  </section>
+
+  <section id="a-outils">
+    <div class="head"><div><h1>Outils</h1><p class="sub">Ce que j'utilise au quotidien.</p></div></div>
+    <div class="cards" id="a-tools"></div>
+  </section>
+
+  <section id="p-parcours">
+    <div class="head"><div><h1>Parcours</h1><p class="sub" id="past-sub"></p></div></div>
+    <div class="tl" id="tl"></div>
+  </section>
+
+  <section id="p-series">
+    <div class="head">
+      <div><h1 id="p-h1"></h1><p class="sub">TL : traduction, CH : check, QC : quality check, CL : clean, ED : édition.</p></div>
+      <div class="tools">
+        <div class="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input id="p-q" type="search" placeholder="Rechercher une série..." aria-label="Rechercher une série"></div>
+      </div>
+    </div>
+    <div class="chips" id="p-chips"></div>
+    <div id="p-out"></div>
+  </section>
+
+  <section id="p-outils">
+    <div class="head"><div><h1>Outils</h1><p class="sub">Ceux que j'ai utilisés avant et que je n'utilise plus.</p></div></div>
+    <div class="cards" id="p-tools"></div>
   </section>
 
   <section id="glossaires">
     <div class="head"><div><h1>Glossaires</h1><p class="sub">Noms, termes et personnages, tenus à jour pour garder une traduction cohérente.</p></div></div>
     <div class="cards" id="gloss"></div>
-  </section>
-
-  <section id="outils">
-    <div class="head"><div><h1>Outils</h1><p class="sub">Les projets que je construis autour de la scantrad.</p></div></div>
-    <div class="cards" id="tools"></div>
   </section>
 
   <section id="liens">
@@ -188,14 +273,15 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 <script src="data/data.js"></script>
 <script>
 const { SITE, EQUIPES, SERIES, OUTILS, GLOSSAIRES, LIENS } = window.HUB;
-const STATUTS = ["En cours", "À venir", "En pause", "Terminées"];
-const CLASSES = { "En cours": "s-cours", "À venir": "s-venir", "En pause": "s-pause", "Terminées": "s-fin" };
-const PAR_PAGE = 10;
+const periode = (x) => x.periode === "historique" ? "historique" : "actuel";
+const PILLS = { "En cours": "s-cours", "En pause": "s-pause", "À venir": "s-venir", "Terminées": "s-fin" };
 const ICONS = {
   home: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
   book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>',
-  open: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   tool: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94z"/>',
+  open: '<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
   link: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
   ext: '<path d="M15 3h6v6"/><path d="M10 14L21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>'
 };
@@ -219,66 +305,174 @@ function cover(s) {
   return d;
 }
 function fallback(d, s) { const t = (s.title || s.name || "?").trim(); d.textContent = t.charAt(0).toUpperCase(); d.style.background = "hsl(" + hue(t) + " 35% 22%)"; }
+function rolesNode(list) {
+  const rr = h("span", "roles");
+  (list || []).forEach(x => rr.append(h("span", "role r-" + (["TL", "ED", "CL", "CH", "QC"].includes(x) ? x : "autre"), x)));
+  return rr;
+}
+function plural(n, un, plus) { return n + " " + (n > 1 ? plus : un); }
+
+const actuelles = SERIES.filter(s => periode(s) === "actuel");
+const passees = SERIES.filter(s => periode(s) === "historique");
+const equipesActives = EQUIPES.filter(e => periode(e) === "actuel");
+const equipesPassees = EQUIPES.filter(e => periode(e) === "historique");
+const outilsActuels = OUTILS.filter(o => periode(o) === "actuel");
+const outilsPasses = OUTILS.filter(o => periode(o) === "historique");
 
 document.querySelectorAll("[data-i]").forEach(a => a.prepend(icon(a.dataset.i)));
 $("hero-text").textContent = SITE.text;
 $("foot-name").textContent = SITE.team;
 
-[[EQUIPES.length, "Équipes"], [new Date().getFullYear() - SITE.depuis, "Ans de scantrad"], [OUTILS.length, "Outils"], [GLOSSAIRES.length, "Glossaires"]].forEach(([n, l]) => {
+[[SERIES.length, "Séries au total"], [actuelles.length, "Séries en cours"], [EQUIPES.length, "Équipes"], [new Date().getFullYear() - SITE.depuis, "Ans de scantrad"]].forEach(([n, l]) => {
   const d = h("div", "panel stat"); d.append(h("span", "", l), h("b", "", String(n))); $("stats").append(d);
 });
-EQUIPES.forEach(e => {
-  const tr = h("tr");
-  const l = h("td", "r");
-  if (e.url) { const a = tag(h("a", "ic"), e.url); a.title = "Ouvrir"; a.append(icon("ext")); l.append(a); } else l.append(h("span", "nolink", "Lien à ajouter"));
-  tr.append(h("td", "", e.name), h("td", "mute", e.dates), h("td", "mute", e.n), l);
-  $("teams").append(tr);
-});
+$("entry-now").textContent = plural(actuelles.length, "série", "séries") + ", " + plural(equipesActives.length, "équipe", "équipes") + " et " + plural(outilsActuels.length, "outil", "outils") + " au quotidien.";
+$("entry-past").textContent = plural(passees.length, "série", "séries") + " chez " + plural(equipesPassees.length, "ancienne équipe", "anciennes équipes") + ", " + plural(outilsPasses.length, "ancien outil", "anciens outils") + ".";
 
-let statut = "Tous", page = 1, poseidon = false;
-["Tous"].concat(STATUTS).forEach(s => {
-  const b = h("button", "chip", s); b.type = "button"; b.setAttribute("aria-pressed", String(s === "Tous"));
-  b.onclick = () => { statut = s; page = 1; [...$("chips").children].forEach(c => c.setAttribute("aria-pressed", String(c.textContent === s))); rendre(); };
-  $("chips").append(b);
-});
-$("sw-pos").onclick = (e) => { poseidon = !poseidon; e.currentTarget.setAttribute("aria-checked", String(poseidon)); page = 1; rendre(); };
-$("q").addEventListener("input", () => { page = 1; rendre(); });
-
-function rendre() {
-  const q = $("q").value.trim().toLowerCase();
-  const liste = SERIES.filter(s => (statut === "Tous" || s.status === statut)
-    && (!poseidon || s.team === "Poséidon Scans")
-    && (!q || s.title.toLowerCase().includes(q)))
-    .sort((a, b) => STATUTS.indexOf(a.status) - STATUTS.indexOf(b.status));
-  const pages = Math.max(1, Math.ceil(liste.length / PAR_PAGE));
-  if (page > pages) page = pages;
-  const body = $("rows"); body.replaceChildren();
-  if (!liste.length) {
-    const tr = h("tr"); const td = h("td", "empty", "Aucune série ne correspond. Essaie un autre mot ou retire un filtre."); td.colSpan = 7; tr.append(td); body.append(tr);
-  }
-  liste.slice((page - 1) * PAR_PAGE, page * PAR_PAGE).forEach(s => {
-    const tr = h("tr");
-    const c = h("td"); c.append(cover(s));
-    const t = h("td"); const tt = h("div", "t-title", s.title); tt.title = s.title; t.append(tt);
-    if (s.chapter) t.append(h("div", "t-sub", s.chapter));
-    const st = h("td"); st.append(h("span", "pill " + CLASSES[s.status], s.status.toLowerCase()));
-    const ro = h("td"); const rr = h("span", "roles");
-    s.roles.forEach(x => rr.append(h("span", "role r-" + (["TL", "ED", "CL", "QC"].includes(x) ? x : "autre"), x))); ro.append(rr);
-    const li = h("td", "r");
-    if (s.url) { const a = tag(h("a", "ic"), s.url); a.title = "Lire"; a.append(icon("ext")); li.append(a); } else li.append(h("span", "nolink", "Lien à ajouter"));
-    tr.append(c, t, h("td", "mute", s.type.toUpperCase()), st, h("td", "mute", s.team), ro, li);
-    body.append(tr);
-  });
-  const p = $("pager"); p.replaceChildren();
-  if (pages > 1) {
-    const mk = (label, n, cur, aria) => { const b = h("button", "", label); b.type = "button"; if (aria) b.setAttribute("aria-label", aria); if (cur) b.setAttribute("aria-current", "page"); b.onclick = () => { page = n; rendre(); }; return b; };
-    p.append(mk("‹", Math.max(1, page - 1), false, "Page précédente"));
-    for (let i = 1; i <= pages; i++) p.append(mk(String(i), i, i === page));
-    p.append(mk("›", Math.min(pages, page + 1), false, "Page suivante"));
-  }
+/* ---------- Séries en cartes (Aujourd'hui et Passé) ---------- */
+function dateFr(iso) {
+  const d = new Date(iso + "T12:00:00");
+  return isNaN(d) ? "" : d.toLocaleDateString("fr-FR", { month: "long", year: "numeric" });
 }
-rendre();
+const nomEquipe = (n) => EQUIPES.find(e => e.name === n) || { name: n };
+const debutEquipe = (n) => nomEquipe(n).debut || "0000";
+function couleurEquipe(n) { return "hsl(" + hue(n) + " 70% 62%)"; }
+function equipesDe(s) {
+  const t = (s.teams && s.teams.length) ? s.teams : [s.team];
+  return t.slice().sort((a, b) => debutEquipe(a).localeCompare(debutEquipe(b)));
+}
+function dot(n) { const d = h("span", "dot"); d.style.background = couleurEquipe(n); return d; }
 
+function carteSerie(s, passee) {
+  const c = h("article", "panel scard");
+  c.append(cover(s));
+  const b = h("div", "sbody");
+  b.append(h("h3", "", s.title));
+  const l = h("div", "sline");
+  equipesDe(s).forEach((n, i, a) => {
+    const t = h("span", "steam"); t.append(dot(n), document.createTextNode(n)); l.append(t);
+    if (i < a.length - 1) l.append(h("span", "sarrow", "→"));
+  });
+  l.append(h("span", "sep", "·"), h("span", "", s.type || ""));
+  b.append(l);
+  if (s.synopsis) b.append(h("p", "syn", s.synopsis));
+  const f = h("div", "sfoot");
+  f.append(rolesNode(s.roles));
+  const dd = s.dernier ? [s.chapitre ? "Chapitre " + s.chapitre : "Dernière activité", dateFr(s.dernier)].join(" · ") : (passee ? (nomEquipe(equipesDe(s).slice(-1)[0]).dates || "") : "");
+  if (dd) f.append(h("span", "sdate", dd));
+  f.append(h("span", "sp"));
+  if (s.url) { const a = tag(h("a", "btn sbtn"), s.url); a.append(document.createTextNode("Lire "), icon("ext")); f.append(a); }
+  b.append(f);
+  c.append(b);
+  return c;
+}
+function groupe(titre, sous, items, passee, couleur) {
+  const g = h("div", "sgroup");
+  const hd = h("div", "ghead");
+  if (couleur) hd.append(dot(couleur));
+  hd.append(h("h2", "", titre));
+  if (sous) hd.append(h("span", "gsub", sous));
+  hd.append(h("span", "gn", plural(items.length, "série", "séries")), h("span", "rule"));
+  const grid = h("div", "scards");
+  items.forEach(s => grid.append(carteSerie(s, passee)));
+  g.append(hd, grid);
+  return g;
+}
+function cartesSeries(pre, list, equipes, titre, passee) {
+  $(pre + "-h1").textContent = titre;
+  let equipe = "Toutes", tri = "recent";
+  const chips = $(pre + "-chips");
+  ["Toutes"].concat(equipes.map(e => e.name)).forEach(s => {
+    const b = h("button", "chip", s); b.type = "button"; b.setAttribute("aria-pressed", String(s === "Toutes"));
+    if (s !== "Toutes") b.prepend(dot(s));
+    b.onclick = () => { equipe = s; [...chips.children].forEach(c => c.setAttribute("aria-pressed", String(c === b))); rendre(); };
+    chips.append(b);
+  });
+  const sortEl = $(pre + "-sort");
+  if (sortEl) {
+    [["recent", "Récent"], ["az", "A → Z"]].forEach(([v, l]) => {
+      const b = h("button", "", l); b.type = "button"; b.setAttribute("aria-pressed", String(v === tri));
+      b.onclick = () => { tri = v; [...sortEl.children].forEach(c => c.setAttribute("aria-pressed", String(c === b))); rendre(); };
+      sortEl.append(b);
+    });
+  }
+  $(pre + "-q").addEventListener("input", rendre);
+  function rendre() {
+    const q = $(pre + "-q").value.trim().toLowerCase();
+    const liste = list.filter(s => (equipe === "Toutes" || equipesDe(s).includes(equipe)) && (!q || s.title.toLowerCase().includes(q)));
+    const out = $(pre + "-out"); out.replaceChildren();
+    if (!liste.length) { out.append(h("div", "empty", "Aucune série ne correspond. Essaie un autre mot ou retire un filtre.")); return; }
+    if (passee) {
+      const ans = {}, sans = {};
+      liste.forEach(s => {
+        if (s.dernier) { const y = s.dernier.slice(0, 4); (ans[y] = ans[y] || []).push(s); }
+        else { const n = equipesDe(s).slice(-1)[0]; (sans[n] = sans[n] || []).push(s); }
+      });
+      Object.keys(ans).sort((a, b) => b.localeCompare(a)).forEach(y => {
+        ans[y].sort((a, b) => b.dernier.localeCompare(a.dernier) || a.title.localeCompare(b.title));
+        out.append(groupe(y, "dernier chapitre fait", ans[y], true));
+      });
+      Object.keys(sans).sort((a, b) => debutEquipe(b).localeCompare(debutEquipe(a))).forEach(n => {
+        sans[n].sort((a, b) => a.title.localeCompare(b.title));
+        out.append(groupe(n, "date du dernier chapitre inconnue", sans[n], true, n));
+      });
+    } else if (tri === "az") {
+      out.append(groupe("Toutes les séries", "", liste.slice().sort((a, b) => a.title.localeCompare(b.title)), false));
+    } else {
+      const par = {};
+      liste.forEach(s => { const k = s.dernier ? s.dernier.slice(0, 7) : "inconnu"; (par[k] = par[k] || []).push(s); });
+      Object.keys(par).sort((a, b) => a === "inconnu" ? 1 : b === "inconnu" ? -1 : b.localeCompare(a)).forEach(k => {
+        par[k].sort((a, b) => (b.dernier || "").localeCompare(a.dernier || "") || a.title.localeCompare(b.title));
+        const t = k === "inconnu" ? "Date inconnue" : dateFr(k + "-15");
+        out.append(groupe(t.charAt(0).toUpperCase() + t.slice(1), "", par[k], false));
+      });
+    }
+  }
+  rendre();
+}
+cartesSeries("a", actuelles, equipesActives, "Séries en cours", false);
+const nomsPasses = new Set(passees.flatMap(equipesDe));
+cartesSeries("p", passees, EQUIPES.filter(e => nomsPasses.has(e.name)), "Séries passées", true);
+
+/* ---------- Équipes ---------- */
+function blocEquipe(e, seulement) {
+  const mine = SERIES.filter(s => ((s.teams && s.teams.length) ? s.teams : [s.team]).includes(e.name) && (!seulement || periode(s) === seulement));
+  const actif = periode(e) === "actuel";
+  const it = h("div", "panel tl-item" + (actif ? " now" : ""));
+  const hd = h("div", "tl-head");
+  hd.append(h("h3", "", e.name), h("span", "mute", e.dates || ""), h("span", "sp"),
+    h("span", "pill " + (actif ? "s-cours" : "s-old"), actif ? "actuelle" : "ancienne"),
+    h("span", "mute", e.n || plural(mine.length, "série", "séries")));
+  if (e.url) { const a = tag(h("a", "ic"), e.url); a.title = "Ouvrir"; a.append(icon("ext")); hd.append(a); }
+  it.append(hd);
+  if (mine.length) {
+    const g = h("div", "tl-series");
+    mine.forEach(s => {
+      const r = h("div", "tl-s"); const n = h("span", "", s.title); n.title = s.title;
+      r.append(n, rolesNode(s.roles)); g.append(r);
+    });
+    it.append(g);
+  } else it.append(h("div", "tl-empty", "Aucune série listée."));
+  return it;
+}
+equipesActives.forEach(e => { const b = blocEquipe(e, "actuel"); b.classList.add("flat"); $("a-teams").append(b); });
+
+/* ---------- Outils ---------- */
+function carteOutil(o) {
+  const c = h("div", "panel card");
+  c.append(h("span", "tag", o.tag), h("h3", "", o.name), h("p", "", o.text));
+  if (o.url) c.append(bouton(o.url, o.label || "Ouvrir"));
+  return c;
+}
+outilsActuels.forEach(o => $("a-tools").append(carteOutil(o)));
+outilsPasses.forEach(o => $("p-tools").append(carteOutil(o)));
+if (!outilsPasses.length) $("p-tools").append(h("p", "tl-empty", "Rien pour l'instant."));
+
+/* ---------- Parcours ---------- */
+$("past-sub").textContent = "Depuis " + SITE.depuis + " : " + plural(EQUIPES.length, "équipe", "équipes") + ", " + plural(SERIES.length, "série", "séries") + ".";
+EQUIPES.slice().sort((a, b) => (b.debut || "0000").localeCompare(a.debut || "0000")).forEach(e => $("tl").append(blocEquipe(e)));
+
+/* ---------- Glossaires, liens ---------- */
 GLOSSAIRES.forEach(g => {
   const c = h("div", "panel card row");
   const cv = cover(g);
@@ -286,14 +480,10 @@ GLOSSAIRES.forEach(g => {
   b.append(h("h3", "", g.name), h("p", "", g.text), bouton(g.url, "Ouvrir"));
   c.append(cv, b); $("gloss").append(c);
 });
-OUTILS.forEach(o => {
-  const c = h("div", "panel card");
-  c.append(h("span", "tag", o.tag), h("h3", "", o.name), h("p", "", o.text), bouton(o.url, o.label || "Ouvrir"));
-  $("tools").append(c);
-});
 LIENS.forEach(o => { $("links").append(o.url ? bouton(o.url, o.name, "btn ghost") : h("span", "btn off", o.name + " · lien à ajouter")); });
 
-const ONGLETS = ["accueil", "series", "glossaires", "outils", "liens"];
+/* ---------- Navigation ---------- */
+const ONGLETS = ["accueil", "a-series", "a-equipes", "a-outils", "glossaires", "p-parcours", "p-series", "p-outils", "liens"];
 function afficher(nom) {
   const actif = ONGLETS.includes(nom) ? nom : "accueil";
   ONGLETS.forEach(id => {
@@ -304,7 +494,7 @@ function afficher(nom) {
   window.scrollTo(0, 0);
   return actif;
 }
-document.querySelectorAll('.nav a[href^="#"]').forEach(a => {
+document.querySelectorAll('a[href^="#"]').forEach(a => {
   a.addEventListener("click", e => {
     e.preventDefault();
     const nom = afficher(a.getAttribute("href").slice(1));
