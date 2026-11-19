@@ -1073,7 +1073,7 @@ function rendreFiche(s) {
   (N.series || []).forEach(s => {
     const row = h("div", "panel nt-row"), t = h("div", "nt-t"), meta = h("div", "nt-meta");
     t.append(h("b", "", s.title), h("small", "", s.detail || ""));
-    meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), h("span", "nt-h", s.heure + " · heure de Corée"));
+    meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), h("span", "nt-h", s.heure ? s.heure + " · heure de Corée" : "Vérifié régulièrement"));
     row.append(cover({ cover: s.cover, title: s.title }), t, meta);
     $("nt-series").append(row);
   });
