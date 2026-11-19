@@ -302,7 +302,7 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
 .ch-resume { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .ch-reader { overflow-y: auto; flex: 1; padding: 24px 28px 48px; line-height: 1.8; font-size: var(--ch-fs, 16px); color: var(--z300); }
 .ch-reader > div, .ch-reader > pre, .ch-reader > p { max-width: 68ch; margin-left: auto; margin-right: auto; }
-.ch-reader p { margin: 0 0 1em; } .ch-reader img { max-width: 100%; height: auto; }
+.ch-reader p { margin: 0; } .ch-reader p.vide::before { content: "\00a0"; } .ch-reader img { max-width: 100%; height: auto; }
 .ch-reader pre { white-space: pre-wrap; word-break: break-word; font-family: inherit; }
 .ch-reader .corr { color: #f87171; }
 .th-sepia .ch-reader { background: #f4ecd8; color: #3b2f1e; } .th-clair .ch-reader { background: #fafafa; color: #1c1c1c; }
@@ -1103,7 +1103,8 @@ async function chDocx(buf) {
       buf = await z.generateAsync({ type: "arraybuffer" });
     }
   } catch (e) { /* sans la couleur : lecture normale */ }
-  return window.mammoth.convertToHtml({ arrayBuffer: buf }, { styleMap: ["r[style-name='Correction'] => span.corr"] });
+  // ignoreEmptyParagraphs:false : un paragraphe vide est un saut de ligne voulu, on le garde
+  return window.mammoth.convertToHtml({ arrayBuffer: buf }, { styleMap: ["r[style-name='Correction'] => span.corr"], ignoreEmptyParagraphs: false });
 }
 
 function chSerie() { const t = chIndex && chIndex.teams.find(x => x.name === chSel.team); return t && t.series.find(x => x.name === chSel.serie); }
@@ -1176,6 +1177,7 @@ async function chOpen(i, top) {
       const r = await chDocx(await blob.arrayBuffer());
       if (my !== chTok) return;
       const d = h("div"); d.innerHTML = r.value || "";
+      d.querySelectorAll("p").forEach(p => { if (!p.textContent.trim() && !p.querySelector("img, br")) p.classList.add("vide"); });   // ligne vide visible
       if (!d.textContent.trim() && !d.querySelector("img")) d.append(h("p", "empty", "(document vide)"));
       reader.replaceChildren(d);
     } else if (ext === "txt") {
