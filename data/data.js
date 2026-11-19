@@ -5778,8 +5778,9 @@ window.HUB = {
     {
       "tag": "Discord",
       "name": "Notificateur Kakao et Naver",
-      "text": "Prévient chaque semaine des nouveaux chapitres, avances payantes comprises.",
-      "url": "",
+      "text": "Prévient sur Discord dès qu'un nouveau chapitre sort sur Kakao ou Naver, avances payantes comprises.",
+      "url": "#notificateur",
+      "label": "Voir les séries surveillées",
       "periode": "actuel"
     },
     {
@@ -5883,6 +5884,25 @@ window.HUB = {
       "cover": "covers/academy-genius-tamer.webp"
     }
   ],
+  "NOTIFICATEUR": {
+    "text": "Un Worker Cloudflare surveille Kakao Webtoon et Naver Webtoon, et prévient sur Discord avec un embed dès qu'un nouveau chapitre sort.",
+    "points": [
+      "À l'heure prévue, il vérifie toutes les 5 minutes pendant 1 heure, et s'arrête dès qu'un chapitre est annoncé.",
+      "Chaque série est vérifiée séparément : une plateforme en panne n'empêche pas les autres.",
+      "Naver : les chapitres payants en avance sont annoncés aussi.",
+      "Kakao Webtoon : les annonces de l'auteur sont relayées chaque jour à 19h00.",
+      "Naver : les posts de la communauté du créateur (texte et images) sont envoyés dans Discord."
+    ],
+    "series": [
+      { "title": "Sand Mage of the Burnt Desert", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/sand-mage-of-the-burnt-desert.webp" },
+      { "title": "Only I Have an EX-Grade Summon", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/only-i-have-an-ex-grade-summon.webp" },
+      { "title": "The Frozen Player Returns", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/return-of-the-frozen-player.webp" },
+      { "title": "The Genius Blacksmith's Game", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/the-genius-blacksmiths-game.webp" },
+      { "title": "Return of the Mount Hua Sect", "platform": "Naver Webtoon", "heure": "23h00", "detail": "Avances payantes annoncées", "cover": "covers/return-of-the-mount-hua-sect.webp" },
+      { "title": "The World After the Fall", "platform": "Naver Webtoon", "heure": "23h00", "detail": "Avances payantes annoncées · posts de la communauté du créateur", "cover": "covers/the-world-after-the-end.webp" }
+    ],
+    "note": "Les heures de vérification sont en heure de Corée. À Paris, il faut retirer 8 h en hiver et 7 h en été : 22h00 en Corée = 14h00 à Paris l'hiver, 15h00 l'été."
+  },
   "LIENS": [
     {
       "name": "Discord Poséidon",
