@@ -5894,12 +5894,56 @@ window.HUB = {
       "Naver : les posts de la communauté du créateur (texte et images) sont envoyés dans Discord."
     ],
     "series": [
-      { "title": "Sand Mage of the Burnt Desert", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/sand-mage-of-the-burnt-desert.webp" },
-      { "title": "Only I Have an EX-Grade Summon", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/only-i-have-an-ex-grade-summon.webp" },
-      { "title": "The Frozen Player Returns", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/return-of-the-frozen-player.webp" },
-      { "title": "The Genius Blacksmith's Game", "platform": "Kakao Webtoon", "heure": "22h00", "detail": "Annonces de l'auteur à 19h00", "cover": "covers/the-genius-blacksmiths-game.webp" },
-      { "title": "Return of the Mount Hua Sect", "platform": "Naver Webtoon", "heure": "23h00", "detail": "Avances payantes annoncées", "cover": "covers/return-of-the-mount-hua-sect.webp" },
-      { "title": "The World After the Fall", "platform": "Naver Webtoon", "heure": "23h00", "detail": "Avances payantes annoncées · posts de la communauté du créateur", "cover": "covers/the-world-after-the-end.webp" }
+      {
+        "title": "Sand Mage of the Burnt Desert",
+        "platform": "Kakao Webtoon",
+        "heure": "22h00",
+        "detail": "Annonces de l'auteur à 19h00",
+        "cover": "covers/sand-mage-of-the-burnt-desert.webp"
+      },
+      {
+        "title": "Only I Have an EX-Grade Summon",
+        "platform": "Kakao Webtoon",
+        "heure": "22h00",
+        "detail": "Annonces de l'auteur à 19h00",
+        "cover": "covers/only-i-have-an-ex-grade-summon.webp"
+      },
+      {
+        "title": "The Frozen Player Returns",
+        "platform": "Kakao Webtoon",
+        "heure": "22h00",
+        "detail": "Annonces de l'auteur à 19h00",
+        "cover": "covers/return-of-the-frozen-player.webp"
+      },
+      {
+        "title": "The Genius Blacksmith's Game",
+        "platform": "Kakao Webtoon",
+        "heure": "22h00",
+        "detail": "Annonces de l'auteur à 19h00",
+        "cover": "covers/the-genius-blacksmiths-game.webp"
+      },
+      {
+        "title": "Return of the Mount Hua Sect",
+        "platform": "Naver Webtoon",
+        "heure": "23h00",
+        "detail": "Avances payantes annoncées",
+        "cover": "covers/return-of-the-mount-hua-sect.webp"
+      },
+      {
+        "title": "The World After the Fall",
+        "platform": "Naver Webtoon",
+        "heure": "23h00",
+        "detail": "Avances payantes annoncées · posts de la communauté du créateur",
+        "cover": "covers/the-world-after-the-end.webp"
+      },
+      {
+        "title": "Logging Out Is Too Hard",
+        "platform": "KakaoPage",
+        "heure": "22h00",
+        "detail": "",
+        "cover": "covers/logging-out-is-too-hard.webp",
+        "ref": "logging-out-is-too-hard"
+      }
     ],
     "note": "Les heures de vérification sont en heure de Corée. À Paris, il faut retirer 8 h en hiver et 7 h en été : 22h00 en Corée = 14h00 à Paris l'hiver, 15h00 l'été."
   },
