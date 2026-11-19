@@ -120,29 +120,6 @@ td.mute { color: var(--z300); }
 .toast { position: fixed; right: 20px; bottom: 20px; max-width: 360px; padding: 12px 16px; border-radius: 8px; background: #18181b; border: 1px solid rgba(255,255,255,.1); z-index: 20; }
 .toast.err { border-color: rgba(248,113,113,.5); color: #fecaca; }
 
-.chap-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; align-items: start; }
-.chap-list { display: flex; flex-direction: column; max-height: calc(100vh - 300px); min-height: 320px; overflow: hidden; }
-#chap-files { overflow-y: auto; flex: 1; border-top: 1px solid var(--line); }
-.chap-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; padding: 8px 16px; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--z300); text-align: left; cursor: pointer; }
-.chap-item:last-child { border-bottom: 0; }
-.chap-item:hover { background: var(--hover); color: var(--text); }
-.chap-item[aria-current="true"] { background: rgba(217,164,6,.15); color: var(--accent-t); }
-.chap-item span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.chap-item .sz { flex: none; font-size: 12px; color: var(--z600); }
-.chap-reader-wrap { display: flex; flex-direction: column; max-height: calc(100vh - 300px); min-height: 320px; overflow: hidden; }
-.chap-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
-.chap-head b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
-.chap-head .tools { gap: 8px; flex: none; }
-.chap-reader { overflow-y: auto; flex: 1; padding: 20px 28px; line-height: 1.75; font-size: 15px; color: var(--z300); }
-.chap-reader p { margin: 0 0 14px; }
-.chap-reader img { max-width: 100%; height: auto; }
-.chap-reader pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: inherit; }
-.btn.sm { padding: 5px 12px; font-size: 13px; }
-@media (max-width: 1023px) {
-  .chap-grid { grid-template-columns: minmax(0, 1fr); }
-  .chap-list, .chap-reader-wrap { max-height: 60vh; }
-  #chap-pick { grid-template-columns: minmax(0, 1fr) !important; }
-}
 @media (max-width: 1023px) {
   .side { position: static; width: auto; flex-direction: row; flex-wrap: wrap; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); }
   .side-head { border-bottom: 0; height: 56px; padding: 0 16px; }
@@ -216,31 +193,6 @@ td.mute { color: var(--z300); }
     <section id="ocr-view" hidden>
       <div class="head"><div><h1>OCR des chapitres</h1><p class="sub">Lit le texte des pages (images ou ZIP) avec l'API Claude. Ta clé API reste dans ce navigateur.</p></div></div>
       <iframe id="ocr-frame" title="OCR des chapitres" style="width:100%;height:calc(100vh - 190px);min-height:480px;border:1px solid var(--line);border-radius:8px;background:#0a0a0a"></iframe>
-    </section>
-    <section id="chap-view" hidden>
-      <div class="head"><div><h1>Lecteur de chapitres</h1><p class="sub" id="chap-sub">Tes traductions, novels et raws, lus depuis le dépôt privé de chapitres.</p></div></div>
-      <div class="panel card" style="padding:16px 20px;margin-bottom:16px">
-        <div class="tools" style="gap:12px">
-          <div class="field" style="margin:0;flex:1;min-width:240px"><label for="chap-repo">Dépôt des chapitres</label><input type="text" id="chap-repo" placeholder="iLozAFK/scantrad-data"></div>
-          <button class="btn ghost" type="button" id="chap-reload" style="align-self:flex-end">Charger</button>
-        </div>
-        <div class="fields" id="chap-pick" style="grid-template-columns:repeat(3,minmax(0,1fr));margin-top:14px" hidden>
-          <div class="field" style="margin:0"><label for="chap-team">Équipe</label><select id="chap-team"></select></div>
-          <div class="field" style="margin:0"><label for="chap-serie">Série</label><select id="chap-serie"></select></div>
-          <div class="field" style="margin:0"><label for="chap-folder">Dossier</label><select id="chap-folder"></select></div>
-        </div>
-      </div>
-      <p class="help" id="chap-msg"></p>
-      <div class="chap-grid" id="chap-grid" hidden>
-        <div class="panel chap-list">
-          <div class="search" style="min-width:0;padding:10px"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" style="left:22px"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" id="chap-q" placeholder="Filtrer (ex : 42)" aria-label="Filtrer les fichiers"></div>
-          <div id="chap-files"></div>
-        </div>
-        <div class="panel chap-reader-wrap">
-          <div class="chap-head" id="chap-head"></div>
-          <div id="chap-reader" class="chap-reader"><p class="empty">Choisis un fichier dans la liste.</p></div>
-        </div>
-      </div>
     </section>
     <section id="edit-view" hidden>
       <button class="back" type="button" id="e-top-back">&larr; Retour à la liste</button>
@@ -428,7 +380,6 @@ function renderNav() {
     nav.append(b);
   };
   Object.keys(COLS).forEach(k => add(k, COLS[k].nav, COLS[k].group));
-  add("CHAP", "Lecteur de chapitres", "Chapitres");
   add("OCR", "OCR des chapitres", "Outils");
   add("SITE", "Textes du site", "Site");
   add("STATS", "Statistiques", "Site");
@@ -440,12 +391,10 @@ function renderBar() {
 }
 function renderAll() {
   renderNav(); renderBar();
-  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS" || section === "OCR" || section === "CHAP";
-  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS" || section === "OCR" || section === "CHAP";
+  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS" || section === "OCR";
+  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS" || section === "OCR";
   $("stats-view").hidden = section !== "STATS";
   $("ocr-view").hidden = section !== "OCR";
-  $("chap-view").hidden = section !== "CHAP";
-  if (section === "CHAP") { editing = null; initChap(); return; }
   if (section === "OCR") {
     editing = null;
     const fr = $("ocr-frame"); if (!fr.getAttribute("src")) fr.src = "ocr.html";  // chargé une seule fois : l'état de l'OCR est conservé en changeant de section
@@ -711,132 +660,6 @@ $("st-run").onclick = () => runStats(false);
 $("st-pick").onclick = () => runStats(true);
 
 /* ---------- Démarrage ---------- */
-/* ---------- Chapitres (dépôt privé lu avec le jeton GitHub) ---------- */
-const CH_LS = "scantrad-hub-chapitres-repo";
-let chIndex = null, chSel = { team: "", serie: "", folder: "" }, chCur = -1, chList = [], chToken = 0;
-function chRepo() { try { return localStorage.getItem(CH_LS) || ""; } catch (e) { return ""; } }
-function chLabel(k) { return { manhwa: "Chapitres Manhwa", novel: "Chapitres Novel", raws: "Raws", __root: "Glossaire et synopsis" }[k] || k; }
-function chSize(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + " Mo" : Math.max(1, Math.round(n / 1024)) + " Ko"; }
-async function chFetch(path, as) {
-  const repo = chRepo();
-  if (!repo) throw new Error("Indique d'abord le dépôt des chapitres.");
-  const res = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path.split("/").map(encodeURIComponent).join("/"), {
-    headers: { Authorization: "Bearer " + cfg.token, Accept: "application/vnd.github.raw+json" }
-  });
-  if (res.status === 404) throw new Error("Introuvable dans " + repo + ". Vérifie le nom du dépôt, et que ton jeton GitHub y a accès (Contents : Read).");
-  if (res.status === 401) throw new Error("Jeton refusé. Reconnecte-toi.");
-  if (res.status === 403) throw new Error("Accès refusé par GitHub. Le jeton doit avoir accès à " + repo + " (Contents : Read).");
-  if (!res.ok) throw new Error("GitHub a répondu " + res.status + ".");
-  return as === "blob" ? res.blob() : as === "json" ? res.json() : res.text();
-}
-function loadScript(src) {
-  return new Promise((ok, ko) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => ko(new Error("Impossible de charger le convertisseur .docx (réseau).")); document.head.append(s); });
-}
-function chSerie() { const t = chIndex && chIndex.teams.find(x => x.name === chSel.team); return t && t.series.find(x => x.name === chSel.serie); }
-function chFolders(s) { const l = s.folders.map(f => f.key); if (s.files.length) l.push("__root"); return l; }
-function chFiles() {
-  const s = chSerie(); if (!s) return [];
-  const base = chSel.team + "/" + s.name + "/";
-  if (chSel.folder === "__root") return s.files.map(f => ({ path: base + f.n, n: f.n, s: f.s }));
-  const f = s.folders.find(x => x.key === chSel.folder);
-  return f ? f.files.map(x => ({ path: base + f.key + "/" + x.n, n: x.n, s: x.s })) : [];
-}
-function fillSelect(id, values, current, label) {
-  const sel = $(id); sel.replaceChildren();
-  values.forEach(v => { const o = h("option", "", label ? label(v) : v); o.value = v; if (v === current) o.selected = true; sel.append(o); });
-}
-function chSync(level) {
-  const teams = chIndex.teams.map(t => t.name);
-  if (level <= 0 || !teams.includes(chSel.team)) chSel.team = teams[0] || "";
-  const t = chIndex.teams.find(x => x.name === chSel.team), series = t ? t.series.map(s => s.name) : [];
-  if (level <= 1 || !series.includes(chSel.serie)) chSel.serie = series[0] || "";
-  const s = chSerie(), folders = s ? chFolders(s) : [];
-  if (level <= 2 || !folders.includes(chSel.folder)) chSel.folder = folders.includes("manhwa") ? "manhwa" : (folders[0] || "");
-  fillSelect("chap-team", teams, chSel.team);
-  fillSelect("chap-serie", series, chSel.serie);
-  fillSelect("chap-folder", folders, chSel.folder, chLabel);
-  chCur = -1; $("chap-q").value = "";
-  chRenderList();
-  $("chap-head").replaceChildren(); $("chap-reader").replaceChildren(h("p", "empty", "Choisis un fichier dans la liste."));
-}
-function chRenderList() {
-  const q = $("chap-q").value.trim().toLowerCase();
-  chList = chFiles();
-  const box = $("chap-files"); box.replaceChildren();
-  let shown = 0;
-  chList.forEach((f, i) => {
-    if (q && !f.n.toLowerCase().includes(q)) return;
-    shown++;
-    const b = h("button", "chap-item"); b.type = "button";
-    if (i === chCur) b.setAttribute("aria-current", "true");
-    b.append(h("span", "", f.n), h("span", "sz", chSize(f.s)));
-    b.onclick = () => chOpen(i);
-    box.append(b);
-  });
-  if (!shown) box.append(h("p", "empty", chList.length ? "Aucun fichier ne correspond." : "Dossier vide."));
-}
-async function chOpen(i) {
-  const f = chList[i]; if (!f) return;
-  chCur = i; chRenderList();
-  const my = ++chToken, reader = $("chap-reader"), head = $("chap-head");
-  head.replaceChildren();
-  const title = h("b", "", f.n); title.title = f.path;
-  const tools = h("div", "tools");
-  const prev = h("button", "btn ghost sm", "Précédent"), next = h("button", "btn ghost sm", "Suivant"), dl = h("button", "btn ghost sm", "Télécharger");
-  [prev, next, dl].forEach(b => { b.type = "button"; });
-  prev.disabled = i <= 0; next.disabled = i >= chList.length - 1;
-  prev.onclick = () => chOpen(i - 1); next.onclick = () => chOpen(i + 1);
-  tools.append(prev, next, dl); head.append(title, tools);
-  reader.replaceChildren(h("p", "help", "Chargement..."));
-  try {
-    const ext = f.n.split(".").pop().toLowerCase();
-    const blob = await chFetch(f.path, "blob");
-    if (my !== chToken) return;
-    dl.onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = f.n.split("/").pop(); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
-    reader.scrollTop = 0;
-    if (ext === "docx") {
-      if (!window.mammoth) await loadScript("https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js");
-      const r = await window.mammoth.convertToHtml({ arrayBuffer: await blob.arrayBuffer() });
-      if (my !== chToken) return;
-      const d = h("div"); d.innerHTML = r.value || ""; if (!d.textContent.trim() && !d.querySelector("img")) d.append(h("p", "empty", "(document vide)"));
-      reader.replaceChildren(d);
-    } else if (ext === "txt") {
-      const pre = h("pre"); pre.textContent = await blob.text(); reader.replaceChildren(pre);
-    } else {
-      reader.replaceChildren(h("p", "empty", "Ce type de fichier (" + ext + ") ne s'affiche pas ici. Utilise Télécharger."));
-    }
-  } catch (e) { if (my === chToken) reader.replaceChildren(h("p", "empty", e.message)); }
-}
-async function chLoad() {
-  const repo = $("chap-repo").value.trim().replace(/^https?:\/\/github\.com\//, "").replace(/\.git$/, "");
-  try { localStorage.setItem(CH_LS, repo); } catch (e) {}
-  $("chap-pick").hidden = true; $("chap-grid").hidden = true; chIndex = null;
-  if (!repo) { $("chap-msg").textContent = "Indique le dépôt des chapitres (ex : iLozAFK/scantrad-data)."; return; }
-  $("chap-msg").textContent = "Chargement de l'index...";
-  try {
-    chIndex = JSON.parse(await chFetch("index.json", "text"));
-    const nb = chIndex.teams.reduce((n, t) => n + t.series.reduce((m, s) => m + s.files.length + s.folders.reduce((k, f) => k + f.files.length, 0), 0), 0);
-    $("chap-msg").textContent = nb + " fichiers, index du " + (chIndex.generated || "?") + ".";
-    $("chap-pick").hidden = false; $("chap-grid").hidden = false;
-    chSync(0);
-  } catch (e) { $("chap-msg").textContent = e.message; $("chap-msg").style.color = "var(--red)"; return; }
-  $("chap-msg").style.color = "";
-}
-let chBound = false;
-function initChap() {
-  if (!chBound) {
-    chBound = true;
-    $("chap-reload").onclick = chLoad;
-    $("chap-repo").addEventListener("keydown", e => { if (e.key === "Enter") chLoad(); });
-    $("chap-team").onchange = () => { chSel.team = $("chap-team").value; chSync(1); };
-    $("chap-serie").onchange = () => { chSel.serie = $("chap-serie").value; chSync(2); };
-    $("chap-folder").onchange = () => { chSel.folder = $("chap-folder").value; chSync(3); };
-    $("chap-q").addEventListener("input", chRenderList);
-  }
-  $("chap-repo").value = chRepo() || (cfg && cfg.repo ? cfg.repo.split("/")[0] + "/scantrad-data" : "");
-  if (!chIndex) chLoad();
-}
-
 function showLogin(msg) {
   $("app").hidden = true; $("login-view").hidden = false;
   const e = $("login-err"); e.hidden = !msg; e.textContent = msg || "";
