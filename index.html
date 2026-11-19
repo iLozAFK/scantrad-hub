@@ -1244,7 +1244,7 @@ async function ntAdd() {
       if (platform === "kakaowebtoon") Object.assign(entry, { notices: true, noticeSchedule: [{ day: "*", time: "19:00", tz: "Asia/Seoul" }] });
       if (parsed) { entry.seriesId = parsed.seriesId; entry.url = platform === "naver" ? "https://comic.naver.com/webtoon/list?titleId=" + parsed.seriesId : platform === "kakaowebtoon" ? "https://webtoon.kakao.com/content/-/" + parsed.seriesId : "https://page.kakao.com/content/" + parsed.seriesId; }
       if (platform === "naver" && ko) entry.nomKo = ko;
-      Object.assign(entry, { schedule: [{ day: "*", time: heure, tz: "Asia/Seoul" }], once: true, windowHours: 1 });
+      Object.assign(entry, { schedule: [{ day: "*", time: heure, tz: "Asia/Seoul" }], windowHours: 1 });   // pas de « once » : le bot revérifie toutes les 5 min pendant la fenêtre
       if (platform === "naver") entry.includePreview = true;
       return { kind: "series", entry, aff: { title: s.title, platform: NT_LABEL[platform], heure: heure.replace(":", "h"), detail: platform === "kakaowebtoon" ? "Annonces de l'auteur à 19h00" : platform === "naver" ? "Avances payantes annoncées" : "", cover: s.cover || "", ref: entry.id } };
     };
