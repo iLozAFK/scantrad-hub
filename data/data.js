@@ -5887,7 +5887,7 @@ window.HUB = {
   "NOTIFICATEUR": {
     "text": "Un Worker Cloudflare surveille Kakao Page et Naver Webtoon, et prévient sur Discord avec un embed dès qu'un nouveau chapitre sort.",
     "points": [
-      "À l'heure prévue, il vérifie toutes les 5 minutes pendant 1 heure, et s'arrête dès qu'un chapitre est annoncé.",
+      "À l'heure prévue, il vérifie chaque minute pendant 1 heure, et s'arrête dès qu'un chapitre est annoncé : l'annonce arrive dans la minute qui suit la sortie.",
       "Chaque série est vérifiée séparément : une plateforme en panne n'empêche pas les autres.",
       "Naver : les chapitres payants en avance sont annoncés aussi.",
       "Naver : les posts de la communauté du créateur (texte et images) sont envoyés dans Discord."
