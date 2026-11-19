@@ -194,25 +194,6 @@ td.mute { color: var(--z300); }
       <div class="head"><div><h1>OCR des chapitres</h1><p class="sub">Lit le texte des pages (images ou ZIP) avec l'API Claude. Ta clé API reste dans ce navigateur.</p></div></div>
       <iframe id="ocr-frame" title="OCR des chapitres" style="width:100%;height:calc(100vh - 190px);min-height:480px;border:1px solid var(--line);border-radius:8px;background:#0a0a0a"></iframe>
     </section>
-    <section id="notif-view" hidden>
-      <div class="head"><div><h1>Notificateur</h1><p class="sub">Ajoute une de tes séries au bot qui prévient sur Discord à chaque nouveau chapitre ou post (Kakao, Naver).</p></div></div>
-      <p class="help" id="nt-msg"></p>
-      <div id="nt-app" hidden>
-        <div class="panel card" style="margin-bottom:16px">
-          <h2>Ajouter une série</h2>
-          <div class="fields">
-            <div class="field"><label for="nt-serie">Série</label><select id="nt-serie"></select></div>
-            <div class="field"><label for="nt-type">Ce que le bot surveille</label><select id="nt-type"><option value="chap">Les chapitres</option><option value="posts">Les posts de la communauté (Naver)</option></select></div>
-            <div class="field full"><p class="help" id="nt-info" style="margin:0"></p></div>
-            <div class="field full"><label for="nt-link" id="nt-link-l">Lien de la série</label><input type="text" id="nt-link" placeholder="https://..." autocomplete="off"><p class="help" id="nt-link-h" style="margin:6px 0 0"></p></div>
-          </div>
-          <div class="tools"><button class="btn" type="button" id="nt-add">Ajouter au notificateur</button><a class="btn ghost" id="nt-search" target="_blank" rel="noopener" hidden>Chercher sur Kakao</a></div>
-          <p id="nt-err" style="color:var(--red);margin:12px 0 0" hidden></p>
-        </div>
-        <div class="panel scroll"><table><thead><tr><th>Série</th><th>Plateforme</th><th>Surveille</th><th>Vérification (heure de Corée)</th><th class="r">Actions</th></tr></thead><tbody id="nt-body"></tbody></table></div>
-        <p class="help" style="margin-top:14px">Les ajouts et retraits ne sont enregistrés qu'en cliquant sur <b>Publier</b> : la liste du bot (dépôt webtoon-notifier) et la page publique du site sont alors mises à jour ensemble. Le bot est redéployé par Cloudflare en environ une minute.</p>
-      </div>
-    </section>
     <section id="edit-view" hidden>
       <button class="back" type="button" id="e-top-back">&larr; Retour à la liste</button>
       <div class="head"><div><h1 id="e-title"></h1><p class="sub" id="e-sub"></p></div></div>
@@ -377,10 +358,6 @@ async function publish() {
       const ex = await gh(p);
       await gh(p, { method: "PUT", body: JSON.stringify({ message: "Couverture " + p, content: v.b64, branch: cfg.branch, sha: ex ? ex.sha : undefined }) });
     }
-    if (notifDirty()) {   // liste du bot d'abord : si le jeton n'y a pas accès, on s'arrête avant de toucher au site
-      const r = await ghr(NT_REPO(), "series.json", { method: "PUT", body: JSON.stringify({ message: "Séries du notificateur mises à jour depuis l'admin du hub", content: b64enc(JSON.stringify(notif.cfg, null, 2) + "\n"), sha: notif.sha }) });
-      notif.sha = r.content.sha; notifSnap = JSON.stringify(notif.cfg);
-    }
     const ex = await gh("data/data.js");
     const text = "window.HUB = " + JSON.stringify(data, null, 2) + ";\n";
     await gh("data/data.js", { method: "PUT", body: JSON.stringify({ message: "Mise à jour du hub depuis l'admin", content: b64enc(text), branch: cfg.branch, sha: ex ? ex.sha : undefined }) });
@@ -390,151 +367,8 @@ async function publish() {
   btn.disabled = false; btn.textContent = "Publier"; renderAll();
 }
 
-/* ---------- Notificateur (bot Kakao / Naver) ---------- */
-const NT_REPO = () => cfg.repo.split("/")[0] + "/webtoon-notifier";
-const NT_LABEL = { naver: "Naver Webtoon", kakaowebtoon: "Kakao Webtoon", kakaopage: "KakaoPage" };
-const NT_HEURE = { naver: "23:00", kakaowebtoon: "22:00", kakaopage: "22:00" };   // heure de Corée, comme les séries déjà branchées
-let notif = null, notifSnap = "";   // { cfg: { series: [], community: [] }, sha }
-async function ghr(repo, path, opts) {   // comme gh(), sur un autre dépôt (branche par défaut)
-  const res = await fetch("https://api.github.com/repos/" + repo + "/contents/" + path.split("/").map(encodeURIComponent).join("/"), Object.assign({}, opts, {
-    headers: { Authorization: "Bearer " + cfg.token, Accept: "application/vnd.github+json", "Content-Type": "application/json" }
-  }));
-  if (res.status === 404) return null;
-  if (!res.ok) {
-    let m = ""; try { m = (await res.json()).message; } catch (e) {}
-    if (res.status === 401) throw new Error("Jeton refusé. Vérifie qu'il est valide et qu'il n'a pas expiré.");
-    if (res.status === 403) throw new Error("Accès refusé. Le jeton doit avoir Contents : Read and write sur " + repo + (m ? " (" + m + ")" : "") + ".");
-    throw new Error("GitHub a répondu " + res.status + (m ? " : " + m : "") + (res.status === 409 || res.status === 422 ? ". Recharge la page : la liste du bot a changé entre-temps." : ""));
-  }
-  return res.json();
-}
-async function loadNotif() {
-  const f = await ghr(NT_REPO(), "series.json");
-  if (!f) throw new Error("series.json est introuvable dans " + NT_REPO() + ". Vérifie que ton jeton GitHub a accès à ce dépôt (Contents : Read and write).");
-  const c = JSON.parse(b64dec(f.content)); c.series = c.series || []; c.community = c.community || [];
-  notif = { cfg: c, sha: f.sha }; notifSnap = JSON.stringify(c);
-}
-const notifDirty = () => !!notif && JSON.stringify(notif.cfg) !== notifSnap;
-function ntPlateforme(s) {   // même logique que les boutons « Kakao / Naver » des fiches du site
-  for (const e of ((s.infos && s.infos.editeurs) || [])) {
-    const x = e.toLowerCase();
-    if (x.indexOf("naver") >= 0) return "naver";
-    if (x.indexOf("daum") >= 0 || x === "kw webtoon" || (x.indexOf("kakao") >= 0 && x.indexOf("webtoon") >= 0)) return "kakaowebtoon";
-    if (x.indexOf("kakao") >= 0) return "kakaopage";
-  }
-  return "";
-}
-function ntKo(s) { return s.nom_ko || (s.infos && s.infos.noms && s.infos.noms.ko && s.infos.noms.ko[0]) || ""; }
-function ntParse(link) {   // null = vide, undefined = non reconnu
-  link = (link || "").trim(); if (!link) return null;
-  let m;
-  if ((m = link.match(/comic\.naver\.com\/community\/u\/(_?([A-Za-z0-9]+))/))) return { posts: true, pageUrlName: m[1], pageId: m[2] };
-  if ((m = link.match(/comic\.naver\.com\/[^\s]*[?&]titleId=(\d+)/))) return { platform: "naver", seriesId: m[1] };
-  if ((m = link.match(/webtoon\.kakao\.com\/content\/(?:[^\/?#\s]+\/)?(\d+)/))) return { platform: "kakaowebtoon", seriesId: m[1] };
-  if ((m = link.match(/page\.kakao\.com\/content\/(\d+)/))) return { platform: "kakaopage", seriesId: m[1] };
-  return undefined;
-}
-function ntId(base) {
-  const ids = new Set(notif.cfg.series.concat(notif.cfg.community).map(x => x.id)); let id = base, n = 2;
-  while (ids.has(id)) id = base + "-" + n++;
-  return id;
-}
-function ntSerieChoisie() { return data.SERIES.find(s => s.title === $("nt-serie").value); }
-function ntForm() {
-  const s = ntSerieChoisie(); if (!s) return;
-  const type = $("nt-type").value, p = ntPlateforme(s), ko = ntKo(s);
-  $("nt-info").textContent = "Plateforme d'origine : " + (p ? NT_LABEL[p] : "non détectée") + " · Nom coréen : " + (ko || "non renseigné");
-  const L = $("nt-link-l"), H = $("nt-link-h"), S = $("nt-search");
-  S.hidden = true;
-  if (type === "posts") {
-    L.textContent = "Lien de la page communauté du créateur (obligatoire)";
-    H.textContent = "Naver uniquement. Exemple : https://comic.naver.com/community/u/_p19inj";
-  } else if (p === "naver" && ko) {
-    L.textContent = "Lien de la série (facultatif)";
-    H.textContent = "Laisse vide : le bot retrouve la série sur Naver avec le nom coréen, et refuse de choisir s'il y a le moindre doute.";
-  } else {
-    L.textContent = "Lien de la série (obligatoire)";
-    H.textContent = p ? "Colle l'adresse de la page de la série sur " + NT_LABEL[p] + ". Le bouton ci-dessous ouvre la recherche avec le nom coréen." : "Plateforme non détectée : colle un lien Kakao Webtoon, KakaoPage ou Naver.";
-    if (ko && (p === "kakaowebtoon" || p === "kakaopage")) {
-      S.hidden = false; S.textContent = "Chercher sur " + NT_LABEL[p];
-      S.href = (p === "kakaowebtoon" ? "https://webtoon.kakao.com/search?keyword=" : "https://page.kakao.com/search/result?keyword=") + encodeURIComponent(ko);
-    }
-  }
-  $("nt-err").hidden = true;
-}
-function ntAdd() {
-  const err = (m) => { $("nt-err").textContent = m; $("nt-err").hidden = false; };
-  const s = ntSerieChoisie(); if (!s) return err("Choisis une série.");
-  const type = $("nt-type").value, p0 = ntPlateforme(s), ko = ntKo(s), parsed = ntParse($("nt-link").value);
-  const c = notif.cfg;
-  if (parsed === undefined) return err("Lien non reconnu. Attendu : une page de série Kakao Webtoon, KakaoPage ou Naver Webtoon, ou une page communauté Naver.");
-  let entry, aff;
-  if (type === "posts") {
-    if (!parsed || !parsed.posts) return err("Colle le lien de la page communauté du créateur (comic.naver.com/community/u/...).");
-    if (c.community.some(x => x.pageId === parsed.pageId)) return err("Cette page communauté est déjà surveillée.");
-    entry = { id: ntId(slug(s.title) + "-posts"), pageId: parsed.pageId, pageUrlName: parsed.pageUrlName, title: s.title };
-    aff = { title: s.title, platform: NT_LABEL.naver, heure: "", detail: "Posts de la communauté du créateur", cover: s.cover || "", ref: entry.id };
-    c.community.push(entry);
-  } else {
-    if (parsed && parsed.posts) return err("C'est un lien de page communauté : choisis « Les posts de la communauté » à la place.");
-    const platform = parsed ? parsed.platform : p0;
-    if (!parsed && !(p0 === "naver" && ko)) return err("Colle le lien de la série : il n'y a pas moyen de le retrouver automatiquement pour cette plateforme.");
-    if (!platform) return err("Plateforme non détectée : colle le lien de la série.");
-    const deja = c.series.find(x => x.platform === platform && (x.title === s.title || (parsed && String(x.seriesId) === parsed.seriesId) || (ko && x.nomKo === ko)));
-    if (deja) return err("Cette série est déjà surveillée sur " + NT_LABEL[platform] + (deja.title !== s.title ? " (sous le nom « " + deja.title + " »)" : "") + ".");
-    const heure = NT_HEURE[platform];
-    entry = { id: ntId(slug(s.title)), title: s.title, platform };
-    if (platform === "kakaowebtoon") Object.assign(entry, { notices: true, noticeSchedule: [{ day: "*", time: "19:00", tz: "Asia/Seoul" }] });
-    if (parsed) { entry.seriesId = parsed.seriesId; entry.url = platform === "naver" ? "https://comic.naver.com/webtoon/list?titleId=" + parsed.seriesId : platform === "kakaowebtoon" ? "https://webtoon.kakao.com/content/-/" + parsed.seriesId : "https://page.kakao.com/content/" + parsed.seriesId; }
-    if (platform === "naver" && ko) entry.nomKo = ko;
-    Object.assign(entry, { schedule: [{ day: "*", time: heure, tz: "Asia/Seoul" }], once: true, windowHours: 1 });
-    if (platform === "naver") entry.includePreview = true;
-    aff = { title: s.title, platform: NT_LABEL[platform], heure: heure.replace(":", "h"), detail: platform === "kakaowebtoon" ? "Annonces de l'auteur à 19h00" : platform === "naver" ? "Avances payantes annoncées" : "", cover: s.cover || "", ref: entry.id };
-    c.series.push(entry);
-  }
-  data.NOTIFICATEUR = data.NOTIFICATEUR || {}; data.NOTIFICATEUR.series = data.NOTIFICATEUR.series || [];
-  data.NOTIFICATEUR.series.push(aff);
-  $("nt-link").value = ""; $("nt-err").hidden = true;
-  toast("Ajouté : " + s.title + ". Clique sur Publier pour l'envoyer au bot et au site.");
-  renderNotif();
-}
-function ntRemove(kind, e) {
-  const c = notif.cfg;
-  c[kind] = c[kind].filter(x => x !== e);
-  const L = data.NOTIFICATEUR && data.NOTIFICATEUR.series;
-  if (L) data.NOTIFICATEUR.series = L.filter(d => d.ref ? d.ref !== e.id : !(kind === "series" && d.title === e.title));   // les anciennes lignes (sans ref) ne partent qu'avec leur série de chapitres
-  toast("Retiré : " + (e.title || e.id) + ". Clique sur Publier pour l'enregistrer.");
-  renderNotif();
-}
-async function renderNotif() {
-  const msg = $("nt-msg"); msg.style.color = "";
-  if (!notif) {
-    $("nt-app").hidden = true; msg.textContent = "Chargement de la liste du bot...";
-    try { await loadNotif(); } catch (e) { msg.style.color = "var(--red)"; msg.textContent = e.message; return; }
-  }
-  msg.textContent = notif.cfg.series.length + " série(s) et " + notif.cfg.community.length + " page(s) communauté surveillées.";
-  $("nt-app").hidden = false;
-  const sel = $("nt-serie"), cur = sel.value; sel.replaceChildren();
-  data.SERIES.filter(s => s.periode !== "historique").sort((a, b) => a.title.localeCompare(b.title)).forEach(s => { const o = h("option", "", s.title); o.value = s.title; sel.append(o); });
-  if (cur) sel.value = cur;
-  if (!sel.onchange) { sel.onchange = ntForm; $("nt-type").onchange = ntForm; $("nt-add").onclick = ntAdd; $("nt-link").addEventListener("keydown", e => { if (e.key === "Enter") ntAdd(); }); }
-  ntForm();
-  const body = $("nt-body"); body.replaceChildren();
-  const rows = notif.cfg.series.map(e => ({ kind: "series", e })).concat(notif.cfg.community.map(e => ({ kind: "community", e })));
-  rows.forEach(({ kind, e }) => {
-    const tr = h("tr"), plat = kind === "community" ? "naver" : e.platform;
-    tr.append(h("td", "strong", e.title || e.id), h("td", "mute", NT_LABEL[plat] || plat), h("td", "mute", kind === "community" ? "Posts de la communauté" : "Chapitres"));
-    const t = kind === "community" ? "toutes les 5 à 10 min" : e.schedule && e.schedule[0] ? e.schedule[0].time + (e.seriesId ? "" : " · numéro trouvé automatiquement") : "";
-    tr.append(h("td", "mute", t));
-    const td = h("td", "r"), act = h("span", "act"), del = h("button", "ic del"); del.type = "button"; del.title = "Retirer du notificateur"; del.append(icon("trash"));
-    del.onclick = () => { if (del.classList.contains("sure")) ntRemove(kind, e); else { del.classList.add("sure"); del.textContent = "Confirmer"; setTimeout(() => { if (del.isConnected) { del.classList.remove("sure"); del.replaceChildren(icon("trash")); } }, 3500); } };
-    act.append(del); td.append(act); tr.append(td); body.append(tr);
-  });
-  renderBar();
-}
-
 /* ---------- Rendu ---------- */
-function dirty() { return JSON.stringify(data) !== snapshot || Object.keys(pending).length > 0 || notifDirty(); }
+function dirty() { return JSON.stringify(data) !== snapshot || Object.keys(pending).length > 0; }
 function renderNav() {
   const nav = $("nav"); nav.replaceChildren();
   let last = "";
@@ -546,7 +380,6 @@ function renderNav() {
     nav.append(b);
   };
   Object.keys(COLS).forEach(k => add(k, COLS[k].nav, COLS[k].group));
-  add("NOTIF", "Notificateur", "Outils");
   add("OCR", "OCR des chapitres", "Outils");
   add("SITE", "Textes du site", "Site");
   add("STATS", "Statistiques", "Site");
@@ -558,12 +391,10 @@ function renderBar() {
 }
 function renderAll() {
   renderNav(); renderBar();
-  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS" || section === "OCR" || section === "NOTIF";
-  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS" || section === "OCR" || section === "NOTIF";
+  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS" || section === "OCR";
+  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS" || section === "OCR";
   $("stats-view").hidden = section !== "STATS";
   $("ocr-view").hidden = section !== "OCR";
-  $("notif-view").hidden = section !== "NOTIF";
-  if (section === "NOTIF") { editing = null; renderNotif(); return; }
   if (section === "OCR") {
     editing = null;
     const fr = $("ocr-frame"); if (!fr.getAttribute("src")) fr.src = "ocr.html";  // chargé une seule fois : l'état de l'OCR est conservé en changeant de section
@@ -847,7 +678,7 @@ $("login-form").addEventListener("submit", async (e) => {
   catch (err) { cfg.token = ""; showLogin(err.message || "Connexion impossible."); }
   btn.disabled = false; btn.textContent = "Se connecter";
 });
-$("logout").onclick = () => { try { localStorage.removeItem(LS); } catch (e) {} cfg = null; data = null; notif = null; showLogin(""); };
+$("logout").onclick = () => { try { localStorage.removeItem(LS); } catch (e) {} cfg = null; data = null; showLogin(""); };
 $("bar-publish").onclick = publish;
 $("bar-cancel").onclick = async () => {
   if (!$("bar-cancel").dataset.sure) { $("bar-cancel").dataset.sure = "1"; $("bar-cancel").textContent = "Confirmer l'annulation"; setTimeout(() => { $("bar-cancel").dataset.sure = ""; $("bar-cancel").textContent = "Annuler tout"; }, 3000); return; }
