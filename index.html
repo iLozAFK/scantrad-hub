@@ -463,7 +463,7 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
     </div>
     <div class="panel pad" id="nt-how"></div>
     <h2 class="sech">Séries surveillées</h2>
-    <p class="sech-sub">Rangées par jour de sortie. Chaque série est vérifiée <b>tous les jours</b>, à l'heure indiquée, pour ne rater aucun chapitre.</p>
+    <p class="sech-sub">Rangées par jour de sortie. Chaque série est vérifiée <b>tous les jours</b>, dès l'heure indiquée (heure de Paris), pour ne rater aucun chapitre.</p>
     <div id="nt-series"></div>
     <p class="note" id="nt-note"></p>
   </section>
@@ -1115,7 +1115,15 @@ function rendreFiche(s) {
 
 /* ---------- Notificateur Kakao et Naver : liste publique + gestion (réservée à ton jeton GitHub) ---------- */
 const NT_LABEL = { naver: "Naver Webtoon", kakaowebtoon: "Kakao Webtoon", kakaopage: "KakaoPage" };
-const NT_HEURE = { naver: "23:00", kakaowebtoon: "22:00", kakaopage: "22:00" };   // heure de Corée, comme les séries déjà branchées
+const NT_HEURE = { naver: "23:01", kakaowebtoon: "22:01", kakaopage: "22:01" };   // heure de Corée (c'est elle qui règle le bot), comme les séries déjà branchées
+// L'horaire est stocké en heure de Corée (« 22h01 ») mais affiché en heure de Paris (« 14h01 »), heure d'été et d'hiver comprises.
+function ntParis(hhmm) {
+  const m = String(hhmm).match(/(\d{1,2})\s*[h:]\s*(\d{2})/); if (!m) return String(hhmm || "");
+  const k = new Date(new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" }));   // la date d'aujourd'hui en Corée
+  const t = new Date(Date.UTC(k.getFullYear(), k.getMonth(), k.getDate(), +m[1] - 9, +m[2]));   // la Corée est à UTC+9, sans heure d'été
+  const p = new Intl.DateTimeFormat("fr-FR", { timeZone: "Europe/Paris", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(t);
+  return p.find(x => x.type === "hour").value + "h" + p.find(x => x.type === "minute").value;
+}
 const NT_JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];   // jours de sortie (heure de Corée), pour l'affichage seulement
 let ntState = null;   // { cfg: { series: [], community: [] } } : la liste du bot, lue avec le jeton
 
@@ -1136,7 +1144,8 @@ function ntRender() {   // la partie publique : aucune information privée (ni w
     liste.forEach(s => {
       const row = h("div", "panel nt-row"), t = h("div", "nt-t"), meta = h("div", "nt-meta");
       t.append(h("b", "", s.title), h("small", "", s.detail || ""));
-      meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), h("span", "nt-h", s.heure ? "chaque jour dès " + s.heure : "vérifié régulièrement"));
+      const hh = h("span", "nt-h", s.heure ? "chaque jour dès " + ntParis(s.heure) : "vérifié régulièrement"); if (s.heure) hh.title = s.heure + " en Corée (heure à laquelle le bot est réglé)";
+      meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), hh);
       row.append(cover({ cover: s.cover, title: s.title }), t, meta);
       grille.append(row);
     });
@@ -1307,7 +1316,7 @@ function ntList() {
   if (!rows.length) box.append(h("p", "note", "Rien n'est surveillé pour l'instant."));
   rows.forEach(({ kind, e }) => {
     const plat = kind === "community" ? "naver" : e.platform, row = h("div", "nt-lrow"), t = h("div", "nt-t");
-    const quand = kind === "community" ? "toutes les 5 à 10 min" : (e.schedule && e.schedule[0] ? e.schedule[0].time + " (Corée)" + (e.seriesId ? "" : " · numéro trouvé automatiquement") : "");
+    const quand = kind === "community" ? "toutes les 5 à 10 min" : (e.schedule && e.schedule[0] ? e.schedule[0].time + " en Corée = " + ntParis(e.schedule[0].time) + " à Paris" + (e.seriesId ? "" : " · numéro trouvé automatiquement") : "");
     t.append(h("b", "", e.title || e.id), h("small", "", (NT_LABEL[plat] || plat) + " · " + (kind === "community" ? "posts de la communauté" : "chapitres") + (quand ? " · " + quand : "")));
     const pubRow = (N) => (N.series || []).filter(d => d.ref ? d.ref === e.id : (kind === "series" && d.title === e.title));
     const aff = pubRow(window.HUB.NOTIFICATEUR || {}), jours = aff[0] ? (aff[0].jours || []) : [];

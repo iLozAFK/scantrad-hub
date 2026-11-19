@@ -5896,7 +5896,7 @@ window.HUB = {
       {
         "title": "Sand Mage of the Burnt Desert",
         "platform": "KakaoPage",
-        "heure": "22h00",
+        "heure": "22h01",
         "detail": "",
         "cover": "covers/sand-mage-of-the-burnt-desert.webp",
         "jours": [
@@ -5906,7 +5906,7 @@ window.HUB = {
       {
         "title": "Only I Have an EX-Grade Summon",
         "platform": "KakaoPage",
-        "heure": "22h00",
+        "heure": "22h01",
         "detail": "",
         "cover": "covers/only-i-have-an-ex-grade-summon.webp",
         "jours": [
@@ -5916,7 +5916,7 @@ window.HUB = {
       {
         "title": "The Frozen Player Returns",
         "platform": "KakaoPage",
-        "heure": "22h00",
+        "heure": "22h01",
         "detail": "",
         "cover": "covers/return-of-the-frozen-player.webp",
         "jours": [
@@ -5926,7 +5926,7 @@ window.HUB = {
       {
         "title": "The Genius Blacksmith's Game",
         "platform": "KakaoPage",
-        "heure": "22h00",
+        "heure": "22h01",
         "detail": "",
         "cover": "covers/the-genius-blacksmiths-game.webp",
         "jours": [
@@ -5936,7 +5936,7 @@ window.HUB = {
       {
         "title": "Return of the Mount Hua Sect",
         "platform": "Naver Webtoon",
-        "heure": "23h00",
+        "heure": "23h01",
         "detail": "Avances payantes annoncées",
         "cover": "covers/return-of-the-mount-hua-sect.webp",
         "jours": [
@@ -5946,7 +5946,7 @@ window.HUB = {
       {
         "title": "The World After the Fall",
         "platform": "Naver Webtoon",
-        "heure": "23h00",
+        "heure": "23h01",
         "detail": "Avances payantes annoncées · posts de la communauté du créateur",
         "cover": "covers/the-world-after-the-end.webp",
         "jours": [
@@ -5956,14 +5956,14 @@ window.HUB = {
       {
         "title": "Logging Out Is Too Hard",
         "platform": "KakaoPage",
-        "heure": "22h00",
+        "heure": "22h01",
         "detail": "",
         "cover": "covers/logging-out-is-too-hard.webp",
         "ref": "logging-out-is-too-hard",
         "jours": []
       }
     ],
-    "note": "Les heures de vérification sont en heure de Corée. À Paris, il faut retirer 8 h en hiver et 7 h en été : 22h00 en Corée = 14h00 à Paris l'hiver, 15h00 l'été. Les jours de sortie sont ceux de Corée ; avec le décalage, ils tombent le même jour à Paris."
+    "note": "Les heures affichées sont en heure de Paris (elles suivent l'heure d'été et d'hiver). Le bot, lui, est réglé sur l'heure de Corée : 22h01 pour Kakao Page, 23h01 pour Naver. Les jours de sortie sont ceux de Corée ; avec le décalage, ils tombent le même jour à Paris."
   },
   "LIENS": [
     {
