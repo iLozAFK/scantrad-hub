@@ -292,12 +292,22 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
 .ch-item[aria-current="true"] { background: rgba(217,164,6,.15); color: var(--accent-t); }
 .ch-item span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .ch-item .sz { flex: none; font-size: 12px; color: var(--z600); }
 .ch-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--line); }
-.ch-head b { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; flex: 1; }
-.ch-head .tools { display: flex; gap: 8px; flex: none; } .ch-head .btn { padding: 5px 12px; font-size: 13px; }
+.ch-ttl { min-width: 0; flex: 1; } .ch-ttl b { display: block; font-weight: 600; font-size: 16px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ch-ttl small { color: var(--z400); font-size: 12px; }
+.ch-head .tools { display: flex; gap: 8px; flex: none; } .ch-head .btn, .ch-bar .btn { padding: 5px 12px; font-size: 13px; }
 .ch-head .btn[disabled] { opacity: .45; cursor: not-allowed; }
-.ch-reader { overflow-y: auto; flex: 1; padding: 20px 28px; line-height: 1.75; font-size: 15px; color: var(--z300); }
-.ch-reader p { margin: 0 0 14px; } .ch-reader img { max-width: 100%; height: auto; }
-.ch-reader pre { margin: 0; white-space: pre-wrap; word-break: break-word; font-family: inherit; }
+.ch-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 16px; border-bottom: 1px solid var(--line); }
+.ch-bar .btn[aria-pressed="true"] { background: rgba(217,164,6,.15); border-color: rgba(217,164,6,.5); color: var(--accent-t); }
+.ch-hint { margin-left: auto; font-size: 12px; color: var(--z600); }
+.ch-resume { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
+.ch-reader { overflow-y: auto; flex: 1; padding: 24px 28px 48px; line-height: 1.8; font-size: var(--ch-fs, 16px); color: var(--z300); }
+.ch-reader > div, .ch-reader > pre, .ch-reader > p { max-width: 68ch; margin-left: auto; margin-right: auto; }
+.ch-reader p { margin: 0 0 1em; } .ch-reader img { max-width: 100%; height: auto; }
+.ch-reader pre { white-space: pre-wrap; word-break: break-word; font-family: inherit; }
+.ch-reader .corr { color: #f87171; }
+.th-sepia .ch-reader { background: #f4ecd8; color: #3b2f1e; } .th-clair .ch-reader { background: #fafafa; color: #1c1c1c; }
+.th-sepia .ch-reader .corr, .th-clair .ch-reader .corr { color: #c40000; }
+.no-corr .ch-reader .corr { color: inherit; }
 @media (max-width: 1023px) { .ch-grid, .ch-pick { grid-template-columns: minmax(0, 1fr); } .ch-list, .ch-reader-wrap { max-height: 60vh; } }
 
 @media (max-width: 1023px) {
@@ -435,13 +445,21 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
         <div><label for="ch-serie">Série</label><select id="ch-serie"></select></div>
         <div><label for="ch-folder">Dossier</label><select id="ch-folder"></select></div>
       </div>
+      <div class="panel pad ch-resume" id="ch-resume" hidden><span id="ch-resume-t"></span><button class="btn" type="button" id="ch-resume-b">Reprendre</button></div>
       <div class="ch-grid">
         <div class="panel ch-list">
           <div class="search"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" id="ch-q" placeholder="Filtrer (ex : 42)" aria-label="Filtrer les fichiers"></div>
           <div id="ch-files"></div>
         </div>
-        <div class="panel ch-reader-wrap">
+        <div class="panel ch-reader-wrap" id="ch-reader-wrap">
           <div class="ch-head" id="ch-head"></div>
+          <div class="ch-bar">
+            <button class="btn ghost" type="button" id="ch-fs-" title="Texte plus petit" aria-label="Texte plus petit">A−</button>
+            <button class="btn ghost" type="button" id="ch-fs+" title="Texte plus grand" aria-label="Texte plus grand">A+</button>
+            <button class="btn ghost" type="button" id="ch-theme" title="Changer le thème de lecture"></button>
+            <button class="btn ghost" type="button" id="ch-corr" aria-pressed="true" title="Afficher les corrections (mots en rouge) des fichiers check">Corrections en rouge</button>
+            <span class="ch-hint">← → pour changer de chapitre</span>
+          </div>
           <div id="ch-reader" class="ch-reader"><p class="empty">Choisis un fichier dans la liste.</p></div>
         </div>
       </div>
@@ -1027,8 +1045,25 @@ function rendreFiche(s) {
 }
 
 /* ---------- Chapitres (dépôt privé, lu avec un jeton GitHub : rien n'est public) ---------- */
-const CH_KEY = "scantrad-hub-chapitres";
-let chCfg = null, chIndex = null, chSel = { team: "", serie: "", folder: "" }, chCur = -1, chList = [], chTok = 0, chBound = false;
+const CH_KEY = "scantrad-hub-chapitres", CH_LECT = "scantrad-hub-lecture";
+const CH_THEMES = ["sombre", "sepia", "clair"], CH_THEME_LBL = { sombre: "Thème : sombre", sepia: "Thème : sépia", clair: "Thème : clair" };
+let chCfg = null, chIndex = null, chSel = { team: "", serie: "", folder: "" }, chCur = -1, chList = [], chTok = 0, chBound = false, chPending = null, chSaveT = 0;
+
+/* Préférences et position de lecture, gardées dans ce navigateur */
+function lectGet() { try { return JSON.parse(localStorage.getItem(CH_LECT) || "{}") || {}; } catch (e) { return {}; } }
+function lectSet(fn) { try { const l = lectGet(); fn(l); localStorage.setItem(CH_LECT, JSON.stringify(l)); } catch (e) {} }
+function chPref() { return Object.assign({ size: 16, theme: "sombre", corr: true }, lectGet().pref || {}); }
+function chSetPref(k, v) { lectSet(l => { l.pref = Object.assign({}, l.pref || {}, { [k]: v }); }); chApplyPref(); }
+function chApplyPref() {
+  const p = chPref(), w = $("ch-reader-wrap");
+  w.style.setProperty("--ch-fs", p.size + "px");
+  CH_THEMES.forEach(t => w.classList.toggle("th-" + t, t === p.theme));
+  w.classList.toggle("no-corr", !p.corr);
+  $("ch-theme").textContent = CH_THEME_LBL[p.theme] || CH_THEME_LBL.sombre;
+  $("ch-corr").setAttribute("aria-pressed", String(!!p.corr));
+}
+function chPosKey() { return [chSel.team, chSel.serie, chSel.folder].join("/"); }
+
 function chLoadCfg() {
   try { const c = JSON.parse(localStorage.getItem(CH_KEY) || "null"); if (c && c.token && c.repo) return c; } catch (e) {}
   try { const a = JSON.parse(localStorage.getItem("scantrad-hub-admin") || "null"); if (a && a.token && a.repo) return { repo: a.repo.split("/")[0] + "/scantrad-data", token: a.token }; } catch (e) {}  // déjà connecté à l'admin
@@ -1036,6 +1071,7 @@ function chLoadCfg() {
 }
 function chLabel(k) { return { manhwa: "Chapitres Manhwa", novel: "Chapitres Novel", raws: "Raws", __root: "Glossaire et synopsis" }[k] || k; }
 function chSize(n) { return n >= 1048576 ? (n / 1048576).toFixed(1) + " Mo" : Math.max(1, Math.round(n / 1024)) + " Ko"; }
+function chTitle(f) { const base = f.n.replace(/\.[^.]+$/, ""); return /^\d+$/.test(base) ? "Chapitre " + base : base; }
 async function chFetch(path, as) {
   const res = await fetch("https://api.github.com/repos/" + chCfg.repo + "/contents/" + path.split("/").map(encodeURIComponent).join("/"), {
     headers: { Authorization: "Bearer " + chCfg.token, Accept: "application/vnd.github.raw+json" }
@@ -1046,7 +1082,30 @@ async function chFetch(path, as) {
   if (!res.ok) throw new Error("GitHub a répondu " + res.status + ".");
   return as === "blob" ? res.blob() : res.text();
 }
-function chScript(src) { return new Promise((ok, ko) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => ko(new Error("Impossible de charger le convertisseur .docx (réseau).")); document.head.append(s); }); }
+function chScript(src) { return new Promise((ok, ko) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => ko(new Error("Impossible de charger un composant de lecture (réseau).")); document.head.append(s); }); }
+
+/* .docx -> HTML. Les mots en rouge (corrections des fichiers check) sont repérés avant la conversion,
+   car le convertisseur ignore la couleur : on leur donne un style que l'on sait traduire en <span class="corr">. */
+async function chDocx(buf) {
+  if (!window.mammoth) await chScript("https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js");
+  try {
+    if (!window.JSZip) await chScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+    const z = await window.JSZip.loadAsync(buf);
+    let doc = await z.file("word/document.xml").async("string"), n = 0;
+    doc = doc.replace(/<w:r(?:\s[^>]*)?>[\s\S]*?<\/w:r>/g, run => {
+      if (!/<w:color\b[^>]*w:val="(?:FF0000|ff0000)"/.test(run) || !/<w:rPr>/.test(run) || /<w:rStyle\b/.test(run)) return run;
+      n++; return run.replace("<w:rPr>", '<w:rPr><w:rStyle w:val="Correction"/>');
+    });
+    if (n) {
+      z.file("word/document.xml", doc);
+      const st = z.file("word/styles.xml");
+      if (st) z.file("word/styles.xml", (await st.async("string")).replace("</w:styles>", '<w:style w:type="character" w:styleId="Correction"><w:name w:val="Correction"/></w:style></w:styles>'));
+      buf = await z.generateAsync({ type: "arraybuffer" });
+    }
+  } catch (e) { /* sans la couleur : lecture normale */ }
+  return window.mammoth.convertToHtml({ arrayBuffer: buf }, { styleMap: ["r[style-name='Correction'] => span.corr"] });
+}
+
 function chSerie() { const t = chIndex && chIndex.teams.find(x => x.name === chSel.team); return t && t.series.find(x => x.name === chSel.serie); }
 function chFiles() {
   const s = chSerie(); if (!s) return [];
@@ -1067,44 +1126,54 @@ function chSync(level) {
   const s = chSerie(), folders = s ? s.folders.map(f => f.key).concat(s.files.length ? ["__root"] : []) : [];
   if (level <= 2 || !folders.includes(chSel.folder)) chSel.folder = folders.includes("manhwa") ? "manhwa" : (folders[0] || "");
   chFill("ch-team", teams, chSel.team); chFill("ch-serie", series, chSel.serie); chFill("ch-folder", folders, chSel.folder, chLabel);
-  chCur = -1; $("ch-q").value = ""; chRenderList();
+  chCur = -1; $("ch-q").value = ""; chRenderList(); chResume();
   $("ch-head").replaceChildren(); $("ch-reader").replaceChildren(h("p", "empty", "Choisis un fichier dans la liste."));
+  lectSet(l => { l.last = { team: chSel.team, serie: chSel.serie, folder: chSel.folder }; });
 }
 function chRenderList() {
   const q = $("ch-q").value.trim().toLowerCase(), box = $("ch-files"); box.replaceChildren();
   chList = chFiles();
-  let shown = 0;
+  let shown = 0, cur = null;
   chList.forEach((f, i) => {
     if (q && !f.n.toLowerCase().includes(q)) return;
     shown++;
     const b = h("button", "ch-item"); b.type = "button";
-    if (i === chCur) b.setAttribute("aria-current", "true");
+    if (i === chCur) { b.setAttribute("aria-current", "true"); cur = b; }
     b.append(h("span", "", f.n), h("span", "sz", chSize(f.s)));
     b.onclick = () => chOpen(i);
     box.append(b);
   });
   if (!shown) box.append(h("p", "empty", chList.length ? "Aucun fichier ne correspond." : "Dossier vide."));
+  if (cur) cur.scrollIntoView({ block: "nearest" });
 }
-async function chOpen(i) {
+function chResume() {
+  const box = $("ch-resume"), pos = (lectGet().pos || {})[chPosKey()], i = pos ? chList.findIndex(f => f.path === pos.path) : -1;
+  if (chCur >= 0 || i < 0) { box.hidden = true; return; }
+  box.hidden = false; $("ch-resume-t").textContent = "Reprendre la lecture : " + chTitle(chList[i]);
+  $("ch-resume-b").onclick = () => chOpen(i, pos.top);
+}
+async function chOpen(i, top) {
   const f = chList[i]; if (!f) return;
-  chCur = i; chRenderList();
-  const my = ++chTok, reader = $("ch-reader"), head = $("ch-head");
+  chCur = i; chRenderList(); $("ch-resume").hidden = true;
+  lectSet(l => { l.pos = l.pos || {}; l.pos[chPosKey()] = { path: f.path, top: top || 0 }; });
+  try { history.replaceState(null, "", "#chapitres/" + [chSel.team, chSel.serie, chSel.folder, f.n].map(encodeURIComponent).join("/")); } catch (e) {}   // lien direct vers ce chapitre
+  const my = ++chTok, reader = $("ch-reader"), head = $("ch-head"), ext = f.n.split(".").pop().toLowerCase();
+  $("ch-corr").hidden = ext !== "docx";
   head.replaceChildren();
-  const title = h("b", "", f.n); title.title = f.path;
+  const ttl = h("div", "ch-ttl"), meta = h("small", "", chSel.serie + " · " + chLabel(chSel.folder) + " · " + (i + 1) + " / " + chList.length);
+  const name = h("b", "", chTitle(f)); name.title = f.path; ttl.append(name, meta);
   const tools = h("div", "tools"), prev = h("button", "btn ghost", "Précédent"), next = h("button", "btn ghost", "Suivant"), dl = h("button", "btn ghost", "Télécharger");
   [prev, next, dl].forEach(b => { b.type = "button"; });
   prev.disabled = i <= 0; next.disabled = i >= chList.length - 1;
   prev.onclick = () => chOpen(i - 1); next.onclick = () => chOpen(i + 1);
-  tools.append(prev, next, dl); head.append(title, tools);
+  tools.append(prev, next, dl); head.append(ttl, tools);
   reader.replaceChildren(h("p", "note", "Chargement..."));
   try {
-    const ext = f.n.split(".").pop().toLowerCase(), blob = await chFetch(f.path, "blob");
+    const blob = await chFetch(f.path, "blob");
     if (my !== chTok) return;
     dl.onclick = () => { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = f.n.split("/").pop(); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); };
-    reader.scrollTop = 0;
     if (ext === "docx") {
-      if (!window.mammoth) await chScript("https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js");
-      const r = await window.mammoth.convertToHtml({ arrayBuffer: await blob.arrayBuffer() });
+      const r = await chDocx(await blob.arrayBuffer());
       if (my !== chTok) return;
       const d = h("div"); d.innerHTML = r.value || "";
       if (!d.textContent.trim() && !d.querySelector("img")) d.append(h("p", "empty", "(document vide)"));
@@ -1112,7 +1181,13 @@ async function chOpen(i) {
     } else if (ext === "txt") {
       const pre = h("pre"); pre.textContent = await blob.text(); reader.replaceChildren(pre);
     } else reader.replaceChildren(h("p", "empty", "Ce type de fichier (" + ext + ") ne s'affiche pas ici. Utilise Télécharger."));
+    reader.scrollTop = top || 0;
   } catch (e) { if (my === chTok) reader.replaceChildren(h("p", "empty", e.message)); }
+}
+function chApplyDeep(deep) {
+  const seg = deep.split("/"); if (seg.length < 4) return;
+  chSel = { team: seg[0], serie: seg[1], folder: seg[2] }; chSync(3);
+  const i = chList.findIndex(f => f.n === seg.slice(3).join("/")); if (i >= 0) chOpen(i);
 }
 async function chLoad() {
   chIndex = null; $("ch-app").hidden = true; $("ch-login").hidden = true; $("ch-out").hidden = true;
@@ -1122,13 +1197,15 @@ async function chLoad() {
     chIndex = JSON.parse(await chFetch("index.json", "text"));
     const nb = chIndex.teams.reduce((n, t) => n + t.series.reduce((m, s) => m + s.files.length + s.folders.reduce((k, f) => k + f.files.length, 0), 0), 0);
     msg.textContent = nb + " fichiers · index du " + (chIndex.generated || "?");
-    $("ch-app").hidden = false; $("ch-out").hidden = false; chSync(0);
+    $("ch-app").hidden = false; $("ch-out").hidden = false;
+    chSel = Object.assign({ team: "", serie: "", folder: "" }, lectGet().last || {}); chSync(3);   // reprend la dernière série ouverte
+    if (chPending) { const d = chPending; chPending = null; chApplyDeep(d); }
   } catch (e) {
     msg.style.color = "var(--red)"; msg.textContent = e.message;
     $("ch-repo").value = chCfg.repo; $("ch-login").hidden = false; chCfg = null;
   }
 }
-function initChapitres() {
+function initChapitres(deep) {
   if (!chBound) {
     chBound = true;
     $("ch-login").onsubmit = e => {
@@ -1142,13 +1219,31 @@ function initChapitres() {
     $("ch-serie").onchange = () => { chSel.serie = $("ch-serie").value; chSync(2); };
     $("ch-folder").onchange = () => { chSel.folder = $("ch-folder").value; chSync(3); };
     $("ch-q").addEventListener("input", chRenderList);
+    $("ch-fs-").onclick = () => chSetPref("size", Math.max(12, chPref().size - 1));
+    $("ch-fs+").onclick = () => chSetPref("size", Math.min(26, chPref().size + 1));
+    $("ch-theme").onclick = () => chSetPref("theme", CH_THEMES[(CH_THEMES.indexOf(chPref().theme) + 1) % CH_THEMES.length]);
+    $("ch-corr").onclick = () => chSetPref("corr", !chPref().corr);
+    $("ch-reader").addEventListener("scroll", () => {                       // retient où tu en es dans le chapitre
+      clearTimeout(chSaveT);
+      chSaveT = setTimeout(() => { if (chCur < 0 || !chList[chCur]) return; const top = $("ch-reader").scrollTop; lectSet(l => { l.pos = l.pos || {}; l.pos[chPosKey()] = { path: chList[chCur].path, top }; }); }, 400);
+    });
+    document.addEventListener("keydown", e => {                             // ← → : chapitre précédent / suivant
+      if (!$("chapitres").classList.contains("on") || chCur < 0 || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement && document.activeElement.tagName)) return;
+      if (e.key === "ArrowLeft" && chCur > 0) { e.preventDefault(); chOpen(chCur - 1); }
+      else if (e.key === "ArrowRight" && chCur < chList.length - 1) { e.preventDefault(); chOpen(chCur + 1); }
+    });
   }
-  if (!chIndex) { chCfg = chLoadCfg(); chLoad(); }
+  chApplyPref();
+  if (chIndex) { if (deep) chApplyDeep(deep); return; }
+  chPending = deep || null; chCfg = chLoadCfg(); chLoad();
 }
 
 /* ---------- Navigation ---------- */
 const ONGLETS = ["accueil", "a-series", "a-equipes", "a-outils", "glossaires", "p-parcours", "p-series", "p-outils", "chapitres", "liens", "fiche"];
 function afficher(nom) {
+  let deep = null;
+  if (nom.indexOf("chapitres/") === 0) { deep = nom.slice(10); nom = "chapitres"; }
   let actif = ONGLETS.includes(nom) ? nom : "accueil", fiche = null;
   if (nom.indexOf("serie/") === 0) { fiche = parSlug[nom.slice(6)] || null; actif = fiche ? "fiche" : "accueil"; }
   else if (actif === "fiche") actif = "accueil";
@@ -1158,7 +1253,7 @@ function afficher(nom) {
     const a = document.querySelector('.nav a[href="#' + id + '"]');
     if (a) { a.classList.toggle("on", id === navId); a.setAttribute("aria-current", id === navId ? "page" : "false"); }
   });
-  if (actif === "chapitres") initChapitres();
+  if (actif === "chapitres") initChapitres(deep);
   if (fiche) { rendreFiche(fiche); document.title = fiche.title + " · Hub scantrad iLoza"; } else document.title = "Hub scantrad iLoza";
   window.scrollTo(0, 0);
   return actif;
