@@ -5777,13 +5777,6 @@ window.HUB = {
     },
     {
       "tag": "Discord",
-      "name": "Bot de sorties",
-      "text": "Surveille les sites de scan et poste un embed à chaque nouveau chapitre.",
-      "url": "",
-      "periode": "actuel"
-    },
-    {
-      "tag": "Discord",
       "name": "Notificateur Kakao et Naver",
       "text": "Prévient chaque semaine des nouveaux chapitres, avances payantes comprises.",
       "url": "",
