@@ -5898,42 +5898,60 @@ window.HUB = {
         "platform": "KakaoPage",
         "heure": "22h00",
         "detail": "",
-        "cover": "covers/sand-mage-of-the-burnt-desert.webp"
+        "cover": "covers/sand-mage-of-the-burnt-desert.webp",
+        "jours": [
+          "Samedi"
+        ]
       },
       {
         "title": "Only I Have an EX-Grade Summon",
         "platform": "KakaoPage",
         "heure": "22h00",
         "detail": "",
-        "cover": "covers/only-i-have-an-ex-grade-summon.webp"
+        "cover": "covers/only-i-have-an-ex-grade-summon.webp",
+        "jours": [
+          "Jeudi"
+        ]
       },
       {
         "title": "The Frozen Player Returns",
         "platform": "KakaoPage",
         "heure": "22h00",
         "detail": "",
-        "cover": "covers/return-of-the-frozen-player.webp"
+        "cover": "covers/return-of-the-frozen-player.webp",
+        "jours": [
+          "Vendredi"
+        ]
       },
       {
         "title": "The Genius Blacksmith's Game",
         "platform": "KakaoPage",
         "heure": "22h00",
         "detail": "",
-        "cover": "covers/the-genius-blacksmiths-game.webp"
+        "cover": "covers/the-genius-blacksmiths-game.webp",
+        "jours": [
+          "Vendredi"
+        ]
       },
       {
         "title": "Return of the Mount Hua Sect",
         "platform": "Naver Webtoon",
         "heure": "23h00",
         "detail": "Avances payantes annoncées",
-        "cover": "covers/return-of-the-mount-hua-sect.webp"
+        "cover": "covers/return-of-the-mount-hua-sect.webp",
+        "jours": [
+          "Mardi"
+        ]
       },
       {
         "title": "The World After the Fall",
         "platform": "Naver Webtoon",
         "heure": "23h00",
         "detail": "Avances payantes annoncées · posts de la communauté du créateur",
-        "cover": "covers/the-world-after-the-end.webp"
+        "cover": "covers/the-world-after-the-end.webp",
+        "jours": [
+          "Lundi"
+        ]
       },
       {
         "title": "Logging Out Is Too Hard",
@@ -5941,10 +5959,11 @@ window.HUB = {
         "heure": "22h00",
         "detail": "",
         "cover": "covers/logging-out-is-too-hard.webp",
-        "ref": "logging-out-is-too-hard"
+        "ref": "logging-out-is-too-hard",
+        "jours": []
       }
     ],
-    "note": "Les heures de vérification sont en heure de Corée. À Paris, il faut retirer 8 h en hiver et 7 h en été : 22h00 en Corée = 14h00 à Paris l'hiver, 15h00 l'été."
+    "note": "Les heures de vérification sont en heure de Corée. À Paris, il faut retirer 8 h en hiver et 7 h en été : 22h00 en Corée = 14h00 à Paris l'hiver, 15h00 l'été. Les jours de sortie sont ceux de Corée ; avec le décalage, ils tombent le même jour à Paris."
   },
   "LIENS": [
     {

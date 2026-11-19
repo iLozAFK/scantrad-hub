@@ -276,12 +276,20 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
 
 /* Notificateur */
 .nt-points { margin: 0; padding-left: 18px; color: var(--z300); display: grid; gap: 6px; }
-#nt-series { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); margin-bottom: 16px; }
+#nt-series { margin-bottom: 16px; }
+.nt-group { margin-bottom: 18px; } .nt-group:last-child { margin-bottom: 0; }
+.nt-day { display: flex; align-items: baseline; gap: 8px; margin: 0 0 8px; font-size: 15px; font-weight: 600; } .nt-day small { color: var(--z400); font-weight: 400; font-size: 12px; }
+.nt-grid-g { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); }
+.nt-days { display: flex; flex-wrap: wrap; gap: 8px; }
+.nt-days label { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-weight: 400; color: var(--z400); }
+.nt-days label.on { background: rgba(217,164,6,.15); border-color: rgba(217,164,6,.5); color: var(--accent-t); }
+.nt-days input { width: auto !important; margin: 0; accent-color: var(--accent); }
+.nt-lrow select { width: auto; padding: 4px 28px 4px 10px; font-size: 13px; }
 .nt-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; }
 .nt-row .cv { width: 40px; height: 60px; border-radius: 6px; flex: none; font-size: 16px; }
 .nt-t { flex: 1; min-width: 0; display: flex; flex-direction: column; } .nt-t small { color: var(--z400); }
 .nt-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; } .nt-h { font-weight: 600; font-size: 14px; }
-@media (max-width: 480px) { #nt-series { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 480px) { .nt-grid-g { grid-template-columns: minmax(0, 1fr); } }
 #notificateur [hidden] { display: none !important; }
 .nt-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .nt-form { display: grid; gap: 10px; margin-bottom: 16px; }
@@ -443,6 +451,9 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
         <label for="nt-link" id="nt-link-l">Lien de la série</label>
         <input type="text" id="nt-link" placeholder="https://..." autocomplete="off">
         <p class="note" id="nt-link-h"></p>
+        <label>Jour(s) de sortie (facultatif)</label>
+        <div class="nt-days" id="nt-days"></div>
+        <p class="note">Sert seulement à ranger la série sur la page : le bot la vérifie tous les jours. Tu peux le modifier plus bas.</p>
         <div class="nt-actions"><button class="btn" type="button" id="nt-add">Ajouter au notificateur</button><a class="btn ghost" id="nt-search" target="_blank" rel="noopener" hidden>Chercher sur Kakao</a></div>
         <p id="nt-err" style="color:var(--red);margin:12px 0 0" hidden></p>
         <h2 class="sech">Surveillé par le bot</h2>
@@ -452,7 +463,7 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
     </div>
     <div class="panel pad" id="nt-how"></div>
     <h2 class="sech">Séries surveillées</h2>
-    <p class="sech-sub">Une vérification par jour et par série, à l'heure ci-dessous.</p>
+    <p class="sech-sub">Rangées par jour de sortie. Chaque série est vérifiée <b>tous les jours</b>, à l'heure indiquée, pour ne rater aucun chapitre.</p>
     <div id="nt-series"></div>
     <p class="note" id="nt-note"></p>
   </section>
@@ -1105,6 +1116,7 @@ function rendreFiche(s) {
 /* ---------- Notificateur Kakao et Naver : liste publique + gestion (réservée à ton jeton GitHub) ---------- */
 const NT_LABEL = { naver: "Naver Webtoon", kakaowebtoon: "Kakao Webtoon", kakaopage: "KakaoPage" };
 const NT_HEURE = { naver: "23:00", kakaowebtoon: "22:00", kakaopage: "22:00" };   // heure de Corée, comme les séries déjà branchées
+const NT_JOURS = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"];   // jours de sortie (heure de Corée), pour l'affichage seulement
 let ntState = null;   // { cfg: { series: [], community: [] } } : la liste du bot, lue avec le jeton
 
 function ntRender() {   // la partie publique : aucune information privée (ni webhook, ni clé)
@@ -1112,12 +1124,23 @@ function ntRender() {   // la partie publique : aucune information privée (ni w
   $("nt-sub").textContent = N.text || "";
   const ul = h("ul", "nt-points"); (N.points || []).forEach(p => ul.append(h("li", "", p))); $("nt-how").replaceChildren(ul);
   const box = $("nt-series"); box.replaceChildren();
+  const groupes = new Map(NT_JOURS.map(j => [j, []])); groupes.set("", []);   // un groupe par jour de sortie, puis « à confirmer »
   (N.series || []).forEach(s => {
-    const row = h("div", "panel nt-row"), t = h("div", "nt-t"), meta = h("div", "nt-meta");
-    t.append(h("b", "", s.title), h("small", "", s.detail || ""));
-    meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), h("span", "nt-h", s.heure ? s.heure + " · heure de Corée" : "Vérifié régulièrement"));
-    row.append(cover({ cover: s.cover, title: s.title }), t, meta);
-    box.append(row);
+    const js = (s.jours || []).filter(j => groupes.has(j));
+    (js.length ? js : [""]).forEach(j => groupes.get(j).push(s));   // une série qui sort 2 jours apparaît dans les 2
+  });
+  groupes.forEach((liste, jour) => {
+    if (!liste.length) return;
+    const g = h("div", "nt-group"), titre = h("h3", "nt-day", jour || "Jour de sortie à confirmer"), grille = h("div", "nt-grid-g");
+    titre.append(h("small", "", plural(liste.length, "série", "séries")));
+    liste.forEach(s => {
+      const row = h("div", "panel nt-row"), t = h("div", "nt-t"), meta = h("div", "nt-meta");
+      t.append(h("b", "", s.title), h("small", "", s.detail || ""));
+      meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), h("span", "nt-h", s.heure ? "chaque jour dès " + s.heure : "vérifié régulièrement"));
+      row.append(cover({ cover: s.cover, title: s.title }), t, meta);
+      grille.append(row);
+    });
+    g.append(titre, grille); box.append(g);
   });
   $("nt-note").textContent = N.note || "";
 }
@@ -1191,18 +1214,30 @@ function ntForm() {
   }
   $("nt-err").hidden = true;
 }
+function ntJoursChoisis() { return Array.from($("nt-days").querySelectorAll("input")).filter(i => i.checked).map(i => i.value); }
+function ntJoursReset() { Array.from($("nt-days").querySelectorAll("input")).forEach(i => { i.checked = false; i.parentNode.classList.remove("on"); }); }
+(function () {   // cases « jour de sortie » du formulaire
+  const box = $("nt-days");
+  NT_JOURS.forEach(j => {
+    const l = h("label", ""), i = h("input"); i.type = "checkbox"; i.value = j;
+    i.onchange = () => l.classList.toggle("on", i.checked);
+    l.append(i, document.createTextNode(j)); box.append(l);
+  });
+})();
 function ntMsg(texte, erreur) { const m = $("nt-msg"); m.style.color = erreur ? "var(--red)" : ""; m.textContent = texte || ""; }
 
 /* Écrit la liste du bot (dépôt webtoon-notifier) puis la page publique (data/data.js du hub).
    mutCfg(cfg) modifie la liste du bot (peut lever une erreur) ; mutPub(NOTIFICATEUR) modifie la liste affichée. */
-async function ntCommit(mutCfg, mutPub) {
+async function ntCommit(mutCfg, mutPub) {   // mutCfg = null : on ne touche qu'à la page publique (ex. changer le jour de sortie)
   const ctx = ntCtx(); if (!ctx) throw new Error("Connecte-toi d'abord avec ton jeton GitHub.");
-  const f = await ntGh(ctx, ctx.bot, "series.json");   // toujours la version la plus récente, pas celle affichée
-  if (!f) throw new Error("series.json est introuvable dans " + ctx.bot + ". Vérifie que ton jeton y a accès (Contents : Read and write).");
-  const cfg = JSON.parse(ntB64d(f.content)); cfg.series = cfg.series || []; cfg.community = cfg.community || [];
-  mutCfg(cfg);
-  const r = await ntGh(ctx, ctx.bot, "series.json", { method: "PUT", body: JSON.stringify({ message: "Séries du notificateur mises à jour depuis le site", content: ntB64e(JSON.stringify(cfg, null, 2) + "\n"), sha: f.sha }) });
-  ntState = { cfg, sha: r.content.sha };
+  if (mutCfg) {
+    const f = await ntGh(ctx, ctx.bot, "series.json");   // toujours la version la plus récente, pas celle affichée
+    if (!f) throw new Error("series.json est introuvable dans " + ctx.bot + ". Vérifie que ton jeton y a accès (Contents : Read and write).");
+    const cfg = JSON.parse(ntB64d(f.content)); cfg.series = cfg.series || []; cfg.community = cfg.community || [];
+    mutCfg(cfg);
+    const r = await ntGh(ctx, ctx.bot, "series.json", { method: "PUT", body: JSON.stringify({ message: "Séries du notificateur mises à jour depuis le site", content: ntB64e(JSON.stringify(cfg, null, 2) + "\n"), sha: f.sha }) });
+    ntState = { cfg, sha: r.content.sha };
+  }
   try {   // la page publique : si elle échoue, le bot est déjà à jour, on le dit
     const g = await ntGh(ctx, ctx.hub, "data/data.js", null, ctx.branch);
     if (!g) throw new Error("data/data.js est introuvable dans " + ctx.hub + ".");
@@ -1250,9 +1285,10 @@ async function ntAdd() {
     };
   }
   const btn = $("nt-add"); btn.disabled = true; btn.textContent = "Enregistrement..."; let b;
+  const jours = ntJoursChoisis();
   try {
-    const siteMsg = await ntCommit(cfg => { b = build(cfg); cfg[b.kind].push(b.entry); }, N => { N.series.push(b.aff); });
-    $("nt-link").value = "";
+    const siteMsg = await ntCommit(cfg => { b = build(cfg); b.aff.jours = jours; cfg[b.kind].push(b.entry); }, N => { N.series.push(b.aff); });
+    $("nt-link").value = ""; ntJoursReset();
     ntMsg(siteMsg || "Ajouté : " + s.title + ". Le bot est redéployé par Cloudflare en environ une minute ; la page publique suit.", !!siteMsg);
   } catch (e) { err(e.message); }
   btn.disabled = false; btn.textContent = "Ajouter au notificateur";
@@ -1273,12 +1309,26 @@ function ntList() {
     const plat = kind === "community" ? "naver" : e.platform, row = h("div", "nt-lrow"), t = h("div", "nt-t");
     const quand = kind === "community" ? "toutes les 5 à 10 min" : (e.schedule && e.schedule[0] ? e.schedule[0].time + " (Corée)" + (e.seriesId ? "" : " · numéro trouvé automatiquement") : "");
     t.append(h("b", "", e.title || e.id), h("small", "", (NT_LABEL[plat] || plat) + " · " + (kind === "community" ? "posts de la communauté" : "chapitres") + (quand ? " · " + quand : "")));
+    const pubRow = (N) => (N.series || []).filter(d => d.ref ? d.ref === e.id : (kind === "series" && d.title === e.title));
+    const aff = pubRow(window.HUB.NOTIFICATEUR || {}), jours = aff[0] ? (aff[0].jours || []) : [];
+    const sel = h("select"); sel.title = "Jour de sortie (affichage seulement : le bot vérifie tous les jours)";
+    const optJ = (v, l) => { const o = h("option", "", l); o.value = v; sel.append(o); };
+    optJ("", "Jour à confirmer"); NT_JOURS.forEach(j => optJ(j, j));
+    if (jours.length > 1) optJ(jours.join("|"), jours.join(" + "));
+    sel.value = jours.length > 1 ? jours.join("|") : (jours[0] || "");
+    sel.onchange = async () => {
+      const v = sel.value ? sel.value.split("|") : [];
+      ntMsg("Enregistrement du jour de sortie..."); sel.disabled = true;
+      try { const siteMsg = await ntCommit(null, N => { pubRow(N).forEach(d => { d.jours = v; }); }); ntMsg(siteMsg || "Jour de sortie enregistré : " + (v.join(" + ") || "à confirmer") + ".", !!siteMsg); }
+      catch (err) { ntMsg(err.message, true); }
+      sel.disabled = false;
+    };
     const del = h("button", "btn ghost", "Retirer"); del.type = "button";
     del.onclick = () => {
       if (del.classList.contains("sure")) ntRemove(kind, e);
       else { del.classList.add("sure"); del.textContent = "Confirmer"; setTimeout(() => { if (del.isConnected) { del.classList.remove("sure"); del.textContent = "Retirer"; } }, 3500); }
     };
-    row.append(t, del); box.append(row);
+    row.append(t, sel, del); box.append(row);
   });
 }
 async function ntOpen() {
