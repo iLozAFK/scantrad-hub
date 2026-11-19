@@ -204,7 +204,13 @@ h2 { margin: 0 0 12px; font-size: 16px; font-weight: 600; }
 .c.l3 { background: rgba(232,185,35,.7); } .c.l4 { background: #e8b923; }
 .c:not(.fut):hover { outline: 1px solid #a1a1aa; }
 .lv { display: inline-flex; align-items: center; gap: 3px; } .lv .c { width: 11px; aspect-ratio: 1; min-width: 0; }
+.svgw { position: relative; cursor: crosshair; }
+.svgw .hdot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #e8b923; box-shadow: 0 0 0 3px rgba(232,185,35,.3); pointer-events: none; }
+.svgw .htip { position: absolute; padding: 6px 9px; background: #1a1a1a; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; font-size: 12px; white-space: nowrap; pointer-events: none; line-height: 1.3; }
+.svgw .htip small { display: block; color: var(--z400); font-size: 11px; }
+.svgw [hidden] { display: none; }
 .svgw svg { width: 100%; height: 150px; display: block; }
+.svgw .yl { position: absolute; left: 0; transform: translateY(-115%); font-size: 10px; color: var(--z400); pointer-events: none; line-height: 1; }
 .axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--z600); margin-top: 4px; }
 .hb { display: grid; grid-template-columns: 26px repeat(24, minmax(0, 1fr)); gap: 3px; align-items: center; }
 .hb .hh { font-size: 10px; color: var(--z600); text-align: left; height: 12px; white-space: nowrap; }
@@ -528,7 +534,22 @@ function statsAccueil() {
   const area = dpath + " L" + VW + "," + VH + " L0," + VH + " Z", lp = pts[N - 1];
   const rt = $("rythme");
   rt.append(el("div", "ptitle", "<b>Rythme</b><span>chapitres par semaine</span>"));
-  rt.append(el("div", "svgw", '<svg viewBox="0 0 ' + VW + " " + VH + '" preserveAspectRatio="none" role="img" aria-label="Chapitres par semaine sur 12 mois"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8b923" stop-opacity=".35"/><stop offset="1" stop-color="#e8b923" stop-opacity="0"/></linearGradient></defs><path d="' + area + '" fill="url(#gA)"/><path d="' + dpath + '" fill="none" stroke="#e8b923" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'));
+  const yOf = v => VH - pad - v / mx * (VH - 2 * pad - 6);
+  const raw = mx / 3, mag = Math.pow(10, Math.floor(Math.log10(raw))), stp = (raw / mag <= 1 ? 1 : raw / mag <= 2 ? 2 : raw / mag <= 5 ? 5 : 10) * mag;
+  let yGrid = "", ylabs = "";
+  for (let v = 0; v <= mx; v += stp) { yGrid +='<line x1="0" x2="' + VW + '" y1="' + yOf(v) + '" y2="' + yOf(v) + '" stroke="#fff" stroke-opacity="' + (v ? ".08" : ".18") + '" stroke-width="1" vector-effect="non-scaling-stroke"' + (v ? ' stroke-dasharray="3 4"' : "") + "/>"; ylabs += '<span class="yl" style="top:' + (yOf(v) / VH * 100) + '%">' + v + "</span>"; }
+  rt.append(el("div", "svgw", ylabs + '<svg viewBox="0 0 ' + VW + " " + VH + '" preserveAspectRatio="none" role="img" aria-label="Chapitres par semaine sur 12 mois"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8b923" stop-opacity=".35"/><stop offset="1" stop-color="#e8b923" stop-opacity="0"/></linearGradient></defs>' + yGrid + '<path d="' + area + '" fill="url(#gA)"/><path d="' + dpath + '" fill="none" stroke="#e8b923" stroke-width="2" vector-effect="non-scaling-stroke"/></svg>'));
+  { const sw = rt.querySelector(".svgw"), dot = el("i", "hdot"), tip = el("div", "htip");
+    dot.hidden = tip.hidden = true; sw.append(dot, tip);
+    const show = ev2 => {
+      const r = sw.getBoundingClientRect(), i = Math.max(0, Math.min(N - 1, Math.round((ev2.clientX - r.left) / r.width * (N - 1))));
+      const x = pts[i][0] / VW * r.width, y = pts[i][1] / VH * r.height, d0 = new Date(wStart.getTime() + i * 7 * MS), d1 = new Date(d0.getTime() + 6 * MS);
+      dot.hidden = tip.hidden = false; dot.style.left = x + "px"; dot.style.top = y + "px";
+      tip.innerHTML = "<b>" + wk[i] + "</b> " + (wk[i] > 1 ? "chapitres" : "chapitre") + "<small>" + fr(d0, { day: "numeric", month: "short" }) + " au " + fr(d1, { day: "numeric", month: "short" }) + "</small>";
+      const tw = tip.offsetWidth; tip.style.left = Math.max(0, Math.min(r.width - tw, x - tw / 2)) + "px"; tip.style.top = Math.max(0, y - tip.offsetHeight - 10) + "px";
+    };
+    sw.addEventListener("mousemove", show); sw.addEventListener("mouseleave", () => { dot.hidden = tip.hidden = true; });
+    sw.addEventListener("touchstart", e => show(e.touches[0]), { passive: true }); sw.addEventListener("touchmove", e => show(e.touches[0]), { passive: true }); }
   rt.append(el("div", "axis", "<span>" + fr(wStart, { day: "numeric", month: "short" }) + "</span><span>" + fr(new Date(wStart.getTime() + 26 * 7 * MS), { day: "numeric", month: "short" }) + "</span><span>" + fr(ref, { day: "numeric", month: "short" }) + "</span>"));
   rt.append(el("div", "legend", "<span>Pic : <b>" + mx + "</b> chapitres en une semaine</span>"));
 

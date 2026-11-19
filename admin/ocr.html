@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>OCR des chapitres</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+/* Même palette et mêmes composants que l'admin du hub */
+:root{
+  --bg:#030303;--panel:#0a0a0a;--line:#1a1a1a;--hover:#111111;--text:#ffffff;
+  --z300:#d4d4d8;--z400:#a1a1aa;--z600:#52525b;
+  --accent:#d9a406;--accent-ink:#1c1500;--accent-t:#e8b923;--red:#f87171;--ok:#4ade80;
+  /* noms utilisés par le script */
+  --green:#4ade80;--blue:#e8b923;--muted:#52525b;
+  --font:"Fira Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+button,input,select,textarea{font-family:inherit;font-size:14px;color:var(--text);}
+:focus-visible{outline:2px solid var(--accent-t);outline-offset:2px;border-radius:6px;}
+a{color:var(--accent-t);text-decoration:none;}
+a:hover{text-decoration:underline;}
+[hidden]{display:none !important;}
+
+/* ---------- Mise en page ---------- */
+#app{height:100%;display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;padding:16px;}
+#sidebar{display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0;padding-right:2px;}
+#sidebar::-webkit-scrollbar,#flist::-webkit-scrollbar,#clist::-webkit-scrollbar,#tVis::-webkit-scrollbar,#tTxt::-webkit-scrollbar,#tJson::-webkit-scrollbar{width:6px;}
+#sidebar::-webkit-scrollbar-thumb,#flist::-webkit-scrollbar-thumb,#clist::-webkit-scrollbar-thumb,#tVis::-webkit-scrollbar-thumb,#tTxt::-webkit-scrollbar-thumb,#tJson::-webkit-scrollbar-thumb{background:var(--line);border-radius:6px;}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;flex-shrink:0;}
+.card h2{margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--z600);display:flex;align-items:center;gap:8px;}
+.card h2 small{font-size:11px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--z600);}
+.help{font-size:12px;color:var(--z400);margin-top:8px;line-height:1.5;}
+
+/* ---------- Boutons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:8px 16px;border-radius:8px;border:1px solid transparent;background:var(--accent);color:var(--accent-ink);font-weight:500;cursor:pointer;transition:background .12s,color .12s,border-color .12s;}
+.btn:hover:not(:disabled){background:rgba(217,164,6,.9);}
+.btn.ghost{background:var(--panel);border-color:var(--line);color:var(--z300);}
+.btn.ghost:hover:not(:disabled){background:var(--hover);color:var(--text);}
+.btn.danger{background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.35);color:var(--red);}
+.btn.danger:hover:not(:disabled){background:rgba(248,113,113,.16);}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn.sm{padding:5px 12px;font-size:13px;}
+.btn-row{display:flex;gap:8px;}
+.btn-row .btn{flex:1;}
+.btn-row + .btn-row{margin-top:8px;}
+
+/* ---------- Choix Image / ZIP ---------- */
+.tog{display:flex;gap:4px;padding:3px;background:var(--bg);border:1px solid var(--line);border-radius:8px;margin-bottom:10px;}
+.tog-btn{flex:1;border:0;background:transparent;color:var(--z400);padding:5px 10px;border-radius:6px;cursor:pointer;font-weight:500;}
+.tog-btn:hover:not(.on){color:var(--text);}
+.tog-btn.on{background:rgba(217,164,6,.15);color:var(--accent-t);}
+
+/* ---------- Zone de dépôt ---------- */
+#dz{border:1px dashed var(--line);border-radius:8px;padding:16px 10px;text-align:center;cursor:pointer;position:relative;min-height:84px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;transition:border-color .12s,background .12s;}
+#dz:hover,#dz.drag{border-color:var(--accent);background:rgba(217,164,6,.06);}
+#dz input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+#dz-ico{color:var(--z600);display:flex;}
+#dz-ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+#dz:hover #dz-ico,#dz.drag #dz-ico{color:var(--accent-t);}
+#dz-hint{font-size:12px;color:var(--z400);line-height:1.4;}
+
+/* ---------- Cases à cocher ---------- */
+.lang-list{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;}
+.lang-row{display:flex;align-items:center;gap:8px;color:var(--z300);cursor:pointer;}
+.lang-row input,.fck input{appearance:none;width:16px;height:16px;border:1px solid var(--line);border-radius:4px;background:var(--bg);cursor:pointer;position:relative;flex:none;}
+.lang-row input:checked,.fck input:checked{background:var(--accent);border-color:var(--accent);}
+.lang-row input:checked::after,.fck input:checked::after{content:'';position:absolute;left:4px;top:1px;width:5px;height:9px;border:solid var(--accent-ink);border-width:0 2px 2px 0;transform:rotate(45deg);}
+
+/* ---------- Champs ---------- */
+.ch-input{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 12px;outline:none;transition:border-color .12s,box-shadow .12s;}
+.ch-input::placeholder{color:var(--z600);}
+.ch-input:focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent);}
+
+/* ---------- Statut du lot ---------- */
+#batch{display:none;font-size:12px;padding:8px 12px;border-radius:8px;margin-top:10px;line-height:1.5;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.3);color:var(--ok);}
+#batch.err{background:rgba(248,113,113,.08);border-color:rgba(248,113,113,.35);color:var(--red);}
+#batch.run{background:rgba(217,164,6,.1);border-color:rgba(217,164,6,.5);color:var(--accent-t);}
+
+/* ---------- Listes (chapitres / pages) ---------- */
+.listcard{padding:0;overflow:hidden;display:flex;flex-direction:column;}
+.listcard:not(:has(.fi)){display:none;}
+#clist{display:none;max-height:170px;overflow-y:auto;flex-shrink:0;}
+#flist{overflow-y:auto;max-height:260px;}
+#clist:not(:empty) + #flist:not(:empty){border-top:1px solid var(--line);}
+.fi{display:flex;align-items:center;gap:8px;padding:7px 16px;border-bottom:1px solid var(--line);cursor:pointer;position:relative;transition:background .1s;}
+.fi:last-child{border-bottom:0;}
+.fi:hover{background:var(--hover);}
+.fi.sel{background:rgba(217,164,6,.1);}
+.fi-n{color:var(--z600);width:26px;flex:none;font-size:12px;font-variant-numeric:tabular-nums;}
+#clist .fi-n{color:var(--accent-t);font-weight:600;}
+.fi-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--z300);}
+.fi.sel .fi-name{color:var(--text);}
+.fi-tag{font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;flex:none;border:1px solid transparent;}
+.fi-tag.p{color:var(--z600);}
+.fi-tag.r{background:rgba(217,164,6,.15);color:var(--accent-t);}
+.fi-tag.ok{background:rgba(74,222,128,.12);color:var(--ok);}
+.fi-tag.e{background:rgba(248,113,113,.12);color:var(--red);cursor:help;}
+.ci-x{color:var(--z600);padding:0 2px;font-size:16px;line-height:1;}
+.ci-x:hover{color:var(--red);}
+.fi-err-detail{display:none;position:absolute;left:8px;right:8px;top:100%;z-index:10;background:#1a0a0a;border:1px solid rgba(248,113,113,.4);color:#fca5a5;font-size:12px;padding:8px 10px;border-radius:8px;line-height:1.5;word-break:break-word;box-shadow:0 8px 24px rgba(0,0,0,.6);}
+.fi.err-open .fi-err-detail{display:block;}
+
+/* ---------- Zone résultat ---------- */
+#main{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+#mbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);flex-shrink:0;}
+.tabs{display:flex;gap:4px;}
+.tb{border:0;background:transparent;color:var(--z400);padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:500;}
+.tb:hover{color:var(--text);background:rgba(255,255,255,.05);}
+.tb.on{background:rgba(217,164,6,.15);color:var(--accent-t);}
+.exports{display:flex;flex-wrap:wrap;gap:8px;}
+#prog-wrap{height:2px;background:var(--line);flex-shrink:0;}
+#prog{height:100%;background:var(--accent);width:0;transition:width .3s ease;}
+
+#res{flex:1;min-height:0;overflow:hidden;position:relative;display:flex;}
+#empty{margin:auto;text-align:center;color:var(--z400);padding:24px;}
+#empty b{display:block;color:var(--z300);font-size:16px;font-weight:600;margin-bottom:4px;}
+#empty span{font-size:13px;}
+
+#tVis{width:100%;height:100%;overflow-y:auto;display:none;flex-wrap:wrap;gap:12px;align-content:flex-start;padding:16px;}
+.rpage{position:relative;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--bg);transition:border-color .12s;}
+.rpage:hover{border-color:var(--accent);}
+.rpage img{display:block;max-width:240px;max-height:340px;}
+.rpage-lbl{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.8);font-size:11px;padding:1px 8px;border-radius:999px;color:var(--z300);}
+
+#tTxt{display:none;width:100%;height:100%;overflow-y:auto;padding:16px 20px;font-size:14px;line-height:1.7;color:var(--z300);white-space:pre-wrap;word-break:break-word;}
+.pb{margin-bottom:22px;}
+.pb-lbl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-t);border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;}
+.pb-lbl span{color:var(--z600);letter-spacing:0;text-transform:none;font-weight:500;}
+
+#tJson{display:none;width:100%;height:100%;overflow-y:auto;padding:16px 20px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.65;color:#a7c4a0;white-space:pre;}
+
+/* ---------- Barre du bas ---------- */
+#fbar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:8px 14px;border-top:1px solid var(--line);flex-shrink:0;}
+.fck{display:flex;align-items:center;gap:8px;color:var(--z400);cursor:pointer;font-size:13px;}
+.f-lbl{font-size:13px;color:var(--z400);}
+.f-sl{width:110px;height:4px;appearance:none;background:var(--line);border-radius:4px;outline:none;cursor:pointer;}
+.f-sl::-webkit-slider-thumb{appearance:none;width:14px;height:14px;border-radius:50%;background:var(--accent);border:0;cursor:pointer;}
+.f-sl::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--accent);border:0;cursor:pointer;}
+#confV{font-size:13px;color:var(--z400);min-width:34px;}
+#fbar-right{margin-left:auto;}
+#sbar{display:flex;align-items:center;gap:14px;padding:6px 14px;border-top:1px solid var(--line);flex-shrink:0;font-size:12px;color:var(--z600);}
+.si{display:flex;align-items:center;gap:6px;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex:none;}
+#err-msg{color:var(--red);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+
+@keyframes spin{to{transform:rotate(360deg);}}
+.sp{display:inline-block;width:11px;height:11px;border:2px solid rgba(232,185,35,.25);border-top-color:var(--accent-t);border-radius:50%;animation:spin .6s linear infinite;vertical-align:-1px;margin-right:6px;}
+
+/* ---------- Petits écrans ---------- */
+@media (max-width:820px){
+  html,body{overflow:auto;}
+  #app{display:flex;flex-direction:column;height:auto;min-height:100%;}
+  #sidebar{overflow:visible;}
+  #main{min-height:480px;}
+}
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===== Colonne de gauche ===== -->
+  <aside id="sidebar">
+
+    <div class="card">
+      <h2>Source</h2>
+      <div class="tog">
+        <button class="tog-btn on" id="bImg" onclick="setMode('img')">Images</button>
+        <button class="tog-btn" id="bZip" onclick="setMode('zip')">ZIP</button>
+      </div>
+      <div id="dz">
+        <input type="file" id="fi" multiple accept="image/*">
+        <span id="dz-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>
+        <span id="dz-hint">Glisser images ici</span>
+      </div>
+    </div>
+
+    <div class="card listcard" id="lists">
+      <div id="clist"></div>
+      <div id="flist"></div>
+    </div>
+
+    <div class="card">
+      <h2>Langues</h2>
+      <div class="lang-list">
+        <label class="lang-row"><input type="checkbox" id="lko" checked> Coréen</label>
+        <label class="lang-row"><input type="checkbox" id="len"> Anglais</label>
+        <label class="lang-row"><input type="checkbox" id="lja"> Japonais</label>
+        <label class="lang-row"><input type="checkbox" id="lzh"> Chinois</label>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Identifiant du chapitre</h2>
+      <input type="text" class="ch-input" id="chId" placeholder="ex : solo-leveling-ch042" oninput="if(cur>=0){chapters[cur].id=this.value.trim();renderChapters();}">
+    </div>
+
+    <div class="card">
+      <h2>Clé API <small>(gardée dans ce navigateur)</small></h2>
+      <input type="password" class="ch-input" id="apiKey" placeholder="sk-ant-api03-…" autocomplete="off">
+      <p class="help"><a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Créer une clé sur console.anthropic.com</a></p>
+    </div>
+
+    <div class="card">
+      <div class="btn-row">
+        <button class="btn" id="goBtn" disabled onclick="launch(false)">Lancer l'OCR</button>
+        <button class="btn ghost" onclick="resetAll()">Réinitialiser</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn danger" id="retryBtn" disabled onclick="launch(true)">Relancer les échecs</button>
+      </div>
+      <div id="batch"></div>
+    </div>
+
+  </aside>
+
+  <!-- ===== Résultat ===== -->
+  <section id="main">
+    <div id="mbar">
+      <div class="tabs">
+        <button class="tb on" onclick="setTab('vis')">Pages</button>
+        <button class="tb" onclick="setTab('txt')">Texte</button>
+        <button class="tb" onclick="setTab('json')">JSON</button>
+      </div>
+      <div class="exports">
+        <button class="btn ghost sm" id="btnExportTxt" disabled onclick="exportTxt()">Télécharger TXT</button>
+        <button class="btn ghost sm" id="btnExportJson" disabled onclick="exportJson()">Télécharger JSON</button>
+        <button class="btn sm" id="btnExportAll" disabled onclick="exportAll()" title="Un .txt et un .json par chapitre, dans un ZIP">Tout en ZIP</button>
+      </div>
+    </div>
+    <div id="prog-wrap"><div id="prog"></div></div>
+
+    <div id="res">
+      <div id="empty"><b>Aucun résultat</b><span>Dépose des images ou un ZIP, puis lance l'OCR.</span></div>
+      <div id="tVis"></div>
+      <div id="tTxt"></div>
+      <div id="tJson"></div>
+    </div>
+
+    <div id="fbar">
+      <span class="f-lbl">Confiance minimale</span>
+      <input type="range" class="f-sl" id="confR" min="0" max="100" value="0" oninput="document.getElementById('confV').textContent=this.value+'%'; doTxt();">
+      <span id="confV">0%</span>
+      <div id="fbar-right">
+        <button class="btn ghost sm" id="copyBtn" disabled onclick="copyText()">Copier le texte</button>
+      </div>
+    </div>
+    <div id="sbar">
+      <div class="si"><span class="dot" id="sDot"></span><span id="sLbl">prêt</span></div>
+      <div id="err-msg"></div>
+    </div>
+  </section>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════
+let mode = 'img';
+let chapters = []; // {id, name, zip:bool, files:[]} — un ZIP = un chapitre
+let cur = -1;      // index du chapitre affiché
+let files = [];    // fichiers du chapitre affiché : {name, blob, url, size, status:'p'|'r'|'ok'|'e', text, data, error}
+let tab = 'vis';
+let busy = false;
+
+// ═══════════════════════════════════════════════
+//  CLÉ API : mémorisée dans le navigateur (localStorage de l'admin)
+// ═══════════════════════════════════════════════
+const KEY_LS = 'scantrad-hub-ocr-key';
+(function () {
+  const el = document.getElementById('apiKey');
+  try { el.value = localStorage.getItem(KEY_LS) || ''; } catch (e) { }
+  el.addEventListener('input', () => {
+    try { el.value.trim() ? localStorage.setItem(KEY_LS, el.value.trim()) : localStorage.removeItem(KEY_LS); } catch (e) { }
+  });
+})();
+
+// ═══════════════════════════════════════════════
+//  MODE IMAGE / ZIP
+// ═══════════════════════════════════════════════
+function setMode(m) {
+  mode = m;
+  document.getElementById('bImg').classList.toggle('on', m === 'img');
+  document.getElementById('bZip').classList.toggle('on', m === 'zip');
+  const fi = document.getElementById('fi');
+  fi.accept = m === 'zip' ? '.zip' : 'image/*';
+  fi.multiple = true;
+  if (!chapters.length) dzInfo();
+}
+
+// ═══════════════════════════════════════════════
+//  DRAG & DROP / FILE INPUT
+// ═══════════════════════════════════════════════
+const dz = document.getElementById('dz');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); handle([...e.dataTransfer.files]); });
+document.getElementById('fi').addEventListener('change', e => { handle([...e.target.files]); e.target.value = ''; });
+
+// Chaque ZIP déposé = un nouveau chapitre dans la file. Les images seules
+// vont dans le chapitre affiché (ou un nouveau si celui-ci vient d'un ZIP).
+async function handle(raw) {
+  const zips = raw.filter(f => f.name.toLowerCase().endsWith('.zip'))
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  const imgs = raw.filter(f => f.type.startsWith('image/'))
+    .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  let show = -1;
+
+  for (const z of zips) {
+    const i = await loadZip(z);
+    if (i >= 0 && show < 0) show = i;
+  }
+
+  if (imgs.length) {
+    let i = cur;
+    if (i < 0 || chapters[i].zip) {
+      chapters.push({ id: document.getElementById('chId').value.trim(), name: 'Images', zip: false, files: [] });
+      i = chapters.length - 1;
+    }
+    const c = chapters[i];
+    imgs.forEach(f => {
+      if (!c.files.find(x => x.name === f.name && x.size === f.size)) {
+        const nf = mkFile(f.name, f, f.size);
+        if (busy) nf._q = true; // ajouté pendant un traitement → rejoint la file
+        c.files.push(nf);
+      }
+    });
+    if (show < 0) show = i;
+  }
+
+  dzInfo();
+  if (busy) { renderChapters(); renderList(); }   // ne pas changer de vue pendant un traitement
+  else if (show >= 0) selectChapter(show);
+  upd();
+}
+
+function mkFile(name, blob, size) {
+  return { name, blob, url: URL.createObjectURL(blob), size, status: 'p', text: '', data: null, error: null };
+}
+
+// Lit un ZIP et l'ajoute comme chapitre. Renvoie son index (-1 si échec).
+async function loadZip(zf) {
+  document.getElementById('dz-hint').innerHTML = '<span class="sp"></span>Lecture ' + zf.name.replace(/[<>&]/g, '') + '…';
+  try {
+    const zip = await JSZip.loadAsync(zf);
+    const exts = /\.(png|jpg|jpeg|webp|gif|bmp)$/i;
+    const ents = [];
+    zip.forEach((p, e) => { if (!e.dir && exts.test(p)) ents.push({ p, e }); });
+    ents.sort((a, b) => a.p.localeCompare(b.p, undefined, { numeric: true }));
+    if (!ents.length) throw new Error('aucune image dans ' + zf.name);
+    const list = [];
+    for (const { p, e } of ents) {
+      const raw = await e.async('blob');
+      const name = p.split('/').pop();
+      const ext = name.split('.').pop().toLowerCase();
+      const mime = { webp: 'image/webp', png: 'image/png', gif: 'image/gif' }[ext] || 'image/jpeg';
+      const nf = mkFile(name, new Blob([raw], { type: mime }), raw.size);
+      if (busy) nf._q = true;
+      list.push(nf);
+    }
+    const base = zf.name.replace(/\.zip$/i, '');
+    chapters.push({ id: base.replace(/[\s_]+/g, '-').toLowerCase(), name: base, zip: true, files: list });
+    return chapters.length - 1;
+  } catch (err) {
+    showErr('ZIP: ' + err.message);
+    return -1;
+  }
+}
+
+function dzInfo() {
+  const h = document.getElementById('dz-hint');
+  const n = chapters.reduce((s, c) => s + c.files.length, 0);
+  h.textContent = chapters.length
+    ? `${chapters.length} chapitre(s) · ${n} imgs — glisser pour en ajouter`
+    : (mode === 'zip' ? 'Glisser un ou plusieurs ZIP ici' : 'Glisser images ici');
+}
+
+// ═══════════════════════════════════════════════
+//  CHAPITRES
+// ═══════════════════════════════════════════════
+function selectChapter(i) {
+  cur = (i >= 0 && i < chapters.length) ? i : -1;
+  files = cur >= 0 ? chapters[cur].files : [];
+  document.getElementById('chId').value = cur >= 0 ? chapters[cur].id : '';
+  renderChapters(); renderList(); refreshView(); upd();
+}
+
+function refreshView() {
+  if (files.some(f => f.status === 'ok')) buildAll(); else clearRes();
+}
+
+function removeChapter(i) {
+  if (busy) return;
+  chapters.splice(i, 1);
+  dzInfo();
+  selectChapter(Math.min(cur > i ? cur - 1 : cur, chapters.length - 1));
+}
+
+function chName(c) { return c.id || c.name || 'ocr-export'; }
+
+function renderChapters() {
+  const el = document.getElementById('clist');
+  el.innerHTML = '';
+  el.style.display = chapters.length ? 'block' : 'none';
+  chapters.forEach((c, i) => {
+    const d = document.createElement('div');
+    d.className = 'fi' + (i === cur ? ' sel' : '');
+    d.onclick = () => selectChapter(i);
+
+    const n = document.createElement('span'); n.className = 'fi-n'; n.textContent = 'C' + (i + 1);
+    const nm = document.createElement('span'); nm.className = 'fi-name'; nm.textContent = chName(c); nm.title = c.name;
+
+    const okN = c.files.filter(f => f.status === 'ok').length;
+    const st = c.files.some(f => f.status === 'r') ? 'r'
+      : c.files.some(f => f.status === 'e') ? 'e'
+      : (okN === c.files.length && okN) ? 'ok' : 'p';
+    const tg = document.createElement('span');
+    tg.className = 'fi-tag ' + st;
+    tg.textContent = `${okN}/${c.files.length}`;
+
+    const x = document.createElement('span'); x.className = 'ci-x'; x.textContent = '×'; x.title = 'Retirer ce chapitre';
+    x.onclick = e => { e.stopPropagation(); removeChapter(i); };
+
+    d.append(n, nm, tg, x);
+    el.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  FILE LIST RENDER
+// ═══════════════════════════════════════════════
+function renderList() {
+  const el = document.getElementById('flist');
+  el.innerHTML = '';
+  files.forEach((f, i) => {
+    const d = document.createElement('div');
+    d.className = 'fi' + (f._sel ? ' sel' : '');
+    d.id = 'fi-' + i;
+
+    // Click: select file, show error detail if ERR
+    d.onclick = () => {
+      if (f.status === 'e') {
+        d.classList.toggle('err-open');
+      } else {
+        files.forEach(x => x._sel = false);
+        f._sel = true;
+        renderList();
+      }
+    };
+
+    const n = document.createElement('span'); n.className = 'fi-n'; n.textContent = String(i + 1).padStart(2, '0');
+    const nm = document.createElement('span'); nm.className = 'fi-name'; nm.textContent = f.name;
+    const tg = document.createElement('span');
+    tg.className = 'fi-tag ' + ({ p: 'p', r: 'r', ok: 'ok', e: 'e' }[f.status] || 'p');
+    tg.textContent = { p: '—', r: f.bandInfo || '…', ok: 'OK', e: 'ERR' }[f.status] || '—';
+    if (f.status === 'e') tg.title = f.error || 'Erreur inconnue';
+
+    d.append(n, nm, tg);
+
+    // Error detail panel
+    if (f.status === 'e' && f.error) {
+      const detail = document.createElement('div');
+      detail.className = 'fi-err-detail';
+      detail.textContent = f.error;
+      d.appendChild(detail);
+    }
+
+    el.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  BUTTON STATES
+// ═══════════════════════════════════════════════
+function upd() {
+  const all = chapters.flatMap(c => c.files);
+  const hasOk = files.some(f => f.status === 'ok');
+  document.getElementById('goBtn').disabled = !all.length || busy;
+  document.getElementById('retryBtn').disabled = !all.some(f => f.status === 'e') || busy;
+  document.getElementById('btnExportTxt').disabled = !hasOk;
+  document.getElementById('btnExportJson').disabled = !hasOk;
+  document.getElementById('btnExportAll').disabled = !all.some(f => f.status === 'ok');
+  document.getElementById('copyBtn').disabled = !hasOk;
+}
+
+// ═══════════════════════════════════════════════
+//  LAUNCH OCR — traite tous les chapitres à la suite
+//  retryOnly = true  → uniquement les fichiers en erreur
+//  retryOnly = false → tout ce qui n'est pas encore OK
+//                      (si tout est déjà OK : refait tout)
+//  Les chapitres ajoutés pendant le traitement rejoignent la file.
+// ═══════════════════════════════════════════════
+async function launch(retryOnly = false) {
+  if (busy) return;
+  const all = chapters.flatMap(c => c.files);
+  let targets = retryOnly ? all.filter(f => f.status === 'e') : all.filter(f => f.status !== 'ok');
+  if (!retryOnly && !targets.length) targets = all;
+  if (!targets.length) return;
+
+  targets.forEach(f => { f.status = 'p'; f.text = ''; f.data = null; f.error = null; f.bandInfo = null; f._q = true; });
+
+  busy = true; upd();
+  clearErr();
+  conn('run', 'traitement…');
+  renderChapters(); renderList(); refreshView();
+
+  let ok = 0, fail = 0, done = 0;
+  const remaining = () => chapters.reduce((n, c) => n + c.files.filter(f => f._q).length, 0);
+  const report = () => {
+    const left = remaining(), total = done + left;
+    setProgress(total ? (done / total) * 100 : 0);
+    setBatch(fail ? 'err' : 'run', `${left ? '<span class="sp"></span>' : ''}${done} / ${total} · ${ok} OK · ${fail} échec`);
+  };
+  report();
+
+  while (remaining() > 0) {
+    for (let ci = 0; ci < chapters.length; ci++) {
+      const c = chapters[ci];
+      if (!c.files.some(f => f._q)) continue;
+      selectChapter(ci);                       // la vue suit le chapitre en cours
+      conn('run', `chapitre ${ci + 1}/${chapters.length}`);
+
+      for (let i = 0; i < c.files.length; i++) {
+        const f = c.files[i];
+        if (!f._q) continue;
+        f._q = false;
+        f.status = 'r'; renderChapters(); renderList();
+        try {
+          await ocr(f, i);
+          ok++;
+        } catch (err) {
+          f.status = 'e';
+          f.error = String(err.message || err);
+          fail++;
+          showErr(`[${chName(c)} · ${f.name}] ${f.error}`);
+        }
+        done++;
+        renderChapters(); renderList();
+        report();
+      }
+      if (chapters[cur] === c) refreshView();  // résultats du chapitre dès qu'il est fini
+    }
+  }
+
+  busy = false; upd();
+  setBatch(fail ? 'err' : '', `Terminé · ${chapters.length} chapitre(s) · ${ok} OK · ${fail} échec`);
+  conn('ok', 'prêt');
+  refreshView();
+  setTimeout(() => setProgress(0), 1500);
+}
+
+// ═══════════════════════════════════════════════
+//  OCR : une image
+//  Les pages webtoon sont très hautes (ex: 800×15000px). Les réduire
+//  globalement pour tenir sous 3800px écrasait aussi la largeur et
+//  rendait le texte minuscule/flou → Claude se mettait à "deviner" du
+//  texte plausible au lieu de le lire (hallucination). On découpe donc
+//  l'image en bandes horizontales courtes (hauteur native, non réduite)
+//  et on OCR chaque bande séparément, puis on recolle les blocs dans
+//  l'ordre de lecture.
+// ═══════════════════════════════════════════════
+const MODEL = 'claude-sonnet-5-5';  // Sonnet 5.5
+const EFFORT = 'medium';            // low | medium | high | xhigh | max
+const MAX_BAND_H = 2500;  // hauteur max (px) d'une bande envoyée à l'API
+const MAX_DIM = 7800;     // limite dure API : 8000px par dimension
+
+async function ocr(f, idx) {
+  const img = await loadImageEl(f.blob);
+  const w = img.naturalWidth || img.width;
+  const h = img.naturalHeight || img.height;
+
+  // Si la largeur seule dépasse la limite API (rare : double-page), on réduit tout
+  const scale = w > MAX_DIM ? MAX_DIM / w : 1;
+  const outW = Math.max(1, Math.round(w * scale));
+  const scaledH = h * scale;
+
+  const nBands = Math.max(1, Math.ceil(scaledH / MAX_BAND_H));
+  const srcBandH = Math.ceil(h / nBands);
+  const langs = getLangs();
+
+  let allBlocks = [];
+  let nextId = 1;
+
+  for (let b = 0; b < nBands; b++) {
+    const srcY = b * srcBandH;
+    const srcH = Math.min(srcBandH, h - srcY);
+    if (srcH <= 0) break;
+    const outH = Math.max(1, Math.round(srcH * scale));
+
+    if (nBands > 1) { f.bandInfo = `…${b + 1}/${nBands}`; renderList(); }
+
+    const bandBlob = await canvasBlob(img, 0, srcY, w, srcH, outW, outH);
+    if (!bandBlob) throw new Error("Échec de découpage de l'image (bande " + (b + 1) + ")");
+
+    const page = await callVisionOCR(bandBlob, langs, idx, f.name);
+    const blocks = (page.blocks || []).map(bl => ({ ...bl, id: nextId++ }));
+    allBlocks.push(...blocks);
+  }
+
+  f.bandInfo = null;
+  f.data = { page: idx + 1, filename: f.name, blocks: allBlocks, full_text: allBlocks.map(b => b.text).join('\n') };
+  f.text = allBlocks.length
+    ? allBlocks.map(b => (b.text || '').trim()).filter(Boolean).join('\n\n')
+    : '';
+  f.status = 'ok';
+}
+
+// Un appel API Claude Vision pour UNE image/bande. Ne lève que sur erreur HTTP ;
+// un JSON mal formé retombe sur un bloc texte brut plutôt que de planter.
+async function callVisionOCR(blob, langs, idx, filename) {
+  const b64 = await toB64(blob);
+  const mime = (blob.type && blob.type !== 'application/octet-stream') ? blob.type : 'image/jpeg';
+
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) throw new Error("Clé API manquante : colle ta clé dans le champ « API Key ».");
+  const headers = {
+    'Content-Type': 'application/json', 'anthropic-version': '2023-06-01',
+    'anthropic-dangerous-direct-browser-access': 'true', 'x-api-key': apiKey,
+    'anthropic-beta': 'server-side-fallback-2026-07-01'   // repli automatique si le modèle refuse une page
+  };
+
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      model: MODEL,
+      max_tokens: 16000,                 // la réflexion du modèle compte dans cette limite
+      output_config: { effort: EFFORT }, // niveau d'effort : medium
+      fallbacks: 'default',
+      messages: [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: mime, data: b64 } },
+          { type: 'text', text: buildPrompt(langs, idx, filename) }
+        ]
+      }]
+    })
+  });
+
+  if (!res.ok) {
+    let msg = `HTTP ${res.status}`;
+    try { const e = await res.json(); msg = e.error?.message || e.error?.type || msg; } catch { }
+    throw new Error(msg);
+  }
+
+  const data = await res.json();
+  // Le modèle peut renvoyer des blocs "thinking" avant le texte : on prend le bloc texte.
+  const textBlock = (data.content || []).find(b => b.type === 'text');
+  let raw = (textBlock?.text || '').replace(/```json[\s\S]*?```|```[\s\S]*?```/g, s => s.slice(s.indexOf('\n') + 1, s.lastIndexOf('```'))).trim();
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (jsonMatch) raw = jsonMatch[0];
+
+  try {
+    const parsed = JSON.parse(raw);
+    const page = parsed.pages?.[0];
+    if (!page || !Array.isArray(page.blocks)) throw new Error('Structure JSON inattendue');
+    return page;
+  } catch {
+    return { blocks: raw ? [{ type: 'text', text: raw, confidence: 1 }] : [], full_text: raw };
+  }
+}
+
+function buildPrompt(langs, idx, filename) {
+  return `Tu es un moteur OCR PUR, spécialisé manhwa/manga. Langue(s) détectée(s) : ${langs}.
+
+RÈGLE ABSOLUE — TRANSCRIPTION LITTÉRALE UNIQUEMENT :
+Tu dois recopier EXACTEMENT les caractères visibles dans l'image, mot pour mot, lettre pour lettre.
+- INTERDIT de paraphraser, reformuler, résumer ou "améliorer" le texte
+- INTERDIT de traduire (même si ${langs} ne correspond pas à ta langue de réponse : tu recopies dans la langue d'origine du texte)
+- INTERDIT de corriger la grammaire, le style ou les fautes apparentes
+- INTERDIT de remplacer un mot par un synonyme même proche en sens
+- Si un mot est ambigu ou flou, transcris ta meilleure lecture littérale et baisse le score "confidence" en conséquence — ne devine pas une formulation "plausible"
+- Cette image peut être une BANDE (portion verticale) d'une page plus grande : n'invente aucun texte pour "compléter" ce qui semble coupé en haut ou en bas
+Tu es un scanner, pas un traducteur ni un rédacteur : zéro interprétation.
+
+Extrais TOUT le texte visible dans cette image, bulle par bulle, boîte par boîte :
+- Chaque bulle de dialogue = UN bloc séparé (même si plusieurs bulles se suivent dans la même case)
+- Chaque boîte de narration = UN bloc séparé
+- Chaque effet sonore (SFX) = UN bloc séparé
+- Chaque enseigne/panneau/texte d'ambiance = UN bloc séparé
+
+RÈGLE IMPORTANTE : ne fusionne JAMAIS deux bulles ou boîtes différentes dans un seul bloc "text", même si elles se suivent logiquement. Une bulle = un élément du tableau "blocks". Ne mets PAS de "\\n" à l'intérieur du champ "text" d'un bloc.
+
+Pour chaque bloc, donne un score "confidence" entre 0 et 1 reflétant ta certitude de lecture (1 = texte net et sans ambiguïté, 0.5 = partiellement illisible/flou, 0.2 = quasi illisible/déduit).
+Si l'image ne contient aucun texte, réponds avec "blocks":[].
+
+Respecte l'ordre de lecture naturel (haut→bas, gauche→droite).
+Réponds UNIQUEMENT avec ce JSON valide, sans aucun texte avant ou après :
+{"pages":[{"page":${idx + 1},"filename":"${filename}","blocks":[{"id":1,"type":"dialogue","text":"texte de la bulle 1","confidence":0.95},{"id":2,"type":"dialogue","text":"texte de la bulle 2","confidence":0.8},{"id":3,"type":"sfx","text":"BOOM","confidence":0.9}],"full_text":"tout le texte concaténé dans l'ordre de lecture"}]}`;
+}
+
+// ═══════════════════════════════════════════════
+//  HELPERS IMAGE
+// ═══════════════════════════════════════════════
+function getLangs() {
+  const l = [];
+  if (document.getElementById('lko').checked) l.push('coréen');
+  if (document.getElementById('len').checked) l.push('anglais');
+  if (document.getElementById('lja').checked) l.push('japonais');
+  if (document.getElementById('lzh').checked) l.push('chinois');
+  return l.join(', ') || 'coréen';
+}
+
+function toB64(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = () => rej(new Error('FileReader failed'));
+    r.readAsDataURL(blob);
+  });
+}
+
+// Décode un blob en élément <img> via FileReader (évite les soucis
+// cross-origin de createObjectURL sur des blobs extraits de ZIP)
+function loadImageEl(blob) {
+  return new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload = evt => {
+      const img = new Image();
+      img.onload = () => res(img);
+      img.onerror = () => rej(new Error("Impossible de décoder l'image"));
+      img.src = evt.target.result;
+    };
+    reader.onerror = () => rej(new Error('FileReader failed'));
+    reader.readAsDataURL(blob);
+  });
+}
+
+// Découpe/redimensionne une zone (sx,sy,sw,sh) d'une image vers un blob JPEG (outW×outH)
+function canvasBlob(img, sx, sy, sw, sh, outW, outH) {
+  return new Promise(res => {
+    const canvas = document.createElement('canvas');
+    canvas.width = outW; canvas.height = outH;
+    canvas.getContext('2d').drawImage(img, sx, sy, sw, sh, 0, 0, outW, outH);
+    canvas.toBlob(b => {
+      if (b) { res(b); return; }
+      try {
+        const du = canvas.toDataURL('image/jpeg', 0.92);
+        fetch(du).then(r => r.blob()).then(res).catch(() => res(null));
+      } catch { res(null); }
+    }, 'image/jpeg', 0.92);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  RÉSULTATS
+// ═══════════════════════════════════════════════
+function clearRes() {
+  document.getElementById('tVis').innerHTML = '';
+  document.getElementById('tTxt').innerHTML = '';
+  document.getElementById('tJson').textContent = '';
+  document.getElementById('empty').style.display = '';
+}
+
+function buildAll() {
+  document.getElementById('empty').style.display = 'none';
+  doVis(); doTxt(); doJson(); applyTab();
+}
+
+function doVis() {
+  const el = document.getElementById('tVis'); el.innerHTML = '';
+  files.filter(f => f.status === 'ok').forEach(f => {
+    const w = document.createElement('div'); w.className = 'rpage';
+    const img = document.createElement('img'); img.src = f.url;
+    img.style.cssText = 'display:block;max-width:240px;max-height:340px;';
+    const lbl = document.createElement('div'); lbl.className = 'rpage-lbl'; lbl.textContent = f.name;
+    w.append(img, lbl); el.appendChild(w);
+  });
+}
+
+function getMinConf() {
+  const el = document.getElementById('confR');
+  return el ? (parseInt(el.value, 10) || 0) / 100 : 0;
+}
+
+// Texte d'un fichier filtré selon le seuil "conf min" : les blocs sous le seuil sont masqués
+function getFilteredText(f) {
+  const min = getMinConf();
+  if (!f.data?.blocks?.length) return min > 0 ? '' : (f.text || '');
+  const kept = f.data.blocks.filter(b => (b.confidence ?? 1) >= min);
+  return kept.map(b => (b.text || '').trim()).filter(Boolean).join('\n\n');
+}
+
+function doTxt() {
+  const el = document.getElementById('tTxt'); el.innerHTML = '';
+  const min = getMinConf();
+  files.filter(f => f.status === 'ok' && f.text).forEach(f => {
+    const txt = getFilteredText(f);
+    if (!txt) return; // tous les blocs sous le seuil : fichier masqué
+    const total = f.data?.blocks?.length || 1;
+    const kept = f.data?.blocks?.filter(b => (b.confidence ?? 1) >= min).length ?? total;
+    const b = document.createElement('div'); b.className = 'pb';
+    const l = document.createElement('div'); l.className = 'pb-lbl';
+    l.innerHTML = `${f.name.replace(/[<>&]/g, '')} <span>${kept}/${total} bloc(s)</span>`;
+    const t = document.createElement('div'); t.textContent = txt;
+    b.append(l, t); el.appendChild(b);
+  });
+}
+
+function chapterJson(c) {
+  return JSON.stringify({ chapter: c.id, generated: new Date().toISOString(), pages: c.files.filter(f => f.data).map(f => f.data) }, null, 2);
+}
+
+function doJson() {
+  document.getElementById('tJson').textContent = cur >= 0 ? chapterJson(chapters[cur]) : '';
+}
+
+// ═══════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════
+function buildFullText(c = chapters[cur]) {
+  if (!c) return '';
+  const ch = c.id;
+  const sep = '─'.repeat(40);
+  const pages = c.files.filter(f => f.status === 'ok' && f.text)
+    .map(f => ({ f, txt: getFilteredText(f) }))
+    .filter(({ txt }) => txt)
+    .map(({ f, txt }) => `[ ${f.name} ]\n\n${txt}`).join(`\n\n${sep}\n\n`);
+  if (!pages) return '';
+  return ch ? `${ch}\n${'═'.repeat(40)}\n\n${pages}` : pages;
+}
+
+// Chapitre affiché
+function exportTxt() {
+  if (cur < 0) return;
+  dl(buildFullText(), `${chName(chapters[cur])}.txt`, 'text/plain');
+}
+
+function exportJson() {
+  if (cur < 0) return;
+  dl(chapterJson(chapters[cur]), `${chName(chapters[cur])}.json`, 'application/json');
+}
+
+// Tous les chapitres : un ZIP avec txt/<chapitre>.txt et json/<chapitre>.json
+async function exportAll() {
+  const done = chapters.filter(c => c.files.some(f => f.status === 'ok'));
+  if (!done.length) { showErr('Rien à exporter : aucun résultat OCR disponible.'); return; }
+  try {
+    const zip = new JSZip();
+    const used = {};
+    done.forEach(c => {
+      let name = chName(c).replace(/[\\/:*?"<>|]/g, '-');
+      used[name] = (used[name] || 0) + 1;
+      if (used[name] > 1) name += '-' + used[name];
+      zip.file(`txt/${name}.txt`, buildFullText(c));
+      zip.file(`json/${name}.json`, chapterJson(c));
+    });
+    const blob = await zip.generateAsync({ type: 'blob' });
+    dl(blob, `ocr-${done.length}-chapitres.zip`, 'application/zip');
+  } catch (e) {
+    showErr('Export ZIP impossible : ' + (e.message || e));
+  }
+}
+
+function copyText() {
+  const btn = document.getElementById('copyBtn');
+  const txt = buildFullText();
+  if (!txt) { flashBtn(btn, '✗ Rien à copier', '⎘ Copier texte'); return; }
+
+  const done = () => flashBtn(btn, '✓ Copié', '⎘ Copier texte');
+  const fail = () => {
+    // Fallback : textarea invisible + execCommand (fonctionne même sans permission Clipboard API,
+    // par ex. dans une iframe ou sur un navigateur plus ancien)
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = txt;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) { done(); return; }
+    } catch (e) { }
+    flashBtn(btn, '✗ Échec copie', '⎘ Copier texte');
+    showErr('Copie impossible : ton navigateur bloque l\'accès au presse-papier ici. Sélectionne le texte manuellement dans l\'onglet Texte.');
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done).catch(fail);
+  } else {
+    fail();
+  }
+}
+
+function flashBtn(btn, tempLabel, resetLabel) {
+  btn.textContent = tempLabel;
+  setTimeout(() => { btn.textContent = resetLabel; }, 1500);
+}
+
+function dl(content, filename, type) {
+  if (!content) { showErr('Rien à exporter : aucun résultat OCR disponible.'); return; }
+  try {
+    const safeName = (filename || 'export').replace(/[\\/:*?"<>|]/g, '-');
+    const blob = content instanceof Blob ? content : new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = safeName; a.rel = 'noopener';
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+  } catch (e) {
+    showErr('Téléchargement impossible : ' + (e.message || e));
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  TABS
+// ═══════════════════════════════════════════════
+function setTab(t) {
+  tab = t;
+  document.querySelectorAll('.tb').forEach((b, i) => b.classList.toggle('on', ['vis', 'txt', 'json'][i] === t));
+  applyTab();
+}
+function applyTab() {
+  document.getElementById('tVis').style.display = tab === 'vis' ? 'flex' : 'none';
+  document.getElementById('tTxt').style.display = tab === 'txt' ? 'block' : 'none';
+  document.getElementById('tJson').style.display = tab === 'json' ? 'block' : 'none';
+}
+
+// ═══════════════════════════════════════════════
+//  RESET
+// ═══════════════════════════════════════════════
+function resetAll() {
+  if (busy) return;
+  chapters = []; cur = -1; files = [];
+  document.getElementById('flist').innerHTML = '';
+  document.getElementById('chId').value = '';
+  renderChapters(); dzInfo();
+  document.getElementById('batch').style.display = 'none';
+  clearRes(); clearErr(); upd(); conn('ok', 'prêt'); setProgress(0);
+}
+
+// ═══════════════════════════════════════════════
+//  UI HELPERS
+// ═══════════════════════════════════════════════
+function setBatch(type, html) {
+  const el = document.getElementById('batch');
+  el.style.display = 'block';
+  el.className = type === 'err' ? 'err' : type === 'run' ? 'run' : '';
+  el.innerHTML = html;
+}
+
+function conn(state, lbl) {
+  document.getElementById('sDot').style.background =
+    state === 'ok' ? 'var(--green)' : state === 'run' ? 'var(--blue)' : 'var(--muted)';
+  document.getElementById('sLbl').textContent = lbl;
+}
+
+function setProgress(pct) {
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+function showErr(msg) {
+  document.getElementById('err-msg').textContent = msg;
+}
+function clearErr() {
+  document.getElementById('err-msg').textContent = '';
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+applyTab();
+upd();
+</script>
+</body>
+</html>

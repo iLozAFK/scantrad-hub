@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glossaire — The World After the End</title>
+<meta name="theme-color" content="#0d0d14">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0d14;
+  --bg-2: #12121c;
+  --surface: #1a1a28;
+  --surface-2: #232336;
+  --border: rgba(255,215,130,0.10);
+  --border-hover: rgba(255,215,130,0.28);
+  --text: #f2efe6;
+  --text-dim: #b5aea0;
+  --text-faint: #7b766b;
+  --accent: #f0b429;
+  --accent-2: #8b5cf6;
+  --accent-3: #2fa88a;
+  --gold: #fcd34d;
+  --radius: 16px;
+  --radius-sm: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image:
+    radial-gradient(1000px 600px at 10% -10%, rgba(240,180,41,0.16), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(139,92,246,0.12), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(255,215,130,0.025) 0px, rgba(255,215,130,0.025) 2px, transparent 2px, transparent 60px);
+  background-attachment: fixed;
+}
+h1,h2,h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+.ic { width: 14px; height: 14px; flex-shrink: 0; vertical-align: -2px; margin-right: 6px; color: var(--accent); }
+.ic-lg { width: 34px; height: 34px; opacity: 0.35; color: var(--text-faint); }
+header {
+  position: sticky; top: 0; top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: rgba(13,13,20,0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 22px 14px;
+}
+.header-top {
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  max-width: 1480px; margin: 0 auto;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(240,180,41,0.4);
+  flex-shrink: 0;
+}
+.brand .logo svg { width: 22px; height: 22px; color: #1a0f08; }
+.brand h1 {
+  margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+}
+.brand .subtitle { margin: 0; font-size: 0.78rem; color: var(--text-dim); }
+.search-wrap { max-width: 1480px; margin: 14px auto 0; position: relative; }
+.search-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--text-faint); pointer-events: none;
+}
+#searchInput {
+  width: 100%; padding: 12px 14px 12px 40px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  font-family: inherit; font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#searchInput::placeholder { color: var(--text-faint); }
+#searchInput:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(240,180,41,0.18);
+}
+nav.tabs {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 12px 22px 0; margin-top: 4px;
+  max-width: 1480px; margin-left: auto; margin-right: auto;
+  scrollbar-width: none;
+}
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button {
+  flex: 0 0 auto; background: transparent; color: var(--text-dim);
+  border: 1px solid transparent; padding: 8px 14px; border-radius: 999px;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+nav.tabs button:hover { color: var(--text); background: var(--surface); }
+nav.tabs button.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a0f08; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(240,180,41,0.32);
+}
+main { max-width: 1480px; margin: 0 auto; padding: 26px 22px 70px; }
+section.panel { display: none; }
+section.panel.active { display: block; animation: fadein 0.3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-title {
+  font-size: 1.3rem; font-weight: 700; margin: 0 0 18px;
+  display: flex; align-items: center; gap: 10px; letter-spacing: -0.01em;
+}
+.count-tag {
+  font-size: 0.72rem; font-family: 'Inter', sans-serif; font-weight: 600;
+  background: var(--surface-2); color: var(--text-dim);
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.card {
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--border-hover);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.5);
+}
+.card-img {
+  width: 100%; aspect-ratio: 4/3; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,12,6,0.5));
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.noimg { display: flex; align-items: center; justify-content: center; }
+.card-body { padding: 14px 16px 16px; flex: 1; }
+.card-body h3 { margin: 0 0 8px; font-size: 1.02rem; font-weight: 600; color: var(--text); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  font-family: 'Inter', sans-serif; font-size: 0.66rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-dim);
+  border: 1px solid var(--border); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.badge.rang { background: linear-gradient(135deg, var(--accent-2), var(--gold)); color: #1a0f08; border: none; }
+.badge.titre { background: linear-gradient(135deg, var(--accent-3), #1e8f7a); color: #06231c; border: none; }
+.meta { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 8px; }
+.meta span { display: flex; align-items: center; }
+.desc { font-size: 0.85rem; line-height: 1.5; margin: 6px 0 0; color: var(--text-dim); }
+.char-card .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.va-tag { font-size: 0.7rem; color: var(--gold); font-weight: 600; margin-bottom: 5px; letter-spacing: 0.02em; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 0.87rem; }
+table th {
+  background: var(--surface-2); color: var(--text-dim); padding: 12px 14px; text-align: left;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border);
+}
+table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+table tr:last-child td { border-bottom: none; }
+table tr:hover td { background: var(--surface-2); }
+td.rel { text-align: center; font-weight: 700; color: var(--accent); font-family: 'Space Grotesk', sans-serif; }
+td.va { color: var(--text-faint); font-style: italic; }
+td.vf { font-weight: 600; color: var(--text); }
+td.pname { display: table-cell; }
+.pname-inner {
+  display: flex; align-items: center; gap: 8px;
+}
+.pname-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pname-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pname-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.hist-item {
+  display: flex; gap: 16px;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 12px; transition: border-color 0.15s;
+}
+.hist-item:hover { border-color: var(--border-hover); }
+.hist-chap { flex: 0 0 118px; display: flex; flex-direction: column; gap: 6px; }
+.chap-webtoon { font-weight: 700; color: var(--accent); font-size: 0.82rem; font-family: 'Space Grotesk', sans-serif; }
+.chap-novel {
+  font-size: 0.68rem; font-weight: 600; color: var(--accent-3);
+  background: rgba(47,168,138,0.14); padding: 3px 8px; border-radius: 999px; width: fit-content;
+}
+.hist-body { flex: 1; }
+.hist-desc { margin: 0 0 8px; font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+.hist-presence { font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; }
+footer {
+  text-align: center; padding: 20px; font-size: 0.75rem; color: var(--text-faint);
+  border-top: 1px solid var(--border);
+}
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10,6,3,0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.modal-overlay.open { display: flex; animation: fadein 0.2s ease; }
+.modal-card {
+  background: linear-gradient(165deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border-hover);
+  border-radius: 20px;
+  max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  position: relative;
+}
+.modal-head {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-portrait {
+  width: 96px; height: 96px; border-radius: 14px;
+  overflow: hidden; flex-shrink: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.modal-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-portrait .noimg { width: 100%; height: 100%; }
+.modal-title-wrap { flex: 1; min-width: 0; }
+.modal-eyebrow {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-faint); font-weight: 600; margin: 0 0 4px;
+}
+.modal-title-wrap h2 {
+  margin: 0 0 8px; font-size: 1.4rem; font-weight: 700; color: var(--text);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--accent-2); color: #fff; }
+.modal-close svg { width: 16px; height: 16px; }
+.modal-body { padding: 20px 24px 26px; }
+.modal-desc {
+  font-size: 0.9rem; line-height: 1.6; color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.modal-meta-row {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.82rem; color: var(--text-dim); margin-bottom: 4px;
+}
+.modal-meta-row span { display: flex; align-items: center; }
+.modal-section {
+  margin-top: 22px;
+}
+.modal-section h4 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 700; color: var(--accent);
+  margin: 0 0 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.rel-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.rel-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 5px 12px 5px 5px;
+  font-size: 0.82rem; color: var(--text);
+  transition: border-color 0.15s;
+}
+.rel-chip:hover { border-color: var(--border-hover); }
+.rel-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.rel-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.rel-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.rel-label {
+  font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+  color: var(--gold); margin-left: 2px;
+}
+.tech-list { display: flex; flex-direction: column; gap: 8px; }
+.tech-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px;
+}
+.tech-item .tech-names {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px;
+}
+.tech-item .tech-vf { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.tech-item .tech-va { font-size: 0.72rem; color: var(--text-faint); font-style: italic; }
+.tech-item .tech-details { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+.modal-empty { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+.char-card { cursor: pointer; }
+
+
+.hero-banner {
+  width: 100%;
+  aspect-ratio: 2033 / 457;
+  max-height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.hero-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(13,13,20,0) 45%, rgba(13,13,20,0.95) 100%);
+}
+
+
+.logo.logo-img { background: transparent; box-shadow: none; padding: 2px; }
+.logo.logo-img img { width: 100%; height: 100%; object-fit: contain; }
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 4px;
+}
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+}
+
+
+.card-img.ph { aspect-ratio: auto; height: 96px; }
+.card-img.ph .initials { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: var(--accent); opacity: .85; z-index: 1; }
+.card-img.ph::after { display: none; }
+.rel-label-s { font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--gold); }
+.tuto-note { color: var(--text-faint); font-size: .78rem; }
+.count-line { color: var(--text-faint); font-size: .8rem; margin: -8px 0 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="logo logo-img"><img src="../covers/the-world-after-the-end.webp" alt="" style="border-radius:9px;object-fit:cover"></div>
+      <div>
+        <h1>The World After the End</h1>
+        <p class="subtitle">Glossaire de la série · iLoza</p>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="searchInput" placeholder="Rechercher un nom, un lieu, une technique...">
+  </div>
+</header>
+<nav class="tabs" id="tabs"><button data-target="personnages" class="active">Personnages · 55</button><button data-target="tuto">Tutoiement/Vouvoiement · 23</button><button data-target="techniques">Techniques · 36</button><button data-target="vocabulaire">Vocabulaire · 60</button><button data-target="lieux">Lieux · 23</button></nav>
+<main>
+<section class="panel active" id="personnages"><h2 class="section-title">Personnages <span class="count-tag">55</span></h2><div class="grid" id="persGrid"><div class="card char-card" data-idx="0" data-search="Jaehwan Personnage Principal "><div class="card-img"><img src="img/the-world-after-the-end/c1r3.jpg" alt="Jaehwan" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Jaehwan</h3><p class="desc">Personnage Principal</p></div></div><div class="card char-card" data-idx="1" data-search="Kairos Dieu de l&#x27;errance "><div class="card-img"><img src="img/the-world-after-the-end/c1r4.jpg" alt="Kairos" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Kairos</h3><p class="desc">Dieu de l&#x27;errance</p></div></div><div class="card char-card" data-idx="2" data-search="Schindler Monarque de la dureté "><div class="card-img"><img src="img/the-world-after-the-end/c1r5.jpg" alt="Schindler" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Schindler</h3><p class="desc">Monarque de la dureté</p></div></div><div class="card char-card" data-idx="3" data-search="Behit Dieu du voyage "><div class="card-img"><img src="img/the-world-after-the-end/c1r6.jpg" alt="Behit" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Behit</h3><p class="desc">Dieu du voyage</p></div></div><div class="card char-card" data-idx="4" data-search="Kainark Monarque de la paresse et ancien conducteur du métabus "><div class="card-img"><img src="img/the-world-after-the-end/c1r7.jpg" alt="Kainark" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Kainark</h3><p class="desc">Monarque de la paresse et ancien conducteur du métabus</p></div></div><div class="card char-card" data-idx="5" data-search="Deus Un des trois anciens dieux "><div class="card-img"><img src="img/the-world-after-the-end/c1r8.jpg" alt="Deus" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Deus</h3><p class="desc">Un des trois anciens dieux</p></div></div><div class="card char-card" data-idx="6" data-search="Siren Armlet Cauchemar, Compagnon de Jaehwan et petite-fille de Mullark "><div class="card-img"><img src="img/the-world-after-the-end/c1r9.jpg" alt="Siren Armlet" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Siren Armlet</h3><p class="desc">Cauchemar, Compagnon de Jaehwan et petite-fille de Mullark</p></div></div><div class="card char-card" data-idx="7" data-search="Mullark Armlet Cauchemar, Grand-père de Siren, un des 13 grand-maîtres de tours "><div class="card-img"><img src="img/the-world-after-the-end/c1r10.jpg" alt="Mullark Armlet" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Mullark Armlet</h3><p class="desc">Cauchemar, Grand-père de Siren, un des 13 grand-maîtres de tours</p></div></div><div class="card char-card" data-idx="8" data-search="Gestalt Un des trois anciens dieux "><div class="card-img"><img src="img/the-world-after-the-end/c1r11.jpg" alt="Gestalt" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Gestalt</h3><p class="desc">Un des trois anciens dieux</p></div></div><div class="card char-card" data-idx="9" data-search="Catastrophe Un des trois anciens dieux "><div class="card-img"><img src="img/the-world-after-the-end/c1r12.jpg" alt="Catastrophe" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Catastrophe</h3><p class="desc">Un des trois anciens dieux</p></div></div><div class="card char-card" data-idx="10" data-search="Chungeo Compagnon de Jaehwan "><div class="card-img"><img src="img/the-world-after-the-end/c1r13.jpg" alt="Chungeo" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Chungeo</h3><p class="desc">Compagnon de Jaehwan</p></div></div><div class="card char-card" data-idx="11" data-search="Runard Compagnon et Adepte de Jaehwan "><div class="card-img"><img src="img/the-world-after-the-end/c1r14.jpg" alt="Runard" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Runard</h3><p class="desc">Compagnon et Adepte de Jaehwan</p></div></div><div class="card char-card" data-idx="12" data-search="Seolha Compagnon de Jaehwan et ancien membre de la fissure "><div class="card-img"><img src="img/the-world-after-the-end/c1r15.jpg" alt="Seolha" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Seolha</h3><p class="desc">Compagnon de Jaehwan et ancien membre de la fissure</p></div></div><div class="card char-card" data-idx="13" data-search="&quot;3751&quot; 3 751ème Jaehwan, n&#x27;a fait que donner des coups pendant 100 millions d&#x27;années "><div class="card-img"><img src="img/the-world-after-the-end/c1r16.jpg" alt="&quot;3751&quot;" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>&quot;3751&quot;</h3><p class="desc">3 751ème Jaehwan, n&#x27;a fait que donner des coups pendant 100 millions d&#x27;années</p></div></div><div class="card char-card" data-idx="14" data-search="&quot;8741&quot; 8 741ème Jaehwan, n&#x27;a fait que découper pendant 320 millions d&#x27;années "><div class="card-img"><img src="img/the-world-after-the-end/c1r17.jpg" alt="&quot;8741&quot;" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>&quot;8741&quot;</h3><p class="desc">8 741ème Jaehwan, n&#x27;a fait que découper pendant 320 millions d&#x27;années</p></div></div><div class="card char-card" data-idx="15" data-search="&quot;63123&quot; 63 123ème Jaehwan, n&#x27;a fait qu&#x27;être nu "><div class="card-img"><img src="img/the-world-after-the-end/c1r18.jpg" alt="&quot;63123&quot;" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>&quot;63123&quot;</h3><p class="desc">63 123ème Jaehwan, n&#x27;a fait qu&#x27;être nu</p></div></div><div class="card char-card" data-idx="16" data-search="&quot;66666&quot; 66 666ème Jaehwan, a enduré 3 milliards d&#x27;années seul dans la cascade du temps "><div class="card-img"><img src="img/the-world-after-the-end/c1r19.jpg" alt="&quot;66666&quot;" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>&quot;66666&quot;</h3><p class="desc">66 666ème Jaehwan, a enduré 3 milliards d&#x27;années seul dans la cascade du temps</p></div></div><div class="card char-card" data-idx="17" data-search="James Instructeur, garde qui a contrôlé jaehwan du point de contrôle de nord "><div class="card-img"><img src="img/the-world-after-the-end/c1r20.jpg" alt="James" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>James</h3><p class="desc">Instructeur, garde qui a contrôlé jaehwan du point de contrôle de nord</p></div></div><div class="card char-card" data-idx="18" data-search="Caiman Compagnon de Jaehwan rencontré dans le chaos "><div class="card-img"><img src="img/the-world-after-the-end/c1r21.jpg" alt="Caiman" loading="lazy" style="object-position:center 18%"></div><div class="card-body"><h3>Caiman</h3><p class="desc">Compagnon de Jaehwan rencontré dans le chaos</p></div></div><div class="card char-card" data-idx="19" data-search="Maillad Souverain de la Fissure, cofondateur avec Buddha et Nameless. A &quot;tué&quot; Big Brother. Monde unique : [Mer de sang remplie de cadavres]. Porte le Deus Ex Machina "><div class="card-img ph"><div class="initials">M</div></div><div class="card-body"><h3>Maillad</h3><p class="desc">Souverain de la Fissure, cofondateur avec Buddha et Nameless. A &quot;tué&quot; Big Brother. Monde unique : [Mer de sang remplie de cadavres]. Porte le Deus Ex Machina</p></div></div><div class="card char-card" data-idx="20" data-search="Nameless Dieu, cofondateur de la Fissure passé du côté des Abysses. Auteur de [Hymne au syndrome de l&#x27;imitation de dieu] "><div class="card-img ph"><div class="initials">N</div></div><div class="card-body"><h3>Nameless</h3><p class="desc">Dieu, cofondateur de la Fissure passé du côté des Abysses. Auteur de [Hymne au syndrome de l&#x27;imitation de dieu]</p></div></div><div class="card char-card" data-idx="21" data-search="Buddha Dieu de la réincarnation, un des sept grands dieux et cofondateur de la Fissure. Histoire unique : [Réincarnation] "><div class="card-img ph"><div class="initials">B</div></div><div class="card-body"><h3>Buddha</h3><p class="desc">Dieu de la réincarnation, un des sept grands dieux et cofondateur de la Fissure. Histoire unique : [Réincarnation]</p></div></div><div class="card char-card" data-idx="22" data-search="Droiyan Dieu Dragon, [Dragon à la Flamme Noire]. Mort face à Buddha "><div class="card-img ph"><div class="initials">D</div></div><div class="card-body"><h3>Droiyan</h3><p class="desc">Dieu Dragon, [Dragon à la Flamme Noire]. Mort face à Buddha</p></div></div><div class="card char-card" data-idx="23" data-search="Caravan Dieu des Flammes aux cheveux rouges, [Armure à la Flamme Rouge]. A hérité d&#x27;un trône des huit dieux. Blessé par Buddha "><div class="card-img ph"><div class="initials">C</div></div><div class="card-body"><h3>Caravan</h3><p class="desc">Dieu des Flammes aux cheveux rouges, [Armure à la Flamme Rouge]. A hérité d&#x27;un trône des huit dieux. Blessé par Buddha</p></div></div><div class="card char-card" data-idx="24" data-search="Imai Un des trois capitaines de la Fissure. Mort après avoir perdu son monde unique "><div class="card-img ph"><div class="initials">I</div></div><div class="card-body"><h3>Imai</h3><p class="desc">Un des trois capitaines de la Fissure. Mort après avoir perdu son monde unique</p></div></div><div class="card char-card" data-idx="25" data-search="Jerome Le plus fort des monarques suprêmes de la Terre toute-puissante. Vaincu par Jaehwan "><div class="card-img ph"><div class="initials">J</div></div><div class="card-body"><h3>Jerome</h3><p class="desc">Le plus fort des monarques suprêmes de la Terre toute-puissante. Vaincu par Jaehwan</p></div></div><div class="card char-card" data-idx="26" data-search="Varkant Monarque suprême au visage hideux, un dragon. Compétence transcendante [Majesté du Dragon]. Battu par Runard "><div class="card-img ph"><div class="initials">V</div></div><div class="card-body"><h3>Varkant</h3><p class="desc">Monarque suprême au visage hideux, un dragon. Compétence transcendante [Majesté du Dragon]. Battu par Runard</p></div></div><div class="card char-card" data-idx="27" data-search="Miriel Dirigeant de la Fissure, envoyé au septième site (Epoche) avec quatre monarques suprêmes "><div class="card-img ph"><div class="initials">M</div></div><div class="card-body"><h3>Miriel</h3><p class="desc">Dirigeant de la Fissure, envoyé au septième site (Epoche) avec quatre monarques suprêmes</p></div></div><div class="card char-card" data-idx="28" data-search="Yoonhwan Ami de Jaehwan, ancien membre de la Fissure et messager de la destruction. [Rafale de vent Puyuu]. Sur Terre, ami de Jaehwan à l&#x27;université "><div class="card-img ph"><div class="initials">Y</div></div><div class="card-body"><h3>Yoonhwan</h3><p class="desc">Ami de Jaehwan, ancien membre de la Fissure et messager de la destruction. [Rafale de vent Puyuu]. Sur Terre, ami de Jaehwan à l&#x27;université</p></div></div><div class="card char-card" data-idx="29" data-search="Han Seoyul Amie de Jaehwan sur Terre, décrite comme une grande beauté. Personnage de son novel "><div class="card-img ph"><div class="initials">HS</div></div><div class="card-body"><h3>Han Seoyul</h3><p class="desc">Amie de Jaehwan sur Terre, décrite comme une grande beauté. Personnage de son novel</p></div></div><div class="card char-card" data-idx="30" data-search="Carlton Ancien subordonné de Jaehwan dans le Chaos. Sa justice l&#x27;oblige à le suivre. Monde unique : [Forteresse de Gorgon] "><div class="card-img ph"><div class="initials">C</div></div><div class="card-body"><h3>Carlton</h3><p class="desc">Ancien subordonné de Jaehwan dans le Chaos. Sa justice l&#x27;oblige à le suivre. Monde unique : [Forteresse de Gorgon]</p></div></div><div class="card char-card" data-idx="31" data-search="Kasim Surnommé &quot;Médecin divin&quot;. Ancien camarade de Chungheo "><div class="card-img ph"><div class="initials">K</div></div><div class="card-body"><h3>Kasim</h3><p class="desc">Surnommé &quot;Médecin divin&quot;. Ancien camarade de Chungheo</p></div></div><div class="card char-card" data-idx="32" data-search="Russel Une des sept étoiles. Sanctuaire : [Mer Profonde] "><div class="card-img ph"><div class="initials">R</div></div><div class="card-body"><h3>Russel</h3><p class="desc">Une des sept étoiles. Sanctuaire : [Mer Profonde]</p></div></div><div class="card char-card" data-idx="33" data-search="Edan Dieu des corbeaux. [Barrage de corbeaux], sanctuaire [Tombe du Corbeau] "><div class="card-img ph"><div class="initials">E</div></div><div class="card-body"><h3>Edan</h3><p class="desc">Dieu des corbeaux. [Barrage de corbeaux], sanctuaire [Tombe du Corbeau]</p></div></div><div class="card char-card" data-idx="34" data-search="Shiyu Dieu des âges, &quot;Vieux Ciel&quot;. Un des huit cieux "><div class="card-img ph"><div class="initials">S</div></div><div class="card-body"><h3>Shiyu</h3><p class="desc">Dieu des âges, &quot;Vieux Ciel&quot;. Un des huit cieux</p></div></div><div class="card char-card" data-idx="35" data-search="Thanatos Dieu des morts, &quot;Ciel Mortel&quot;. Un des huit cieux "><div class="card-img ph"><div class="initials">T</div></div><div class="card-body"><h3>Thanatos</h3><p class="desc">Dieu des morts, &quot;Ciel Mortel&quot;. Un des huit cieux</p></div></div><div class="card char-card" data-idx="36" data-search="Andersen Déesse, considérée comme un [bon dieu] par l&#x27;ancien dieu fou "><div class="card-img ph"><div class="initials">A</div></div><div class="card-body"><h3>Andersen</h3><p class="desc">Déesse, considérée comme un [bon dieu] par l&#x27;ancien dieu fou</p></div></div><div class="card char-card" data-idx="37" data-search="Ra-Hamad Lié à l&#x27;entraînement sans fin menant à l&#x27;Oeil de Gestalt. Ses paroles sur la guerre des trois anciens dieux "><div class="card-img ph"><div class="initials">RH</div></div><div class="card-body"><h3>Ra-Hamad</h3><p class="desc">Lié à l&#x27;entraînement sans fin menant à l&#x27;Oeil de Gestalt. Ses paroles sur la guerre des trois anciens dieux</p></div></div><div class="card char-card" data-idx="38" data-search="Beastrain Démon intermédiaire en costume noir, 8 152ème rang démoniaque, surnommé &quot;Monsieur taquin&quot;. Cultivateur de la Forteresse des regrets. Voix de la flamme empoisonnée de Jaehwan "><div class="card-img ph"><div class="initials">B</div></div><div class="card-body"><h3>Beastrain</h3><p class="desc">Démon intermédiaire en costume noir, 8 152ème rang démoniaque, surnommé &quot;Monsieur taquin&quot;. Cultivateur de la Forteresse des regrets. Voix de la flamme empoisonnée de Jaehwan</p></div></div><div class="card char-card" data-idx="39" data-search="Samyung Garam Monarque adaptateur qui doutait du système. A mis Maillad en garde contre Jaehwan "><div class="card-img ph"><div class="initials">SG</div></div><div class="card-body"><h3>Samyung Garam</h3><p class="desc">Monarque adaptateur qui doutait du système. A mis Maillad en garde contre Jaehwan</p></div></div><div class="card char-card" data-idx="40" data-search="Jean-Paul Jean-Paul de l&#x27;existence. Grand maître des cauchemars, créateur de la Tour des cauchemars. Dirige le Panopticon "><div class="card-img ph"><div class="initials">JP</div></div><div class="card-body"><h3>Jean-Paul</h3><p class="desc">Jean-Paul de l&#x27;existence. Grand maître des cauchemars, créateur de la Tour des cauchemars. Dirige le Panopticon</p></div></div><div class="card char-card" data-idx="41" data-search="Jorge Jorge du virtuel. Dirige le Panopticon avec Mullark "><div class="card-img ph"><div class="initials">J</div></div><div class="card-body"><h3>Jorge</h3><p class="desc">Jorge du virtuel. Dirige le Panopticon avec Mullark</p></div></div><div class="card char-card" data-idx="42" data-search="Scalzi Scalzi de l&#x27;univers. Dirige le Panopticon avec Mullark "><div class="card-img ph"><div class="initials">S</div></div><div class="card-body"><h3>Scalzi</h3><p class="desc">Scalzi de l&#x27;univers. Dirige le Panopticon avec Mullark</p></div></div><div class="card char-card" data-idx="43" data-search="Marus Marus du jeu. Dirige le Panopticon avec Mullark "><div class="card-img ph"><div class="initials">M</div></div><div class="card-body"><h3>Marus</h3><p class="desc">Marus du jeu. Dirige le Panopticon avec Mullark</p></div></div><div class="card char-card" data-idx="44" data-search="Melville Cauchemar récemment devenu maître de la 4ème tour, &quot;Moby Dick&quot; (tour complétée par Chungheo) "><div class="card-img ph"><div class="initials">M</div></div><div class="card-body"><h3>Melville</h3><p class="desc">Cauchemar récemment devenu maître de la 4ème tour, &quot;Moby Dick&quot; (tour complétée par Chungheo)</p></div></div><div class="card char-card" data-idx="45" data-search="Ignel Ignel du crépuscule profond. Maître de l&#x27;atelier Crépuscule, a forgé le souverain absolu de Jaehwan. Disparu après la &quot;catastrophe de Watchnold&quot; "><div class="card-img ph"><div class="initials">I</div></div><div class="card-body"><h3>Ignel</h3><p class="desc">Ignel du crépuscule profond. Maître de l&#x27;atelier Crépuscule, a forgé le souverain absolu de Jaehwan. Disparu après la &quot;catastrophe de Watchnold&quot;</p></div></div><div class="card char-card" data-idx="46" data-search="Jurhen Habitant de Carpe Diem, proche de Kaiman "><div class="card-img ph"><div class="initials">J</div></div><div class="card-body"><h3>Jurhen</h3><p class="desc">Habitant de Carpe Diem, proche de Kaiman</p></div></div><div class="card char-card" data-idx="47" data-search="Eunsae Compagnon de Runard au Comité gouvernant des abysses "><div class="card-img ph"><div class="initials">E</div></div><div class="card-body"><h3>Eunsae</h3><p class="desc">Compagnon de Runard au Comité gouvernant des abysses</p></div></div><div class="card char-card" data-idx="48" data-search="Shin Mugeuk Chef du clan Sans Limite (Murim) "><div class="card-img ph"><div class="initials">SM</div></div><div class="card-body"><h3>Shin Mugeuk</h3><p class="desc">Chef du clan Sans Limite (Murim)</p></div></div><div class="card char-card" data-idx="49" data-search="Kang Hwang Clan du Feu (Murim) "><div class="card-img ph"><div class="initials">KH</div></div><div class="card-body"><h3>Kang Hwang</h3><p class="desc">Clan du Feu (Murim)</p></div></div><div class="card char-card" data-idx="50" data-search="Yoon Yong Clan de l&#x27;Eclair (Murim) "><div class="card-img ph"><div class="initials">YY</div></div><div class="card-body"><h3>Yoon Yong</h3><p class="desc">Clan de l&#x27;Eclair (Murim)</p></div></div><div class="card char-card" data-idx="51" data-search="Le Professeur Docteur du centre de conseil polyvalent qui suit Jaehwan sur Terre pendant dix ans "><div class="card-img ph"><div class="initials">LP</div></div><div class="card-body"><h3>Le Professeur</h3><p class="desc">Docteur du centre de conseil polyvalent qui suit Jaehwan sur Terre pendant dix ans</p></div></div><div class="card char-card" data-idx="52" data-search="Seiji Sakamoto Camarade de Carpe Diem qui a gravi la tour avec Jaehwan. Devenu professeur de lettres de Jaehwan sur Terre, sans souvenirs "><div class="card-img ph"><div class="initials">SS</div></div><div class="card-body"><h3>Seiji Sakamoto</h3><p class="desc">Camarade de Carpe Diem qui a gravi la tour avec Jaehwan. Devenu professeur de lettres de Jaehwan sur Terre, sans souvenirs</p></div></div><div class="card char-card" data-idx="53" data-search="Mère de Jaehwan Mère de Jaehwan sur Terre, &quot;Maman&quot; "><div class="card-img ph"><div class="initials">MD</div></div><div class="card-body"><h3>Mère de Jaehwan</h3><p class="desc">Mère de Jaehwan sur Terre, &quot;Maman&quot;</p></div></div><div class="card char-card" data-idx="54" data-search="Hwang Inchan Chef du département éditorial de l&#x27;équipe 1 de l&#x27;entreprise de web novels. Surnommé &quot;Panique à l&#x27;épée&quot;. Sur Terre, aime les histoires de régression. Jaehwan et Seoyul le vouvoient, il les tutoie (ch. 259) "><div class="card-img ph"><div class="initials">HI</div></div><div class="card-body"><h3>Hwang Inchan</h3><p class="desc">Chef du département éditorial de l&#x27;équipe 1 de l&#x27;entreprise de web novels. Surnommé &quot;Panique à l&#x27;épée&quot;. Sur Terre, aime les histoires de régression. Jaehwan et Seoyul le vouvoient, il les tutoie (ch. 259)</p></div></div></div></section>
+<section class="panel" id="tuto"><h2 class="section-title">Tutoiement / Vouvoiement <span class="count-tag">23</span></h2><div class="table-wrap"><table><thead><tr><th>Personnage 1</th><th>Relation</th><th>Personnage 2</th></tr></thead><tbody><tr data-search="Jaehwan Kainark Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Kainark</td></tr><tr data-search="Jaehwan Mullark Armlet Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Mullark Armlet</td></tr><tr data-search="Gestalt Deus Tu / Tu"><td class="pname">Gestalt</td><td class="rel">Tu / Tu</td><td class="pname">Deus</td></tr><tr data-search="Gestalt Catastrophe Tu / Tu"><td class="pname">Gestalt</td><td class="rel">Tu / Tu</td><td class="pname">Catastrophe</td></tr><tr data-search="Catastrophe Deus Tu / Tu"><td class="pname">Catastrophe</td><td class="rel">Tu / Tu</td><td class="pname">Deus</td></tr><tr data-search="Jaehwan Chungeo Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Chungeo</td></tr><tr data-search="Jaehwan Runard Tu / Vous"><td class="pname">Jaehwan</td><td class="rel">Tu / Vous</td><td class="pname">Runard</td></tr><tr data-search="Jaehwan Seolha Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Seolha</td></tr><tr data-search="Jaehwan &quot;3751&quot; Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">&quot;3751&quot;</td></tr><tr data-search="Jaehwan &quot;8741&quot; Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">&quot;8741&quot;</td></tr><tr data-search="Jaehwan &quot;63123&quot; Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">&quot;63123&quot;</td></tr><tr data-search="Jaehwan &quot;66666&quot; Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">&quot;66666&quot;</td></tr><tr data-search="Jaehwan James Tu / Vous"><td class="pname">Jaehwan</td><td class="rel">Tu / Vous</td><td class="pname">James</td></tr><tr data-search="Jaehwan Caiman Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Caiman</td></tr><tr data-search="Jaehwan Maillad Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Maillad</td></tr><tr data-search="Jaehwan Mullark Armlet Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Mullark Armlet</td></tr><tr data-search="Jaehwan Beastrain Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Beastrain</td></tr><tr data-search="Jaehwan Yoonhwan Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Yoonhwan</td></tr><tr data-search="Jaehwan Han Seoyul Tu / Tu"><td class="pname">Jaehwan</td><td class="rel">Tu / Tu</td><td class="pname">Han Seoyul</td></tr><tr data-search="Jaehwan Carlton Tu / Vous"><td class="pname">Jaehwan</td><td class="rel">Tu / Vous</td><td class="pname">Carlton</td></tr><tr data-search="Jaehwan Le Professeur Vous / Tu"><td class="pname">Jaehwan</td><td class="rel">Vous / Tu</td><td class="pname">Le Professeur</td></tr><tr data-search="Vous / Tu Jaehwan Hwang Inchan"><td class="pname">Vous / Tu</td><td class="rel">Hwang Inchan</td><td class="pname">Jaehwan</td></tr><tr data-search="Vous / Tu Han Seoyul Hwang Inchan"><td class="pname">Vous / Tu</td><td class="rel">Hwang Inchan</td><td class="pname">Han Seoyul</td></tr></tbody></table></div></section>
+<section class="panel" id="techniques"><h2 class="section-title">Techniques <span class="count-tag">36</span></h2><div class="table-wrap"><table><thead><tr><th>VA</th><th>VF</th><th>Détenteur</th><th>Détails</th></tr></thead><tbody><tr data-search="Eye of Gestalt Oeil de Gestalt Jaehwan Trésor des trois anciens dieux"><td class="va">Eye of Gestalt</td><td class="vf">Oeil de Gestalt</td><td>Jaehwan</td><td>Trésor des trois anciens dieux</td></tr><tr data-search="Deus ex machina Deus Ex Machina Jaehwan Trésor des trois anciens dieux"><td class="va">Deus ex machina</td><td class="vf">Deus Ex Machina</td><td>Jaehwan</td><td>Trésor des trois anciens dieux</td></tr><tr data-search="Void Sword Epée du vide Jaehwan Trésor des trois anciens dieux"><td class="va">Void Sword</td><td class="vf">Epée du vide</td><td>Jaehwan</td><td>Trésor des trois anciens dieux</td></tr><tr data-search="[The World After the End] [Le Monde Après la Fin] Jaehwan Monde unique"><td class="va">[The World After the End]</td><td class="vf">[Le Monde Après la Fin]</td><td>Jaehwan</td><td>Monde unique</td></tr><tr data-search="[Sword of Destruction]<br>[Second Form]<br>[Destruction] [Epée de la destruction]<br>[Seconde forme]<br>[Destruction] &quot;66666&quot; "><td class="va">[Sword of Destruction]<br>[Second Form]<br>[Destruction]</td><td class="vf">[Epée de la destruction]<br>[Seconde forme]<br>[Destruction]</td><td>&quot;66666&quot;</td><td></td></tr><tr data-search="World Thrust Coup Mondial Jaehwan "><td class="va">World Thrust</td><td class="vf">Coup Mondial</td><td>Jaehwan</td><td></td></tr><tr data-search="Slight Thrust Coup Léger Jaehwan "><td class="va">Slight Thrust</td><td class="vf">Coup Léger</td><td>Jaehwan</td><td></td></tr><tr data-search="Normal Slash Découpe normale Jaehwan "><td class="va">Normal Slash</td><td class="vf">Découpe normale</td><td>Jaehwan</td><td></td></tr><tr data-search=" [Les Cents Frappes à la Main] Buddha Attaque utilisant la pression de l&#x27;air"><td class="va"></td><td class="vf">[Les Cents Frappes à la Main]</td><td>Buddha</td><td>Attaque utilisant la pression de l&#x27;air</td></tr><tr data-search=" [Réincarnation] Buddha Histoire unique : sacrifie un habit pour renaître, quelle que soit la cause de la mort"><td class="va"></td><td class="vf">[Réincarnation]</td><td>Buddha</td><td>Histoire unique : sacrifie un habit pour renaître, quelle que soit la cause de la mort</td></tr><tr data-search=" [Les Cents Mains de Guanyin -- Extrême]<br>[Roue du Dharma] Buddha Fait augmenter sa puissance mondiale"><td class="va"></td><td class="vf">[Les Cents Mains de Guanyin -- Extrême]<br>[Roue du Dharma]</td><td>Buddha</td><td>Fait augmenter sa puissance mondiale</td></tr><tr data-search=" [Dragon à la Flamme Noire] Droiyan Histoire du Dieu Dragon Droiyan"><td class="va"></td><td class="vf">[Dragon à la Flamme Noire]</td><td>Droiyan</td><td>Histoire du Dieu Dragon Droiyan</td></tr><tr data-search=" [Armure à la Flamme Rouge] Caravan Histoire du Dieu des Flammes"><td class="va"></td><td class="vf">[Armure à la Flamme Rouge]</td><td>Caravan</td><td>Histoire du Dieu des Flammes</td></tr><tr data-search=" [Création d&#x27;une histoire : Rafale de vent Puyuu]<br>[Attention décuplée] Yoonhwan Prise d&#x27;attention"><td class="va"></td><td class="vf">[Création d&#x27;une histoire : Rafale de vent Puyuu]<br>[Attention décuplée]</td><td>Yoonhwan</td><td>Prise d&#x27;attention</td></tr><tr data-search=" [Style d&#x27;épée de l&#x27;empereur des cieux]<br>[Les 14 coups d&#x27;épée de la fleur du prunier]<br>[Les 36 coups d&#x27;épée de la mer du sud]<br>[L&#x27;art de l&#x27;épée du Taiji éclairé]<br>[Les 13 coups de l&#x27;épée Dharma] Chungheo "><td class="va"></td><td class="vf">[Style d&#x27;épée de l&#x27;empereur des cieux]<br>[Les 14 coups d&#x27;épée de la fleur du prunier]<br>[Les 36 coups d&#x27;épée de la mer du sud]<br>[L&#x27;art de l&#x27;épée du Taiji éclairé]<br>[Les 13 coups de l&#x27;épée Dharma]</td><td>Chungheo</td><td></td></tr><tr data-search=" [Murim] Chungheo Déploiement du sanctuaire. Monde forgé par le sang et les âmes d&#x27;innombrables artistes martiaux"><td class="va"></td><td class="vf">[Murim]</td><td>Chungheo</td><td>Déploiement du sanctuaire. Monde forgé par le sang et les âmes d&#x27;innombrables artistes martiaux</td></tr><tr data-search=" [Barrage de corbeaux] Edan "><td class="va"></td><td class="vf">[Barrage de corbeaux]</td><td>Edan</td><td></td></tr><tr data-search=" [Tombe du Corbeau]<br>[Armure du corbeau] Edan Déploiement du sanctuaire d&#x27;Edan"><td class="va"></td><td class="vf">[Tombe du Corbeau]<br>[Armure du corbeau]</td><td>Edan</td><td>Déploiement du sanctuaire d&#x27;Edan</td></tr><tr data-search=" [Mer Profonde] Russel Déploiement du sanctuaire de Russel"><td class="va"></td><td class="vf">[Mer Profonde]</td><td>Russel</td><td>Déploiement du sanctuaire de Russel</td></tr><tr data-search=" [Crépuscule] Thanatos Histoire du dieu des morts"><td class="va"></td><td class="vf">[Crépuscule]</td><td>Thanatos</td><td>Histoire du dieu des morts</td></tr><tr data-search=" [Jeunesse] Shiyu Histoire du dieu des âges"><td class="va"></td><td class="vf">[Jeunesse]</td><td>Shiyu</td><td>Histoire du dieu des âges</td></tr><tr data-search=" [Majesté du Dragon] Varkant Compétence de grade transcendant"><td class="va"></td><td class="vf">[Majesté du Dragon]</td><td>Varkant</td><td>Compétence de grade transcendant</td></tr><tr data-search=" [Runard -- Imitation de style]<br>[Déploiement du sanctuaire cible] Runard Syndrome de l&#x27;imitation de dieu : imite [Dissonance], [Flamme empoisonnée]..."><td class="va"></td><td class="vf">[Runard -- Imitation de style]<br>[Déploiement du sanctuaire cible]</td><td>Runard</td><td>Syndrome de l&#x27;imitation de dieu : imite [Dissonance], [Flamme empoisonnée]...</td></tr><tr data-search=" [Mer de sang remplie de cadavres] Maillad Monde unique. Ne permet aucun autre monde unique"><td class="va"></td><td class="vf">[Mer de sang remplie de cadavres]</td><td>Maillad</td><td>Monde unique. Ne permet aucun autre monde unique</td></tr><tr data-search=" [Véritable annihilation] Maillad Monde unique créé avec ouroboros, réplique les histoires des autres"><td class="va"></td><td class="vf">[Véritable annihilation]</td><td>Maillad</td><td>Monde unique créé avec ouroboros, réplique les histoires des autres</td></tr><tr data-search=" [Perte de vraisemblance] Deus Coupe le lien entre le dieu et son avatar"><td class="va"></td><td class="vf">[Perte de vraisemblance]</td><td>Deus</td><td>Coupe le lien entre le dieu et son avatar</td></tr><tr data-search=" [Temps d&#x27;infection] Maillad Histoire unique de l&#x27;épée du vide. Infecte les avatars avec le [système]"><td class="va"></td><td class="vf">[Temps d&#x27;infection]</td><td>Maillad</td><td>Histoire unique de l&#x27;épée du vide. Infecte les avatars avec le [système]</td></tr><tr data-search=" [Dissonance] Gestalt Manipule le sens des avatars"><td class="va"></td><td class="vf">[Dissonance]</td><td>Gestalt</td><td>Manipule le sens des avatars</td></tr><tr data-search=" [Deus Ex Machina : phase cachée]<br>⌜Système : exploitation⌝<br>[Ex machina -Phase 1- Deus] Maillad Transforme le monde unique de chacun en un [système] singulier"><td class="va"></td><td class="vf">[Deus Ex Machina : phase cachée]<br>⌜Système : exploitation⌝<br>[Ex machina -Phase 1- Deus]</td><td>Maillad</td><td>Transforme le monde unique de chacun en un [système] singulier</td></tr><tr data-search=" [Forteresse de Gorgon] Carlton Monde unique. Crée un passage reliant le Chaos aux Abysses (renommée Carpe Diem)"><td class="va"></td><td class="vf">[Forteresse de Gorgon]</td><td>Carlton</td><td>Monde unique. Crée un passage reliant le Chaos aux Abysses (renommée Carpe Diem)</td></tr><tr data-search=" [Transmission de pouvoir mondiale] Carlton Donne de la puissance mondiale à un autre"><td class="va"></td><td class="vf">[Transmission de pouvoir mondiale]</td><td>Carlton</td><td>Donne de la puissance mondiale à un autre</td></tr><tr data-search=" [Le Monde Après la Destruction] Jaehwan Déploiement complet du sanctuaire, après l&#x27;étape 5 de l&#x27;éveil (Preuve)"><td class="va"></td><td class="vf">[Le Monde Après la Destruction]</td><td>Jaehwan</td><td>Déploiement complet du sanctuaire, après l&#x27;étape 5 de l&#x27;éveil (Preuve)</td></tr><tr data-search=" Mutilation de constellations Jaehwan Ne parvient pas à déchirer l&#x27;obscurité de la cascade du temps"><td class="va"></td><td class="vf">Mutilation de constellations</td><td>Jaehwan</td><td>Ne parvient pas à déchirer l&#x27;obscurité de la cascade du temps</td></tr><tr data-search=" Coup Moyen<br>Coup Fort<br>Coup Planétaire Jaehwan Coups enseignés à Carpe Diem"><td class="va"></td><td class="vf">Coup Moyen<br>Coup Fort<br>Coup Planétaire</td><td>Jaehwan</td><td>Coups enseignés à Carpe Diem</td></tr><tr data-search=" Ouroboros Jaehwan Histoire du dieu nu (porter les vêtements du dieu nu)"><td class="va"></td><td class="vf">Ouroboros</td><td>Jaehwan</td><td>Histoire du dieu nu (porter les vêtements du dieu nu)</td></tr><tr data-search=" [Nudité] &quot;63123&quot; Pouvoir de la nudité"><td class="va"></td><td class="vf">[Nudité]</td><td>&quot;63123&quot;</td><td>Pouvoir de la nudité</td></tr></tbody></table></div></section>
+<section class="panel" id="vocabulaire"><h2 class="section-title">Vocabulaire <span class="count-tag">60</span></h2><div class="grid"><div class="card" data-search="System Système "><div class="card-body"><h3>Système</h3><div class="va-tag">System</div></div></div><div class="card" data-search="Illusion tree Arbre des illusions "><div class="card-body"><h3>Arbre des illusions</h3><div class="va-tag">Illusion tree</div></div></div><div class="card" data-search="Big brother Big brother "><div class="card-body"><h3>Big brother</h3></div></div><div class="card" data-search="Tower of nighmares Tour des cauchemars "><div class="card-body"><h3>Tour des cauchemars</h3><div class="va-tag">Tower of nighmares</div></div></div><div class="card" data-search="World power Puissance mondiale "><div class="card-body"><h3>Puissance mondiale</h3><div class="va-tag">World power</div></div></div><div class="card" data-search="Transcendent Transcendant "><div class="card-body"><h3>Transcendant</h3><div class="va-tag">Transcendent</div></div></div><div class="card" data-search="Existence games Jeu des existences "><div class="card-body"><h3>Jeu des existences</h3><div class="va-tag">Existence games</div></div></div><div class="card" data-search="Workshop Atelier "><div class="card-body"><h3>Atelier</h3><div class="va-tag">Workshop</div></div></div><div class="card" data-search="Cultivation Cultivation "><div class="card-body"><h3>Cultivation</h3></div></div><div class="card" data-search="Adapters Adaptateurs "><div class="card-body"><h3>Adaptateurs</h3><div class="va-tag">Adapters</div></div></div><div class="card" data-search="Awakeners Eveillés "><div class="card-body"><h3>Eveillés</h3><div class="va-tag">Awakeners</div></div></div><div class="card" data-search="Awakening Eveil "><div class="card-body"><h3>Eveil</h3><div class="va-tag">Awakening</div></div></div><div class="card" data-search="Question Questionnement 1ère étape de l&#x27;éveil"><div class="card-body"><h3>Questionnement</h3><div class="va-tag">Question</div><p class="desc">1ère étape de l&#x27;éveil</p></div></div><div class="card" data-search="Comprehend Compréhension 2ème étape de l&#x27;éveil"><div class="card-body"><h3>Compréhension</h3><div class="va-tag">Comprehend</div><p class="desc">2ème étape de l&#x27;éveil</p></div></div><div class="card" data-search="Self-surrender Abandon de soi 3ème étape de l&#x27;éveil"><div class="card-body"><h3>Abandon de soi</h3><div class="va-tag">Self-surrender</div><p class="desc">3ème étape de l&#x27;éveil</p></div></div><div class="card" data-search="Theory Théorie 4ème étape de l&#x27;éveil"><div class="card-body"><h3>Théorie</h3><div class="va-tag">Theory</div><p class="desc">4ème étape de l&#x27;éveil</p></div></div><div class="card" data-search="Proof Preuve 5ème étape de l&#x27;éveil"><div class="card-body"><h3>Preuve</h3><div class="va-tag">Proof</div><p class="desc">5ème étape de l&#x27;éveil</p></div></div><div class="card" data-search="Poison Flame Flamme empoisonnée Arme spirituelle de Jaehwan"><div class="card-body"><h3>Flamme empoisonnée</h3><div class="va-tag">Poison Flame</div><p class="desc">Arme spirituelle de Jaehwan</p></div></div><div class="card" data-search="Beastrain Beastrain Manager de la forteresse des regrets"><div class="card-body"><h3>Beastrain</h3><p class="desc">Manager de la forteresse des regrets</p></div></div><div class="card" data-search="Unique World Monde unique "><div class="card-body"><h3>Monde unique</h3><div class="va-tag">Unique World</div></div></div><div class="card" data-search="Clothes Habits "><div class="card-body"><h3>Habits</h3><div class="va-tag">Clothes</div></div></div><div class="card" data-search="Main Body L&#x27;Original "><div class="card-body"><h3>L&#x27;Original</h3><div class="va-tag">Main Body</div></div></div><div class="card" data-search="Edit Modification 6ème étape de l&#x27;éveil"><div class="card-body"><h3>Modification</h3><div class="va-tag">Edit</div><p class="desc">6ème étape de l&#x27;éveil</p></div></div><div class="card" data-search="Abyss Governement Committee Comité gouvernant des abysses "><div class="card-body"><h3>Comité gouvernant des abysses</h3><div class="va-tag">Abyss Governement Committee</div></div></div><div class="card" data-search="White revolutionary army armée révolutionnaire blanche "><div class="card-body"><h3>armée révolutionnaire blanche</h3><div class="va-tag">White revolutionary army</div></div></div><div class="card" data-search="Carpe Diem Carpe Diem Forteresse du Chaos"><div class="card-body"><h3>Carpe Diem</h3><p class="desc">Forteresse du Chaos</p></div></div><div class="card" data-search=" Fissure Organisation fondée par Buddha, Nameless et Maillad pour abattre Big Brother"><div class="card-body"><h3>Fissure</h3><p class="desc">Organisation fondée par Buddha, Nameless et Maillad pour abattre Big Brother</p></div></div><div class="card" data-search=" Souverain de la Fissure Titre de Maillad"><div class="card-body"><h3>Souverain de la Fissure</h3><p class="desc">Titre de Maillad</p></div></div><div class="card" data-search=" Messagers de la destruction Groupe de Jaehwan. Menace de rang 1 pour la Fissure"><div class="card-body"><h3>Messagers de la destruction</h3><p class="desc">Groupe de Jaehwan. Menace de rang 1 pour la Fissure</p></div></div><div class="card" data-search=" Monarque suprême Rang des plus puissants de la Terre toute-puissante (Jerome, Varkant)"><div class="card-body"><h3>Monarque suprême</h3><p class="desc">Rang des plus puissants de la Terre toute-puissante (Jerome, Varkant)</p></div></div><div class="card" data-search=" Sept grands dieux Les plus grands dieux des Abysses (dont Buddha, Droiyan, Caravan)"><div class="card-body"><h3>Sept grands dieux</h3><p class="desc">Les plus grands dieux des Abysses (dont Buddha, Droiyan, Caravan)</p></div></div><div class="card" data-search=" Trois anciens dieux Deus, Gestalt et Catastrophe"><div class="card-body"><h3>Trois anciens dieux</h3><p class="desc">Deus, Gestalt et Catastrophe</p></div></div><div class="card" data-search=" Trois trésors sacrés Oeil de Gestalt, Epée du vide, Deus Ex Machina"><div class="card-body"><h3>Trois trésors sacrés</h3><p class="desc">Oeil de Gestalt, Epée du vide, Deus Ex Machina</p></div></div><div class="card" data-search=" Huit cieux Dieux de la Terre toute-puissante (Shiyu, Thanatos...)"><div class="card-body"><h3>Huit cieux</h3><p class="desc">Dieux de la Terre toute-puissante (Shiyu, Thanatos...)</p></div></div><div class="card" data-search=" Sept étoiles Titre de Russel"><div class="card-body"><h3>Sept étoiles</h3><p class="desc">Titre de Russel</p></div></div><div class="card" data-search=" Gigantes Robot géant des Abysses avec cockpit, augmente la puissance mondiale"><div class="card-body"><h3>Gigantes</h3><p class="desc">Robot géant des Abysses avec cockpit, augmente la puissance mondiale</p></div></div><div class="card" data-search=" Déploiement du sanctuaire Manifestation du monde unique"><div class="card-body"><h3>Déploiement du sanctuaire</h3><p class="desc">Manifestation du monde unique</p></div></div><div class="card" data-search=" Histoire Capacité d&#x27;un dieu ou d&#x27;un éveillé. Les histoires uniques sont écrites entre crochets"><div class="card-body"><h3>Histoire</h3><p class="desc">Capacité d&#x27;un dieu ou d&#x27;un éveillé. Les histoires uniques sont écrites entre crochets</p></div></div><div class="card" data-search=" Adepte Fidèle d&#x27;un dieu"><div class="card-body"><h3>Adepte</h3><p class="desc">Fidèle d&#x27;un dieu</p></div></div><div class="card" data-search=" Avatar Émissaire d&#x27;un dieu en son absence"><div class="card-body"><h3>Avatar</h3><p class="desc">Émissaire d&#x27;un dieu en son absence</p></div></div><div class="card" data-search=" Syndrome de l&#x27;imitation de dieu Maladie des Abysses. Seule chose pouvant résister au [système]"><div class="card-body"><h3>Syndrome de l&#x27;imitation de dieu</h3><p class="desc">Maladie des Abysses. Seule chose pouvant résister au [système]</p></div></div><div class="card" data-search=" Dieu fou Désigne toute la tribu éternelle"><div class="card-body"><h3>Dieu fou</h3><p class="desc">Désigne toute la tribu éternelle</p></div></div><div class="card" data-search=" Évaluation de rang Système du Comité : les dieux sont classés selon l&#x27;index de bonheur de leurs adeptes"><div class="card-body"><h3>Évaluation de rang</h3><p class="desc">Système du Comité : les dieux sont classés selon l&#x27;index de bonheur de leurs adeptes</p></div></div><div class="card" data-search=" Salle de la grande assemblée Structure des Abysses conçue par le Comité. Les [grandes histoires] adoptées influencent tous les Abysses"><div class="card-body"><h3>Salle de la grande assemblée</h3><p class="desc">Structure des Abysses conçue par le Comité. Les [grandes histoires] adoptées influencent tous les Abysses</p></div></div><div class="card" data-search=" Little brother Réseau créé par Big Brother (forum des dieux)"><div class="card-body"><h3>Little brother</h3><p class="desc">Réseau créé par Big Brother (forum des dieux)</p></div></div><div class="card" data-search=" Pierre de retour Objet permettant de retourner en arrière, utilisé dans la tour (77ème étage)"><div class="card-body"><h3>Pierre de retour</h3><p class="desc">Objet permettant de retourner en arrière, utilisé dans la tour (77ème étage)</p></div></div><div class="card" data-search=" Fruit Pluie dorée tombant du ciel déchiré, trésor contenant la vie"><div class="card-body"><h3>Fruit</h3><p class="desc">Pluie dorée tombant du ciel déchiré, trésor contenant la vie</p></div></div><div class="card" data-search=" Hibernation Histoire des démons vivant longtemps, aide à endurer le poids des années"><div class="card-body"><h3>Hibernation</h3><p class="desc">Histoire des démons vivant longtemps, aide à endurer le poids des années</p></div></div><div class="card" data-search=" Rang démoniaque Classement des démons (Beastrain : 8 152ème)"><div class="card-body"><h3>Rang démoniaque</h3><p class="desc">Classement des démons (Beastrain : 8 152ème)</p></div></div><div class="card" data-search=" Maître de la forteresse Titre de Jaehwan"><div class="card-body"><h3>Maître de la forteresse</h3><p class="desc">Titre de Jaehwan</p></div></div><div class="card" data-search=" Roi solitaire Surnom de Jaehwan"><div class="card-body"><h3>Roi solitaire</h3><p class="desc">Surnom de Jaehwan</p></div></div><div class="card" data-search=" 1 131ème Big Brother Titre donné à Jaehwan par Mullark"><div class="card-body"><h3>1 131ème Big Brother</h3><p class="desc">Titre donné à Jaehwan par Mullark</p></div></div><div class="card" data-search=" Trouble délirant Diagnostic donné à Jaehwan sur Terre"><div class="card-body"><h3>Trouble délirant</h3><p class="desc">Diagnostic donné à Jaehwan sur Terre</p></div></div><div class="card" data-search=" Concours littéraire du Nouveau Printemps Concours d&#x27;écriture auquel le Professeur pousse Jaehwan à participer (ch. 257)"><div class="card-body"><h3>Concours littéraire du Nouveau Printemps</h3><p class="desc">Concours d&#x27;écriture auquel le Professeur pousse Jaehwan à participer (ch. 257)</p></div></div><div class="card" data-search=" Premier Cauchemar [Premier Cauchemar] : nom lié à la réalité de Jaehwan (ch. 258)"><div class="card-body"><h3>Premier Cauchemar</h3><p class="desc">[Premier Cauchemar] : nom lié à la réalité de Jaehwan (ch. 258)</p></div></div><div class="card" data-search=" Blade Walker &lt;Blade Walker&gt; : premier groupe de raid de l&#x27;expédition, organisé par Hwang Inchan quand la Tour s&#x27;est ouverte (ch. 259)"><div class="card-body"><h3>Blade Walker</h3><p class="desc">&lt;Blade Walker&gt; : premier groupe de raid de l&#x27;expédition, organisé par Hwang Inchan quand la Tour s&#x27;est ouverte (ch. 259)</p></div></div><div class="card" data-search=" Marcheur Walker : personne qui gravit la Tour des cauchemars (ch. 259)"><div class="card-body"><h3>Marcheur</h3><p class="desc">Walker : personne qui gravit la Tour des cauchemars (ch. 259)</p></div></div><div class="card" data-search=" Panique à l&#x27;épée &quot;Sword Panic&quot; : surnom de Hwang Inchan, avant la Terre (ch. 259)"><div class="card-body"><h3>Panique à l&#x27;épée</h3><p class="desc">&quot;Sword Panic&quot; : surnom de Hwang Inchan, avant la Terre (ch. 259)</p></div></div><div class="card" data-search=" Les 15 minutes d&#x27;Andy Warhol Citation que Hwang Inchan répète comme un mantra (ch. 259)"><div class="card-body"><h3>Les 15 minutes d&#x27;Andy Warhol</h3><p class="desc">Citation que Hwang Inchan répète comme un mantra (ch. 259)</p></div></div><div class="card" data-search=" Histoires de régression Genre de web novel préféré de Hwang Inchan ; genre que Jaehwan déteste le plus (ch. 259)"><div class="card-body"><h3>Histoires de régression</h3><p class="desc">Genre de web novel préféré de Hwang Inchan ; genre que Jaehwan déteste le plus (ch. 259)</p></div></div></div></section>
+<section class="panel" id="lieux"><h2 class="section-title">Lieux <span class="count-tag">23</span></h2><div class="grid"><div class="card" data-search="Abyss Abysses "><div class="card-body"><h3>Abysses</h3><div class="va-tag">Abyss</div></div></div><div class="card" data-search="Metabus Métabus "><div class="card-body"><h3>Métabus</h3><div class="va-tag">Metabus</div></div></div><div class="card" data-search="Almighty land Terre toute-puissante "><div class="card-body"><h3>Terre toute-puissante</h3><div class="va-tag">Almighty land</div></div></div><div class="card" data-search="Fortress of regrets Forteresse des regrets "><div class="card-body"><h3>Forteresse des regrets</h3><div class="va-tag">Fortress of regrets</div></div></div><div class="card" data-search="Time Waterfall Cascade du temps "><div class="card-body"><h3>Cascade du temps</h3><div class="va-tag">Time Waterfall</div></div></div><div class="card" data-search="Panopticon Panopticon Centre de l&#x27;arbre des illusions"><div class="card-body"><h3>Panopticon</h3><p class="desc">Centre de l&#x27;arbre des illusions</p></div></div><div class="card" data-search="Chaos Chaos "><div class="card-body"><h3>Chaos</h3></div></div><div class="card" data-search="Remote regions Régions reculées "><div class="card-body"><h3>Régions reculées</h3><div class="va-tag">Remote regions</div></div></div><div class="card" data-search="First Nightmare Premier Cauchemar "><div class="card-body"><h3>Premier Cauchemar</h3><div class="va-tag">First Nightmare</div></div></div><div class="card" data-search=" Epoche 7ème site des Abysses"><div class="card-body"><h3>Epoche</h3><p class="desc">7ème site des Abysses</p></div></div><div class="card" data-search=" Nuit tropicale 3ème site des Abysses"><div class="card-body"><h3>Nuit tropicale</h3><p class="desc">3ème site des Abysses</p></div></div><div class="card" data-search=" Muspelheim Niveau profond du 3ème site"><div class="card-body"><h3>Muspelheim</h3><p class="desc">Niveau profond du 3ème site</p></div></div><div class="card" data-search=" Forteresse de Gorgon Ancien nom de Carpe Diem (Chaos)"><div class="card-body"><h3>Forteresse de Gorgon</h3><p class="desc">Ancien nom de Carpe Diem (Chaos)</p></div></div><div class="card" data-search=" Salle de la grande assemblée Abysses"><div class="card-body"><h3>Salle de la grande assemblée</h3><p class="desc">Abysses</p></div></div><div class="card" data-search=" Moby Dick Monde de la 4ème tour de Melville"><div class="card-body"><h3>Moby Dick</h3><p class="desc">Monde de la 4ème tour de Melville</p></div></div><div class="card" data-search=" Atelier Crépuscule Atelier d&#x27;Ignel"><div class="card-body"><h3>Atelier Crépuscule</h3><p class="desc">Atelier d&#x27;Ignel</p></div></div><div class="card" data-search=" Point de contrôle du nord Chaos, poste de James"><div class="card-body"><h3>Point de contrôle du nord</h3><p class="desc">Chaos, poste de James</p></div></div><div class="card" data-search=" Monde 294 Monde de Jaehwan (la Terre)"><div class="card-body"><h3>Monde 294</h3><p class="desc">Monde de Jaehwan (la Terre)</p></div></div><div class="card" data-search=" Séoul Terre, 21ème siècle"><div class="card-body"><h3>Séoul</h3><p class="desc">Terre, 21ème siècle</p></div></div><div class="card" data-search=" Centre de conseil polyvalent Séoul, cabinet du Professeur"><div class="card-body"><h3>Centre de conseil polyvalent</h3><p class="desc">Séoul, cabinet du Professeur</p></div></div><div class="card" data-search=" Camp militaire avancé Terre, camp où Jaehwan s&#x27;engage à 21 ans (ch. 257)"><div class="card-body"><h3>Camp militaire avancé</h3><p class="desc">Terre, camp où Jaehwan s&#x27;engage à 21 ans (ch. 257)</p></div></div><div class="card" data-search=" Gwanghwamun Séoul, lieu de manifestation où le Professeur crie l&#x27;existence de la Tour (ch. 259)"><div class="card-body"><h3>Gwanghwamun</h3><p class="desc">Séoul, lieu de manifestation où le Professeur crie l&#x27;existence de la Tour (ch. 259)</p></div></div><div class="card" data-search=" Place de Séoul Séoul, lieu où le Professeur est filmé en train de crier (ch. 259)"><div class="card-body"><h3>Place de Séoul</h3><p class="desc">Séoul, lieu où le Professeur est filmé en train de crier (ch. 259)</p></div></div></div></section>
+</main>
+<footer>Glossaire iLoza · The World After the End</footer>
+<div class="modal-overlay" id="charModal">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head">
+      <div class="modal-portrait" id="modalPortrait" style="display:none"></div>
+      <div class="modal-title-wrap">
+        <p class="modal-eyebrow">Fiche personnage</p>
+        <h2 id="modalName"></h2>
+        <div class="modal-meta-row" id="modalMeta"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-section"><h4>Tutoiement / Vouvoiement</h4><div class="rel-grid" id="modalRelations"></div></div>
+      <div class="modal-section" id="techSec"><h4>Techniques</h4><div class="tech-list" id="modalTechniques"></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const CHARS = [{"name": "Jaehwan", "first": "", "desc": "Personnage Principal", "img": "img/the-world-after-the-end/c1r3.jpg", "rels": [{"with": "Kainark", "label": "Tu / Tu"}, {"with": "Mullark Armlet", "label": "Tu / Tu"}, {"with": "Chungeo", "label": "Tu / Tu"}, {"with": "Runard", "label": "Tu / Vous"}, {"with": "Seolha", "label": "Tu / Tu"}, {"with": "\"3751\"", "label": "Tu / Tu"}, {"with": "\"8741\"", "label": "Tu / Tu"}, {"with": "\"63123\"", "label": "Tu / Tu"}, {"with": "\"66666\"", "label": "Tu / Tu"}, {"with": "James", "label": "Tu / Vous"}, {"with": "Caiman", "label": "Tu / Tu"}, {"with": "Maillad", "label": "Tu / Tu"}, {"with": "Mullark Armlet", "label": "Tu / Tu"}, {"with": "Beastrain", "label": "Tu / Tu"}, {"with": "Yoonhwan", "label": "Tu / Tu"}, {"with": "Han Seoyul", "label": "Tu / Tu"}, {"with": "Carlton", "label": "Tu / Vous"}, {"with": "Le Professeur", "label": "Vous / Tu"}, {"with": "Vous / Tu", "label": "Hwang Inchan"}], "techs": [{"vf": "Oeil de Gestalt", "va": "Eye of Gestalt", "details": "Trésor des trois anciens dieux"}, {"vf": "Deus Ex Machina", "va": "Deus ex machina", "details": "Trésor des trois anciens dieux"}, {"vf": "Epée du vide", "va": "Void Sword", "details": "Trésor des trois anciens dieux"}, {"vf": "[Le Monde Après la Fin]", "va": "[The World After the End]", "details": "Monde unique"}, {"vf": "Coup Mondial", "va": "World Thrust", "details": ""}, {"vf": "Coup Léger", "va": "Slight Thrust", "details": ""}, {"vf": "Découpe normale", "va": "Normal Slash", "details": ""}, {"vf": "[Le Monde Après la Destruction]", "va": "", "details": "Déploiement complet du sanctuaire, après l'étape 5 de l'éveil (Preuve)"}, {"vf": "Mutilation de constellations", "va": "", "details": "Ne parvient pas à déchirer l'obscurité de la cascade du temps"}, {"vf": "Coup Moyen\nCoup Fort\nCoup Planétaire", "va": "", "details": "Coups enseignés à Carpe Diem"}, {"vf": "Ouroboros", "va": "", "details": "Histoire du dieu nu (porter les vêtements du dieu nu)"}]}, {"name": "Kairos", "first": "", "desc": "Dieu de l'errance", "img": "img/the-world-after-the-end/c1r4.jpg", "rels": [], "techs": []}, {"name": "Schindler", "first": "", "desc": "Monarque de la dureté", "img": "img/the-world-after-the-end/c1r5.jpg", "rels": [], "techs": []}, {"name": "Behit", "first": "", "desc": "Dieu du voyage", "img": "img/the-world-after-the-end/c1r6.jpg", "rels": [], "techs": []}, {"name": "Kainark", "first": "", "desc": "Monarque de la paresse et ancien conducteur du métabus", "img": "img/the-world-after-the-end/c1r7.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "Deus", "first": "", "desc": "Un des trois anciens dieux", "img": "img/the-world-after-the-end/c1r8.jpg", "rels": [{"with": "Gestalt", "label": "Tu / Tu"}, {"with": "Catastrophe", "label": "Tu / Tu"}], "techs": [{"vf": "[Perte de vraisemblance]", "va": "", "details": "Coupe le lien entre le dieu et son avatar"}]}, {"name": "Siren Armlet", "first": "", "desc": "Cauchemar, Compagnon de Jaehwan et petite-fille de Mullark", "img": "img/the-world-after-the-end/c1r9.jpg", "rels": [], "techs": []}, {"name": "Mullark Armlet", "first": "", "desc": "Cauchemar, Grand-père de Siren, un des 13 grand-maîtres de tours", "img": "img/the-world-after-the-end/c1r10.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}, {"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "Gestalt", "first": "", "desc": "Un des trois anciens dieux", "img": "img/the-world-after-the-end/c1r11.jpg", "rels": [{"with": "Deus", "label": "Tu / Tu"}, {"with": "Catastrophe", "label": "Tu / Tu"}], "techs": [{"vf": "[Dissonance]", "va": "", "details": "Manipule le sens des avatars"}]}, {"name": "Catastrophe", "first": "", "desc": "Un des trois anciens dieux", "img": "img/the-world-after-the-end/c1r12.jpg", "rels": [{"with": "Gestalt", "label": "Tu / Tu"}, {"with": "Deus", "label": "Tu / Tu"}], "techs": []}, {"name": "Chungeo", "first": "", "desc": "Compagnon de Jaehwan", "img": "img/the-world-after-the-end/c1r13.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "Runard", "first": "", "desc": "Compagnon et Adepte de Jaehwan", "img": "img/the-world-after-the-end/c1r14.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Vous"}], "techs": [{"vf": "[Runard -- Imitation de style]\n[Déploiement du sanctuaire cible]", "va": "", "details": "Syndrome de l'imitation de dieu : imite [Dissonance], [Flamme empoisonnée]..."}]}, {"name": "Seolha", "first": "", "desc": "Compagnon de Jaehwan et ancien membre de la fissure", "img": "img/the-world-after-the-end/c1r15.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "\"3751\"", "first": "", "desc": "3 751ème Jaehwan, n'a fait que donner des coups pendant 100 millions d'années", "img": "img/the-world-after-the-end/c1r16.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "\"8741\"", "first": "", "desc": "8 741ème Jaehwan, n'a fait que découper pendant 320 millions d'années", "img": "img/the-world-after-the-end/c1r17.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "\"63123\"", "first": "", "desc": "63 123ème Jaehwan, n'a fait qu'être nu", "img": "img/the-world-after-the-end/c1r18.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": [{"vf": "[Nudité]", "va": "", "details": "Pouvoir de la nudité"}]}, {"name": "\"66666\"", "first": "", "desc": "66 666ème Jaehwan, a enduré 3 milliards d'années seul dans la cascade du temps", "img": "img/the-world-after-the-end/c1r19.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": [{"vf": "[Epée de la destruction]\n[Seconde forme]\n[Destruction]", "va": "[Sword of Destruction]\n[Second Form]\n[Destruction]", "details": ""}]}, {"name": "James", "first": "", "desc": "Instructeur, garde qui a contrôlé jaehwan du point de contrôle de nord", "img": "img/the-world-after-the-end/c1r20.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Vous"}], "techs": []}, {"name": "Caiman", "first": "", "desc": "Compagnon de Jaehwan rencontré dans le chaos", "img": "img/the-world-after-the-end/c1r21.jpg", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "Maillad", "first": "", "desc": "Souverain de la Fissure, cofondateur avec Buddha et Nameless. A \"tué\" Big Brother. Monde unique : [Mer de sang remplie de cadavres]. Porte le Deus Ex Machina", "img": "", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": [{"vf": "[Mer de sang remplie de cadavres]", "va": "", "details": "Monde unique. Ne permet aucun autre monde unique"}, {"vf": "[Véritable annihilation]", "va": "", "details": "Monde unique créé avec ouroboros, réplique les histoires des autres"}, {"vf": "[Temps d'infection]", "va": "", "details": "Histoire unique de l'épée du vide. Infecte les avatars avec le [système]"}, {"vf": "[Deus Ex Machina : phase cachée]\n⌜Système : exploitation⌝\n[Ex machina -Phase 1- Deus]", "va": "", "details": "Transforme le monde unique de chacun en un [système] singulier"}]}, {"name": "Nameless", "first": "", "desc": "Dieu, cofondateur de la Fissure passé du côté des Abysses. Auteur de [Hymne au syndrome de l'imitation de dieu]", "img": "", "rels": [], "techs": []}, {"name": "Buddha", "first": "", "desc": "Dieu de la réincarnation, un des sept grands dieux et cofondateur de la Fissure. Histoire unique : [Réincarnation]", "img": "", "rels": [], "techs": [{"vf": "[Les Cents Frappes à la Main]", "va": "", "details": "Attaque utilisant la pression de l'air"}, {"vf": "[Réincarnation]", "va": "", "details": "Histoire unique : sacrifie un habit pour renaître, quelle que soit la cause de la mort"}, {"vf": "[Les Cents Mains de Guanyin -- Extrême]\n[Roue du Dharma]", "va": "", "details": "Fait augmenter sa puissance mondiale"}]}, {"name": "Droiyan", "first": "", "desc": "Dieu Dragon, [Dragon à la Flamme Noire]. Mort face à Buddha", "img": "", "rels": [], "techs": [{"vf": "[Dragon à la Flamme Noire]", "va": "", "details": "Histoire du Dieu Dragon Droiyan"}]}, {"name": "Caravan", "first": "", "desc": "Dieu des Flammes aux cheveux rouges, [Armure à la Flamme Rouge]. A hérité d'un trône des huit dieux. Blessé par Buddha", "img": "", "rels": [], "techs": [{"vf": "[Armure à la Flamme Rouge]", "va": "", "details": "Histoire du Dieu des Flammes"}]}, {"name": "Imai", "first": "", "desc": "Un des trois capitaines de la Fissure. Mort après avoir perdu son monde unique", "img": "", "rels": [], "techs": []}, {"name": "Jerome", "first": "", "desc": "Le plus fort des monarques suprêmes de la Terre toute-puissante. Vaincu par Jaehwan", "img": "", "rels": [], "techs": []}, {"name": "Varkant", "first": "", "desc": "Monarque suprême au visage hideux, un dragon. Compétence transcendante [Majesté du Dragon]. Battu par Runard", "img": "", "rels": [], "techs": [{"vf": "[Majesté du Dragon]", "va": "", "details": "Compétence de grade transcendant"}]}, {"name": "Miriel", "first": "", "desc": "Dirigeant de la Fissure, envoyé au septième site (Epoche) avec quatre monarques suprêmes", "img": "", "rels": [], "techs": []}, {"name": "Yoonhwan", "first": "", "desc": "Ami de Jaehwan, ancien membre de la Fissure et messager de la destruction. [Rafale de vent Puyuu]. Sur Terre, ami de Jaehwan à l'université", "img": "", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": [{"vf": "[Création d'une histoire : Rafale de vent Puyuu]\n[Attention décuplée]", "va": "", "details": "Prise d'attention"}]}, {"name": "Han Seoyul", "first": "", "desc": "Amie de Jaehwan sur Terre, décrite comme une grande beauté. Personnage de son novel", "img": "", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}, {"with": "Vous / Tu", "label": "Hwang Inchan"}], "techs": []}, {"name": "Carlton", "first": "", "desc": "Ancien subordonné de Jaehwan dans le Chaos. Sa justice l'oblige à le suivre. Monde unique : [Forteresse de Gorgon]", "img": "", "rels": [{"with": "Jaehwan", "label": "Tu / Vous"}], "techs": [{"vf": "[Forteresse de Gorgon]", "va": "", "details": "Monde unique. Crée un passage reliant le Chaos aux Abysses (renommée Carpe Diem)"}, {"vf": "[Transmission de pouvoir mondiale]", "va": "", "details": "Donne de la puissance mondiale à un autre"}]}, {"name": "Kasim", "first": "", "desc": "Surnommé \"Médecin divin\". Ancien camarade de Chungheo", "img": "", "rels": [], "techs": []}, {"name": "Russel", "first": "", "desc": "Une des sept étoiles. Sanctuaire : [Mer Profonde]", "img": "", "rels": [], "techs": [{"vf": "[Mer Profonde]", "va": "", "details": "Déploiement du sanctuaire de Russel"}]}, {"name": "Edan", "first": "", "desc": "Dieu des corbeaux. [Barrage de corbeaux], sanctuaire [Tombe du Corbeau]", "img": "", "rels": [], "techs": [{"vf": "[Barrage de corbeaux]", "va": "", "details": ""}, {"vf": "[Tombe du Corbeau]\n[Armure du corbeau]", "va": "", "details": "Déploiement du sanctuaire d'Edan"}]}, {"name": "Shiyu", "first": "", "desc": "Dieu des âges, \"Vieux Ciel\". Un des huit cieux", "img": "", "rels": [], "techs": [{"vf": "[Jeunesse]", "va": "", "details": "Histoire du dieu des âges"}]}, {"name": "Thanatos", "first": "", "desc": "Dieu des morts, \"Ciel Mortel\". Un des huit cieux", "img": "", "rels": [], "techs": [{"vf": "[Crépuscule]", "va": "", "details": "Histoire du dieu des morts"}]}, {"name": "Andersen", "first": "", "desc": "Déesse, considérée comme un [bon dieu] par l'ancien dieu fou", "img": "", "rels": [], "techs": []}, {"name": "Ra-Hamad", "first": "", "desc": "Lié à l'entraînement sans fin menant à l'Oeil de Gestalt. Ses paroles sur la guerre des trois anciens dieux", "img": "", "rels": [], "techs": []}, {"name": "Beastrain", "first": "", "desc": "Démon intermédiaire en costume noir, 8 152ème rang démoniaque, surnommé \"Monsieur taquin\". Cultivateur de la Forteresse des regrets. Voix de la flamme empoisonnée de Jaehwan", "img": "", "rels": [{"with": "Jaehwan", "label": "Tu / Tu"}], "techs": []}, {"name": "Samyung Garam", "first": "", "desc": "Monarque adaptateur qui doutait du système. A mis Maillad en garde contre Jaehwan", "img": "", "rels": [], "techs": []}, {"name": "Jean-Paul", "first": "", "desc": "Jean-Paul de l'existence. Grand maître des cauchemars, créateur de la Tour des cauchemars. Dirige le Panopticon", "img": "", "rels": [], "techs": []}, {"name": "Jorge", "first": "", "desc": "Jorge du virtuel. Dirige le Panopticon avec Mullark", "img": "", "rels": [], "techs": []}, {"name": "Scalzi", "first": "", "desc": "Scalzi de l'univers. Dirige le Panopticon avec Mullark", "img": "", "rels": [], "techs": []}, {"name": "Marus", "first": "", "desc": "Marus du jeu. Dirige le Panopticon avec Mullark", "img": "", "rels": [], "techs": []}, {"name": "Melville", "first": "", "desc": "Cauchemar récemment devenu maître de la 4ème tour, \"Moby Dick\" (tour complétée par Chungheo)", "img": "", "rels": [], "techs": []}, {"name": "Ignel", "first": "", "desc": "Ignel du crépuscule profond. Maître de l'atelier Crépuscule, a forgé le souverain absolu de Jaehwan. Disparu après la \"catastrophe de Watchnold\"", "img": "", "rels": [], "techs": []}, {"name": "Jurhen", "first": "", "desc": "Habitant de Carpe Diem, proche de Kaiman", "img": "", "rels": [], "techs": []}, {"name": "Eunsae", "first": "", "desc": "Compagnon de Runard au Comité gouvernant des abysses", "img": "", "rels": [], "techs": []}, {"name": "Shin Mugeuk", "first": "", "desc": "Chef du clan Sans Limite (Murim)", "img": "", "rels": [], "techs": []}, {"name": "Kang Hwang", "first": "", "desc": "Clan du Feu (Murim)", "img": "", "rels": [], "techs": []}, {"name": "Yoon Yong", "first": "", "desc": "Clan de l'Eclair (Murim)", "img": "", "rels": [], "techs": []}, {"name": "Le Professeur", "first": "", "desc": "Docteur du centre de conseil polyvalent qui suit Jaehwan sur Terre pendant dix ans", "img": "", "rels": [{"with": "Jaehwan", "label": "Vous / Tu"}], "techs": []}, {"name": "Seiji Sakamoto", "first": "", "desc": "Camarade de Carpe Diem qui a gravi la tour avec Jaehwan. Devenu professeur de lettres de Jaehwan sur Terre, sans souvenirs", "img": "", "rels": [], "techs": []}, {"name": "Mère de Jaehwan", "first": "", "desc": "Mère de Jaehwan sur Terre, \"Maman\"", "img": "", "rels": [], "techs": []}, {"name": "Hwang Inchan", "first": "", "desc": "Chef du département éditorial de l'équipe 1 de l'entreprise de web novels. Surnommé \"Panique à l'épée\". Sur Terre, aime les histoires de régression. Jaehwan et Seoyul le vouvoient, il les tutoie (ch. 259)", "img": "", "rels": [], "techs": []}];
+const tabs = document.querySelectorAll('nav.tabs button'), panels = document.querySelectorAll('section.panel');
+tabs.forEach(btn => btn.addEventListener('click', () => {
+  tabs.forEach(b => b.classList.remove('active')); panels.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');
+}));
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('[data-search]').forEach(el => {
+    el.style.display = (q === '' || el.getAttribute('data-search').toLowerCase().includes(q)) ? '' : 'none';
+  });
+});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function openChar(i) {
+  const c = CHARS[i];
+  document.getElementById('modalName').textContent = c.name;
+  const pt = document.getElementById('modalPortrait');
+  pt.style.display = c.img ? '' : 'none';
+  pt.innerHTML = c.img ? '<img src="' + esc(c.img) + '" alt="" style="object-position:center 18%">' : '';
+  document.getElementById('modalMeta').innerHTML = c.first ? '<span>' + esc(c.first) + '</span>' : '';
+  document.getElementById('modalDesc').textContent = c.desc || '';
+  document.getElementById('modalRelations').innerHTML = c.rels.length ? c.rels.map(r =>
+    '<div class="rel-chip"><span style="padding-left:8px">' + esc(r.with) + '</span><span class="rel-label">' + esc(r.label || '?') + '</span></div>').join('')
+    : '<p class="modal-empty">Aucune relation renseignée.</p>';
+  const ts = document.getElementById('techSec');
+  ts.style.display = c.techs.length ? '' : 'none';
+  document.getElementById('modalTechniques').innerHTML = c.techs.map(t =>
+    '<div class="tech-item"><div class="tech-names"><span class="tech-vf">' + esc(t.vf) + '</span>' + (t.va ? '<span class="tech-va">' + esc(t.va) + '</span>' : '') + '</div>' + (t.details ? '<p class="tech-details">' + esc(t.details) + '</p>' : '') + '</div>').join('');
+  document.getElementById('charModal').classList.add('open');
+}
+document.querySelectorAll('.char-card').forEach(card => card.addEventListener('click', () => openChar(parseInt(card.dataset.idx, 10))));
+document.addEventListener('click', e => { if (e.target.closest('#modalClose') || e.target.id === 'charModal') document.getElementById('charModal').classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('charModal').classList.remove('open'); });
+</script>
+</body>
+</html>

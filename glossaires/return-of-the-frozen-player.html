@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glossaire — Return of the Frozen Player</title>
+<meta name="theme-color" content="#0a1417">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a1417;
+  --bg-2: #0e1b20;
+  --surface: #14262c;
+  --surface-2: #1a323a;
+  --border: rgba(150,230,255,0.10);
+  --border-hover: rgba(150,230,255,0.28);
+  --text: #e4f7fb;
+  --text-dim: #93bcc6;
+  --text-faint: #5c8089;
+  --accent: #5eead4;
+  --accent-2: #38bdf8;
+  --accent-3: #2fa88a;
+  --gold: #fde68a;
+  --radius: 16px;
+  --radius-sm: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image:
+    radial-gradient(1000px 600px at 10% -10%, rgba(94,234,212,0.16), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(56,189,248,0.12), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(150,230,255,0.025) 0px, rgba(150,230,255,0.025) 2px, transparent 2px, transparent 60px);
+  background-attachment: fixed;
+}
+h1,h2,h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+.ic { width: 14px; height: 14px; flex-shrink: 0; vertical-align: -2px; margin-right: 6px; color: var(--accent); }
+.ic-lg { width: 34px; height: 34px; opacity: 0.35; color: var(--text-faint); }
+header {
+  position: sticky; top: 0; top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: rgba(10,20,23,0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 22px 14px;
+}
+.header-top {
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  max-width: 1480px; margin: 0 auto;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(94,234,212,0.4);
+  flex-shrink: 0;
+}
+.brand .logo svg { width: 22px; height: 22px; color: #1a0f08; }
+.brand h1 {
+  margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+}
+.brand .subtitle { margin: 0; font-size: 0.78rem; color: var(--text-dim); }
+.search-wrap { max-width: 1480px; margin: 14px auto 0; position: relative; }
+.search-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--text-faint); pointer-events: none;
+}
+#searchInput {
+  width: 100%; padding: 12px 14px 12px 40px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  font-family: inherit; font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#searchInput::placeholder { color: var(--text-faint); }
+#searchInput:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(94,234,212,0.18);
+}
+nav.tabs {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 12px 22px 0; margin-top: 4px;
+  max-width: 1480px; margin-left: auto; margin-right: auto;
+  scrollbar-width: none;
+}
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button {
+  flex: 0 0 auto; background: transparent; color: var(--text-dim);
+  border: 1px solid transparent; padding: 8px 14px; border-radius: 999px;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+nav.tabs button:hover { color: var(--text); background: var(--surface); }
+nav.tabs button.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a0f08; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(94,234,212,0.32);
+}
+main { max-width: 1480px; margin: 0 auto; padding: 26px 22px 70px; }
+section.panel { display: none; }
+section.panel.active { display: block; animation: fadein 0.3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-title {
+  font-size: 1.3rem; font-weight: 700; margin: 0 0 18px;
+  display: flex; align-items: center; gap: 10px; letter-spacing: -0.01em;
+}
+.count-tag {
+  font-size: 0.72rem; font-family: 'Inter', sans-serif; font-weight: 600;
+  background: var(--surface-2); color: var(--text-dim);
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.card {
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--border-hover);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.5);
+}
+.card-img {
+  width: 100%; aspect-ratio: 4/3; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,12,6,0.5));
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.noimg { display: flex; align-items: center; justify-content: center; }
+.card-body { padding: 14px 16px 16px; flex: 1; }
+.card-body h3 { margin: 0 0 8px; font-size: 1.02rem; font-weight: 600; color: var(--text); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  font-family: 'Inter', sans-serif; font-size: 0.66rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-dim);
+  border: 1px solid var(--border); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.badge.rang { background: linear-gradient(135deg, var(--accent-2), var(--gold)); color: #1a0f08; border: none; }
+.badge.titre { background: linear-gradient(135deg, var(--accent-3), #1e8f7a); color: #06231c; border: none; }
+.meta { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 8px; }
+.meta span { display: flex; align-items: center; }
+.desc { font-size: 0.85rem; line-height: 1.5; margin: 6px 0 0; color: var(--text-dim); }
+.char-card .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.va-tag { font-size: 0.7rem; color: var(--gold); font-weight: 600; margin-bottom: 5px; letter-spacing: 0.02em; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 0.87rem; }
+table th {
+  background: var(--surface-2); color: var(--text-dim); padding: 12px 14px; text-align: left;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border);
+}
+table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+table tr:last-child td { border-bottom: none; }
+table tr:hover td { background: var(--surface-2); }
+td.rel { text-align: center; font-weight: 700; color: var(--accent); font-family: 'Space Grotesk', sans-serif; }
+td.va { color: var(--text-faint); font-style: italic; }
+td.vf { font-weight: 600; color: var(--text); }
+td.pname { display: table-cell; }
+.pname-inner {
+  display: flex; align-items: center; gap: 8px;
+}
+.pname-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pname-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pname-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.hist-item {
+  display: flex; gap: 16px;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 12px; transition: border-color 0.15s;
+}
+.hist-item:hover { border-color: var(--border-hover); }
+.hist-chap { flex: 0 0 118px; display: flex; flex-direction: column; gap: 6px; }
+.chap-webtoon { font-weight: 700; color: var(--accent); font-size: 0.82rem; font-family: 'Space Grotesk', sans-serif; }
+.chap-novel {
+  font-size: 0.68rem; font-weight: 600; color: var(--accent-3);
+  background: rgba(47,168,138,0.14); padding: 3px 8px; border-radius: 999px; width: fit-content;
+}
+.hist-body { flex: 1; }
+.hist-desc { margin: 0 0 8px; font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+.hist-presence { font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; }
+footer {
+  text-align: center; padding: 20px; font-size: 0.75rem; color: var(--text-faint);
+  border-top: 1px solid var(--border);
+}
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10,6,3,0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.modal-overlay.open { display: flex; animation: fadein 0.2s ease; }
+.modal-card {
+  background: linear-gradient(165deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border-hover);
+  border-radius: 20px;
+  max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  position: relative;
+}
+.modal-head {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-portrait {
+  width: 96px; height: 96px; border-radius: 14px;
+  overflow: hidden; flex-shrink: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.modal-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-portrait .noimg { width: 100%; height: 100%; }
+.modal-title-wrap { flex: 1; min-width: 0; }
+.modal-eyebrow {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-faint); font-weight: 600; margin: 0 0 4px;
+}
+.modal-title-wrap h2 {
+  margin: 0 0 8px; font-size: 1.4rem; font-weight: 700; color: var(--text);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--accent-2); color: #fff; }
+.modal-close svg { width: 16px; height: 16px; }
+.modal-body { padding: 20px 24px 26px; }
+.modal-desc {
+  font-size: 0.9rem; line-height: 1.6; color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.modal-meta-row {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.82rem; color: var(--text-dim); margin-bottom: 4px;
+}
+.modal-meta-row span { display: flex; align-items: center; }
+.modal-section {
+  margin-top: 22px;
+}
+.modal-section h4 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 700; color: var(--accent);
+  margin: 0 0 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.rel-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.rel-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 5px 12px 5px 5px;
+  font-size: 0.82rem; color: var(--text);
+  transition: border-color 0.15s;
+}
+.rel-chip:hover { border-color: var(--border-hover); }
+.rel-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.rel-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.rel-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.rel-label {
+  font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+  color: var(--gold); margin-left: 2px;
+}
+.tech-list { display: flex; flex-direction: column; gap: 8px; }
+.tech-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px;
+}
+.tech-item .tech-names {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px;
+}
+.tech-item .tech-vf { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.tech-item .tech-va { font-size: 0.72rem; color: var(--text-faint); font-style: italic; }
+.tech-item .tech-details { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+.modal-empty { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+.char-card { cursor: pointer; }
+
+
+.hero-banner {
+  width: 100%;
+  aspect-ratio: 2033 / 457;
+  max-height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.hero-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10,20,23,0) 45%, rgba(10,20,23,0.95) 100%);
+}
+
+
+.logo.logo-img { background: transparent; box-shadow: none; padding: 2px; }
+.logo.logo-img img { width: 100%; height: 100%; object-fit: contain; }
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 4px;
+}
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+}
+
+
+.card-img.ph { aspect-ratio: auto; height: 96px; }
+.card-img.ph .initials { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: var(--accent); opacity: .85; z-index: 1; }
+.card-img.ph::after { display: none; }
+.rel-label-s { font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--gold); }
+.tuto-note { color: var(--text-faint); font-size: .78rem; }
+.count-line { color: var(--text-faint); font-size: .8rem; margin: -8px 0 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="logo logo-img"><img src="../covers/return-of-the-frozen-player.webp" alt="" style="border-radius:9px;object-fit:cover"></div>
+      <div>
+        <h1>Return of the Frozen Player</h1>
+        <p class="subtitle">Glossaire de la série · iLoza</p>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="searchInput" placeholder="Rechercher un nom, un lieu, une technique...">
+  </div>
+</header>
+<nav class="tabs" id="tabs"><button data-target="tuto" class="active">Tutoiement/Vouvoiement · 138</button><button data-target="techniques">Techniques · 47</button><button data-target="vocabulaire">Vocabulaire · 154</button></nav>
+<main>
+<section class="panel active" id="tuto"><h2 class="section-title">Tutoiement / Vouvoiement <span class="count-tag">138</span></h2><div class="table-wrap"><table><thead><tr><th>Personnage 1</th><th>Relation</th><th>Personnage 2</th><th>Remarque</th></tr></thead><tbody><tr data-search="raze / administratrice magasin  2eme  étage mc / specter / seo Jun-ho tu"><td class="pname">raze / administratrice magasin  2eme  étage</td><td class="rel">tu</td><td class="pname">mc / specter / seo Jun-ho</td><td class="tuto-note">????</td></tr><tr data-search="mc raze / administratrice magasin "><td class="pname">mc</td><td class="rel">?</td><td class="pname">raze / administratrice magasin</td><td class="tuto-note"></td></tr><tr data-search="raze frost queen tu"><td class="pname">raze</td><td class="rel">tu</td><td class="pname">frost queen</td><td class="tuto-note"></td></tr><tr data-search="mc / specter / seo Jun-ho skaya / mage / archimage tu"><td class="pname">mc / specter / seo Jun-ho</td><td class="rel">tu</td><td class="pname">skaya / mage / archimage</td><td class="tuto-note"></td></tr><tr data-search="mc / specter / seo Jun-ho frost queen tu"><td class="pname">mc / specter / seo Jun-ho</td><td class="rel">tu</td><td class="pname">frost queen</td><td class="tuto-note"></td></tr><tr data-search="frost queen mc / specter / seo Jun-ho tu"><td class="pname">frost queen</td><td class="rel">tu</td><td class="pname">mc / specter / seo Jun-ho</td><td class="tuto-note"></td></tr><tr data-search="mc graham guldir / enfant nain fabricant d&#x27;armes tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">graham guldir / enfant nain fabricant d&#x27;armes</td><td class="tuto-note"></td></tr><tr data-search="archimage/soeur MC guide de l&#x27;espace/shin sunghyun/yaksha vous"><td class="pname">archimage/soeur MC</td><td class="rel">vous</td><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="vous/tu entre perso archimage vous"><td class="pname">vous/tu entre perso</td><td class="rel">vous</td><td class="pname">archimage</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée collaborateur à lunettes et cheveux longs tu"><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée</td><td class="rel">tu</td><td class="pname">collaborateur à lunettes et cheveux longs</td><td class="tuto-note"></td></tr><tr data-search="graham guldir / enfant nain fabricant d&#x27;armes mc tu"><td class="pname">graham guldir / enfant nain fabricant d&#x27;armes</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="gong cheffe d&#x27;équipe/mlle juha mc en junho tu"><td class="pname">gong cheffe d&#x27;équipe/mlle juha</td><td class="rel">tu</td><td class="pname">mc en junho</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha mc seo tu"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">tu</td><td class="pname">mc seo</td><td class="tuto-note"></td></tr><tr data-search="mc en junho gong cheffe d&#x27;équipe/mlle juha tu"><td class="pname">mc en junho</td><td class="rel">tu</td><td class="pname">gong cheffe d&#x27;équipe/mlle juha</td><td class="tuto-note">ch 132</td></tr><tr data-search="jang gyeonghun/vice maître mc vous"><td class="pname">jang gyeonghun/vice maître</td><td class="rel">vous</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="gong cheffe d&#x27;équipe jang gyeonghun/vice maître vous"><td class="pname">gong cheffe d&#x27;équipe</td><td class="rel">vous</td><td class="pname">jang gyeonghun/vice maître</td><td class="tuto-note"></td></tr><tr data-search="mc guide de l&#x27;espace/shin sunghyun/yaksha vous"><td class="pname">mc</td><td class="rel">vous</td><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="mc gasman tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">gasman</td><td class="tuto-note"></td></tr><tr data-search="gasman mc / M. jun-ho tu"><td class="pname">gasman</td><td class="rel">tu</td><td class="pname">mc / M. jun-ho</td><td class="tuto-note">m. jun-ho</td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha jang gyeonghun/vice maître tu"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">tu</td><td class="pname">jang gyeonghun/vice maître</td><td class="tuto-note"></td></tr><tr data-search="skaya / mage / archimage / skaya killiland / grande mage gil tu"><td class="pname">skaya / mage / archimage / skaya killiland / grande mage</td><td class="rel">tu</td><td class="pname">gil</td><td class="tuto-note"></td></tr><tr data-search="gil skaya / mage / archimage tu"><td class="pname">gil</td><td class="rel">tu</td><td class="pname">skaya / mage / archimage</td><td class="tuto-note"></td></tr><tr data-search="seigneur de la fierté fuse tu"><td class="pname">seigneur de la fierté</td><td class="rel">tu</td><td class="pname">fuse</td><td class="tuto-note"></td></tr><tr data-search="fuse seigneur de la fierté vous"><td class="pname">fuse</td><td class="rel">vous</td><td class="pname">seigneur de la fierté</td><td class="tuto-note"></td></tr><tr data-search="gil/gilberto mc tu"><td class="pname">gil/gilberto</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="tu gil/gilberto green/ “faucheur gris” tu"><td class="pname">tu</td><td class="rel">tu</td><td class="pname">gil/gilberto green/ “faucheur gris”</td><td class="tuto-note"></td></tr><tr data-search="skaya / mage / archimage mc tu"><td class="pname">skaya / mage / archimage</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="mc skaya / mage / archimage tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">skaya / mage / archimage</td><td class="tuto-note"></td></tr><tr data-search="seigneur de la fierté mc tu"><td class="pname">seigneur de la fierté</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="mc seigneur de la fierté tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">seigneur de la fierté</td><td class="tuto-note"></td></tr><tr data-search="seigneur gu sion fuse tu"><td class="pname">seigneur gu sion</td><td class="rel">tu</td><td class="pname">fuse</td><td class="tuto-note"></td></tr><tr data-search="fuse seigneur gu sion vous"><td class="pname">fuse</td><td class="rel">vous</td><td class="pname">seigneur gu sion</td><td class="tuto-note"></td></tr><tr data-search="mc seigneur gu sion tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">seigneur gu sion</td><td class="tuto-note"></td></tr><tr data-search="seigneur gu sion mc tu"><td class="pname">seigneur gu sion</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="skaya / mage / archimage seigneur gu sion tu"><td class="pname">skaya / mage / archimage</td><td class="rel">tu</td><td class="pname">seigneur gu sion</td><td class="tuto-note"></td></tr><tr data-search="gil/gilberto reine des neiges tu"><td class="pname">gil/gilberto</td><td class="rel">tu</td><td class="pname">reine des neiges</td><td class="tuto-note"></td></tr><tr data-search="reine des neiges gil/gilberto tu"><td class="pname">reine des neiges</td><td class="rel">tu</td><td class="pname">gil/gilberto</td><td class="tuto-note"></td></tr><tr data-search="skaya / mage / archimage reine des neiges tu"><td class="pname">skaya / mage / archimage</td><td class="rel">tu</td><td class="pname">reine des neiges</td><td class="tuto-note"></td></tr><tr data-search="son chaewon / maître de guilde de “silent moon” chef des renseignements tu"><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="rel">tu</td><td class="pname">chef des renseignements</td><td class="tuto-note"></td></tr><tr data-search="chef des renseignements son chaewon / maître de guilde de “silent moon” vous"><td class="pname">chef des renseignements</td><td class="rel">vous</td><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="tuto-note"></td></tr><tr data-search="kal signer son chaewon / maître de guilde de “silent moon” tu"><td class="pname">kal signer</td><td class="rel">tu</td><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="tuto-note"></td></tr><tr data-search="son chaewon / maître de guilde de “silent moon” kal signer tu"><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="rel">tu</td><td class="pname">kal signer</td><td class="tuto-note"></td></tr><tr data-search="Kim woojoong cha minwoo tu"><td class="pname">Kim woojoong</td><td class="rel">tu</td><td class="pname">cha minwoo</td><td class="tuto-note">frères</td></tr><tr data-search="cha minwoo Kim woojoong tu"><td class="pname">cha minwoo</td><td class="rel">tu</td><td class="pname">Kim woojoong</td><td class="tuto-note">frères</td></tr><tr data-search="deokgu mc tu"><td class="pname">deokgu</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="reine des neiges deokgu tu"><td class="pname">reine des neiges</td><td class="rel">tu</td><td class="pname">deokgu</td><td class="tuto-note"></td></tr><tr data-search="son chaewon / maître de guilde de “silent moon” milphage maître de la guilde hallem tu"><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="rel">tu</td><td class="pname">milphage maître de la guilde hallem</td><td class="tuto-note"></td></tr><tr data-search="son chaewon / maître de guilde de “silent moon” guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha tu"><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="rel">tu</td><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="maître de la guilde hallem tenmei yuugo/maître de la guilde divine order sky soul tu"><td class="pname">maître de la guilde hallem</td><td class="rel">tu</td><td class="pname">tenmei yuugo/maître de la guilde divine order sky soul</td><td class="tuto-note"></td></tr><tr data-search="tenmei yuugo/maître de la guilde divine order sky soul milphage maître de la guilde hallem tu"><td class="pname">tenmei yuugo/maître de la guilde divine order sky soul</td><td class="rel">tu</td><td class="pname">milphage maître de la guilde hallem</td><td class="tuto-note"></td></tr><tr data-search="mc deokgu tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">deokgu</td><td class="tuto-note"></td></tr><tr data-search="milphage maître de la guilde hallem mc tu"><td class="pname">milphage maître de la guilde hallem</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée milphage maître de la guilde hallem tu"><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée</td><td class="rel">tu</td><td class="pname">milphage maître de la guilde hallem</td><td class="tuto-note"></td></tr><tr data-search="gong  juha cheffe d&#x27;équipe gasman tu"><td class="pname">gong  juha cheffe d&#x27;équipe</td><td class="rel">tu</td><td class="pname">gasman</td><td class="tuto-note"></td></tr><tr data-search="gasman gong  juha cheffe d&#x27;équipe vous"><td class="pname">gasman</td><td class="rel">vous</td><td class="pname">gong  juha cheffe d&#x27;équipe</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha gong  juha cheffe d&#x27;équipe vous"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">vous</td><td class="pname">gong  juha cheffe d&#x27;équipe</td><td class="tuto-note"></td></tr><tr data-search="inho gong  juha cheffe d&#x27;équipe / princesse tu"><td class="pname">inho</td><td class="rel">tu</td><td class="pname">gong  juha cheffe d&#x27;équipe / princesse</td><td class="tuto-note"></td></tr><tr data-search="grand sage de la tour des astrologues Seo Jun-ho vous"><td class="pname">grand sage de la tour des astrologues</td><td class="rel">vous</td><td class="pname">Seo Jun-ho</td><td class="tuto-note"></td></tr><tr data-search="Seo Jun-ho grand sage de la tour des astrologues vous"><td class="pname">Seo Jun-ho</td><td class="rel">vous</td><td class="pname">grand sage de la tour des astrologues</td><td class="tuto-note"></td></tr><tr data-search="la sainte Schumern / secrétaire cha / mademoiselle Si-eun mc tu"><td class="pname">la sainte Schumern / secrétaire cha / mademoiselle Si-eun</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="mc jun-oh la sainte Schumern vous"><td class="pname">mc jun-oh</td><td class="rel">vous</td><td class="pname">la sainte Schumern</td><td class="tuto-note">tu à partir du 196</td></tr><tr data-search="Wi Cheon-hak guide de l&#x27;espace/shin sunghyun/yaksha tu"><td class="pname">Wi Cheon-hak</td><td class="rel">tu</td><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha Wi Cheon-hak tu"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">tu</td><td class="pname">Wi Cheon-hak</td><td class="tuto-note"></td></tr><tr data-search="Kim woojoong guide de l&#x27;espace/shin sunghyun/yaksha "><td class="pname">Kim woojoong</td><td class="rel">?</td><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha Kim woojoong tu"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">tu</td><td class="pname">Kim woojoong</td><td class="tuto-note"></td></tr><tr data-search="gong  juha cheffe d&#x27;équipe mc en SPECTER vous"><td class="pname">gong  juha cheffe d&#x27;équipe</td><td class="rel">vous</td><td class="pname">mc en SPECTER</td><td class="tuto-note"></td></tr><tr data-search="mc en SPECTER gong  juha cheffe d&#x27;équipe tu"><td class="pname">mc en SPECTER</td><td class="rel">tu</td><td class="pname">gong  juha cheffe d&#x27;équipe</td><td class="tuto-note"></td></tr><tr data-search="Baek Geonwoo mc tu"><td class="pname">Baek Geonwoo</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="mc Baek Geonwoo tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">Baek Geonwoo</td><td class="tuto-note"></td></tr><tr data-search="isaac/Sorcier de la mort citrin tu"><td class="pname">isaac/Sorcier de la mort</td><td class="rel">tu</td><td class="pname">citrin</td><td class="tuto-note"></td></tr><tr data-search="citrin/reine des ronces isaac/Sorcier de la mort tu"><td class="pname">citrin/reine des ronces</td><td class="rel">tu</td><td class="pname">isaac/Sorcier de la mort</td><td class="tuto-note"></td></tr><tr data-search="shadow/Maître du pavillon de la lune sombre Seigneur Démon Céleste/roi des renégats vous"><td class="pname">shadow/Maître du pavillon de la lune sombre</td><td class="rel">vous</td><td class="pname">Seigneur Démon Céleste/roi des renégats</td><td class="tuto-note"></td></tr><tr data-search="citrin Seigneur Démon Céleste. vous"><td class="pname">citrin</td><td class="rel">vous</td><td class="pname">Seigneur Démon Céleste.</td><td class="tuto-note"></td></tr><tr data-search="isaac Seigneur Démon Céleste. vous"><td class="pname">isaac</td><td class="rel">vous</td><td class="pname">Seigneur Démon Céleste.</td><td class="tuto-note"></td></tr><tr data-search="Seigneur Démon Céleste. isaac tu"><td class="pname">Seigneur Démon Céleste.</td><td class="rel">tu</td><td class="pname">isaac</td><td class="tuto-note"></td></tr><tr data-search="Seigneur Démon Céleste. shadow tu"><td class="pname">Seigneur Démon Céleste.</td><td class="rel">tu</td><td class="pname">shadow</td><td class="tuto-note"></td></tr><tr data-search="mc seigneur eblouissant tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">seigneur eblouissant</td><td class="tuto-note"></td></tr><tr data-search="gil deokgu tu"><td class="pname">gil</td><td class="rel">tu</td><td class="pname">deokgu</td><td class="tuto-note"></td></tr><tr data-search="Rahmadat khali “roi de la destruction” joya, équipe médicale du passé tu"><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="rel">tu</td><td class="pname">joya, équipe médicale du passé</td><td class="tuto-note"></td></tr><tr data-search="Kim woojoong son chaewon / maître de guilde de “silent moon” tu"><td class="pname">Kim woojoong</td><td class="rel">tu</td><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="tuto-note"></td></tr><tr data-search="mc vita tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">vita</td><td class="tuto-note"></td></tr><tr data-search="mc Specter Rahmadat khali “roi de la destruction” tu"><td class="pname">mc Specter</td><td class="rel">tu</td><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="tuto-note"></td></tr><tr data-search="mc Jun-ho en public Rahmadat khali “roi de la destruction” vous"><td class="pname">mc Jun-ho en public</td><td class="rel">vous</td><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="tuto-note"></td></tr><tr data-search="Rahmadat khali “roi de la destruction” mc tu"><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="capitaine de l&#x27;escouade de la paresse mc jun-ho tu"><td class="pname">capitaine de l&#x27;escouade de la paresse</td><td class="rel">tu</td><td class="pname">mc jun-ho</td><td class="tuto-note"></td></tr><tr data-search="mc jun-ho capitaine de l&#x27;escouade de la paresse tu"><td class="pname">mc jun-ho</td><td class="rel">tu</td><td class="pname">capitaine de l&#x27;escouade de la paresse</td><td class="tuto-note"></td></tr><tr data-search="Capitaine de la garde Damian duc (altesse) vous"><td class="pname">Capitaine de la garde Damian</td><td class="rel">vous</td><td class="pname">duc (altesse)</td><td class="tuto-note"></td></tr><tr data-search="duc (altesse) damian tu"><td class="pname">duc (altesse)</td><td class="rel">tu</td><td class="pname">damian</td><td class="tuto-note"></td></tr><tr data-search="Capitaine de la garde Damian mc jun-ho vous"><td class="pname">Capitaine de la garde Damian</td><td class="rel">vous</td><td class="pname">mc jun-ho</td><td class="tuto-note"></td></tr><tr data-search="mc jun-ho Capitaine de la garde Damian vous"><td class="pname">mc jun-ho</td><td class="rel">vous</td><td class="pname">Capitaine de la garde Damian</td><td class="tuto-note"></td></tr><tr data-search="simus gilleon mc jun-ho vous"><td class="pname">simus gilleon</td><td class="rel">vous</td><td class="pname">mc jun-ho</td><td class="tuto-note"></td></tr><tr data-search="mc jun-ho simus gilleon vous"><td class="pname">mc jun-ho</td><td class="rel">vous</td><td class="pname">simus gilleon</td><td class="tuto-note"></td></tr><tr data-search="Favir, commandant des chevaliers de l&#x27;ordre de Gilleon simus gilleon, monseigneur vous"><td class="pname">Favir, commandant des chevaliers de l&#x27;ordre de Gilleon</td><td class="rel">vous</td><td class="pname">simus gilleon, monseigneur</td><td class="tuto-note"></td></tr><tr data-search="simus gilleon, monseigneur Favir, commandant des chevaliers de l&#x27;ordre de Gilleon vous"><td class="pname">simus gilleon, monseigneur</td><td class="rel">vous</td><td class="pname">Favir, commandant des chevaliers de l&#x27;ordre de Gilleon</td><td class="tuto-note"></td></tr><tr data-search="empereur à la volonté de fer simus gilleon, monseigneur tu"><td class="pname">empereur à la volonté de fer</td><td class="rel">tu</td><td class="pname">simus gilleon, monseigneur</td><td class="tuto-note"></td></tr><tr data-search="Tenmei Mio, sainte de l&#x27;épée milphage maître de la guilde hallem tu"><td class="pname">Tenmei Mio, sainte de l&#x27;épée</td><td class="rel">tu</td><td class="pname">milphage maître de la guilde hallem</td><td class="tuto-note"></td></tr><tr data-search="shim deokgu, président de l’association son chaewon / maître de guilde de “silent moon” vous"><td class="pname">shim deokgu, président de l’association</td><td class="rel">vous</td><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="tuto-note"></td></tr><tr data-search="son chaewon / maître de guilde de “silent moon” shim deokgu, président de l’association vous"><td class="pname">son chaewon / maître de guilde de “silent moon”</td><td class="rel">vous</td><td class="pname">shim deokgu, président de l’association</td><td class="tuto-note"></td></tr><tr data-search="maître tenmei yuugo, guilde divine order suit tu"><td class="pname">maître tenmei yuugo, guilde divine order</td><td class="rel">tu</td><td class="pname">suit</td><td class="tuto-note"></td></tr><tr data-search="mc Wi Cheon-hak tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">Wi Cheon-hak</td><td class="tuto-note"></td></tr><tr data-search="Wi Cheon-hak,  heavenly dragon mc specter/sénior vous"><td class="pname">Wi Cheon-hak,  heavenly dragon</td><td class="rel">vous</td><td class="pname">mc specter/sénior</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée mc specter/sénior tu"><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée</td><td class="rel">tu</td><td class="pname">mc specter/sénior</td><td class="tuto-note">chap 205</td></tr><tr data-search="sainte de l&#x27;épée wi cheon-hak tu"><td class="pname">sainte de l&#x27;épée</td><td class="rel">tu</td><td class="pname">wi cheon-hak</td><td class="tuto-note">junior</td></tr><tr data-search="wi cheon-hak sainte de l&#x27;épée, sénior vous"><td class="pname">wi cheon-hak</td><td class="rel">vous</td><td class="pname">sainte de l&#x27;épée, sénior</td><td class="tuto-note"></td></tr><tr data-search="wi cheon-hak les 5 héros, vous, sénior vous"><td class="pname">wi cheon-hak</td><td class="rel">vous</td><td class="pname">les 5 héros, vous, sénior</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée reine des glaces vous"><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée</td><td class="rel">vous</td><td class="pname">reine des glaces</td><td class="tuto-note"></td></tr><tr data-search="reine des glaces guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée tu"><td class="pname">reine des glaces</td><td class="rel">tu</td><td class="pname">guide de l&#x27;espace - dokkaebi/shin sunghyun/yaksha / saint épée</td><td class="tuto-note"></td></tr><tr data-search="administrateur de l&#x27;arbre-monde (femme) mc tu"><td class="pname">administrateur de l&#x27;arbre-monde (femme)</td><td class="rel">tu</td><td class="pname">mc</td><td class="tuto-note">210</td></tr><tr data-search="mc han jun-min, chef d&#x27;équipe vous"><td class="pname">mc</td><td class="rel">vous</td><td class="pname">han jun-min, chef d&#x27;équipe</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha han jun-min, chef d&#x27;équipe vous"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">vous</td><td class="pname">han jun-min, chef d&#x27;équipe</td><td class="tuto-note"></td></tr><tr data-search="han jun-min, chef d&#x27;équipe &gt; de section mc vous"><td class="pname">han jun-min, chef d&#x27;équipe &gt; de section</td><td class="rel">vous</td><td class="pname">mc</td><td class="tuto-note"></td></tr><tr data-search="Rahmadat khali “roi de la destruction” milphage tu"><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="rel">tu</td><td class="pname">milphage</td><td class="tuto-note"></td></tr><tr data-search="milphage Rahmadat khali “roi de la destruction” tu"><td class="pname">milphage</td><td class="rel">tu</td><td class="pname">Rahmadat khali “roi de la destruction”</td><td class="tuto-note"></td></tr><tr data-search="tenmei ryo suit, maître de la guilde labyrinth tu"><td class="pname">tenmei ryo</td><td class="rel">tu</td><td class="pname">suit, maître de la guilde labyrinth</td><td class="tuto-note"></td></tr><tr data-search="mc milphage tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">milphage</td><td class="tuto-note"></td></tr><tr data-search="juha mc qd identité révélée vous"><td class="pname">juha</td><td class="rel">vous</td><td class="pname">mc qd identité révélée</td><td class="tuto-note">214</td></tr><tr data-search="mc qd identité révélée juha tu"><td class="pname">mc qd identité révélée</td><td class="rel">tu</td><td class="pname">juha</td><td class="tuto-note">214</td></tr><tr data-search="kim woojoong mio vous"><td class="pname">kim woojoong</td><td class="rel">vous</td><td class="pname">mio</td><td class="tuto-note"></td></tr><tr data-search="suit, maître de la guilde labyrinth tenmei ryo tu"><td class="pname">suit, maître de la guilde labyrinth</td><td class="rel">tu</td><td class="pname">tenmei ryo</td><td class="tuto-note"></td></tr><tr data-search="guide de l&#x27;espace/shin sunghyun/yaksha tenmei ryo vous"><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="rel">vous</td><td class="pname">tenmei ryo</td><td class="tuto-note"></td></tr><tr data-search="tenmei ryo guide de l&#x27;espace/shin sunghyun/yaksha vous"><td class="pname">tenmei ryo</td><td class="rel">vous</td><td class="pname">guide de l&#x27;espace/shin sunghyun/yaksha</td><td class="tuto-note"></td></tr><tr data-search="chef des renseignements tenmei ryo vous"><td class="pname">chef des renseignements</td><td class="rel">vous</td><td class="pname">tenmei ryo</td><td class="tuto-note"></td></tr><tr data-search="Jun-sik (clone) mc / Jun-ho / Specter tu"><td class="pname">Jun-sik (clone)</td><td class="rel">tu</td><td class="pname">mc / Jun-ho / Specter</td><td class="tuto-note">ch 231 - l&#x27;appelle &quot;partenaire&quot;</td></tr><tr data-search="mc / Jun-ho / Specter Jun-sik (clone) tu"><td class="pname">mc / Jun-ho / Specter</td><td class="rel">tu</td><td class="pname">Jun-sik (clone)</td><td class="tuto-note">ch 231</td></tr><tr data-search="shim deokgu, président de l’association Jun-sik (clone) tu"><td class="pname">shim deokgu, président de l’association</td><td class="rel">tu</td><td class="pname">Jun-sik (clone)</td><td class="tuto-note">ch 231</td></tr><tr data-search="équipe de sécurité de l&#x27;association shim deokgu, président de l’association vous"><td class="pname">équipe de sécurité de l&#x27;association</td><td class="rel">vous</td><td class="pname">shim deokgu, président de l’association</td><td class="tuto-note">ch 231</td></tr><tr data-search="shim deokgu, président de l’association équipe de sécurité de l&#x27;association vous"><td class="pname">shim deokgu, président de l’association</td><td class="rel">vous</td><td class="pname">équipe de sécurité de l&#x27;association</td><td class="tuto-note">ch 231</td></tr><tr data-search="Jun-sik (clone) Ombre colorée (déguisé en serveur) tu"><td class="pname">Jun-sik (clone)</td><td class="rel">tu</td><td class="pname">Ombre colorée (déguisé en serveur)</td><td class="tuto-note">ch 231</td></tr><tr data-search="hyeon baek, directeur de la Murim Corporation mc / Jun-ho / Specter vous"><td class="pname">hyeon baek, directeur de la Murim Corporation</td><td class="rel">vous</td><td class="pname">mc / Jun-ho / Specter</td><td class="tuto-note">ch 232 - l&#x27;appelle &quot;jeune maître Seo&quot;</td></tr><tr data-search="mc / Jun-ho / Specter hyeon baek, directeur de la Murim Corporation vous"><td class="pname">mc / Jun-ho / Specter</td><td class="rel">vous</td><td class="pname">hyeon baek, directeur de la Murim Corporation</td><td class="tuto-note">ch 232</td></tr><tr data-search="mc / Jun-ho / Specter reine des glaces (Frost) tu"><td class="pname">mc / Jun-ho / Specter</td><td class="rel">tu</td><td class="pname">reine des glaces (Frost)</td><td class="tuto-note">ch 232 - elle l&#x27;appelle &quot;contractant&quot;</td></tr><tr data-search="Wi Sosol son père, le Seigneur Démon Céleste de Néo City vous"><td class="pname">Wi Sosol</td><td class="rel">vous</td><td class="pname">son père, le Seigneur Démon Céleste de Néo City</td><td class="tuto-note">ch 233 - l&#x27;appelle &quot;Père&quot;</td></tr><tr data-search="son père, le Seigneur Démon Céleste de Néo City Wi Sosol tu"><td class="pname">son père, le Seigneur Démon Céleste de Néo City</td><td class="rel">tu</td><td class="pname">Wi Sosol</td><td class="tuto-note">ch 233</td></tr><tr data-search="Wi Sosol mc / Jun-ho / Specter vous"><td class="pname">Wi Sosol</td><td class="rel">vous</td><td class="pname">mc / Jun-ho / Specter</td><td class="tuto-note">ch 233</td></tr><tr data-search="mc / Jun-ho / Specter Wi Sosol tu"><td class="pname">mc / Jun-ho / Specter</td><td class="rel">tu</td><td class="pname">Wi Sosol</td><td class="tuto-note">ch 234</td></tr><tr data-search="Wi Sosol reine des glaces (Frost) vous"><td class="pname">Wi Sosol</td><td class="rel">vous</td><td class="pname">reine des glaces (Frost)</td><td class="tuto-note">ch 234 - l&#x27;appelle &quot;Votre Majesté&quot;</td></tr><tr data-search="reine des glaces (Frost) Wi Sosol tu"><td class="pname">reine des glaces (Frost)</td><td class="rel">tu</td><td class="pname">Wi Sosol</td><td class="tuto-note">ch 234</td></tr><tr data-search="Hyeon Baek mc / Jun-ho / Specter vous"><td class="pname">Hyeon Baek</td><td class="rel">vous</td><td class="pname">mc / Jun-ho / Specter</td><td class="tuto-note">ch 234 - &quot;jeune maître Seo&quot;</td></tr></tbody></table></div></section>
+<section class="panel" id="techniques"><h2 class="section-title">Techniques <span class="count-tag">47</span></h2><div class="table-wrap"><table><thead><tr><th>VA</th><th>VF</th><th>Détails</th></tr></thead><tbody><tr data-search="persistent seeker chercheur persistant  "><td class="va">persistent seeker</td><td class="vf">chercheur persistant</td><td></td></tr><tr data-search="reverse gravity gravité inversée  "><td class="va">reverse gravity</td><td class="vf">gravité inversée</td><td></td></tr><tr data-search="maximum pause Arrêt Maximal  "><td class="va">maximum pause</td><td class="vf">Arrêt Maximal</td><td></td></tr><tr data-search="room of crystal chambre de cristal  "><td class="va">room of crystal</td><td class="vf">chambre de cristal</td><td></td></tr><tr data-search="ruthless sword épée impitoyable  "><td class="va">ruthless sword</td><td class="vf">épée impitoyable</td><td></td></tr><tr data-search="lightning flurry rafale étincelante  "><td class="va">lightning flurry</td><td class="vf">rafale étincelante</td><td></td></tr><tr data-search="aether gladi ! way of sword “gladiateur de l’éther” (chemin de l’épée)  "><td class="va">aether gladi ! way of sword</td><td class="vf">“gladiateur de l’éther” (chemin de l’épée)</td><td></td></tr><tr data-search="shifted transféré  "><td class="va">shifted</td><td class="vf">transféré</td><td></td></tr><tr data-search="disregard d’ignorer  "><td class="va">disregard</td><td class="vf">d’ignorer</td><td></td></tr><tr data-search="curtain of darkness rideau de ténèbres  "><td class="va">curtain of darkness</td><td class="vf">rideau de ténèbres</td><td></td></tr><tr data-search="moongazer contemplation de la lune  "><td class="va">moongazer</td><td class="vf">contemplation de la lune</td><td></td></tr><tr data-search="confession of the dead Confession des morts  "><td class="va">confession of the dead</td><td class="vf">Confession des morts</td><td></td></tr><tr data-search="authority of contempt autorité du mépris  autorité du mc liée à sa compétence de ténèbre"><td class="va">authority of contempt</td><td class="vf">autorité du mépris</td><td>autorité du mc liée à sa compétence de ténèbre</td></tr><tr data-search="authority of interdiction autorité d&#x27;interdiction  capacité de la reine de glace"><td class="va">authority of interdiction</td><td class="vf">autorité d&#x27;interdiction</td><td>capacité de la reine de glace</td></tr><tr data-search="authority of stasis autorité de stase  "><td class="va">authority of stasis</td><td class="vf">autorité de stase</td><td></td></tr><tr data-search="the true descent of the lightning dragon La Véritable Descente du Dragon de Foudre  "><td class="va">the true descent of the lightning dragon</td><td class="vf">La Véritable Descente du Dragon de Foudre</td><td></td></tr><tr data-search="stuffed predator prédateur rassasié  "><td class="va">stuffed predator</td><td class="vf">prédateur rassasié</td><td></td></tr><tr data-search="moon eye œil de la lune  "><td class="va">moon eye</td><td class="vf">œil de la lune</td><td></td></tr><tr data-search="heartless blade, swift Lame impitoyable, rapide  "><td class="va">heartless blade, swift</td><td class="vf">Lame impitoyable, rapide</td><td></td></tr><tr data-search="Hwarang traesure sword épée du trésor Hwarang  "><td class="va">Hwarang traesure sword</td><td class="vf">épée du trésor Hwarang</td><td></td></tr><tr data-search="split heaven and hell sépare le paradis et l&#x27;enfer  "><td class="va">split heaven and hell</td><td class="vf">sépare le paradis et l&#x27;enfer</td><td></td></tr><tr data-search="stretto stretto  "><td class="va">stretto</td><td class="vf">stretto</td><td></td></tr><tr data-search="clara lux clara lux  "><td class="va">clara lux</td><td class="vf">clara lux</td><td></td></tr><tr data-search="weapon hell enfer des armes  "><td class="va">weapon hell</td><td class="vf">enfer des armes</td><td></td></tr><tr data-search="crimson first blade, bowin clouds Première lame cramoisie - nuages obliques  l&#x27;inclinaison des nuages"><td class="va">crimson first blade, bowin clouds</td><td class="vf">Première lame cramoisie - nuages obliques</td><td>l&#x27;inclinaison des nuages</td></tr><tr data-search="cell regeneration régénération cellulaire  "><td class="va">cell regeneration</td><td class="vf">régénération cellulaire</td><td></td></tr><tr data-search="dreal-soul severance circle cercle de séparation du rêve et l’âme  "><td class="va">dreal-soul severance circle</td><td class="vf">cercle de séparation du rêve et l’âme</td><td></td></tr><tr data-search="Tempest Tempête  "><td class="va">Tempest</td><td class="vf">Tempête</td><td></td></tr><tr data-search="lightning body flow courant corporel foudroyant  "><td class="va">lightning body flow</td><td class="vf">courant corporel foudroyant</td><td></td></tr><tr data-search="swift lightning guard of heaven vive garde foudroyante céleste  "><td class="va">swift lightning guard of heaven</td><td class="vf">vive garde foudroyante céleste</td><td></td></tr><tr data-search="weapon mastery Maîtrise des Armes  "><td class="va">weapon mastery</td><td class="vf">Maîtrise des Armes</td><td></td></tr><tr data-search="sword carving SCULPTURE À L&#x27;ÉPÉE  "><td class="va">sword carving</td><td class="vf">SCULPTURE À L&#x27;ÉPÉE</td><td></td></tr><tr data-search="spirit crystal cristaux d&#x27;esprit  "><td class="va">spirit crystal</td><td class="vf">cristaux d&#x27;esprit</td><td></td></tr><tr data-search="green moon blade lame de la lune verte  "><td class="va">green moon blade</td><td class="vf">lame de la lune verte</td><td></td></tr><tr data-search="the swallow&#x27;s sword l’épée hirondelle  "><td class="va">the swallow&#x27;s sword</td><td class="vf">l’épée hirondelle</td><td></td></tr><tr data-search="stack stack  "><td class="va">stack</td><td class="vf">stack</td><td></td></tr><tr data-search="rail gun canon électrique  "><td class="va">rail gun</td><td class="vf">canon électrique</td><td></td></tr><tr data-search="draw slash découpe nette  "><td class="va">draw slash</td><td class="vf">découpe nette</td><td></td></tr><tr data-search="new moon nouvelle lune  "><td class="va">new moon</td><td class="vf">nouvelle lune</td><td></td></tr><tr data-search="genia manus compétence d&#x27;épée du clone d&#x27;erebo  "><td class="va">genia manus</td><td class="vf">compétence d&#x27;épée du clone d&#x27;erebo</td><td></td></tr><tr data-search="tenmeu swordsmanship les techniques d&#x27;épée tenmei.  "><td class="va">tenmeu swordsmanship</td><td class="vf">les techniques d&#x27;épée tenmei.</td><td></td></tr><tr data-search="erebo   "><td class="va">erebo</td><td class="vf"></td><td></td></tr><tr data-search="bloom forth éclosion  "><td class="va">bloom forth</td><td class="vf">éclosion</td><td></td></tr><tr data-search="slanted shadows Ombres obliques  "><td class="va">slanted shadows</td><td class="vf">Ombres obliques</td><td></td></tr><tr data-search="scattered light lumière dispersée  "><td class="va">scattered light</td><td class="vf">lumière dispersée</td><td></td></tr><tr data-search="clear shallow waters Eaux claires et peu profondes  "><td class="va">clear shallow waters</td><td class="vf">Eaux claires et peu profondes</td><td></td></tr><tr data-search="talisman spell sort de talisman  "><td class="va">talisman spell</td><td class="vf">sort de talisman</td><td></td></tr></tbody></table></div></section>
+<section class="panel" id="vocabulaire"><h2 class="section-title">Vocabulaire <span class="count-tag">154</span></h2><div class="grid"><div class="card" data-search="galactic star spear Lance de l’étoile galactique "><div class="card-body"><h3>Lance de l’étoile galactique</h3><div class="va-tag">galactic star spear</div></div></div><div class="card" data-search="Specter Specter "><div class="card-body"><h3>Specter</h3></div></div><div class="card" data-search="frost queen Reine de Glace "><div class="card-body"><h3>Reine de Glace</h3><div class="va-tag">frost queen</div></div></div><div class="card" data-search="sword user épéiste "><div class="card-body"><h3>épéiste</h3><div class="va-tag">sword user</div></div></div><div class="card" data-search="conductor of space Guide de l’espace "><div class="card-body"><h3>Guide de l’espace</h3><div class="va-tag">conductor of space</div></div></div><div class="card" data-search="wintry knotweed renouée hivernale "><div class="card-body"><h3>renouée hivernale</h3><div class="va-tag">wintry knotweed</div></div></div><div class="card" data-search="senior aînée archimage"><div class="card-body"><h3>aînée</h3><div class="va-tag">senior</div><p class="desc">archimage</p></div></div><div class="card" data-search="nine heavens neuf cieux "><div class="card-body"><h3>neuf cieux</h3><div class="va-tag">nine heavens</div></div></div><div class="card" data-search="frozen gelé "><div class="card-body"><h3>gelé</h3><div class="va-tag">frozen</div></div></div><div class="card" data-search="fiend humain démoniaque "><div class="card-body"><h3>humain démoniaque</h3><div class="va-tag">fiend</div></div></div><div class="card" data-search="mithril mithril "><div class="card-body"><h3>mithril</h3></div></div><div class="card" data-search="lich une liche "><div class="card-body"><h3>une liche</h3><div class="va-tag">lich</div></div></div><div class="card" data-search="watchguard of darkness / guardian of darkness gardien des ténèbres "><div class="card-body"><h3>gardien des ténèbres</h3><div class="va-tag">watchguard of darkness / guardian of darkness</div></div></div><div class="card" data-search="explanatory announcement événement spécial "><div class="card-body"><h3>événement spécial</h3><div class="va-tag">explanatory announcement</div></div></div><div class="card" data-search="Flasia extract extrait de Flasia "><div class="card-body"><h3>extrait de Flasia</h3><div class="va-tag">Flasia extract</div></div></div><div class="card" data-search="amitabha holy water L’eau sacrée Amitabha "><div class="card-body"><h3>L’eau sacrée Amitabha</h3><div class="va-tag">amitabha holy water</div></div></div><div class="card" data-search="the heart of shade le cœur de l’ombre "><div class="card-body"><h3>le cœur de l’ombre</h3><div class="va-tag">the heart of shade</div></div></div><div class="card" data-search="yin energy énergie yin "><div class="card-body"><h3>énergie yin</h3><div class="va-tag">yin energy</div></div></div><div class="card" data-search="ex-grade frost skill compétence de grade ex “ Frost ” "><div class="card-body"><h3>compétence de grade ex “ Frost ”</h3><div class="va-tag">ex-grade frost skill</div></div></div><div class="card" data-search="core of Pochiclops noyau de Pochiclops "><div class="card-body"><h3>noyau de Pochiclops</h3><div class="va-tag">core of Pochiclops</div></div></div><div class="card" data-search="darkness attribute attribut des ténèbres "><div class="card-body"><h3>attribut des ténèbres</h3><div class="va-tag">darkness attribute</div></div></div><div class="card" data-search="stamina vitalité "><div class="card-body"><h3>vitalité</h3><div class="va-tag">stamina</div></div></div><div class="card" data-search="fame réputation "><div class="card-body"><h3>réputation</h3><div class="va-tag">fame</div></div></div><div class="card" data-search="dark-hearted personnes sans cœur "><div class="card-body"><h3>personnes sans cœur</h3><div class="va-tag">dark-hearted</div></div></div><div class="card" data-search="town town lieu"><div class="card-body"><h3>town</h3><p class="desc">lieu</p></div></div><div class="card" data-search="lightning lord seigneur éblouissant "><div class="card-body"><h3>seigneur éblouissant</h3><div class="va-tag">lightning lord</div></div></div><div class="card" data-search="hunter of frost chasseur de glace "><div class="card-body"><h3>chasseur de glace</h3><div class="va-tag">hunter of frost</div></div></div><div class="card" data-search="stargazing tower tour des astrologues "><div class="card-body"><h3>tour des astrologues</h3><div class="va-tag">stargazing tower</div></div></div><div class="card" data-search="chainsaw blade lame tronçonneuse "><div class="card-body"><h3>lame tronçonneuse</h3><div class="va-tag">chainsaw blade</div></div></div><div class="card" data-search="myriad year-old glacial iron fer gelé millénaire "><div class="card-body"><h3>fer gelé millénaire</h3><div class="va-tag">myriad year-old glacial iron</div></div></div><div class="card" data-search="pride squadron escouade de la fierté "><div class="card-body"><h3>escouade de la fierté</h3><div class="va-tag">pride squadron</div></div></div><div class="card" data-search="lord pride seigneur de la fierté "><div class="card-body"><h3>seigneur de la fierté</h3><div class="va-tag">lord pride</div></div></div><div class="card" data-search="lord shadow seigneur des ombres "><div class="card-body"><h3>seigneur des ombres</h3><div class="va-tag">lord shadow</div></div></div><div class="card" data-search="dark moon pavilion pavillon de la lune sombre "><div class="card-body"><h3>pavillon de la lune sombre</h3><div class="va-tag">dark moon pavilion</div></div></div><div class="card" data-search="envoy envoyé gris "><div class="card-body"><h3>envoyé gris</h3><div class="va-tag">envoy</div></div></div><div class="card" data-search="dragon rock rocher dragon "><div class="card-body"><h3>rocher dragon</h3><div class="va-tag">dragon rock</div></div></div><div class="card" data-search="overlock surcharge "><div class="card-body"><h3>surcharge</h3><div class="va-tag">overlock</div></div></div><div class="card" data-search="silent moon guilde de silent moon "><div class="card-body"><h3>guilde de silent moon</h3><div class="va-tag">silent moon</div></div></div><div class="card" data-search="thunder bear ours foudroyant "><div class="card-body"><h3>ours foudroyant</h3><div class="va-tag">thunder bear</div></div></div><div class="card" data-search="kobold subjugation raid du kobold "><div class="card-body"><h3>raid du kobold</h3><div class="va-tag">kobold subjugation</div></div></div><div class="card" data-search="church of the sun église du soleil "><div class="card-body"><h3>église du soleil</h3><div class="va-tag">church of the sun</div></div></div><div class="card" data-search="blackfield blackfield "><div class="card-body"><h3>blackfield</h3></div></div><div class="card" data-search="shrieking mountains / canal mountains montagnes hurlantes "><div class="card-body"><h3>montagnes hurlantes</h3><div class="va-tag">shrieking mountains / canal mountains</div></div></div><div class="card" data-search="ruben empire empire de ruben "><div class="card-body"><h3>empire de ruben</h3><div class="va-tag">ruben empire</div></div></div><div class="card" data-search="the big six le big 6 les 6 grandes guildes"><div class="card-body"><h3>le big 6</h3><div class="va-tag">the big six</div><p class="desc">les 6 grandes guildes</p></div></div><div class="card" data-search="sword saint saint de l&#x27;épée "><div class="card-body"><h3>saint de l&#x27;épée</h3><div class="va-tag">sword saint</div></div></div><div class="card" data-search="bloodsword épée sanguinaire "><div class="card-body"><h3>épée sanguinaire</h3><div class="va-tag">bloodsword</div></div></div><div class="card" data-search="head mage grand mage "><div class="card-body"><h3>grand mage</h3><div class="va-tag">head mage</div></div></div><div class="card" data-search="ruben the &quot;iron-blooded&quot; ruben à “l’acier sanglant” "><div class="card-body"><h3>ruben à “l’acier sanglant”</h3><div class="va-tag">ruben the &quot;iron-blooded&quot;</div></div></div><div class="card" data-search="korean association association coréenne "><div class="card-body"><h3>association coréenne</h3><div class="va-tag">korean association</div></div></div><div class="card" data-search="contractor contractant "><div class="card-body"><h3>contractant</h3><div class="va-tag">contractor</div></div></div><div class="card" data-search="death scythe faux de la mort "><div class="card-body"><h3>faux de la mort</h3><div class="va-tag">death scythe</div></div></div><div class="card" data-search="second heaven le second ciel "><div class="card-body"><h3>le second ciel</h3><div class="va-tag">second heaven</div></div></div><div class="card" data-search="matching board tableau d&#x27;appariement "><div class="card-body"><h3>tableau d&#x27;appariement</h3><div class="va-tag">matching board</div></div></div><div class="card" data-search="news board pages d&#x27;actualités "><div class="card-body"><h3>pages d&#x27;actualités</h3><div class="va-tag">news board</div></div></div><div class="card" data-search="flame attribut attribut de flamme "><div class="card-body"><h3>attribut de flamme</h3><div class="va-tag">flame attribut</div></div></div><div class="card" data-search="janabi&#x27;s core noyau de Janabi "><div class="card-body"><h3>noyau de Janabi</h3><div class="va-tag">janabi&#x27;s core</div></div></div><div class="card" data-search="exterminator exterminateur "><div class="card-body"><h3>exterminateur</h3><div class="va-tag">exterminator</div></div></div><div class="card" data-search="metamorphosis métamorphose "><div class="card-body"><h3>métamorphose</h3><div class="va-tag">metamorphosis</div></div></div><div class="card" data-search="lord heavenly demon seigneur démon celeste "><div class="card-body"><h3>seigneur démon celeste</h3><div class="va-tag">lord heavenly demon</div></div></div><div class="card" data-search="advancement test test de promotion "><div class="card-body"><h3>test de promotion</h3><div class="va-tag">advancement test</div></div></div><div class="card" data-search="floor master boss d&#x27;étage "><div class="card-body"><h3>boss d&#x27;étage</h3><div class="va-tag">floor master</div></div></div><div class="card" data-search="undead mort-vivant "><div class="card-body"><h3>mort-vivant</h3><div class="va-tag">undead</div></div></div><div class="card" data-search="king of corpses le roi des cadavres Nazad Hallow"><div class="card-body"><h3>le roi des cadavres</h3><div class="va-tag">king of corpses</div><p class="desc">Nazad Hallow</p></div></div><div class="card" data-search="city of beginnings cité du commencement "><div class="card-body"><h3>cité du commencement</h3><div class="va-tag">city of beginnings</div></div></div><div class="card" data-search="heavenly dragon dragon celeste ch 178 rien à voir avec la guilde"><div class="card-body"><h3>dragon celeste</h3><div class="va-tag">heavenly dragon</div><p class="desc">ch 178 rien à voir avec la guilde</p></div></div><div class="card" data-search="Trembling star étoile tremblante "><div class="card-body"><h3>étoile tremblante</h3><div class="va-tag">Trembling star</div></div></div><div class="card" data-search="insanio shooting star étoile filante de folie "><div class="card-body"><h3>étoile filante de folie</h3><div class="va-tag">insanio shooting star</div></div></div><div class="card" data-search="nest nid "><div class="card-body"><h3>nid</h3><div class="va-tag">nest</div></div></div><div class="card" data-search="demon king roi démon "><div class="card-body"><h3>roi démon</h3><div class="va-tag">demon king</div></div></div><div class="card" data-search="freezing magix magie de gel "><div class="card-body"><h3>magie de gel</h3><div class="va-tag">freezing magix</div></div></div><div class="card" data-search="barrier spell sort de barrière "><div class="card-body"><h3>sort de barrière</h3><div class="va-tag">barrier spell</div></div></div><div class="card" data-search="dimensional elevator ascenseur dimensionnel "><div class="card-body"><h3>ascenseur dimensionnel</h3><div class="va-tag">dimensional elevator</div></div></div><div class="card" data-search="hall of jealousy hall de la jalousie "><div class="card-body"><h3>hall de la jalousie</h3><div class="va-tag">hall of jealousy</div></div></div><div class="card" data-search="proxy mandataire "><div class="card-body"><h3>mandataire</h3><div class="va-tag">proxy</div></div></div><div class="card" data-search="fiend king le roi des renégats "><div class="card-body"><h3>le roi des renégats</h3><div class="va-tag">fiend king</div></div></div><div class="card" data-search="anti-rebound core noyau anti-rebond "><div class="card-body"><h3>noyau anti-rebond</h3><div class="va-tag">anti-rebound core</div></div></div><div class="card" data-search="butterfly core noyau de janabi typo de l&#x27;auteur"><div class="card-body"><h3>noyau de janabi</h3><div class="va-tag">butterfly core</div><p class="desc">typo de l&#x27;auteur</p></div></div><div class="card" data-search="the sword of ambition l&#x27;épée de l&#x27;ambition "><div class="card-body"><h3>l&#x27;épée de l&#x27;ambition</h3><div class="va-tag">the sword of ambition</div></div></div><div class="card" data-search="Moonlight moonlight unité d&#x27;investigation de l&#x27;association"><div class="card-body"><h3>moonlight</h3><div class="va-tag">Moonlight</div><p class="desc">unité d&#x27;investigation de l&#x27;association</p></div></div><div class="card" data-search="dell ice dell ice village de nain"><div class="card-body"><h3>dell ice</h3><p class="desc">village de nain</p></div></div><div class="card" data-search="lovely rosemary romarin adorable "><div class="card-body"><h3>romarin adorable</h3><div class="va-tag">lovely rosemary</div></div></div><div class="card" data-search="sloth order l&#x27;ecouade de la paresse "><div class="card-body"><h3>l&#x27;ecouade de la paresse</h3><div class="va-tag">sloth order</div></div></div><div class="card" data-search="storm invader envahisseur tempète "><div class="card-body"><h3>envahisseur tempète</h3><div class="va-tag">storm invader</div></div></div><div class="card" data-search="horizon&#x27;s edge tranchant de l&#x27;horizon "><div class="card-body"><h3>tranchant de l&#x27;horizon</h3><div class="va-tag">horizon&#x27;s edge</div></div></div><div class="card" data-search="iron blooded imperor empereur à l&#x27;acier sanglant "><div class="card-body"><h3>empereur à l&#x27;acier sanglant</h3><div class="va-tag">iron blooded imperor</div></div></div><div class="card" data-search="bramble queen reine des ronces "><div class="card-body"><h3>reine des ronces</h3><div class="va-tag">bramble queen</div></div></div><div class="card" data-search="schubert territory territoire de Schubert "><div class="card-body"><h3>territoire de Schubert</h3><div class="va-tag">schubert territory</div></div></div><div class="card" data-search="raman village village de Raman "><div class="card-body"><h3>village de Raman</h3><div class="va-tag">raman village</div></div></div><div class="card" data-search="order of gluttony escouade de la Gourmandise "><div class="card-body"><h3>escouade de la Gourmandise</h3><div class="va-tag">order of gluttony</div></div></div><div class="card" data-search="sky soul guild guilde divine order guilde sky soul"><div class="card-body"><h3>guilde divine order</h3><div class="va-tag">sky soul guild</div><p class="desc">guilde sky soul</p></div></div><div class="card" data-search="outland outland "><div class="card-body"><h3>outland</h3></div></div><div class="card" data-search="rayark rayark ville de l&#x27;empire de ruben"><div class="card-body"><h3>rayark</h3><p class="desc">ville de l&#x27;empire de ruben</p></div></div><div class="card" data-search="imperial knights&#x27; order ordre des chevaliers impériaux "><div class="card-body"><h3>ordre des chevaliers impériaux</h3><div class="va-tag">imperial knights&#x27; order</div></div></div><div class="card" data-search="star absorption absorption stellaire "><div class="card-body"><h3>absorption stellaire</h3><div class="va-tag">star absorption</div></div></div><div class="card" data-search="curse of hellfire malédiction du feu de l’enfer "><div class="card-body"><h3>malédiction du feu de l’enfer</h3><div class="va-tag">curse of hellfire</div></div></div><div class="card" data-search="primordial light lumières primordiales "><div class="card-body"><h3>lumières primordiales</h3><div class="va-tag">primordial light</div></div></div><div class="card" data-search="spirit king roi des esprits "><div class="card-body"><h3>roi des esprits</h3><div class="va-tag">spirit king</div></div></div><div class="card" data-search="la base de rengoku rengoku facility "><div class="card-body"><h3>rengoku facility</h3><div class="va-tag">la base de rengoku</div></div></div><div class="card" data-search="climb alliance climb, l&#x27;alliance des rankers "><div class="card-body"><h3>climb, l&#x27;alliance des rankers</h3><div class="va-tag">climb alliance</div></div></div><div class="card" data-search="divin order guild guilde divine order un des big 6"><div class="card-body"><h3>guilde divine order</h3><div class="va-tag">divin order guild</div><p class="desc">un des big 6</p></div></div><div class="card" data-search="freezing abilities capacités de gel "><div class="card-body"><h3>capacités de gel</h3><div class="va-tag">freezing abilities</div></div></div><div class="card" data-search="heavenly dragon guilde heavenly dragon "><div class="card-body"><h3>guilde heavenly dragon</h3><div class="va-tag">heavenly dragon</div></div></div><div class="card" data-search="sword qi qi d&#x27;épée "><div class="card-body"><h3>qi d&#x27;épée</h3><div class="va-tag">sword qi</div></div></div><div class="card" data-search="evolving revolutionist révolutionnaire en évolution insecte sombre"><div class="card-body"><h3>révolutionnaire en évolution</h3><div class="va-tag">evolving revolutionist</div><p class="desc">insecte sombre</p></div></div><div class="card" data-search="ice thunder glace foudroyante "><div class="card-body"><h3>glace foudroyante</h3><div class="va-tag">ice thunder</div></div></div><div class="card" data-search="frost&#x27;s attack attaque de glace "><div class="card-body"><h3>attaque de glace</h3><div class="va-tag">frost&#x27;s attack</div></div></div><div class="card" data-search="intelligent combat intelligence tactique "><div class="card-body"><h3>intelligence tactique</h3><div class="va-tag">intelligent combat</div></div></div><div class="card" data-search="tree of wisdom arbre de la sagesse "><div class="card-body"><h3>arbre de la sagesse</h3><div class="va-tag">tree of wisdom</div></div></div><div class="card" data-search="divine throne of transcendence trône divin de la transcendance "><div class="card-body"><h3>trône divin de la transcendance</h3><div class="va-tag">divine throne of transcendence</div></div></div><div class="card" data-search="mental construction &quot;image mentale&quot; "><div class="card-body"><h3>&quot;image mentale&quot;</h3><div class="va-tag">mental construction</div></div></div><div class="card" data-search="team leader chef de section "><div class="card-body"><h3>chef de section</h3><div class="va-tag">team leader</div></div></div><div class="card" data-search="pest exterminator Exterminateur de la peste "><div class="card-body"><h3>Exterminateur de la peste</h3><div class="va-tag">pest exterminator</div></div></div><div class="card" data-search=" guilde proto "><div class="card-body"><h3>guilde proto</h3></div></div><div class="card" data-search="blackout black-out "><div class="card-body"><h3>black-out</h3><div class="va-tag">blackout</div></div></div><div class="card" data-search="mercenary king roi des mercenaires "><div class="card-body"><h3>roi des mercenaires</h3><div class="va-tag">mercenary king</div></div></div><div class="card" data-search="revolver of renewed covenant le revolver du pacte renouvelé ch 231 - arme dont la puissance augmente à chaque ricochet"><div class="card-body"><h3>le revolver du pacte renouvelé</h3><div class="va-tag">revolver of renewed covenant</div><p class="desc">ch 231 - arme dont la puissance augmente à chaque ricochet</p></div></div><div class="card" data-search="colored shadow Ombre colorée ch 231 - surnom de Shadow, couvert de bandages, dirige la division assassinats"><div class="card-body"><h3>Ombre colorée</h3><div class="va-tag">colored shadow</div><p class="desc">ch 231 - surnom de Shadow, couvert de bandages, dirige la division assassinats</p></div></div><div class="card" data-search="shadow Shadow ch 231 - haut dirigeant des humains démoniaques (renseignement et assassinats), tué par Jun-sik"><div class="card-body"><h3>Shadow</h3><div class="va-tag">shadow</div><p class="desc">ch 231 - haut dirigeant des humains démoniaques (renseignement et assassinats), tué par Jun-sik</p></div></div><div class="card" data-search="junsik / spiritual body clone Jun-sik ch 231 - clone (corps spirituel) de Jun-ho, appelle Jun-ho &quot;partenaire&quot;"><div class="card-body"><h3>Jun-sik</h3><div class="va-tag">junsik / spiritual body clone</div><p class="desc">ch 231 - clone (corps spirituel) de Jun-ho, appelle Jun-ho &quot;partenaire&quot;</p></div></div><div class="card" data-search="medusa&#x27;s venom venin de Méduse ch 231 - poison le plus puissant"><div class="card-body"><h3>venin de Méduse</h3><div class="va-tag">medusa&#x27;s venom</div><p class="desc">ch 231 - poison le plus puissant</p></div></div><div class="card" data-search="fiend association association des humains démoniaques "><div class="card-body"><h3>association des humains démoniaques</h3><div class="va-tag">fiend association</div></div></div><div class="card" data-search="valencia citrin Valencia Citrin ch 231 - proche de longue date du Seigneur Démon Céleste"><div class="card-body"><h3>Valencia Citrin</h3><div class="va-tag">valencia citrin</div><p class="desc">ch 231 - proche de longue date du Seigneur Démon Céleste</p></div></div><div class="card" data-search="isaac dvor Isaac Dvor ch 231 - sorcier de la mort"><div class="card-body"><h3>Isaac Dvor</h3><div class="va-tag">isaac dvor</div><p class="desc">ch 231 - sorcier de la mort</p></div></div><div class="card" data-search="seph, charmok, butcher, silence, wrath Seph, Charmok, Boucher, Silence, Colère ch 231 - dirigeants non identifiés des humains démoniaques"><div class="card-body"><h3>Seph, Charmok, Boucher, Silence, Colère</h3><div class="va-tag">seph, charmok, butcher, silence, wrath</div><p class="desc">ch 231 - dirigeants non identifiés des humains démoniaques</p></div></div><div class="card" data-search="leader of the lifeless le chef des Sans-vie ch 231"><div class="card-body"><h3>le chef des Sans-vie</h3><div class="va-tag">leader of the lifeless</div><p class="desc">ch 231</p></div></div><div class="card" data-search="fifth floor 5e étage ch 231 - ouverture des portes"><div class="card-body"><h3>5e étage</h3><div class="va-tag">fifth floor</div><p class="desc">ch 231 - ouverture des portes</p></div></div><div class="card" data-search="neo city Néo City ch 232 - ville cyberpunk du 5e étage"><div class="card-body"><h3>Néo City</h3><div class="va-tag">neo city</div><p class="desc">ch 232 - ville cyberpunk du 5e étage</p></div></div><div class="card" data-search="bounty hunter chasseur de primes ch 232 - nom des joueurs à Néo City"><div class="card-body"><h3>chasseur de primes</h3><div class="va-tag">bounty hunter</div><p class="desc">ch 232 - nom des joueurs à Néo City</p></div></div><div class="card" data-search="murim corporation Murim Corporation ch 232 - société qui gère les artistes martiaux, ancienne &quot;Alliance Murim&quot;"><div class="card-body"><h3>Murim Corporation</h3><div class="va-tag">murim corporation</div><p class="desc">ch 232 - société qui gère les artistes martiaux, ancienne &quot;Alliance Murim&quot;</p></div></div><div class="card" data-search="hyeon baek Hyeon Baek ch 232 - directeur général de la Murim Corporation"><div class="card-body"><h3>Hyeon Baek</h3><div class="va-tag">hyeon baek</div><p class="desc">ch 232 - directeur général de la Murim Corporation</p></div></div><div class="card" data-search="murim alliance Alliance Murim ch 232"><div class="card-body"><h3>Alliance Murim</h3><div class="va-tag">murim alliance</div><p class="desc">ch 232</p></div></div><div class="card" data-search="naegong naegong ch 232 - énergie interne"><div class="card-body"><h3>naegong</h3><p class="desc">ch 232 - énergie interne</p></div></div><div class="card" data-search="naegong generation program programme de génération de naegong ch 232 - volé par le Seigneur Démon Céleste"><div class="card-body"><h3>programme de génération de naegong</h3><div class="va-tag">naegong generation program</div><p class="desc">ch 232 - volé par le Seigneur Démon Céleste</p></div></div><div class="card" data-search="aeon empire empire Aeon ch 232 - État suzerain de Néo City"><div class="card-body"><h3>empire Aeon</h3><div class="va-tag">aeon empire</div><p class="desc">ch 232 - État suzerain de Néo City</p></div></div><div class="card" data-search="demonic faction Faction démoniaque ch 232 - organisation de mercenaires du Seigneur Démon Céleste, bidonvilles de l&#x27;Est"><div class="card-body"><h3>Faction démoniaque</h3><div class="va-tag">demonic faction</div><p class="desc">ch 232 - organisation de mercenaires du Seigneur Démon Céleste, bidonvilles de l&#x27;Est</p></div></div><div class="card" data-search="central plains Plaines centrales ch 232"><div class="card-body"><h3>Plaines centrales</h3><div class="va-tag">central plains</div><p class="desc">ch 232</p></div></div><div class="card" data-search="gosiwon gosiwon ch 232 - où Frost était enfermée"><div class="card-body"><h3>gosiwon</h3><p class="desc">ch 232 - où Frost était enfermée</p></div></div><div class="card" data-search="cyborg cyborg ch 232"><div class="card-body"><h3>cyborg</h3><p class="desc">ch 232</p></div></div><div class="card" data-search="demonic corporation / demonic corp Demonic Corporation (Demonic Corp) ch 233 - organisation du Seigneur Démon Céleste de Néo City, anéantie"><div class="card-body"><h3>Demonic Corporation (Demonic Corp)</h3><div class="va-tag">demonic corporation / demonic corp</div><p class="desc">ch 233 - organisation du Seigneur Démon Céleste de Néo City, anéantie</p></div></div><div class="card" data-search="demonic cult Secte démoniaque ch 233"><div class="card-body"><h3>Secte démoniaque</h3><div class="va-tag">demonic cult</div><p class="desc">ch 233</p></div></div><div class="card" data-search="beta internal energy chip puce de naegong bêta ch 233 - puce vieille de trois mille ans, volée au Seigneur Démon Céleste ; au moins quatre puces"><div class="card-body"><h3>puce de naegong bêta</h3><div class="va-tag">beta internal energy chip</div><p class="desc">ch 233 - puce vieille de trois mille ans, volée au Seigneur Démon Céleste ; au moins quatre puces</p></div></div><div class="card" data-search="wi sosol / junior heavenly demon Wi Sosol / la Jeune Démon Céleste ch 233 - fille et seule disciple du Seigneur Démon Céleste de Néo City, âme dans un robot en forme de boulet de canon"><div class="card-body"><h3>Wi Sosol / la Jeune Démon Céleste</h3><div class="va-tag">wi sosol / junior heavenly demon</div><p class="desc">ch 233 - fille et seule disciple du Seigneur Démon Céleste de Néo City, âme dans un robot en forme de boulet de canon</p></div></div><div class="card" data-search="dantian dantian ch 233"><div class="card-body"><h3>dantian</h3><p class="desc">ch 233</p></div></div><div class="card" data-search="alliance leader chef de l&#x27;Alliance ch 233 - dirigeant de la Murim Corporation, alerte niveau Ciel"><div class="card-body"><h3>chef de l&#x27;Alliance</h3><div class="va-tag">alliance leader</div><p class="desc">ch 233 - dirigeant de la Murim Corporation, alerte niveau Ciel</p></div></div><div class="card" data-search="system chip puce Système ch 234 - laissée par l&#x27;empire Aeon, seul l&#x27;empereur peut la manipuler"><div class="card-body"><h3>puce Système</h3><div class="va-tag">system chip</div><p class="desc">ch 234 - laissée par l&#x27;empire Aeon, seul l&#x27;empereur peut la manipuler</p></div></div><div class="card" data-search="muwon chip puce Muwon ch 234 - enregistre tous les arts martiaux des Plaines centrales"><div class="card-body"><h3>puce Muwon</h3><div class="va-tag">muwon chip</div><p class="desc">ch 234 - enregistre tous les arts martiaux des Plaines centrales</p></div></div><div class="card" data-search="naegong chip puce Naegong ch 234 - énergie interne pour former des artistes martiaux (la bêta en est un modèle de test)"><div class="card-body"><h3>puce Naegong</h3><div class="va-tag">naegong chip</div><p class="desc">ch 234 - énergie interne pour former des artistes martiaux (la bêta en est un modèle de test)</p></div></div><div class="card" data-search="namgung jicheon Namgung Jicheon ch 234 - chef de l&#x27;Alliance Murim, pouvoir derrière Néo City"><div class="card-body"><h3>Namgung Jicheon</h3><div class="va-tag">namgung jicheon</div><p class="desc">ch 234 - chef de l&#x27;Alliance Murim, pouvoir derrière Néo City</p></div></div><div class="card" data-search="yangban yangban ch 234 - classe noble ; dirigeants de l&#x27;Alliance Murim"><div class="card-body"><h3>yangban</h3><p class="desc">ch 234 - classe noble ; dirigeants de l&#x27;Alliance Murim</p></div></div><div class="card" data-search="nine sects and one guild les neuf sectes et la guilde ch 234 - membres de l&#x27;Alliance Murim"><div class="card-body"><h3>les neuf sectes et la guilde</h3><div class="va-tag">nine sects and one guild</div><p class="desc">ch 234 - membres de l&#x27;Alliance Murim</p></div></div><div class="card" data-search="black tortoise division division de la Tortue noire ch 234"><div class="card-body"><h3>division de la Tortue noire</h3><div class="va-tag">black tortoise division</div><p class="desc">ch 234</p></div></div><div class="card" data-search="iron ball boule de fer ch 234 - surnom de Wi Sosol donné par Frost"><div class="card-body"><h3>boule de fer</h3><div class="va-tag">iron ball</div><p class="desc">ch 234 - surnom de Wi Sosol donné par Frost</p></div></div><div class="card" data-search="wi soso (raw) Wi Sosol ch 234 - le raw écrit &quot;Wi Soso&quot;, garder Sosol"><div class="card-body"><h3>Wi Sosol</h3><div class="va-tag">wi soso (raw)</div><p class="desc">ch 234 - le raw écrit &quot;Wi Soso&quot;, garder Sosol</p></div></div></div></section>
+</main>
+<footer>Glossaire iLoza · Return of the Frozen Player</footer>
+<div class="modal-overlay" id="charModal">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head">
+      <div class="modal-portrait" id="modalPortrait" style="display:none"></div>
+      <div class="modal-title-wrap">
+        <p class="modal-eyebrow">Fiche personnage</p>
+        <h2 id="modalName"></h2>
+        <div class="modal-meta-row" id="modalMeta"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-section"><h4>Tutoiement / Vouvoiement</h4><div class="rel-grid" id="modalRelations"></div></div>
+      <div class="modal-section" id="techSec"><h4>Techniques</h4><div class="tech-list" id="modalTechniques"></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const CHARS = [];
+const tabs = document.querySelectorAll('nav.tabs button'), panels = document.querySelectorAll('section.panel');
+tabs.forEach(btn => btn.addEventListener('click', () => {
+  tabs.forEach(b => b.classList.remove('active')); panels.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');
+}));
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('[data-search]').forEach(el => {
+    el.style.display = (q === '' || el.getAttribute('data-search').toLowerCase().includes(q)) ? '' : 'none';
+  });
+});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function openChar(i) {
+  const c = CHARS[i];
+  document.getElementById('modalName').textContent = c.name;
+  const pt = document.getElementById('modalPortrait');
+  pt.style.display = c.img ? '' : 'none';
+  pt.innerHTML = c.img ? '<img src="' + esc(c.img) + '" alt="" style="object-position:center 18%">' : '';
+  document.getElementById('modalMeta').innerHTML = c.first ? '<span>' + esc(c.first) + '</span>' : '';
+  document.getElementById('modalDesc').textContent = c.desc || '';
+  document.getElementById('modalRelations').innerHTML = c.rels.length ? c.rels.map(r =>
+    '<div class="rel-chip"><span style="padding-left:8px">' + esc(r.with) + '</span><span class="rel-label">' + esc(r.label || '?') + '</span></div>').join('')
+    : '<p class="modal-empty">Aucune relation renseignée.</p>';
+  const ts = document.getElementById('techSec');
+  ts.style.display = c.techs.length ? '' : 'none';
+  document.getElementById('modalTechniques').innerHTML = c.techs.map(t =>
+    '<div class="tech-item"><div class="tech-names"><span class="tech-vf">' + esc(t.vf) + '</span>' + (t.va ? '<span class="tech-va">' + esc(t.va) + '</span>' : '') + '</div>' + (t.details ? '<p class="tech-details">' + esc(t.details) + '</p>' : '') + '</div>').join('');
+  document.getElementById('charModal').classList.add('open');
+}
+document.querySelectorAll('.char-card').forEach(card => card.addEventListener('click', () => openChar(parseInt(card.dataset.idx, 10))));
+document.addEventListener('click', e => { if (e.target.closest('#modalClose') || e.target.id === 'charModal') document.getElementById('charModal').classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('charModal').classList.remove('open'); });
+</script>
+</body>
+</html>

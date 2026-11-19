@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glossaire — Logging Out Is Too Hard</title>
+<meta name="theme-color" content="#0b1218">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b1218;
+  --bg-2: #0f1822;
+  --surface: #15212d;
+  --surface-2: #1b2a39;
+  --border: rgba(140,200,255,0.10);
+  --border-hover: rgba(140,200,255,0.28);
+  --text: #e6f1fb;
+  --text-dim: #94b0c9;
+  --text-faint: #5f7a92;
+  --accent: #38bdf8;
+  --accent-2: #6366f1;
+  --accent-3: #2fa88a;
+  --gold: #facc15;
+  --radius: 16px;
+  --radius-sm: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image:
+    radial-gradient(1000px 600px at 10% -10%, rgba(56,189,248,0.16), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(99,102,241,0.12), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(140,200,255,0.025) 0px, rgba(140,200,255,0.025) 2px, transparent 2px, transparent 60px);
+  background-attachment: fixed;
+}
+h1,h2,h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+.ic { width: 14px; height: 14px; flex-shrink: 0; vertical-align: -2px; margin-right: 6px; color: var(--accent); }
+.ic-lg { width: 34px; height: 34px; opacity: 0.35; color: var(--text-faint); }
+header {
+  position: sticky; top: 0; top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: rgba(11,18,24,0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 22px 14px;
+}
+.header-top {
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  max-width: 1480px; margin: 0 auto;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(56,189,248,0.4);
+  flex-shrink: 0;
+}
+.brand .logo svg { width: 22px; height: 22px; color: #1a0f08; }
+.brand h1 {
+  margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+}
+.brand .subtitle { margin: 0; font-size: 0.78rem; color: var(--text-dim); }
+.search-wrap { max-width: 1480px; margin: 14px auto 0; position: relative; }
+.search-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--text-faint); pointer-events: none;
+}
+#searchInput {
+  width: 100%; padding: 12px 14px 12px 40px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  font-family: inherit; font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#searchInput::placeholder { color: var(--text-faint); }
+#searchInput:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56,189,248,0.18);
+}
+nav.tabs {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 12px 22px 0; margin-top: 4px;
+  max-width: 1480px; margin-left: auto; margin-right: auto;
+  scrollbar-width: none;
+}
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button {
+  flex: 0 0 auto; background: transparent; color: var(--text-dim);
+  border: 1px solid transparent; padding: 8px 14px; border-radius: 999px;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+nav.tabs button:hover { color: var(--text); background: var(--surface); }
+nav.tabs button.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a0f08; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(56,189,248,0.32);
+}
+main { max-width: 1480px; margin: 0 auto; padding: 26px 22px 70px; }
+section.panel { display: none; }
+section.panel.active { display: block; animation: fadein 0.3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-title {
+  font-size: 1.3rem; font-weight: 700; margin: 0 0 18px;
+  display: flex; align-items: center; gap: 10px; letter-spacing: -0.01em;
+}
+.count-tag {
+  font-size: 0.72rem; font-family: 'Inter', sans-serif; font-weight: 600;
+  background: var(--surface-2); color: var(--text-dim);
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.card {
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--border-hover);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.5);
+}
+.card-img {
+  width: 100%; aspect-ratio: 4/3; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,12,6,0.5));
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.noimg { display: flex; align-items: center; justify-content: center; }
+.card-body { padding: 14px 16px 16px; flex: 1; }
+.card-body h3 { margin: 0 0 8px; font-size: 1.02rem; font-weight: 600; color: var(--text); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  font-family: 'Inter', sans-serif; font-size: 0.66rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-dim);
+  border: 1px solid var(--border); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.badge.rang { background: linear-gradient(135deg, var(--accent-2), var(--gold)); color: #1a0f08; border: none; }
+.badge.titre { background: linear-gradient(135deg, var(--accent-3), #1e8f7a); color: #06231c; border: none; }
+.meta { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 8px; }
+.meta span { display: flex; align-items: center; }
+.desc { font-size: 0.85rem; line-height: 1.5; margin: 6px 0 0; color: var(--text-dim); }
+.char-card .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.va-tag { font-size: 0.7rem; color: var(--gold); font-weight: 600; margin-bottom: 5px; letter-spacing: 0.02em; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 0.87rem; }
+table th {
+  background: var(--surface-2); color: var(--text-dim); padding: 12px 14px; text-align: left;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border);
+}
+table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+table tr:last-child td { border-bottom: none; }
+table tr:hover td { background: var(--surface-2); }
+td.rel { text-align: center; font-weight: 700; color: var(--accent); font-family: 'Space Grotesk', sans-serif; }
+td.va { color: var(--text-faint); font-style: italic; }
+td.vf { font-weight: 600; color: var(--text); }
+td.pname { display: table-cell; }
+.pname-inner {
+  display: flex; align-items: center; gap: 8px;
+}
+.pname-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pname-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pname-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.hist-item {
+  display: flex; gap: 16px;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 12px; transition: border-color 0.15s;
+}
+.hist-item:hover { border-color: var(--border-hover); }
+.hist-chap { flex: 0 0 118px; display: flex; flex-direction: column; gap: 6px; }
+.chap-webtoon { font-weight: 700; color: var(--accent); font-size: 0.82rem; font-family: 'Space Grotesk', sans-serif; }
+.chap-novel {
+  font-size: 0.68rem; font-weight: 600; color: var(--accent-3);
+  background: rgba(47,168,138,0.14); padding: 3px 8px; border-radius: 999px; width: fit-content;
+}
+.hist-body { flex: 1; }
+.hist-desc { margin: 0 0 8px; font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+.hist-presence { font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; }
+footer {
+  text-align: center; padding: 20px; font-size: 0.75rem; color: var(--text-faint);
+  border-top: 1px solid var(--border);
+}
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10,6,3,0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.modal-overlay.open { display: flex; animation: fadein 0.2s ease; }
+.modal-card {
+  background: linear-gradient(165deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border-hover);
+  border-radius: 20px;
+  max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  position: relative;
+}
+.modal-head {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-portrait {
+  width: 96px; height: 96px; border-radius: 14px;
+  overflow: hidden; flex-shrink: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.modal-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-portrait .noimg { width: 100%; height: 100%; }
+.modal-title-wrap { flex: 1; min-width: 0; }
+.modal-eyebrow {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-faint); font-weight: 600; margin: 0 0 4px;
+}
+.modal-title-wrap h2 {
+  margin: 0 0 8px; font-size: 1.4rem; font-weight: 700; color: var(--text);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--accent-2); color: #fff; }
+.modal-close svg { width: 16px; height: 16px; }
+.modal-body { padding: 20px 24px 26px; }
+.modal-desc {
+  font-size: 0.9rem; line-height: 1.6; color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.modal-meta-row {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.82rem; color: var(--text-dim); margin-bottom: 4px;
+}
+.modal-meta-row span { display: flex; align-items: center; }
+.modal-section {
+  margin-top: 22px;
+}
+.modal-section h4 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 700; color: var(--accent);
+  margin: 0 0 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.rel-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.rel-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 5px 12px 5px 5px;
+  font-size: 0.82rem; color: var(--text);
+  transition: border-color 0.15s;
+}
+.rel-chip:hover { border-color: var(--border-hover); }
+.rel-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.rel-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.rel-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.rel-label {
+  font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+  color: var(--gold); margin-left: 2px;
+}
+.tech-list { display: flex; flex-direction: column; gap: 8px; }
+.tech-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px;
+}
+.tech-item .tech-names {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px;
+}
+.tech-item .tech-vf { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.tech-item .tech-va { font-size: 0.72rem; color: var(--text-faint); font-style: italic; }
+.tech-item .tech-details { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+.modal-empty { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+.char-card { cursor: pointer; }
+
+
+.hero-banner {
+  width: 100%;
+  aspect-ratio: 2033 / 457;
+  max-height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.hero-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11,18,24,0) 45%, rgba(11,18,24,0.95) 100%);
+}
+
+
+.logo.logo-img { background: transparent; box-shadow: none; padding: 2px; }
+.logo.logo-img img { width: 100%; height: 100%; object-fit: contain; }
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 4px;
+}
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+}
+
+
+.card-img.ph { aspect-ratio: auto; height: 96px; }
+.card-img.ph .initials { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: var(--accent); opacity: .85; z-index: 1; }
+.card-img.ph::after { display: none; }
+.rel-label-s { font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--gold); }
+.tuto-note { color: var(--text-faint); font-size: .78rem; }
+.count-line { color: var(--text-faint); font-size: .8rem; margin: -8px 0 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="logo logo-img"><img src="../covers/logging-out-is-too-hard.webp" alt="" style="border-radius:9px;object-fit:cover"></div>
+      <div>
+        <h1>Logging Out Is Too Hard</h1>
+        <p class="subtitle">Glossaire de la série · iLoza</p>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="searchInput" placeholder="Rechercher un nom, un lieu, une technique...">
+  </div>
+</header>
+<nav class="tabs" id="tabs"><button data-target="personnages" class="active">Personnages · 27</button><button data-target="tuto">Tutoiement/Vouvoiement · 6</button><button data-target="ennemis">Ennemis / Monstres · 9</button><button data-target="vocabulaire">Vocabulaire · 116</button><button data-target="lieux">Lieux · 23</button></nav>
+<main>
+<section class="panel active" id="personnages"><h2 class="section-title">Personnages <span class="count-tag">27</span></h2><div class="grid" id="persGrid"><div class="card char-card" data-idx="0" data-search="Woojin (Kim Woojin) Protagoniste, joueur piégé dans Evil Tale. Apparaît ici sous les traits d&#x27;un jeune. "><div class="card-img ph"><div class="initials">W</div></div><div class="card-body"><h3>Woojin (Kim Woojin)</h3><p class="desc">Protagoniste, joueur piégé dans Evil Tale. Apparaît ici sous les traits d&#x27;un jeune.</p></div></div><div class="card char-card" data-idx="1" data-search="Raul Épéiste, guide Woojin dans le village de Moreti. Paraît avoir une trentaine d&#x27;années. Tutoie Woojin. "><div class="card-img ph"><div class="initials">R</div></div><div class="card-body"><h3>Raul</h3><p class="desc">Épéiste, guide Woojin dans le village de Moreti. Paraît avoir une trentaine d&#x27;années. Tutoie Woojin.</p></div></div><div class="card char-card" data-idx="2" data-search="Roi Lion (Lion King) Mentionné : sa forteresse est la destination de certains aventuriers. "><div class="card-img ph"><div class="initials">RL</div></div><div class="card-body"><h3>Roi Lion (Lion King)</h3><p class="desc">Mentionné : sa forteresse est la destination de certains aventuriers.</p></div></div><div class="card char-card" data-idx="3" data-search="Edan IA qui a créé Evil Tale. La réponse au mystère se trouve peut-être chez elle. "><div class="card-img ph"><div class="initials">E</div></div><div class="card-body"><h3>Edan</h3><p class="desc">IA qui a créé Evil Tale. La réponse au mystère se trouve peut-être chez elle.</p></div></div><div class="card char-card" data-idx="4" data-search="Re-a Femme vivant dans une petite maison au toit vert, à Yoreuka. Raul demande qu&#x27;on la prévienne de ne pas attraper froid (lien non précisé). "><div class="card-img ph"><div class="initials">RA</div></div><div class="card-body"><h3>Re-a</h3><p class="desc">Femme vivant dans une petite maison au toit vert, à Yoreuka. Raul demande qu&#x27;on la prévienne de ne pas attraper froid (lien non précisé).</p></div></div><div class="card char-card" data-idx="5" data-search="Kerga Joueur classé n°1 d&#x27;Evil Tale ; son record au Nid de gobelins est battu par Woojin. "><div class="card-img ph"><div class="initials">K</div></div><div class="card-body"><h3>Kerga</h3><p class="desc">Joueur classé n°1 d&#x27;Evil Tale ; son record au Nid de gobelins est battu par Woojin.</p></div></div><div class="card char-card" data-idx="6" data-search="Kan Pseudo sous lequel Woojin enregistre son nom. "><div class="card-img ph"><div class="initials">K</div></div><div class="card-body"><h3>Kan</h3><p class="desc">Pseudo sous lequel Woojin enregistre son nom.</p></div></div><div class="card char-card" data-idx="7" data-search="Tramel Chef d&#x27;un groupe de 4 joueurs, 3e du classement du Nid de gobelins. "><div class="card-img ph"><div class="initials">T</div></div><div class="card-body"><h3>Tramel</h3><p class="desc">Chef d&#x27;un groupe de 4 joueurs, 3e du classement du Nid de gobelins.</p></div></div><div class="card char-card" data-idx="8" data-search="Go Juncheol (MJ Dain) Équipe de gestion 2. Vouvoie son supérieur. "><div class="card-img ph"><div class="initials">GJ</div></div><div class="card-body"><h3>Go Juncheol (MJ Dain)</h3><p class="desc">Équipe de gestion 2. Vouvoie son supérieur.</p></div></div><div class="card char-card" data-idx="9" data-search="Directeur Han Dirigeant du jeu ; fait surveiller le joueur coincé à Moreti. "><div class="card-img ph"><div class="initials">DH</div></div><div class="card-body"><h3>Directeur Han</h3><p class="desc">Dirigeant du jeu ; fait surveiller le joueur coincé à Moreti.</p></div></div><div class="card char-card" data-idx="10" data-search="Sarbandin Bête divine ancienne dont l&#x27;âme s&#x27;imprime en Woojin. "><div class="card-img ph"><div class="initials">S</div></div><div class="card-body"><h3>Sarbandin</h3><p class="desc">Bête divine ancienne dont l&#x27;âme s&#x27;imprime en Woojin.</p></div></div><div class="card char-card" data-idx="11" data-search="Kahira Naine, pèlerine de Meuha (femme), niv. 65, artisane habile (forge l&#x27;armure de Woojin). Cherche des failles et l&#x27;orc aux yeux rouges ; rejoint le groupe de Woojin. Vouvoiement avec Woojin. "><div class="card-img ph"><div class="initials">K</div></div><div class="card-body"><h3>Kahira</h3><p class="desc">Naine, pèlerine de Meuha (femme), niv. 65, artisane habile (forge l&#x27;armure de Woojin). Cherche des failles et l&#x27;orc aux yeux rouges ; rejoint le groupe de Woojin. Vouvoiement avec Woojin.</p></div></div><div class="card char-card" data-idx="12" data-search="Ruen Pirbas Elfe (féminin, confirmé au ch. 16), archer arcanique niv. 20, famille royale d&#x27;Elvenheim, descendante d&#x27;Uldin. Ne peut pas utiliser la magie. Mercenaire de Woojin ; classe unique ; PNJ clé de la 2e mise à jour ; future Reine des elfes. "><div class="card-img ph"><div class="initials">RP</div></div><div class="card-body"><h3>Ruen Pirbas</h3><p class="desc">Elfe (féminin, confirmé au ch. 16), archer arcanique niv. 20, famille royale d&#x27;Elvenheim, descendante d&#x27;Uldin. Ne peut pas utiliser la magie. Mercenaire de Woojin ; classe unique ; PNJ clé de la 2e mise à jour ; future Reine des elfes.</p></div></div><div class="card char-card" data-idx="13" data-search="Uldin Ancêtre de Ruen Pirbas, lié à la famille royale d&#x27;Elvenheim. "><div class="card-img ph"><div class="initials">U</div></div><div class="card-body"><h3>Uldin</h3><p class="desc">Ancêtre de Ruen Pirbas, lié à la famille royale d&#x27;Elvenheim.</p></div></div><div class="card char-card" data-idx="14" data-search="Kinte Garde du clan qui monopolise la Forteresse des orcs ; tué en un coup par Kahira. "><div class="card-img ph"><div class="initials">K</div></div><div class="card-body"><h3>Kinte</h3><p class="desc">Garde du clan qui monopolise la Forteresse des orcs ; tué en un coup par Kahira.</p></div></div><div class="card char-card" data-idx="15" data-search="Rasin Dieu de la lumière. "><div class="card-img ph"><div class="initials">R</div></div><div class="card-body"><h3>Rasin</h3><p class="desc">Dieu de la lumière.</p></div></div><div class="card char-card" data-idx="16" data-search="Haden Dieu des ténèbres. "><div class="card-img ph"><div class="initials">H</div></div><div class="card-body"><h3>Haden</h3><p class="desc">Dieu des ténèbres.</p></div></div><div class="card char-card" data-idx="17" data-search="Meuha Dieu du Vide. "><div class="card-img ph"><div class="initials">M</div></div><div class="card-body"><h3>Meuha</h3><p class="desc">Dieu du Vide.</p></div></div><div class="card char-card" data-idx="18" data-search="Sarban Premier humain ; Akedonia est née de son sang et de celui des trois dieux. "><div class="card-img ph"><div class="initials">S</div></div><div class="card-body"><h3>Sarban</h3><p class="desc">Premier humain ; Akedonia est née de son sang et de celui des trois dieux.</p></div></div><div class="card char-card" data-idx="19" data-search="Peron Rôdeur du clan Blan, plus grande alliance de la Forêt sombre ; envoyé par l&#x27;Ordre de la Genèse pour capturer Woojin. Niveau ~40. Tué par Woojin. "><div class="card-img ph"><div class="initials">P</div></div><div class="card-body"><h3>Peron</h3><p class="desc">Rôdeur du clan Blan, plus grande alliance de la Forêt sombre ; envoyé par l&#x27;Ordre de la Genèse pour capturer Woojin. Niveau ~40. Tué par Woojin.</p></div></div><div class="card char-card" data-idx="20" data-search="Sig Ellik Alchimiste, boss du Laboratoire de l&#x27;alchimiste ; formule de transmutation, barrière, invocations. "><div class="card-img ph"><div class="initials">SE</div></div><div class="card-body"><h3>Sig Ellik</h3><p class="desc">Alchimiste, boss du Laboratoire de l&#x27;alchimiste ; formule de transmutation, barrière, invocations.</p></div></div><div class="card char-card" data-idx="21" data-search="Lahad Ennemi de Sig Ellik (il le soupçonne de lui envoyer des intrus). "><div class="card-img ph"><div class="initials">L</div></div><div class="card-body"><h3>Lahad</h3><p class="desc">Ennemi de Sig Ellik (il le soupçonne de lui envoyer des intrus).</p></div></div><div class="card char-card" data-idx="22" data-search="MJ Han (GM Han) MJ maladroit assigné à Kan ; vient de le surveiller en cachette. Apparenté (soeur ?) au directeur Han ? "><div class="card-img ph"><div class="initials">MH</div></div><div class="card-body"><h3>MJ Han (GM Han)</h3><p class="desc">MJ maladroit assigné à Kan ; vient de le surveiller en cachette. Apparenté (soeur ?) au directeur Han ?</p></div></div><div class="card char-card" data-idx="23" data-search="Han Mi Ho PDG d&#x27;Andra Studio, &quot;directeur Han&quot; ; ordonne la surveillance de Kan. Le ch. 6 la désigne peut-être au masculin (à vérifier). "><div class="card-img ph"><div class="initials">HM</div></div><div class="card-body"><h3>Han Mi Ho</h3><p class="desc">PDG d&#x27;Andra Studio, &quot;directeur Han&quot; ; ordonne la surveillance de Kan. Le ch. 6 la désigne peut-être au masculin (à vérifier).</p></div></div><div class="card char-card" data-idx="24" data-search="Go-Un Réfugié elfe du refuge de la caverne couleur sang. "><div class="card-img ph"><div class="initials">GU</div></div><div class="card-body"><h3>Go-Un</h3><p class="desc">Réfugié elfe du refuge de la caverne couleur sang.</p></div></div><div class="card char-card" data-idx="25" data-search="Bronpeu Collectionneur abattu par Kan. "><div class="card-img ph"><div class="initials">B</div></div><div class="card-body"><h3>Bronpeu</h3><p class="desc">Collectionneur abattu par Kan.</p></div></div><div class="card char-card" data-idx="26" data-search="Ratan Mage noir ; ses outils magiques sont découverts sous le laboratoire (maître d&#x27;un des personnages). "><div class="card-img ph"><div class="initials">R</div></div><div class="card-body"><h3>Ratan</h3><p class="desc">Mage noir ; ses outils magiques sont découverts sous le laboratoire (maître d&#x27;un des personnages).</p></div></div></div></section>
+<section class="panel" id="tuto"><h2 class="section-title">Tutoiement / Vouvoiement <span class="count-tag">6</span></h2><div class="table-wrap"><table><thead><tr><th>Personnage 1</th><th>Relation</th><th>Personnage 2</th></tr></thead><tbody><tr data-search="Woojin Raul Vous / Tu"><td class="pname">Woojin</td><td class="rel">Vous / Tu</td><td class="pname">Raul</td></tr><tr data-search="Go Juncheol Son supérieur Vous / Tu"><td class="pname">Go Juncheol</td><td class="rel">Vous / Tu</td><td class="pname">Son supérieur</td></tr><tr data-search="Woojin Kahira Vous / Vous"><td class="pname">Woojin</td><td class="rel">Vous / Vous</td><td class="pname">Kahira</td></tr><tr data-search="Woojin Employé de l&#x27;association de mercenaires Vous / Vous"><td class="pname">Woojin</td><td class="rel">Vous / Vous</td><td class="pname">Employé de l&#x27;association de mercenaires</td></tr><tr data-search="Woojin Peron Tu / Tu"><td class="pname">Woojin</td><td class="rel">Tu / Tu</td><td class="pname">Peron</td></tr><tr data-search="Woojin Reine des elfes (Ruen future) Vous / Vous"><td class="pname">Woojin</td><td class="rel">Vous / Vous</td><td class="pname">Reine des elfes (Ruen future)</td></tr></tbody></table></div></section>
+<section class="panel" id="ennemis"><h2 class="section-title">Ennemis / Monstres <span class="count-tag">9</span></h2><div class="grid"><div class="card" data-search="Monstres de bas niveau, réputés difficiles à tuer. Ch. 2 "><div class="card-img ph"><div class="initials">MD</div></div><div class="card-body"><h3>Monstres de bas niveau, réputés difficiles à tuer. Ch. 2</h3><p class="desc"></p></div></div><div class="card" data-search="Maître du territoire où se trouve Moreti. Ch. 2 "><div class="card-img ph"><div class="initials">MD</div></div><div class="card-body"><h3>Maître du territoire où se trouve Moreti. Ch. 2</h3><p class="desc"></p></div></div><div class="card" data-search="Boss du Nid de gobelins ; tué en un coup par Woojin. Ch. 6 "><div class="card-img ph"><div class="initials">BD</div></div><div class="card-body"><h3>Boss du Nid de gobelins ; tué en un coup par Woojin. Ch. 6</h3><p class="desc"></p></div></div><div class="card" data-search="Monstres. Ch. 3 "><div class="card-img ph"><div class="initials">MC</div></div><div class="card-body"><h3>Monstres. Ch. 3</h3><p class="desc"></p></div></div><div class="card" data-search="Corps physique très résistant une fois les 3 conditions remplies ; le corps n&#x27;est qu&#x27;une carapace (cicatrice = point faible). Ch. 10 "><div class="card-img ph"><div class="initials">CP</div></div><div class="card-body"><h3>Corps physique très résistant une fois les 3 conditions remplies ; le corps n&#x27;est qu&#x27;une carapace (cicatrice = point faible). Ch. 10</h3><p class="desc"></p></div></div><div class="card" data-search="Monstre caché de la Forteresse des orcs, entouré de rumeurs. Ch. 8 "><div class="card-img ph"><div class="initials">MC</div></div><div class="card-body"><h3>Monstre caché de la Forteresse des orcs, entouré de rumeurs. Ch. 8</h3><p class="desc"></p></div></div><div class="card" data-search="Alimenté par une pierre-noyau à détruire ; insensible aux attaques physiques. Ch. 14 "><div class="card-img ph"><div class="initials">AP</div></div><div class="card-body"><h3>Alimenté par une pierre-noyau à détruire ; insensible aux attaques physiques. Ch. 14</h3><p class="desc"></p></div></div><div class="card" data-search="Monstre du Laboratoire de l&#x27;alchimiste. Ch. 14 "><div class="card-img ph"><div class="initials">MD</div></div><div class="card-body"><h3>Monstre du Laboratoire de l&#x27;alchimiste. Ch. 14</h3><p class="desc"></p></div></div><div class="card" data-search="Groupe hostile qui traque/capture les elfes réfugiés ; croit aux rumeurs sur le Roi Lion. Ch. 16 "><div class="card-img ph"><div class="initials">GH</div></div><div class="card-body"><h3>Groupe hostile qui traque/capture les elfes réfugiés ; croit aux rumeurs sur le Roi Lion. Ch. 16</h3><p class="desc"></p></div></div></div></section>
+<section class="panel" id="vocabulaire"><h2 class="section-title">Vocabulaire <span class="count-tag">116</span></h2><div class="grid"><div class="card" data-search="Evil Tale Evil Tale Le jeu de réalité virtuelle."><div class="card-body"><h3>Evil Tale</h3><p class="desc">Le jeu de réalité virtuelle.</p></div></div><div class="card" data-search="Labyrinth Tower Tour du Labyrinthe Tour de 100 étages."><div class="card-body"><h3>Tour du Labyrinthe</h3><div class="va-tag">Labyrinth Tower</div><p class="desc">Tour de 100 étages.</p></div></div><div class="card" data-search="Status window Fenêtre de statut Ne fonctionne pas dans ce monde."><div class="card-body"><h3>Fenêtre de statut</h3><div class="va-tag">Status window</div><p class="desc">Ne fonctionne pas dans ce monde.</p></div></div><div class="card" data-search="World map Carte du monde "><div class="card-body"><h3>Carte du monde</h3><div class="va-tag">World map</div></div></div><div class="card" data-search="Inventory Inventaire "><div class="card-body"><h3>Inventaire</h3><div class="va-tag">Inventory</div></div></div><div class="card" data-search="Potion Potion Fonctionne comme dans Evil Tale."><div class="card-body"><h3>Potion</h3><p class="desc">Fonctionne comme dans Evil Tale.</p></div></div><div class="card" data-search="Throwing Lancer Compétence de classe Voleur."><div class="card-body"><h3>Lancer</h3><div class="va-tag">Throwing</div><p class="desc">Compétence de classe Voleur.</p></div></div><div class="card" data-search="Thief Voleur Classe d&#x27;Evil Tale."><div class="card-body"><h3>Voleur</h3><div class="va-tag">Thief</div><p class="desc">Classe d&#x27;Evil Tale.</p></div></div><div class="card" data-search="Adventurer Aventurier "><div class="card-body"><h3>Aventurier</h3><div class="va-tag">Adventurer</div></div></div><div class="card" data-search="House Mwiren Maison Mwiren Maison dont un membre est tenu pour responsable de la chute de Moreti."><div class="card-body"><h3>Maison Mwiren</h3><div class="va-tag">House Mwiren</div><p class="desc">Maison dont un membre est tenu pour responsable de la chute de Moreti.</p></div></div><div class="card" data-search="Lion King Roi Lion "><div class="card-body"><h3>Roi Lion</h3><div class="va-tag">Lion King</div></div></div><div class="card" data-search="Gray Wolf Loup gris Monstre de bas niveau."><div class="card-body"><h3>Loup gris</h3><div class="va-tag">Gray Wolf</div><p class="desc">Monstre de bas niveau.</p></div></div><div class="card" data-search="Inscription Inscription Gravée sur une tablette de pierre au 60e étage : réaliser n&#x27;importe quel vœu en franchissant le 100e étage."><div class="card-body"><h3>Inscription</h3><p class="desc">Gravée sur une tablette de pierre au 60e étage : réaliser n&#x27;importe quel vœu en franchissant le 100e étage.</p></div></div><div class="card" data-search="Rune Rune Matériau rare tombant à partir du 5e étage. Rouge = force. Grade le plus bas : +5 points de stat (= 1 niveau)."><div class="card-body"><h3>Rune</h3><p class="desc">Matériau rare tombant à partir du 5e étage. Rouge = force. Grade le plus bas : +5 points de stat (= 1 niveau).</p></div></div><div class="card" data-search="Strength / Agility / Vitality / Dexterity Force / Agilité / Vitalité / Dextérité Statistiques augmentées par les runes."><div class="card-body"><h3>Force / Agilité / Vitalité / Dextérité</h3><div class="va-tag">Strength / Agility / Vitality / Dexterity</div><p class="desc">Statistiques augmentées par les runes.</p></div></div><div class="card" data-search="Aura Blade Lame d&#x27;aura Compétence de maître, débloquée au niveau 99 de la classe Guerrier."><div class="card-body"><h3>Lame d&#x27;aura</h3><div class="va-tag">Aura Blade</div><p class="desc">Compétence de maître, débloquée au niveau 99 de la classe Guerrier.</p></div></div><div class="card" data-search="Inherited skill Compétence héritée Transmise à la mort du détenteur ; absorbe aussi ses souvenirs et son escrime."><div class="card-body"><h3>Compétence héritée</h3><div class="va-tag">Inherited skill</div><p class="desc">Transmise à la mort du détenteur ; absorbe aussi ses souvenirs et son escrime.</p></div></div><div class="card" data-search="Dragon Heart Cœur de dragon Blessure de Raul ; sa magie le tue lentement."><div class="card-body"><h3>Cœur de dragon</h3><div class="va-tag">Dragon Heart</div><p class="desc">Blessure de Raul ; sa magie le tue lentement.</p></div></div><div class="card" data-search="Dragon Slayer Tueur de dragons Classe unique de Raul."><div class="card-body"><h3>Tueur de dragons</h3><div class="va-tag">Dragon Slayer</div><p class="desc">Classe unique de Raul.</p></div></div><div class="card" data-search="Unique class Classe unique Débloquée après le 3e changement de classe et une quête spécifique."><div class="card-body"><h3>Classe unique</h3><div class="va-tag">Unique class</div><p class="desc">Débloquée après le 3e changement de classe et une quête spécifique.</p></div></div><div class="card" data-search="Class advancement Changement de classe "><div class="card-body"><h3>Changement de classe</h3><div class="va-tag">Class advancement</div></div></div><div class="card" data-search="Warrior Guerrier Classe d&#x27;Evil Tale."><div class="card-body"><h3>Guerrier</h3><div class="va-tag">Warrior</div><p class="desc">Classe d&#x27;Evil Tale.</p></div></div><div class="card" data-search="Goblin Gobelin Monstre."><div class="card-body"><h3>Gobelin</h3><div class="va-tag">Goblin</div><p class="desc">Monstre.</p></div></div><div class="card" data-search="Black magician Mage noir "><div class="card-body"><h3>Mage noir</h3><div class="va-tag">Black magician</div></div></div><div class="card" data-search="Goblin Nest Nid de gobelins Donjon de terrain, niveau max pour les récompenses : 15."><div class="card-body"><h3>Nid de gobelins</h3><div class="va-tag">Goblin Nest</div><p class="desc">Donjon de terrain, niveau max pour les récompenses : 15.</p></div></div><div class="card" data-search="Dungeon Board Tableau des donjons Classement des records de donjon."><div class="card-body"><h3>Tableau des donjons</h3><div class="va-tag">Dungeon Board</div><p class="desc">Classement des records de donjon.</p></div></div><div class="card" data-search="Time attack Contre-la-montre "><div class="card-body"><h3>Contre-la-montre</h3><div class="va-tag">Time attack</div></div></div><div class="card" data-search="Field dungeon Donjon de terrain "><div class="card-body"><h3>Donjon de terrain</h3><div class="va-tag">Field dungeon</div></div></div><div class="card" data-search="Swift Hunter Chasseur rapide Titre Héroïque : 1re place en solo au Nid de gobelins."><div class="card-body"><h3>Chasseur rapide</h3><div class="va-tag">Swift Hunter</div><p class="desc">Titre Héroïque : 1re place en solo au Nid de gobelins.</p></div></div><div class="card" data-search="Nimble Hunter Chasseur agile Titre habituel du contre-la-montre du Nid de gobelins."><div class="card-body"><h3>Chasseur agile</h3><div class="va-tag">Nimble Hunter</div><p class="desc">Titre habituel du contre-la-montre du Nid de gobelins.</p></div></div><div class="card" data-search="Magic stone Pierre magique "><div class="card-body"><h3>Pierre magique</h3><div class="va-tag">Magic stone</div></div></div><div class="card" data-search="Goblin Lord&#x27;s Expanded Magic Stone Pierre magique étendue du Seigneur gobelin Rare ; effet [Étendu] : valeur de magie x1,5 ; explose sous une légère force."><div class="card-body"><h3>Pierre magique étendue du Seigneur gobelin</h3><div class="va-tag">Goblin Lord&#x27;s Expanded Magic Stone</div><p class="desc">Rare ; effet [Étendu] : valeur de magie x1,5 ; explose sous une légère force.</p></div></div><div class="card" data-search="Ancient Tome: Soul Imprinting Ancien grimoire : Empreinte d&#x27;âme Artefact légendaire du coffre caché."><div class="card-body"><h3>Ancien grimoire : Empreinte d&#x27;âme</h3><div class="va-tag">Ancient Tome: Soul Imprinting</div><p class="desc">Artefact légendaire du coffre caché.</p></div></div><div class="card" data-search="Soul Imprinting Empreinte d&#x27;âme Légendaire ; contrat avec l&#x27;âme d&#x27;une ancienne bête divine ; capacité [0/1]."><div class="card-body"><h3>Empreinte d&#x27;âme</h3><div class="va-tag">Soul Imprinting</div><p class="desc">Légendaire ; contrat avec l&#x27;âme d&#x27;une ancienne bête divine ; capacité [0/1].</p></div></div><div class="card" data-search="Ancient divine beast Ancienne bête divine "><div class="card-body"><h3>Ancienne bête divine</h3><div class="va-tag">Ancient divine beast</div></div></div><div class="card" data-search="Black Guardian Gardien noir Compétence issue de l&#x27;âme de Sarbandin."><div class="card-body"><h3>Gardien noir</h3><div class="va-tag">Black Guardian</div><p class="desc">Compétence issue de l&#x27;âme de Sarbandin.</p></div></div><div class="card" data-search="Hungry Brand Marque du vorace Compétence issue de l&#x27;âme de Sarbandin."><div class="card-body"><h3>Marque du vorace</h3><div class="va-tag">Hungry Brand</div><p class="desc">Compétence issue de l&#x27;âme de Sarbandin.</p></div></div><div class="card" data-search="Shell Eye Œil de carapace Compétence issue de l&#x27;âme de Sarbandin."><div class="card-body"><h3>Œil de carapace</h3><div class="va-tag">Shell Eye</div><p class="desc">Compétence issue de l&#x27;âme de Sarbandin.</p></div></div><div class="card" data-search="Heroic / Rare / Legendary Héroïque / Rare / Légendaire Grades d&#x27;objets et de titres."><div class="card-body"><h3>Héroïque / Rare / Légendaire</h3><div class="va-tag">Heroic / Rare / Legendary</div><p class="desc">Grades d&#x27;objets et de titres.</p></div></div><div class="card" data-search="GM MJ Maître du jeu, équipe de gestion."><div class="card-body"><h3>MJ</h3><div class="va-tag">GM</div><p class="desc">Maître du jeu, équipe de gestion.</p></div></div><div class="card" data-search="Clan Clan Dix plus grands clans."><div class="card-body"><h3>Clan</h3><p class="desc">Dix plus grands clans.</p></div></div><div class="card" data-search="Order of Meuha Ordre de Meuha Ordre religieux de Kahira."><div class="card-body"><h3>Ordre de Meuha</h3><div class="va-tag">Order of Meuha</div><p class="desc">Ordre religieux de Kahira.</p></div></div><div class="card" data-search="Genesis Order Ordre de la Genèse Groupe de joueurs mentionné, touché par le marteau."><div class="card-body"><h3>Ordre de la Genèse</h3><div class="va-tag">Genesis Order</div><p class="desc">Groupe de joueurs mentionné, touché par le marteau.</p></div></div><div class="card" data-search="Meuha&#x27;s embrace Étreinte de Meuha Formule liée à l&#x27;Ordre de Meuha."><div class="card-body"><h3>Étreinte de Meuha</h3><div class="va-tag">Meuha&#x27;s embrace</div><p class="desc">Formule liée à l&#x27;Ordre de Meuha.</p></div></div><div class="card" data-search="Rift Faille Kahira les recherche."><div class="card-body"><h3>Faille</h3><div class="va-tag">Rift</div><p class="desc">Kahira les recherche.</p></div></div><div class="card" data-search="Rift Stone Pierre de faille Aspire tout, même les êtres vivants ; relie une faille à une autre."><div class="card-body"><h3>Pierre de faille</h3><div class="va-tag">Rift Stone</div><p class="desc">Aspire tout, même les êtres vivants ; relie une faille à une autre.</p></div></div><div class="card" data-search="Earth Spirit&#x27;s Grasp Poigne de l&#x27;esprit de la terre Objet nécessaire pour manipuler une pierre de faille."><div class="card-body"><h3>Poigne de l&#x27;esprit de la terre</h3><div class="va-tag">Earth Spirit&#x27;s Grasp</div><p class="desc">Objet nécessaire pour manipuler une pierre de faille.</p></div></div><div class="card" data-search="Pilgrim&#x27;s Cross Croix du pèlerin Grade C ; relique de l&#x27;Ordre ; purification, Lever la malédiction 1x/jour."><div class="card-body"><h3>Croix du pèlerin</h3><div class="va-tag">Pilgrim&#x27;s Cross</div><p class="desc">Grade C ; relique de l&#x27;Ordre ; purification, Lever la malédiction 1x/jour.</p></div></div><div class="card" data-search="Remove Curse Lever la malédiction "><div class="card-body"><h3>Lever la malédiction</h3><div class="va-tag">Remove Curse</div></div></div><div class="card" data-search="Contract with Kahira Contrat avec Kahira Quête de grade C : recueillir des informations sur les failles."><div class="card-body"><h3>Contrat avec Kahira</h3><div class="va-tag">Contract with Kahira</div><p class="desc">Quête de grade C : recueillir des informations sur les failles.</p></div></div><div class="card" data-search="Phantom Fantôme État de l&#x27;orc ancien tant que les conditions ne sont pas remplies."><div class="card-body"><h3>Fantôme</h3><div class="va-tag">Phantom</div><p class="desc">État de l&#x27;orc ancien tant que les conditions ne sont pas remplies.</p></div></div><div class="card" data-search="Magic-Infused Ancient Leather Armor Armure de cuir ancien imprégnée de magie Grade C ; Défense +150 ; résistance magique +1 rang."><div class="card-body"><h3>Armure de cuir ancien imprégnée de magie</h3><div class="va-tag">Magic-Infused Ancient Leather Armor</div><p class="desc">Grade C ; Défense +150 ; résistance magique +1 rang.</p></div></div><div class="card" data-search="Valor Vaillance Trait : protège de la peur."><div class="card-body"><h3>Vaillance</h3><div class="va-tag">Valor</div><p class="desc">Trait : protège de la peur.</p></div></div><div class="card" data-search="Golden Rule Règle d&#x27;or Trait : un peu plus d&#x27;argent à la chasse."><div class="card-body"><h3>Règle d&#x27;or</h3><div class="va-tag">Golden Rule</div><p class="desc">Trait : un peu plus d&#x27;argent à la chasse.</p></div></div><div class="card" data-search="Spirit Channeling Canalisation spirituelle Compétence : puise dans le pouvoir d&#x27;un orc ancien."><div class="card-body"><h3>Canalisation spirituelle</h3><div class="va-tag">Spirit Channeling</div><p class="desc">Compétence : puise dans le pouvoir d&#x27;un orc ancien.</p></div></div><div class="card" data-search="Solitude Solitude Trait de Woojin : +5 % stats et +10 % EXP en solo."><div class="card-body"><h3>Solitude</h3><p class="desc">Trait de Woojin : +5 % stats et +10 % EXP en solo.</p></div></div><div class="card" data-search="Mercenary Mercenaire "><div class="card-body"><h3>Mercenaire</h3><div class="va-tag">Mercenary</div></div></div><div class="card" data-search="Mercenary Association Association de mercenaires "><div class="card-body"><h3>Association de mercenaires</h3><div class="va-tag">Mercenary Association</div></div></div><div class="card" data-search="Druid Druide Spécialistes des bêtes divines (continent central)."><div class="card-body"><h3>Druide</h3><div class="va-tag">Druid</div><p class="desc">Spécialistes des bêtes divines (continent central).</p></div></div><div class="card" data-search="Arcane Archer Archer arcanique Classe de Ruen Pirbas."><div class="card-body"><h3>Archer arcanique</h3><div class="va-tag">Arcane Archer</div><p class="desc">Classe de Ruen Pirbas.</p></div></div><div class="card" data-search="Conviction / Tactics / Magic Power Conviction / Tactique / Puissance magique Stats."><div class="card-body"><h3>Conviction / Tactique / Puissance magique</h3><div class="va-tag">Conviction / Tactics / Magic Power</div><p class="desc">Stats.</p></div></div><div class="card" data-search="Swiftness / Survival Instinct / Hawk Eye Rapidité / Instinct de survie / Œil de faucon Traits de Ruen Pirbas."><div class="card-body"><h3>Rapidité / Instinct de survie / Œil de faucon</h3><div class="va-tag">Swiftness / Survival Instinct / Hawk Eye</div><p class="desc">Traits de Ruen Pirbas.</p></div></div><div class="card" data-search="Mana Vessel Disease Maladie du vaisseau de mana Causée par des vaisseaux de mana étroits ; empêche d&#x27;utiliser la magie."><div class="card-body"><h3>Maladie du vaisseau de mana</h3><div class="va-tag">Mana Vessel Disease</div><p class="desc">Causée par des vaisseaux de mana étroits ; empêche d&#x27;utiliser la magie.</p></div></div><div class="card" data-search="Elf Elfe "><div class="card-body"><h3>Elfe</h3><div class="va-tag">Elf</div></div></div><div class="card" data-search="NPC PNJ "><div class="card-body"><h3>PNJ</h3><div class="va-tag">NPC</div></div></div><div class="card" data-search="Void Vide Brèche reliant un monde à un autre, où naissent monstres et races."><div class="card-body"><h3>Vide</h3><div class="va-tag">Void</div><p class="desc">Brèche reliant un monde à un autre, où naissent monstres et races.</p></div></div><div class="card" data-search="Pilgrim Pèlerin / pèlerine Membre de l&#x27;Ordre de Meuha qui cherche les vides."><div class="card-body"><h3>Pèlerin / pèlerine</h3><div class="va-tag">Pilgrim</div><p class="desc">Membre de l&#x27;Ordre de Meuha qui cherche les vides.</p></div></div><div class="card" data-search="Sarbant Sarbant Premiers Descendants, peuple étranger ayant créé un dieu sans nom."><div class="card-body"><h3>Sarbant</h3><p class="desc">Premiers Descendants, peuple étranger ayant créé un dieu sans nom.</p></div></div><div class="card" data-search="First Descendants Premiers Descendants "><div class="card-body"><h3>Premiers Descendants</h3><div class="va-tag">First Descendants</div></div></div><div class="card" data-search="Nameless God Dieu sans nom "><div class="card-body"><h3>Dieu sans nom</h3><div class="va-tag">Nameless God</div></div></div><div class="card" data-search="Hidden monster Monstre caché N&#x27;apparaît que si certaines conditions sont remplies."><div class="card-body"><h3>Monstre caché</h3><div class="va-tag">Hidden monster</div><p class="desc">N&#x27;apparaît que si certaines conditions sont remplies.</p></div></div><div class="card" data-search="Drop table Table de butin Restreinte selon le niveau."><div class="card-body"><h3>Table de butin</h3><div class="va-tag">Drop table</div><p class="desc">Restreinte selon le niveau.</p></div></div><div class="card" data-search="Dwarf Nain / Naine "><div class="card-body"><h3>Nain / Naine</h3><div class="va-tag">Dwarf</div></div></div><div class="card" data-search="Studies in Essence Magic Études sur la magie des essences Livre de la bibliothèque de Parta."><div class="card-body"><h3>Études sur la magie des essences</h3><div class="va-tag">Studies in Essence Magic</div><p class="desc">Livre de la bibliothèque de Parta.</p></div></div><div class="card" data-search="A Treatise on the Sorcery of Foreign Peoples Traité sur la sorcellerie des peuples étrangers Livre."><div class="card-body"><h3>Traité sur la sorcellerie des peuples étrangers</h3><div class="va-tag">A Treatise on the Sorcery of Foreign Peoples</div><p class="desc">Livre.</p></div></div><div class="card" data-search="The Light of the World La Lumière du monde Livre."><div class="card-body"><h3>La Lumière du monde</h3><div class="va-tag">The Light of the World</div><p class="desc">Livre.</p></div></div><div class="card" data-search="Mercenary hiring system Système d&#x27;embauche de mercenaires Existe sur le continent central."><div class="card-body"><h3>Système d&#x27;embauche de mercenaires</h3><div class="va-tag">Mercenary hiring system</div><p class="desc">Existe sur le continent central.</p></div></div><div class="card" data-search="Ranger Rôdeur Classe de Peron."><div class="card-body"><h3>Rôdeur</h3><div class="va-tag">Ranger</div><p class="desc">Classe de Peron.</p></div></div><div class="card" data-search="Blan Clan Clan Blan Plus grande alliance de la Forêt sombre."><div class="card-body"><h3>Clan Blan</h3><div class="va-tag">Blan Clan</div><p class="desc">Plus grande alliance de la Forêt sombre.</p></div></div><div class="card" data-search="Cheetah Ring Bague du guépard Grade D ; agilité +5."><div class="card-body"><h3>Bague du guépard</h3><div class="va-tag">Cheetah Ring</div><p class="desc">Grade D ; agilité +5.</p></div></div><div class="card" data-search="Shrine of Resurrection Sanctuaire de résurrection Lieu de réapparition après la mort."><div class="card-body"><h3>Sanctuaire de résurrection</h3><div class="va-tag">Shrine of Resurrection</div><p class="desc">Lieu de réapparition après la mort.</p></div></div><div class="card" data-search="PK PK Combat entre joueurs."><div class="card-body"><h3>PK</h3><p class="desc">Combat entre joueurs.</p></div></div><div class="card" data-search="Alchemist&#x27;s Laboratory Laboratoire de l&#x27;alchimiste Lieu où Woojin entre à la fin du ch. 13."><div class="card-body"><h3>Laboratoire de l&#x27;alchimiste</h3><div class="va-tag">Alchemist&#x27;s Laboratory</div><p class="desc">Lieu où Woojin entre à la fin du ch. 13.</p></div></div><div class="card" data-search="Trap Piège On ne peut pas les désamorcer avant le niveau 50."><div class="card-body"><h3>Piège</h3><div class="va-tag">Trap</div><p class="desc">On ne peut pas les désamorcer avant le niveau 50.</p></div></div><div class="card" data-search="Core stone Pierre-noyau Alimente le golem ; il faut la détruire."><div class="card-body"><h3>Pierre-noyau</h3><div class="va-tag">Core stone</div><p class="desc">Alimente le golem ; il faut la détruire.</p></div></div><div class="card" data-search="Mist Brume Se dissipe en atteignant l&#x27;escalier du 2e étage ; il faut normalement 4 combats."><div class="card-body"><h3>Brume</h3><div class="va-tag">Mist</div><p class="desc">Se dissipe en atteignant l&#x27;escalier du 2e étage ; il faut normalement 4 combats.</p></div></div><div class="card" data-search="Severance Sectionnement Compétence de Woojin (vue en ch. 14)."><div class="card-body"><h3>Sectionnement</h3><div class="va-tag">Severance</div><p class="desc">Compétence de Woojin (vue en ch. 14).</p></div></div><div class="card" data-search="Acceleration Accélération Compétence."><div class="card-body"><h3>Accélération</h3><div class="va-tag">Acceleration</div><p class="desc">Compétence.</p></div></div><div class="card" data-search="Trinity Belt Ceinture de la Trinité Équipement donné à Ruen avec la Bague du guépard."><div class="card-body"><h3>Ceinture de la Trinité</h3><div class="va-tag">Trinity Belt</div><p class="desc">Équipement donné à Ruen avec la Bague du guépard.</p></div></div><div class="card" data-search="Gargoyle Gargouille "><div class="card-body"><h3>Gargouille</h3><div class="va-tag">Gargoyle</div></div></div><div class="card" data-search="Fire element Élément feu Les premières répliques du boss déterminent son élément."><div class="card-body"><h3>Élément feu</h3><div class="va-tag">Fire element</div><p class="desc">Les premières répliques du boss déterminent son élément.</p></div></div><div class="card" data-search="Transmutation formula Formule de transmutation Celle de Sig Ellik."><div class="card-body"><h3>Formule de transmutation</h3><div class="va-tag">Transmutation formula</div><p class="desc">Celle de Sig Ellik.</p></div></div><div class="card" data-search="Master of the Elements Maître des éléments Titre Héroïque (1re place du contre-la-montre du Laboratoire de l&#x27;alchimiste à 2 joueurs max) : stats +5, Cinq éléments, Élément, Barrière."><div class="card-body"><h3>Maître des éléments</h3><div class="va-tag">Master of the Elements</div><p class="desc">Titre Héroïque (1re place du contre-la-montre du Laboratoire de l&#x27;alchimiste à 2 joueurs max) : stats +5, Cinq éléments, Élément, Barrière.</p></div></div><div class="card" data-search="Five Elements Cinq éléments Trait : résistance aux éléments naturels +15 %."><div class="card-body"><h3>Cinq éléments</h3><div class="va-tag">Five Elements</div><p class="desc">Trait : résistance aux éléments naturels +15 %.</p></div></div><div class="card" data-search="Element Élément Compétence : imprégner l&#x27;équipement d&#x27;un élément."><div class="card-body"><h3>Élément</h3><div class="va-tag">Element</div><p class="desc">Compétence : imprégner l&#x27;équipement d&#x27;un élément.</p></div></div><div class="card" data-search="Barrier Barrière Compétence : bouclier du même élément."><div class="card-body"><h3>Barrière</h3><div class="va-tag">Barrier</div><p class="desc">Compétence : bouclier du même élément.</p></div></div><div class="card" data-search="Brimming Philosopher&#x27;s Stone Pierre philosophale débordante Grade B ; effet [Débordant] : golem → gardien ; obtenue en tuant Sig Ellik avant ses invocations."><div class="card-body"><h3>Pierre philosophale débordante</h3><div class="va-tag">Brimming Philosopher&#x27;s Stone</div><p class="desc">Grade B ; effet [Débordant] : golem → gardien ; obtenue en tuant Sig Ellik avant ses invocations.</p></div></div><div class="card" data-search="Guardian Gardien Invocation d&#x27;un cran au-dessus du golem."><div class="card-body"><h3>Gardien</h3><div class="va-tag">Guardian</div><p class="desc">Invocation d&#x27;un cran au-dessus du golem.</p></div></div><div class="card" data-search="Instance dungeon Donjon instancié Espace séparé dès l&#x27;entrée."><div class="card-body"><h3>Donjon instancié</h3><div class="va-tag">Instance dungeon</div><p class="desc">Espace séparé dès l&#x27;entrée.</p></div></div><div class="card" data-search="Mercenary (Master) Maître Ruen appelle Woojin &quot;Maître&quot;."><div class="card-body"><h3>Maître</h3><div class="va-tag">Mercenary (Master)</div><p class="desc">Ruen appelle Woojin &quot;Maître&quot;.</p></div></div><div class="card" data-search="Association Association Association d&#x27;alchimistes, présidée par Lahad."><div class="card-body"><h3>Association</h3><p class="desc">Association d&#x27;alchimistes, présidée par Lahad.</p></div></div><div class="card" data-search="Collector Collectionneur Membre du groupe hostile."><div class="card-body"><h3>Collectionneur</h3><div class="va-tag">Collector</div><p class="desc">Membre du groupe hostile.</p></div></div><div class="card" data-search="Queen of the Elves Reine des elfes Rôle futur de Ruen Pirbas dans Evil Tale."><div class="card-body"><h3>Reine des elfes</h3><div class="va-tag">Queen of the Elves</div><p class="desc">Rôle futur de Ruen Pirbas dans Evil Tale.</p></div></div><div class="card" data-search="Management team leader Chef de l&#x27;équipe de gestion Supérieur du MJ Han."><div class="card-body"><h3>Chef de l&#x27;équipe de gestion</h3><div class="va-tag">Management team leader</div><p class="desc">Supérieur du MJ Han.</p></div></div><div class="card" data-search="PKer PKer Joueur qui tue d&#x27;autres joueurs."><div class="card-body"><h3>PKer</h3><p class="desc">Joueur qui tue d&#x27;autres joueurs.</p></div></div><div class="card" data-search="Second update Deuxième mise à jour Prévue dans au moins 5 ans ; Ruen y est un PNJ clé."><div class="card-body"><h3>Deuxième mise à jour</h3><div class="va-tag">Second update</div><p class="desc">Prévue dans au moins 5 ans ; Ruen y est un PNJ clé.</p></div></div><div class="card" data-search="Yongcheon Yongcheon Compétence/technique de Woojin (vue ch. 6 &quot;Porte 1&quot;, ch. 20) ; ses dégâts lui sont revenus à cause de l&#x27;Équilibre du sang."><div class="card-body"><h3>Yongcheon</h3><p class="desc">Compétence/technique de Woojin (vue ch. 6 &quot;Porte 1&quot;, ch. 20) ; ses dégâts lui sont revenus à cause de l&#x27;Équilibre du sang.</p></div></div><div class="card" data-search="Blood Balance Équilibre du sang Mécanisme mentionné en fin de ch. 20."><div class="card-body"><h3>Équilibre du sang</h3><div class="va-tag">Blood Balance</div><p class="desc">Mécanisme mentionné en fin de ch. 20.</p></div></div><div class="card" data-search="Force Narua Force Narua Phrase d&#x27;activation d&#x27;un sort (ch. 20)."><div class="card-body"><h3>Force Narua</h3><p class="desc">Phrase d&#x27;activation d&#x27;un sort (ch. 20).</p></div></div><div class="card" data-search="Arcane Arrow Flèche arcanique Attaque de Ruen."><div class="card-body"><h3>Flèche arcanique</h3><div class="va-tag">Arcane Arrow</div><p class="desc">Attaque de Ruen.</p></div></div><div class="card" data-search="Aggro Aggro "><div class="card-body"><h3>Aggro</h3></div></div><div class="card" data-search="Magic Power Puissance magique Tout le monde en a ; seule la capacité du réceptacle diffère."><div class="card-body"><h3>Puissance magique</h3><div class="va-tag">Magic Power</div><p class="desc">Tout le monde en a ; seule la capacité du réceptacle diffère.</p></div></div><div class="card" data-search="Great War Grande Guerre Pendant laquelle l&#x27;Équilibre du sang a été créé."><div class="card-body"><h3>Grande Guerre</h3><div class="va-tag">Great War</div><p class="desc">Pendant laquelle l&#x27;Équilibre du sang a été créé.</p></div></div><div class="card" data-search="Diluted elixir Élixir dilué Trouvé dans la réserve cachée sous le laboratoire."><div class="card-body"><h3>Élixir dilué</h3><div class="va-tag">Diluted elixir</div><p class="desc">Trouvé dans la réserve cachée sous le laboratoire.</p></div></div><div class="card" data-search="Guardians Gardiens Invocations de la pierre philosophale débordante."><div class="card-body"><h3>Gardiens</h3><div class="va-tag">Guardians</div><p class="desc">Invocations de la pierre philosophale débordante.</p></div></div><div class="card" data-search="R&amp;C Technology R&amp;C Technology Entreprise inconnue citée par Woojin."><div class="card-body"><h3>R&amp;C Technology</h3><p class="desc">Entreprise inconnue citée par Woojin.</p></div></div></div></section>
+<section class="panel" id="lieux"><h2 class="section-title">Lieux <span class="count-tag">23</span></h2><div class="grid"><div class="card" data-search="Moreti Village Village Moreti Ancienne ville de départ, nommée ainsi il y a environ 50 ans."><div class="card-body"><h3>Village Moreti</h3><div class="va-tag">Moreti Village</div><p class="desc">Ancienne ville de départ, nommée ainsi il y a environ 50 ans.</p></div></div><div class="card" data-search="Lion King&#x27;s Stronghold Forteresse du Roi Lion "><div class="card-body"><h3>Forteresse du Roi Lion</h3><div class="va-tag">Lion King&#x27;s Stronghold</div></div></div><div class="card" data-search="Faceless Monster&#x27;s territory Territoire du Monstre sans visage Territoire où se trouve Moreti."><div class="card-body"><h3>Territoire du Monstre sans visage</h3><div class="va-tag">Faceless Monster&#x27;s territory</div><p class="desc">Territoire où se trouve Moreti.</p></div></div><div class="card" data-search="100th floor 100e étage Étage jamais conquis, flottant dans les airs."><div class="card-body"><h3>100e étage</h3><div class="va-tag">100th floor</div><p class="desc">Étage jamais conquis, flottant dans les airs.</p></div></div><div class="card" data-search="60th floor 60e étage Les monstres de la Tour se sont déversés dans le monde quand il a été franchi."><div class="card-body"><h3>60e étage</h3><div class="va-tag">60th floor</div><p class="desc">Les monstres de la Tour se sont déversés dans le monde quand il a été franchi.</p></div></div><div class="card" data-search="Central Continent Continent central "><div class="card-body"><h3>Continent central</h3><div class="va-tag">Central Continent</div></div></div><div class="card" data-search="Yoreuka Yoreuka Petit village du continent central."><div class="card-body"><h3>Yoreuka</h3><p class="desc">Petit village du continent central.</p></div></div><div class="card" data-search="Goblin Nest Nid de gobelins Donjon de terrain, avec la salle du boss."><div class="card-body"><h3>Nid de gobelins</h3><div class="va-tag">Goblin Nest</div><p class="desc">Donjon de terrain, avec la salle du boss.</p></div></div><div class="card" data-search="Yongcheon - Gate 1 Yongcheon - Porte 1 "><div class="card-body"><h3>Yongcheon - Porte 1</h3><div class="va-tag">Yongcheon - Gate 1</div></div></div><div class="card" data-search="Ogal Ogal Avant-poste de ravitaillement dans le désert, à l&#x27;ouest de Moreti."><div class="card-body"><h3>Ogal</h3><p class="desc">Avant-poste de ravitaillement dans le désert, à l&#x27;ouest de Moreti.</p></div></div><div class="card" data-search="Parta Parta Ville de taille moyenne au nord d&#x27;Ogal, avec une bibliothèque."><div class="card-body"><h3>Parta</h3><p class="desc">Ville de taille moyenne au nord d&#x27;Ogal, avec une bibliothèque.</p></div></div><div class="card" data-search="Elvenheim Elvenheim Royaume déchu des elfes."><div class="card-body"><h3>Elvenheim</h3><p class="desc">Royaume déchu des elfes.</p></div></div><div class="card" data-search="Beginner area Zone débutante Zone où se trouve l&#x27;association de mercenaires."><div class="card-body"><h3>Zone débutante</h3><div class="va-tag">Beginner area</div><p class="desc">Zone où se trouve l&#x27;association de mercenaires.</p></div></div><div class="card" data-search="Orc Fortress Forteresse des orcs Donjon de chasse où un clan veut monopoliser l&#x27;accès."><div class="card-body"><h3>Forteresse des orcs</h3><div class="va-tag">Orc Fortress</div><p class="desc">Donjon de chasse où un clan veut monopoliser l&#x27;accès.</p></div></div><div class="card" data-search="Akedonia Akedonia Le monde, formé du sang des trois dieux et de Sarban."><div class="card-body"><h3>Akedonia</h3><p class="desc">Le monde, formé du sang des trois dieux et de Sarban.</p></div></div><div class="card" data-search="Balkran workshop Atelier Balkran Sur le continent central ; fabrique des flèches (plumes brunes, pointe en argent)."><div class="card-body"><h3>Atelier Balkran</h3><div class="va-tag">Balkran workshop</div><p class="desc">Sur le continent central ; fabrique des flèches (plumes brunes, pointe en argent).</p></div></div><div class="card" data-search="Parta&#x27;s library Bibliothèque de Parta "><div class="card-body"><h3>Bibliothèque de Parta</h3><div class="va-tag">Parta&#x27;s library</div></div></div><div class="card" data-search="Dark Forest Forêt sombre Zone débutante avec plusieurs donjons."><div class="card-body"><h3>Forêt sombre</h3><div class="va-tag">Dark Forest</div><p class="desc">Zone débutante avec plusieurs donjons.</p></div></div><div class="card" data-search="Blood-colored Cave Caverne couleur sang Seul donjon de la zone débutante où les joueurs peuvent se tuer entre eux ; zone sans loi."><div class="card-body"><h3>Caverne couleur sang</h3><div class="va-tag">Blood-colored Cave</div><p class="desc">Seul donjon de la zone débutante où les joueurs peuvent se tuer entre eux ; zone sans loi.</p></div></div><div class="card" data-search="Alchemist&#x27;s Laboratory Laboratoire de l&#x27;alchimiste "><div class="card-body"><h3>Laboratoire de l&#x27;alchimiste</h3><div class="va-tag">Alchemist&#x27;s Laboratory</div></div></div><div class="card" data-search="Island of the Northern Wall Île du Mur du Nord Rumeur : occupée par des démons."><div class="card-body"><h3>Île du Mur du Nord</h3><div class="va-tag">Island of the Northern Wall</div><p class="desc">Rumeur : occupée par des démons.</p></div></div><div class="card" data-search="Hidden storeroom Réserve cachée Sous le laboratoire ; contient les outils magiques de Ratan."><div class="card-body"><h3>Réserve cachée</h3><div class="va-tag">Hidden storeroom</div><p class="desc">Sous le laboratoire ; contient les outils magiques de Ratan.</p></div></div><div class="card" data-search="Lake Lac Le refuge est sous le lac."><div class="card-body"><h3>Lac</h3><div class="va-tag">Lake</div><p class="desc">Le refuge est sous le lac.</p></div></div></div></section>
+</main>
+<footer>Glossaire iLoza · Logging Out Is Too Hard</footer>
+<div class="modal-overlay" id="charModal">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head">
+      <div class="modal-portrait" id="modalPortrait" style="display:none"></div>
+      <div class="modal-title-wrap">
+        <p class="modal-eyebrow">Fiche personnage</p>
+        <h2 id="modalName"></h2>
+        <div class="modal-meta-row" id="modalMeta"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-section"><h4>Tutoiement / Vouvoiement</h4><div class="rel-grid" id="modalRelations"></div></div>
+      <div class="modal-section" id="techSec"><h4>Techniques</h4><div class="tech-list" id="modalTechniques"></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const CHARS = [{"name": "Woojin (Kim Woojin)", "first": "", "desc": "Protagoniste, joueur piégé dans Evil Tale. Apparaît ici sous les traits d'un jeune.", "img": "", "rels": [{"with": "Raul", "label": "Vous / Tu"}, {"with": "Kahira", "label": "Vous / Vous"}, {"with": "Employé de l'association de mercenaires", "label": "Vous / Vous"}, {"with": "Peron", "label": "Tu / Tu"}, {"with": "Reine des elfes (Ruen future)", "label": "Vous / Vous"}], "techs": []}, {"name": "Raul", "first": "", "desc": "Épéiste, guide Woojin dans le village de Moreti. Paraît avoir une trentaine d'années. Tutoie Woojin.", "img": "", "rels": [{"with": "Woojin", "label": "Vous / Tu"}], "techs": []}, {"name": "Roi Lion (Lion King)", "first": "", "desc": "Mentionné : sa forteresse est la destination de certains aventuriers.", "img": "", "rels": [], "techs": []}, {"name": "Edan", "first": "", "desc": "IA qui a créé Evil Tale. La réponse au mystère se trouve peut-être chez elle.", "img": "", "rels": [], "techs": []}, {"name": "Re-a", "first": "", "desc": "Femme vivant dans une petite maison au toit vert, à Yoreuka. Raul demande qu'on la prévienne de ne pas attraper froid (lien non précisé).", "img": "", "rels": [], "techs": []}, {"name": "Kerga", "first": "", "desc": "Joueur classé n°1 d'Evil Tale ; son record au Nid de gobelins est battu par Woojin.", "img": "", "rels": [], "techs": []}, {"name": "Kan", "first": "", "desc": "Pseudo sous lequel Woojin enregistre son nom.", "img": "", "rels": [], "techs": []}, {"name": "Tramel", "first": "", "desc": "Chef d'un groupe de 4 joueurs, 3e du classement du Nid de gobelins.", "img": "", "rels": [], "techs": []}, {"name": "Go Juncheol (MJ Dain)", "first": "", "desc": "Équipe de gestion 2. Vouvoie son supérieur.", "img": "", "rels": [{"with": "Son supérieur", "label": "Vous / Tu"}], "techs": []}, {"name": "Directeur Han", "first": "", "desc": "Dirigeant du jeu ; fait surveiller le joueur coincé à Moreti.", "img": "", "rels": [], "techs": []}, {"name": "Sarbandin", "first": "", "desc": "Bête divine ancienne dont l'âme s'imprime en Woojin.", "img": "", "rels": [], "techs": []}, {"name": "Kahira", "first": "", "desc": "Naine, pèlerine de Meuha (femme), niv. 65, artisane habile (forge l'armure de Woojin). Cherche des failles et l'orc aux yeux rouges ; rejoint le groupe de Woojin. Vouvoiement avec Woojin.", "img": "", "rels": [{"with": "Woojin", "label": "Vous / Vous"}], "techs": []}, {"name": "Ruen Pirbas", "first": "", "desc": "Elfe (féminin, confirmé au ch. 16), archer arcanique niv. 20, famille royale d'Elvenheim, descendante d'Uldin. Ne peut pas utiliser la magie. Mercenaire de Woojin ; classe unique ; PNJ clé de la 2e mise à jour ; future Reine des elfes.", "img": "", "rels": [], "techs": []}, {"name": "Uldin", "first": "", "desc": "Ancêtre de Ruen Pirbas, lié à la famille royale d'Elvenheim.", "img": "", "rels": [], "techs": []}, {"name": "Kinte", "first": "", "desc": "Garde du clan qui monopolise la Forteresse des orcs ; tué en un coup par Kahira.", "img": "", "rels": [], "techs": []}, {"name": "Rasin", "first": "", "desc": "Dieu de la lumière.", "img": "", "rels": [], "techs": []}, {"name": "Haden", "first": "", "desc": "Dieu des ténèbres.", "img": "", "rels": [], "techs": []}, {"name": "Meuha", "first": "", "desc": "Dieu du Vide.", "img": "", "rels": [], "techs": []}, {"name": "Sarban", "first": "", "desc": "Premier humain ; Akedonia est née de son sang et de celui des trois dieux.", "img": "", "rels": [], "techs": []}, {"name": "Peron", "first": "", "desc": "Rôdeur du clan Blan, plus grande alliance de la Forêt sombre ; envoyé par l'Ordre de la Genèse pour capturer Woojin. Niveau ~40. Tué par Woojin.", "img": "", "rels": [{"with": "Woojin", "label": "Tu / Tu"}], "techs": []}, {"name": "Sig Ellik", "first": "", "desc": "Alchimiste, boss du Laboratoire de l'alchimiste ; formule de transmutation, barrière, invocations.", "img": "", "rels": [], "techs": []}, {"name": "Lahad", "first": "", "desc": "Ennemi de Sig Ellik (il le soupçonne de lui envoyer des intrus).", "img": "", "rels": [], "techs": []}, {"name": "MJ Han (GM Han)", "first": "", "desc": "MJ maladroit assigné à Kan ; vient de le surveiller en cachette. Apparenté (soeur ?) au directeur Han ?", "img": "", "rels": [], "techs": []}, {"name": "Han Mi Ho", "first": "", "desc": "PDG d'Andra Studio, \"directeur Han\" ; ordonne la surveillance de Kan. Le ch. 6 la désigne peut-être au masculin (à vérifier).", "img": "", "rels": [], "techs": []}, {"name": "Go-Un", "first": "", "desc": "Réfugié elfe du refuge de la caverne couleur sang.", "img": "", "rels": [], "techs": []}, {"name": "Bronpeu", "first": "", "desc": "Collectionneur abattu par Kan.", "img": "", "rels": [], "techs": []}, {"name": "Ratan", "first": "", "desc": "Mage noir ; ses outils magiques sont découverts sous le laboratoire (maître d'un des personnages).", "img": "", "rels": [], "techs": []}];
+const tabs = document.querySelectorAll('nav.tabs button'), panels = document.querySelectorAll('section.panel');
+tabs.forEach(btn => btn.addEventListener('click', () => {
+  tabs.forEach(b => b.classList.remove('active')); panels.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');
+}));
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('[data-search]').forEach(el => {
+    el.style.display = (q === '' || el.getAttribute('data-search').toLowerCase().includes(q)) ? '' : 'none';
+  });
+});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function openChar(i) {
+  const c = CHARS[i];
+  document.getElementById('modalName').textContent = c.name;
+  const pt = document.getElementById('modalPortrait');
+  pt.style.display = c.img ? '' : 'none';
+  pt.innerHTML = c.img ? '<img src="' + esc(c.img) + '" alt="" style="object-position:center 18%">' : '';
+  document.getElementById('modalMeta').innerHTML = c.first ? '<span>' + esc(c.first) + '</span>' : '';
+  document.getElementById('modalDesc').textContent = c.desc || '';
+  document.getElementById('modalRelations').innerHTML = c.rels.length ? c.rels.map(r =>
+    '<div class="rel-chip"><span style="padding-left:8px">' + esc(r.with) + '</span><span class="rel-label">' + esc(r.label || '?') + '</span></div>').join('')
+    : '<p class="modal-empty">Aucune relation renseignée.</p>';
+  const ts = document.getElementById('techSec');
+  ts.style.display = c.techs.length ? '' : 'none';
+  document.getElementById('modalTechniques').innerHTML = c.techs.map(t =>
+    '<div class="tech-item"><div class="tech-names"><span class="tech-vf">' + esc(t.vf) + '</span>' + (t.va ? '<span class="tech-va">' + esc(t.va) + '</span>' : '') + '</div>' + (t.details ? '<p class="tech-details">' + esc(t.details) + '</p>' : '') + '</div>').join('');
+  document.getElementById('charModal').classList.add('open');
+}
+document.querySelectorAll('.char-card').forEach(card => card.addEventListener('click', () => openChar(parseInt(card.dataset.idx, 10))));
+document.addEventListener('click', e => { if (e.target.closest('#modalClose') || e.target.id === 'charModal') document.getElementById('charModal').classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('charModal').classList.remove('open'); });
+</script>
+</body>
+</html>

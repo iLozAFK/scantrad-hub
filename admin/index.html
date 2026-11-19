@@ -190,6 +190,10 @@ td.mute { color: var(--z300); }
         <pre id="st-out" class="help" style="white-space:pre-wrap;margin:16px 0 0;font-family:inherit"></pre>
       </div>
     </section>
+    <section id="ocr-view" hidden>
+      <div class="head"><div><h1>OCR des chapitres</h1><p class="sub">Lit le texte des pages (images ou ZIP) avec l'API Claude. Ta clé API reste dans ce navigateur.</p></div></div>
+      <iframe id="ocr-frame" title="OCR des chapitres" style="width:100%;height:calc(100vh - 190px);min-height:480px;border:1px solid var(--line);border-radius:8px;background:#0a0a0a"></iframe>
+    </section>
     <section id="edit-view" hidden>
       <button class="back" type="button" id="e-top-back">&larr; Retour à la liste</button>
       <div class="head"><div><h1 id="e-title"></h1><p class="sub" id="e-sub"></p></div></div>
@@ -376,6 +380,7 @@ function renderNav() {
     nav.append(b);
   };
   Object.keys(COLS).forEach(k => add(k, COLS[k].nav, COLS[k].group));
+  add("OCR", "OCR des chapitres", "Outils");
   add("SITE", "Textes du site", "Site");
   add("STATS", "Statistiques", "Site");
 }
@@ -386,9 +391,15 @@ function renderBar() {
 }
 function renderAll() {
   renderNav(); renderBar();
-  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS";
-  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS";
+  $("list-view").hidden = !!editing || section === "SITE" || section === "STATS" || section === "OCR";
+  $("edit-view").hidden = (!editing && section !== "SITE") || section === "STATS" || section === "OCR";
   $("stats-view").hidden = section !== "STATS";
+  $("ocr-view").hidden = section !== "OCR";
+  if (section === "OCR") {
+    editing = null;
+    const fr = $("ocr-frame"); if (!fr.getAttribute("src")) fr.src = "ocr.html";  // chargé une seule fois : l'état de l'OCR est conservé en changeant de section
+    return;
+  }
   if (section === "STATS") { editing = null; renderStats(); return; }
   if (section === "SITE" && !editing) startEdit("SITE", 0);
   else if (editing) renderEdit(); else renderList();

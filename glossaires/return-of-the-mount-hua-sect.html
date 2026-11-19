@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glossaire — Return of the Mount Hua Sect</title>
+<meta name="theme-color" content="#0f1511">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1511;
+  --bg-2: #141c16;
+  --surface: #1b261e;
+  --surface-2: #233227;
+  --border: rgba(170,230,190,0.10);
+  --border-hover: rgba(170,230,190,0.28);
+  --text: #e9f3ea;
+  --text-dim: #9fbfa8;
+  --text-faint: #678270;
+  --accent: #34d399;
+  --accent-2: #e11d48;
+  --accent-3: #2fa88a;
+  --gold: #f0b429;
+  --radius: 16px;
+  --radius-sm: 10px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background-image:
+    radial-gradient(1000px 600px at 10% -10%, rgba(52,211,153,0.16), transparent 60%),
+    radial-gradient(800px 600px at 100% 0%, rgba(225,29,72,0.12), transparent 55%),
+    repeating-linear-gradient(115deg, rgba(170,230,190,0.025) 0px, rgba(170,230,190,0.025) 2px, transparent 2px, transparent 60px);
+  background-attachment: fixed;
+}
+h1,h2,h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; }
+.ic { width: 14px; height: 14px; flex-shrink: 0; vertical-align: -2px; margin-right: 6px; color: var(--accent); }
+.ic-lg { width: 34px; height: 34px; opacity: 0.35; color: var(--text-faint); }
+header {
+  position: sticky; top: 0; top: env(safe-area-inset-top, 0px);
+  z-index: 30;
+  background: rgba(15,21,17,0.78);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 22px 14px;
+}
+.header-top {
+  display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  max-width: 1480px; margin: 0 auto;
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand .logo {
+  width: 40px; height: 40px; border-radius: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 18px rgba(52,211,153,0.4);
+  flex-shrink: 0;
+}
+.brand .logo svg { width: 22px; height: 22px; color: #1a0f08; }
+.brand h1 {
+  margin: 0; font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2;
+}
+.brand .subtitle { margin: 0; font-size: 0.78rem; color: var(--text-dim); }
+.search-wrap { max-width: 1480px; margin: 14px auto 0; position: relative; }
+.search-wrap svg {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 17px; height: 17px; color: var(--text-faint); pointer-events: none;
+}
+#searchInput {
+  width: 100%; padding: 12px 14px 12px 40px;
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text);
+  font-family: inherit; font-size: 0.92rem;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+#searchInput::placeholder { color: var(--text-faint); }
+#searchInput:focus {
+  outline: none; border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(52,211,153,0.18);
+}
+nav.tabs {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 12px 22px 0; margin-top: 4px;
+  max-width: 1480px; margin-left: auto; margin-right: auto;
+  scrollbar-width: none;
+}
+nav.tabs::-webkit-scrollbar { display: none; }
+nav.tabs button {
+  flex: 0 0 auto; background: transparent; color: var(--text-dim);
+  border: 1px solid transparent; padding: 8px 14px; border-radius: 999px;
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 500;
+  cursor: pointer; white-space: nowrap; transition: all 0.15s;
+}
+nav.tabs button:hover { color: var(--text); background: var(--surface); }
+nav.tabs button.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #1a0f08; font-weight: 600;
+  box-shadow: 0 4px 14px rgba(52,211,153,0.32);
+}
+main { max-width: 1480px; margin: 0 auto; padding: 26px 22px 70px; }
+section.panel { display: none; }
+section.panel.active { display: block; animation: fadein 0.3s ease; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.section-title {
+  font-size: 1.3rem; font-weight: 700; margin: 0 0 18px;
+  display: flex; align-items: center; gap: 10px; letter-spacing: -0.01em;
+}
+.count-tag {
+  font-size: 0.72rem; font-family: 'Inter', sans-serif; font-weight: 600;
+  background: var(--surface-2); color: var(--text-dim);
+  padding: 3px 10px; border-radius: 999px; border: 1px solid var(--border);
+}
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.card {
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+.card:hover {
+  transform: translateY(-4px); border-color: var(--border-hover);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.5);
+}
+.card-img {
+  width: 100%; aspect-ratio: 4/3; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; position: relative;
+}
+.card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(20,12,6,0.5));
+}
+.card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.noimg { display: flex; align-items: center; justify-content: center; }
+.card-body { padding: 14px 16px 16px; flex: 1; }
+.card-body h3 { margin: 0 0 8px; font-size: 1.02rem; font-weight: 600; color: var(--text); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.badge {
+  font-family: 'Inter', sans-serif; font-size: 0.66rem; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--surface-2); color: var(--text-dim);
+  border: 1px solid var(--border); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.badge.rang { background: linear-gradient(135deg, var(--accent-2), var(--gold)); color: #1a0f08; border: none; }
+.badge.titre { background: linear-gradient(135deg, var(--accent-3), #1e8f7a); color: #06231c; border: none; }
+.meta { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 8px; }
+.meta span { display: flex; align-items: center; }
+.desc { font-size: 0.85rem; line-height: 1.5; margin: 6px 0 0; color: var(--text-dim); }
+.char-card .desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.va-tag { font-size: 0.7rem; color: var(--gold); font-weight: 600; margin-bottom: 5px; letter-spacing: 0.02em; }
+.table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: 0.87rem; }
+table th {
+  background: var(--surface-2); color: var(--text-dim); padding: 12px 14px; text-align: left;
+  font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border);
+}
+table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text); }
+table tr:last-child td { border-bottom: none; }
+table tr:hover td { background: var(--surface-2); }
+td.rel { text-align: center; font-weight: 700; color: var(--accent); font-family: 'Space Grotesk', sans-serif; }
+td.va { color: var(--text-faint); font-style: italic; }
+td.vf { font-weight: 600; color: var(--text); }
+td.pname { display: table-cell; }
+.pname-inner {
+  display: flex; align-items: center; gap: 8px;
+}
+.pname-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+}
+.pname-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pname-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.hist-item {
+  display: flex; gap: 16px;
+  background: linear-gradient(160deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; margin-bottom: 12px; transition: border-color 0.15s;
+}
+.hist-item:hover { border-color: var(--border-hover); }
+.hist-chap { flex: 0 0 118px; display: flex; flex-direction: column; gap: 6px; }
+.chap-webtoon { font-weight: 700; color: var(--accent); font-size: 0.82rem; font-family: 'Space Grotesk', sans-serif; }
+.chap-novel {
+  font-size: 0.68rem; font-weight: 600; color: var(--accent-3);
+  background: rgba(47,168,138,0.14); padding: 3px 8px; border-radius: 999px; width: fit-content;
+}
+.hist-body { flex: 1; }
+.hist-desc { margin: 0 0 8px; font-size: 0.87rem; line-height: 1.55; color: var(--text); }
+.hist-presence { font-size: 0.75rem; color: var(--text-dim); display: flex; align-items: center; }
+footer {
+  text-align: center; padding: 20px; font-size: 0.75rem; color: var(--text-faint);
+  border-top: 1px solid var(--border);
+}
+
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(10,6,3,0.72);
+  backdrop-filter: blur(6px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 20px;
+  padding-top: calc(20px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.modal-overlay.open { display: flex; animation: fadein 0.2s ease; }
+.modal-card {
+  background: linear-gradient(165deg, var(--surface), var(--surface-2));
+  border: 1px solid var(--border-hover);
+  border-radius: 20px;
+  max-width: 640px; width: 100%;
+  max-height: 88vh; overflow-y: auto;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6);
+  position: relative;
+}
+.modal-head {
+  display: flex; gap: 18px; align-items: flex-start;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--border);
+}
+.modal-portrait {
+  width: 96px; height: 96px; border-radius: 14px;
+  overflow: hidden; flex-shrink: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+.modal-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.modal-portrait .noimg { width: 100%; height: 100%; }
+.modal-title-wrap { flex: 1; min-width: 0; }
+.modal-eyebrow {
+  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-faint); font-weight: 600; margin: 0 0 4px;
+}
+.modal-title-wrap h2 {
+  margin: 0 0 8px; font-size: 1.4rem; font-weight: 700; color: var(--text);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 16px;
+  width: 34px; height: 34px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.modal-close:hover { background: var(--accent-2); color: #fff; }
+.modal-close svg { width: 16px; height: 16px; }
+.modal-body { padding: 20px 24px 26px; }
+.modal-desc {
+  font-size: 0.9rem; line-height: 1.6; color: var(--text-dim);
+  margin: 0 0 22px;
+}
+.modal-meta-row {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.82rem; color: var(--text-dim); margin-bottom: 4px;
+}
+.modal-meta-row span { display: flex; align-items: center; }
+.modal-section {
+  margin-top: 22px;
+}
+.modal-section h4 {
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em;
+  font-weight: 700; color: var(--accent);
+  margin: 0 0 12px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.rel-grid {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.rel-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 999px; padding: 5px 12px 5px 5px;
+  font-size: 0.82rem; color: var(--text);
+  transition: border-color 0.15s;
+}
+.rel-chip:hover { border-color: var(--border-hover); }
+.rel-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; flex-shrink: 0; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+}
+.rel-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.rel-avatar svg { width: 14px; height: 14px; opacity: 0.3; }
+.rel-label {
+  font-weight: 700; font-size: 0.7rem; text-transform: uppercase;
+  color: var(--gold); margin-left: 2px;
+}
+.tech-list { display: flex; flex-direction: column; gap: 8px; }
+.tech-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 10px 14px;
+}
+.tech-item .tech-names {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 3px;
+}
+.tech-item .tech-vf { font-weight: 700; color: var(--text); font-size: 0.9rem; }
+.tech-item .tech-va { font-size: 0.72rem; color: var(--text-faint); font-style: italic; }
+.tech-item .tech-details { font-size: 0.8rem; color: var(--text-dim); margin: 0; }
+.modal-empty { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+.char-card { cursor: pointer; }
+
+
+.hero-banner {
+  width: 100%;
+  aspect-ratio: 2033 / 457;
+  max-height: 260px;
+  overflow: hidden;
+  position: relative;
+}
+.hero-banner img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.hero-banner::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(15,21,17,0) 45%, rgba(15,21,17,0.95) 100%);
+}
+
+
+.logo.logo-img { background: transparent; box-shadow: none; padding: 2px; }
+.logo.logo-img img { width: 100%; height: 100%; object-fit: contain; }
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+  display: flex; align-items: center; gap: 4px;
+}
+
+
+.hist-item { align-items: stretch; }
+.hist-loc-img {
+  flex: 0 0 84px;
+  width: 84px; height: 84px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border);
+}
+.hist-loc-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hist-loc-img .noimg svg { width: 28px; height: 28px; opacity: 0.3; color: var(--text-faint); }
+.chap-lieu {
+  font-size: 0.68rem; color: var(--text-dim);
+}
+
+
+.card-img.ph { aspect-ratio: auto; height: 96px; }
+.card-img.ph .initials { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; color: var(--accent); opacity: .85; z-index: 1; }
+.card-img.ph::after { display: none; }
+.rel-label-s { font-weight: 700; font-size: 0.7rem; text-transform: uppercase; color: var(--gold); }
+.tuto-note { color: var(--text-faint); font-size: .78rem; }
+.count-line { color: var(--text-faint); font-size: .8rem; margin: -8px 0 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="brand">
+      <div class="logo logo-img"><img src="../covers/return-of-the-mount-hua-sect.webp" alt="" style="border-radius:9px;object-fit:cover"></div>
+      <div>
+        <h1>Return of the Mount Hua Sect</h1>
+        <p class="subtitle">Glossaire de la série · iLoza</p>
+      </div>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="search" id="searchInput" placeholder="Rechercher un nom, un lieu, une technique...">
+  </div>
+</header>
+<nav class="tabs" id="tabs"><button data-target="tuto" class="active">Tutoiement/Vouvoiement · 9</button><button data-target="vocabulaire">Vocabulaire · 66</button></nav>
+<main>
+<section class="panel active" id="tuto"><h2 class="section-title">Tutoiement / Vouvoiement <span class="count-tag">9</span></h2><div class="table-wrap"><table><thead><tr><th>Personnage 1</th><th>Relation</th><th>Personnage 2</th></tr></thead><tbody><tr data-search="mc son groupe tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">son groupe</td></tr><tr data-search="son groupe mc tu"><td class="pname">son groupe</td><td class="rel">tu</td><td class="pname">mc</td></tr><tr data-search="mc chef de l&#x27;alliance bidule tu"><td class="pname">mc</td><td class="rel">tu</td><td class="pname">chef de l&#x27;alliance bidule</td></tr><tr data-search="chef de l&#x27;alliance bidule mc tu"><td class="pname">chef de l&#x27;alliance bidule</td><td class="rel">tu</td><td class="pname">mc</td></tr><tr data-search="Anciens du mont hua MC tu"><td class="pname">Anciens du mont hua</td><td class="rel">tu</td><td class="pname">MC</td></tr><tr data-search="MC Anciens du mont hua vous"><td class="pname">MC</td><td class="rel">vous</td><td class="pname">Anciens du mont hua</td></tr><tr data-search="Ancien feuj tous tu"><td class="pname">Ancien feuj</td><td class="rel">tu</td><td class="pname">tous</td></tr><tr data-search="MC Chef de guilde Eunha vous"><td class="pname">MC</td><td class="rel">vous</td><td class="pname">Chef de guilde Eunha</td></tr><tr data-search="Chef de guilde Eunha MC vous"><td class="pname">Chef de guilde Eunha</td><td class="rel">vous</td><td class="pname">MC</td></tr></tbody></table></div></section>
+<section class="panel" id="vocabulaire"><h2 class="section-title">Vocabulaire <span class="count-tag">66</span></h2><div class="grid"><div class="card" data-search="junior cadet "><div class="card-body"><h3>cadet</h3><div class="va-tag">junior</div></div></div><div class="card" data-search=" secte du mont hua "><div class="card-body"><h3>secte du mont hua</h3></div></div><div class="card" data-search="class génération "><div class="card-body"><h3>génération</h3><div class="va-tag">class</div></div></div><div class="card" data-search="dragon-pheonix summit l&#x27;assemblée dragon-phénix "><div class="card-body"><h3>l&#x27;assemblée dragon-phénix</h3><div class="va-tag">dragon-pheonix summit</div></div></div><div class="card" data-search="greatest three of shaanxi trois plus grands de shaanxi "><div class="card-body"><h3>trois plus grands de shaanxi</h3><div class="va-tag">greatest three of shaanxi</div></div></div><div class="card" data-search="eternal enlightenment l’éveil éternel "><div class="card-body"><h3>l’éveil éternel</h3><div class="va-tag">eternal enlightenment</div></div></div><div class="card" data-search="euhna merchant guild la guilde marchande d’eunha "><div class="card-body"><h3>la guilde marchande d’eunha</h3><div class="va-tag">euhna merchant guild</div></div></div><div class="card" data-search="silver nyang nyang d&#x27;argent "><div class="card-body"><h3>nyang d&#x27;argent</h3><div class="va-tag">silver nyang</div></div></div><div class="card" data-search="beast palace palais bestial "><div class="card-body"><h3>palais bestial</h3><div class="va-tag">beast palace</div></div></div><div class="card" data-search="plum blossom sword épée de la fleur de prunier "><div class="card-body"><h3>épée de la fleur de prunier</h3><div class="va-tag">plum blossom sword</div></div></div><div class="card" data-search="peace merchant guild guilde marchande pacifiste "><div class="card-body"><h3>guilde marchande pacifiste</h3><div class="va-tag">peace merchant guild</div></div></div><div class="card" data-search="five outer palace les cinq palais extérieurs "><div class="card-body"><h3>les cinq palais extérieurs</h3><div class="va-tag">five outer palace</div></div></div><div class="card" data-search="plum blossom sword supreme l’épée suprême de fleur de prunier "><div class="card-body"><h3>l’épée suprême de fleur de prunier</h3><div class="va-tag">plum blossom sword supreme</div></div></div><div class="card" data-search="peach spring fragrance fragrance printanière à la pêche "><div class="card-body"><h3>fragrance printanière à la pêche</h3><div class="va-tag">peach spring fragrance</div></div></div><div class="card" data-search="five demon-repelling heros les cinq héros repousseurs de démons "><div class="card-body"><h3>les cinq héros repousseurs de démons</h3><div class="va-tag">five demon-repelling heros</div></div></div><div class="card" data-search="dark supreme Suprême des ténèbres "><div class="card-body"><h3>Suprême des ténèbres</h3><div class="va-tag">dark supreme</div></div></div><div class="card" data-search="deity ascension ascension divine "><div class="card-body"><h3>ascension divine</h3><div class="va-tag">deity ascension</div></div></div><div class="card" data-search="divine spirit herb herbe de l&#x27;esprit divin "><div class="card-body"><h3>herbe de l&#x27;esprit divin</h3><div class="va-tag">divine spirit herb</div></div></div><div class="card" data-search="reservoir réservoir "><div class="card-body"><h3>réservoir</h3><div class="va-tag">reservoir</div></div></div><div class="card" data-search="white lightning foudre blanche "><div class="card-body"><h3>foudre blanche</h3><div class="va-tag">white lightning</div></div></div><div class="card" data-search="INK-SCALED BLOOD PYTHON python sanguinaire aux écailles d’encre "><div class="card-body"><h3>python sanguinaire aux écailles d’encre</h3><div class="va-tag">INK-SCALED BLOOD PYTHON</div></div></div><div class="card" data-search="HIDDEN WEAPON ARTS INFUSED WITH THE TANG CLAN PATRIARCH&#x27;S INTERNAL ENERGY arts des armes cachées infusés d’énergie interne du patriarche du clan tang "><div class="card-body"><h3>arts des armes cachées infusés d’énergie interne du patriarche du clan tang</h3><div class="va-tag">HIDDEN WEAPON ARTS INFUSED WITH THE TANG CLAN PATRIARCH&#x27;S INTERNAL ENERGY</div></div></div><div class="card" data-search="enhanced sword energy énergie de l’épée renforcée "><div class="card-body"><h3>énergie de l’épée renforcée</h3><div class="va-tag">enhanced sword energy</div></div></div><div class="card" data-search="enhanced energy énergie renforcée "><div class="card-body"><h3>énergie renforcée</h3><div class="va-tag">enhanced energy</div></div></div><div class="card" data-search="everlasting metal métal éternel "><div class="card-body"><h3>métal éternel</h3><div class="va-tag">everlasting metal</div></div></div><div class="card" data-search="origin energy pill Des pilules d’énergie originelle. "><div class="card-body"><h3>Des pilules d’énergie originelle.</h3><div class="va-tag">origin energy pill</div></div></div><div class="card" data-search="thousand-poison pill la pilule des mille poisons "><div class="card-body"><h3>la pilule des mille poisons</h3><div class="va-tag">thousand-poison pill</div></div></div><div class="card" data-search="beauty&#x27;s tear La larme de beauté "><div class="card-body"><h3>La larme de beauté</h3><div class="va-tag">beauty&#x27;s tear</div></div></div><div class="card" data-search="THE GREAT REJUVENATION PILL grande pilule de rajeunissement "><div class="card-body"><h3>grande pilule de rajeunissement</h3><div class="va-tag">THE GREAT REJUVENATION PILL</div></div></div><div class="card" data-search="TAIQING PILL pilule de taiqing "><div class="card-body"><h3>pilule de taiqing</h3><div class="va-tag">TAIQING PILL</div></div></div><div class="card" data-search="cleanest origin energy pill pilule d’énergie originelle la plus pure "><div class="card-body"><h3>pilule d’énergie originelle la plus pure</h3><div class="va-tag">cleanest origin energy pill</div></div></div><div class="card" data-search="success exploit "><div class="card-body"><h3>exploit</h3><div class="va-tag">success</div></div></div><div class="card" data-search="imperial gromwell gremlin impérial "><div class="card-body"><h3>gremlin impérial</h3><div class="va-tag">imperial gromwell</div></div></div><div class="card" data-search="Maeng So Maître du palais bestial "><div class="card-body"><h3>Maître du palais bestial</h3><div class="va-tag">Maeng So</div></div></div><div class="card" data-search="Four seas merchant association Association marchande des quatre mers "><div class="card-body"><h3>Association marchande des quatre mers</h3><div class="va-tag">Four seas merchant association</div></div></div><div class="card" data-search="Medical hall Pavillon médicinal "><div class="card-body"><h3>Pavillon médicinal</h3><div class="va-tag">Medical hall</div></div></div><div class="card" data-search="The plum blossom pill La pilule de fleur de prunier "><div class="card-body"><h3>La pilule de fleur de prunier</h3><div class="va-tag">The plum blossom pill</div></div></div><div class="card" data-search="Goldenberry extract Extrait de baie dorée "><div class="card-body"><h3>Extrait de baie dorée</h3><div class="va-tag">Goldenberry extract</div></div></div><div class="card" data-search="Fire god liquid Liquide du dieu du feu "><div class="card-body"><h3>Liquide du dieu du feu</h3><div class="va-tag">Fire god liquid</div></div></div><div class="card" data-search="Bamboo shadow strike Frappe du bambou spectral "><div class="card-body"><h3>Frappe du bambou spectral</h3><div class="va-tag">Bamboo shadow strike</div></div></div><div class="card" data-search="plum blossom scattered strike Dispersion de fleurs de prunier "><div class="card-body"><h3>Dispersion de fleurs de prunier</h3><div class="va-tag">plum blossom scattered strike</div></div></div><div class="card" data-search="Falling petal stride Pas de pétale tombant "><div class="card-body"><h3>Pas de pétale tombant</h3><div class="va-tag">Falling petal stride</div></div></div><div class="card" data-search="scattered plum shadow Dispersion de l&#x27;ombre de prunier "><div class="card-body"><h3>Dispersion de l&#x27;ombre de prunier</h3><div class="va-tag">scattered plum shadow</div></div></div><div class="card" data-search="The 24-movement plum blossom sword technique les 24 fleurs de prunier "><div class="card-body"><h3>les 24 fleurs de prunier</h3><div class="va-tag">The 24-movement plum blossom sword technique</div></div></div><div class="card" data-search="Hyun Dang. aîné, sale fils de pute "><div class="card-body"><h3>aîné, sale fils de pute</h3><div class="va-tag">Hyun Dang.</div></div></div><div class="card" data-search="Huayin Huayin (préfecture) Nouvelle branche de la secte des mendiants ouverte près du mont Hua"><div class="card-body"><h3>Huayin (préfecture)</h3><div class="va-tag">Huayin</div><p class="desc">Nouvelle branche de la secte des mendiants ouverte près du mont Hua</p></div></div><div class="card" data-search="Beggar Sect secte des mendiants "><div class="card-body"><h3>secte des mendiants</h3><div class="va-tag">Beggar Sect</div></div></div><div class="card" data-search="Hong Daegwang Hong Daegwang Ancien chef de branche de Luoyang, devenu chef de la branche de Huayin de la secte des mendiants"><div class="card-body"><h3>Hong Daegwang</h3><p class="desc">Ancien chef de branche de Luoyang, devenu chef de la branche de Huayin de la secte des mendiants</p></div></div><div class="card" data-search="Hong Daegwang → Hyun Jong  Hong Daegwang vouvoie le chef de secte Hyun Jong"><div class="card-body"><h3>Hong Daegwang → Hyun Jong</h3><p class="desc">Hong Daegwang vouvoie le chef de secte Hyun Jong</p></div></div><div class="card" data-search="Yi Bo l’intendant Yi Bo Escorte l’intendant jusqu’à Xi-An"><div class="card-body"><h3>l’intendant Yi Bo</h3><div class="va-tag">Yi Bo</div><p class="desc">Escorte l’intendant jusqu’à Xi-An</p></div></div><div class="card" data-search="Xi-An Xi-An "><div class="card-body"><h3>Xi-An</h3></div></div><div class="card" data-search="Chengdu Chengdu Siège de la guilde marchande d’Eunha"><div class="card-body"><h3>Chengdu</h3><p class="desc">Siège de la guilde marchande d’Eunha</p></div></div><div class="card" data-search="Baek Chun Baek Chun Disciple de deuxième génération, « épée vertueuse de Hua » ; aide Un Gum à entraîner les enfants. Orthographe : Baek Chun (sans trait d’union)"><div class="card-body"><h3>Baek Chun</h3><p class="desc">Disciple de deuxième génération, « épée vertueuse de Hua » ; aide Un Gum à entraîner les enfants. Orthographe : Baek Chun (sans trait d’union)</p></div></div><div class="card" data-search="Hyun Dang Hyun Dang Ancien de la secte, absent depuis une trentaine d’années, de retour au mont Hua ; Hyun Jong l’appelle « Frère aîné Hyun Dang ». Tutoie Baek Chun (« mon enfant »)"><div class="card-body"><h3>Hyun Dang</h3><p class="desc">Ancien de la secte, absent depuis une trentaine d’années, de retour au mont Hua ; Hyun Jong l’appelle « Frère aîné Hyun Dang ». Tutoie Baek Chun (« mon enfant »)</p></div></div><div class="card" data-search="Hyun Young Hyun Young Ancien du mont Hua, hostile au retour de Hyun Dang"><div class="card-body"><h3>Hyun Young</h3><p class="desc">Ancien du mont Hua, hostile au retour de Hyun Dang</p></div></div><div class="card" data-search="Hyun Jong Hyun Jong Chef de secte du mont Hua"><div class="card-body"><h3>Hyun Jong</h3><p class="desc">Chef de secte du mont Hua</p></div></div><div class="card" data-search="monastic name nom monastique Hyun Dang appelle Hyun Jong par son nom monastique, sans titre"><div class="card-body"><h3>nom monastique</h3><div class="va-tag">monastic name</div><p class="desc">Hyun Dang appelle Hyun Jong par son nom monastique, sans titre</p></div></div><div class="card" data-search="divine dragon of Mount Hua dragon divin du mont Hua Surnom de Chung Myung (le dragon, au masculin)"><div class="card-body"><h3>dragon divin du mont Hua</h3><div class="va-tag">divine dragon of Mount Hua</div><p class="desc">Surnom de Chung Myung (le dragon, au masculin)</p></div></div><div class="card" data-search="Righteous Sword of Hua épée vertueuse de Hua Titre de Baek Chun"><div class="card-body"><h3>épée vertueuse de Hua</h3><div class="va-tag">Righteous Sword of Hua</div><p class="desc">Titre de Baek Chun</p></div></div><div class="card" data-search="Sword Plum Blossom Supreme l’épée suprême de fleur de prunier Manuels secrets illustrés (24 volumes) écrits par Chung Myung"><div class="card-body"><h3>l’épée suprême de fleur de prunier</h3><div class="va-tag">Sword Plum Blossom Supreme</div><p class="desc">Manuels secrets illustrés (24 volumes) écrits par Chung Myung</p></div></div><div class="card" data-search="Scattered Plum Shadow Dispersion de l’ombre de prunier Technique de pas perdue de la secte"><div class="card-body"><h3>Dispersion de l’ombre de prunier</h3><div class="va-tag">Scattered Plum Shadow</div><p class="desc">Technique de pas perdue de la secte</p></div></div><div class="card" data-search="nine palaces sword arts arts d’épée des neuf palais "><div class="card-body"><h3>arts d’épée des neuf palais</h3><div class="va-tag">nine palaces sword arts</div></div></div><div class="card" data-search="Nu’er Hong Nu’er Hong Vin de riz chinois (NDT) ; un baril offert à Chung Myung par le chef de la guilde marchande"><div class="card-body"><h3>Nu’er Hong</h3><p class="desc">Vin de riz chinois (NDT) ; un baril offert à Chung Myung par le chef de la guilde marchande</p></div></div><div class="card" data-search="Mount Zhongnan mont Zhongnan Chung Myung menace d’y envoyer les anciens"><div class="card-body"><h3>mont Zhongnan</h3><div class="va-tag">Mount Zhongnan</div><p class="desc">Chung Myung menace d’y envoyer les anciens</p></div></div><div class="card" data-search="Hyun Dang → ses petits-enfants  Hyun Dang vouvoie ses descendants ; ils l’appellent « grand-père » (ch. 187)"><div class="card-body"><h3>Hyun Dang → ses petits-enfants</h3><p class="desc">Hyun Dang vouvoie ses descendants ; ils l’appellent « grand-père » (ch. 187)</p></div></div><div class="card" data-search="Chung Myung → Hyun Dang et les anciens  Chung Myung tutoie les anciens (insolent, ch. 187)"><div class="card-body"><h3>Chung Myung → Hyun Dang et les anciens</h3><p class="desc">Chung Myung tutoie les anciens (insolent, ch. 187)</p></div></div></div></section>
+</main>
+<footer>Glossaire iLoza · Return of the Mount Hua Sect</footer>
+<div class="modal-overlay" id="charModal">
+  <div class="modal-card">
+    <button class="modal-close" id="modalClose" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-head">
+      <div class="modal-portrait" id="modalPortrait" style="display:none"></div>
+      <div class="modal-title-wrap">
+        <p class="modal-eyebrow">Fiche personnage</p>
+        <h2 id="modalName"></h2>
+        <div class="modal-meta-row" id="modalMeta"></div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-section"><h4>Tutoiement / Vouvoiement</h4><div class="rel-grid" id="modalRelations"></div></div>
+      <div class="modal-section" id="techSec"><h4>Techniques</h4><div class="tech-list" id="modalTechniques"></div></div>
+    </div>
+  </div>
+</div>
+<script>
+const CHARS = [];
+const tabs = document.querySelectorAll('nav.tabs button'), panels = document.querySelectorAll('section.panel');
+tabs.forEach(btn => btn.addEventListener('click', () => {
+  tabs.forEach(b => b.classList.remove('active')); panels.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active'); document.getElementById(btn.dataset.target).classList.add('active');
+}));
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', () => {
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('[data-search]').forEach(el => {
+    el.style.display = (q === '' || el.getAttribute('data-search').toLowerCase().includes(q)) ? '' : 'none';
+  });
+});
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function openChar(i) {
+  const c = CHARS[i];
+  document.getElementById('modalName').textContent = c.name;
+  const pt = document.getElementById('modalPortrait');
+  pt.style.display = c.img ? '' : 'none';
+  pt.innerHTML = c.img ? '<img src="' + esc(c.img) + '" alt="" style="object-position:center 18%">' : '';
+  document.getElementById('modalMeta').innerHTML = c.first ? '<span>' + esc(c.first) + '</span>' : '';
+  document.getElementById('modalDesc').textContent = c.desc || '';
+  document.getElementById('modalRelations').innerHTML = c.rels.length ? c.rels.map(r =>
+    '<div class="rel-chip"><span style="padding-left:8px">' + esc(r.with) + '</span><span class="rel-label">' + esc(r.label || '?') + '</span></div>').join('')
+    : '<p class="modal-empty">Aucune relation renseignée.</p>';
+  const ts = document.getElementById('techSec');
+  ts.style.display = c.techs.length ? '' : 'none';
+  document.getElementById('modalTechniques').innerHTML = c.techs.map(t =>
+    '<div class="tech-item"><div class="tech-names"><span class="tech-vf">' + esc(t.vf) + '</span>' + (t.va ? '<span class="tech-va">' + esc(t.va) + '</span>' : '') + '</div>' + (t.details ? '<p class="tech-details">' + esc(t.details) + '</p>' : '') + '</div>').join('');
+  document.getElementById('charModal').classList.add('open');
+}
+document.querySelectorAll('.char-card').forEach(card => card.addEventListener('click', () => openChar(parseInt(card.dataset.idx, 10))));
+document.addEventListener('click', e => { if (e.target.closest('#modalClose') || e.target.id === 'charModal') document.getElementById('charModal').classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('charModal').classList.remove('open'); });
+</script>
+</body>
+</html>

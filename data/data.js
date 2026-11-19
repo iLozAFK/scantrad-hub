@@ -5821,7 +5821,8 @@ window.HUB = {
       "tag": "OCR",
       "name": "OCR",
       "text": "Extrait le texte des pages pour accélérer la traduction.",
-      "url": "",
+      "url": "admin/ocr.html",
+      "label": "Lancer l'OCR",
       "periode": "actuel"
     },
     {
@@ -5855,14 +5856,38 @@ window.HUB = {
     {
       "name": "The Genius Blacksmith's Game",
       "text": "Personnages, monstres et tutoiement ou vouvoiement entre chaque duo.",
-      "url": "",
+      "url": "glossaires/the-genius-blacksmiths-game.html",
       "cover": "covers/the-genius-blacksmiths-game.webp"
     },
     {
       "name": "The World After the End",
       "text": "Personnages, dieux et monarques, avec leur façon de se parler.",
-      "url": "",
+      "url": "glossaires/the-world-after-the-end.html",
       "cover": "covers/the-world-after-the-end.webp"
+    },
+    {
+      "name": "Logging Out Is Too Hard",
+      "text": "Personnages, monstres, lieux et vocabulaire du jeu, avec le tutoiement ou vouvoiement.",
+      "url": "glossaires/logging-out-is-too-hard.html",
+      "cover": "covers/logging-out-is-too-hard.webp"
+    },
+    {
+      "name": "Return of the Frozen Player",
+      "text": "Termes, techniques et tutoiement ou vouvoiement entre les personnages.",
+      "url": "glossaires/return-of-the-frozen-player.html",
+      "cover": "covers/return-of-the-frozen-player.webp"
+    },
+    {
+      "name": "Return of the Mount Hua Sect",
+      "text": "Vocabulaire de la secte et tutoiement ou vouvoiement entre les personnages.",
+      "url": "glossaires/return-of-the-mount-hua-sect.html",
+      "cover": "covers/return-of-the-mount-hua-sect.webp"
+    },
+    {
+      "name": "The Academy Genius Tamer",
+      "text": "Personnages, techniques, lieux et vocabulaire de l'académie.",
+      "url": "glossaires/the-academy-genius-tamer.html",
+      "cover": "covers/academy-genius-tamer.webp"
     }
   ],
   "LIENS": [
