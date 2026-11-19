@@ -5885,41 +5885,40 @@ window.HUB = {
     }
   ],
   "NOTIFICATEUR": {
-    "text": "Un Worker Cloudflare surveille Kakao Webtoon et Naver Webtoon, et prévient sur Discord avec un embed dès qu'un nouveau chapitre sort.",
+    "text": "Un Worker Cloudflare surveille Kakao Page et Naver Webtoon, et prévient sur Discord avec un embed dès qu'un nouveau chapitre sort.",
     "points": [
       "À l'heure prévue, il vérifie toutes les 5 minutes pendant 1 heure, et s'arrête dès qu'un chapitre est annoncé.",
       "Chaque série est vérifiée séparément : une plateforme en panne n'empêche pas les autres.",
       "Naver : les chapitres payants en avance sont annoncés aussi.",
-      "Kakao Webtoon : les annonces de l'auteur sont relayées chaque jour à 19h00.",
       "Naver : les posts de la communauté du créateur (texte et images) sont envoyés dans Discord."
     ],
     "series": [
       {
         "title": "Sand Mage of the Burnt Desert",
-        "platform": "Kakao Webtoon",
+        "platform": "KakaoPage",
         "heure": "22h00",
-        "detail": "Annonces de l'auteur à 19h00",
+        "detail": "",
         "cover": "covers/sand-mage-of-the-burnt-desert.webp"
       },
       {
         "title": "Only I Have an EX-Grade Summon",
-        "platform": "Kakao Webtoon",
+        "platform": "KakaoPage",
         "heure": "22h00",
-        "detail": "Annonces de l'auteur à 19h00",
+        "detail": "",
         "cover": "covers/only-i-have-an-ex-grade-summon.webp"
       },
       {
         "title": "The Frozen Player Returns",
-        "platform": "Kakao Webtoon",
+        "platform": "KakaoPage",
         "heure": "22h00",
-        "detail": "Annonces de l'auteur à 19h00",
+        "detail": "",
         "cover": "covers/return-of-the-frozen-player.webp"
       },
       {
         "title": "The Genius Blacksmith's Game",
-        "platform": "Kakao Webtoon",
+        "platform": "KakaoPage",
         "heure": "22h00",
-        "detail": "Annonces de l'auteur à 19h00",
+        "detail": "",
         "cover": "covers/the-genius-blacksmiths-game.webp"
       },
       {
