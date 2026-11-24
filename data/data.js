@@ -315,9 +315,9 @@ window.HUB = {
       "teams": [
         "Poséidon Scans"
       ],
-      "dernier": "2026-11-15",
+      "dernier": "2026-11-19",
       "synopsis": "Après trois ans de coma à la suite d'un accident de la route, il se réveille dans un monde où un certain jeu est devenu réalité. Ici, systèmes et invocations sont la norme, et pour gravir la « Tour des Épreuves », il faut trouver le « Dieu Ji-nu ». Mais… Dieu Ji-nu ? C'est lui.",
-      "chapitre": 46,
+      "chapitre": 47,
       "infos": {
         "mu": {
           "id": 44727485433,
@@ -490,9 +490,9 @@ window.HUB = {
       "teams": [
         "Poséidon Scans"
       ],
-      "dernier": "2026-11-17",
+      "dernier": "2026-11-23",
       "synopsis": "Kim Woojin s’est retrouvé piégé dans le jeu de réalité virtuelle « Evil Tale ». Au plus profond du désespoir, alors même que son existence dans le monde réel avait été effacée, il tomba enfin sur une fenêtre de déconnexion et cliqua dessus… Mais au lieu de retourner à la réalité, il se retrouva dans Evil Tale, 50 ans dans le futur — un monde au bord de la destruction !",
-      "chapitre": 21,
+      "chapitre": 22,
       "infos": {
         "mu": {
           "id": 53797428245,
@@ -557,9 +557,9 @@ window.HUB = {
       "teams": [
         "Poséidon Scans"
       ],
-      "dernier": "2026-11-14",
+      "dernier": "2026-11-22",
       "synopsis": "Cinq ans après que le monde ait changé, le dernier boss est apparu. (Le dernier Boss du district terrien, la Reine de Givre, est apparu.) Le dernier Boss ! Si on réussi à la vaincre, nos vies reviendraient à la normale ! Les cinq joueurs les plus forts du monde entier, dont Seo Jun-Ho, surnommé Specter, ont finalement vaincu la Reine de Givre… mais ils sont tombés dans un profond sommeil. 25 ans ont passé.",
-      "chapitre": 234,
+      "chapitre": 235,
       "infos": {
         "mu": {
           "id": 14166418753,
@@ -723,6 +723,109 @@ window.HUB = {
         ]
       },
       "url_fr": "https://poseidon-scans.net/serie/return-of-the-mount-hua-sect"
+    },
+    {
+      "title": "Omniscient Reader's Viewpoint",
+      "team": "Poséidon Scans",
+      "type": "Manhwa",
+      "status": "En cours",
+      "roles": [
+        "TL"
+      ],
+      "url": "https://poseidon-scans.net/serie/omniscient-readers-viewpoint",
+      "cover": "covers/omniscient-readers-viewpoint.webp",
+      "periode": "actuel",
+      "teams": [
+        "Poséidon Scans"
+      ],
+      "dernier": "2026-11-24",
+      "synopsis": "Un roman intitulé « Les Trois façons de survivre dans un monde en ruine » (écrit par l'auteur anonyme tls123) a été écrit et publié pendant dix ans, et Kim Dokja est le seul lecteur à l'avoir lu jusqu'à la fin.",
+      "chapitre": 311,
+      "url_fr": "https://poseidon-scans.net/serie/omniscient-readers-viewpoint",
+      "infos": {
+        "mu": {
+          "id": 50369844984,
+          "url": "https://www.mangaupdates.com/series/n50wl4o/omniscient-reader",
+          "note": 8.82,
+          "votes": 959
+        },
+        "noms": {
+          "ko": [
+            "전지적 독자 시점"
+          ],
+          "autres": [
+            "Der allwissende Leser",
+            "Jeonjijeok Dokja Sijeom",
+            "Lecteur omniscient",
+            "Lector omnisciente",
+            "Omniscient Reader's Point of View",
+            "ORV",
+            "Ponto de vista de um leitor onisciente",
+            "Punto de vista de lector omnisciente",
+            "Toàn trí độc giả",
+            "Всеведущий читатель",
+            "Всезнаючий читач",
+            "خواننده همه فن حریف"
+          ]
+        },
+        "auteurs": [
+          "Redice",
+          "sing N song",
+          "UMI (II)"
+        ],
+        "artistes": [
+          "Sleepy-C"
+        ],
+        "editeurs": [
+          "3B2S",
+          "A.tempo Media",
+          "L7",
+          "Naver",
+          "REDICE"
+        ],
+        "editeurs_en": [
+          "Ize Press",
+          "LINE Webtoon"
+        ],
+        "genres": [
+          "Action",
+          "Adventure",
+          "Drama",
+          "Fantasy",
+          "Mystery",
+          "Psychological",
+          "Supernatural"
+        ],
+        "tags": [
+          "Apocalypse",
+          "Competent Male Lead",
+          "Survival",
+          "Adult Male Lead",
+          "Adult Protagonist",
+          "Competent Protagonist",
+          "Game Elements",
+          "Strong-Willed Protagonist",
+          "Survival Game",
+          "Based on a Novel",
+          "Perceptive Protagonist",
+          "Smart Male Lead"
+        ],
+        "annee": 2020,
+        "type_vo": "Manhwa",
+        "termine": false,
+        "licence": true,
+        "chapitres_vo": 308,
+        "liees": [
+          {
+            "nom": "Omniscient Reader's Viewpoint (Novel)",
+            "relation": "Adapted From"
+          },
+          {
+            "nom": "The World After the Fall",
+            "relation": "Other"
+          }
+        ]
+      }
     },
     {
       "title": "Solo Swordmaster",
@@ -1197,9 +1300,9 @@ window.HUB = {
       "teams": [
         "Ortega Scans"
       ],
-      "dernier": "2026-11-13",
+      "dernier": "2026-11-23",
       "synopsis": "Junhyeon découvre que ses collègues ont pris l’habitude de parier dans son dos. Déterminé à ne pas se laisser faire, il commence à riposter avec humour à leurs plaisanteries incessantes au bureau.",
-      "chapitre": 56,
+      "chapitre": 57,
       "infos": {
         "mu": {
           "id": 67933409677,
@@ -1277,9 +1380,9 @@ window.HUB = {
       "teams": [
         "Ortega Scans"
       ],
-      "dernier": "2026-11-17",
+      "dernier": "2026-11-24",
       "synopsis": "Même dans une entreprise de jeux vidéo où les heures supplémentaires sont légion, nos sentiments ne peuvent être réprimés ! Voici l’histoire d’un bureau rempli de jeunes qui ne veulent pas choisir entre le travail et l’amour. C’est ainsi que de nombreux secrets vont commencer à se dévoiler dans cette vie de bureau !",
-      "chapitre": 40,
+      "chapitre": 41,
       "infos": {
         "mu": {
           "id": 16500730403,
@@ -5984,7 +6087,7 @@ window.HUB = {
     }
   ],
   "STATS": {
-    "maj": "2026-11-18",
+    "maj": "2026-11-24",
     "source": "Dates de modification des fichiers : Drive (dossier de ton rôle), dossiers locaux, archives. Format : date|série|rôle|n° du chapitre[|b = copie en bloc, sans date fiable].",
     "evenements": [
       "2023-05-17T17:09|Heavenly Grand Archive's Young Master|ED|6",
@@ -6332,11 +6435,15 @@ window.HUB = {
       "2025-12-04T09:56|Teacher's Efforts|CH|69",
       "2025-12-04T09:59|Teacher's Efforts|CH|70",
       "2025-12-05T13:45|Teacher's Efforts|CH|71",
+      "2026-01-06T12:41|Omniscient Reader's Viewpoint|TL|294",
+      "2026-01-10T03:16|Omniscient Reader's Viewpoint|TL|295",
       "2026-01-10T08:32|Teacher's Efforts|CH|72",
       "2026-01-10T08:40|Teacher's Efforts|CH|73",
       "2026-01-10T08:47|Teacher's Efforts|CH|74",
       "2026-01-10T09:02|Teacher's Efforts|CH|75",
       "2026-01-10T09:12|Teacher's Efforts|CH|76",
+      "2026-01-12T11:55|Omniscient Reader's Viewpoint|TL|296",
+      "2026-01-15T11:30|Omniscient Reader's Viewpoint|TL|297",
       "2026-01-18T09:05|The Heavenly Demon Can't Live a Normal Life|TL|176",
       "2026-01-21T06:46|The Heavenly Demon Can't Live a Normal Life|TL|121",
       "2026-01-25T11:31|The Heavenly Demon Can't Live a Normal Life|TL|181",
@@ -6372,6 +6479,7 @@ window.HUB = {
       "2026-02-14T04:22|The Professor's Secret Account|CH|21",
       "2026-02-14T06:21|The Genius Blacksmith's Game|TL|39",
       "2026-02-14T10:29|The Heavenly Demon Can't Live a Normal Life|TL|180",
+      "2026-02-15T01:21|Omniscient Reader's Viewpoint|TL|298",
       "2026-02-15T14:11|The Professor's Secret Account|CH|22",
       "2026-02-15T14:49|The Professor's Secret Account|CH|23",
       "2026-02-16T08:45|The Heavenly Demon Can't Live a Normal Life|TL|182",
@@ -6395,6 +6503,7 @@ window.HUB = {
       "2026-03-01T17:22|Performance (Sex) Report|CH|20",
       "2026-03-02T02:49|Wireless Onahole|CH|75",
       "2026-03-02T04:19|The Professor's Secret Account|CH|25",
+      "2026-03-06T18:03|Omniscient Reader's Viewpoint|TL|303",
       "2026-03-07T10:16|The World After The End|TL|217",
       "2026-03-07T14:45|Moby Dick|CH|83",
       "2026-03-07T14:56|Performance (Sex) Report|CH|21",
@@ -6436,6 +6545,7 @@ window.HUB = {
       "2026-03-21T15:09|Moby Dick|CH|85",
       "2026-03-21T15:30|Return of The Frozen Player|TL|173",
       "2026-03-21T17:20|Return of The Frozen Player|TL|174",
+      "2026-03-21T19:41|Omniscient Reader's Viewpoint|TL|304",
       "2026-03-22T01:16|Teacher's Efforts|CH|82",
       "2026-03-22T02:51|Wireless Onahole|CH|80",
       "2026-03-22T07:07|The Genius Blacksmith's Game|TL|41",
@@ -6479,6 +6589,7 @@ window.HUB = {
       "2026-04-04T14:00|Wireless Onahole|CH|83",
       "2026-04-05T19:00|Love Quest|TL|11",
       "2026-04-06T14:24|Performance (Sex) Report|CH|25",
+      "2026-04-06T18:58|Omniscient Reader's Viewpoint|TL|305",
       "2026-04-07T12:41|Wireless Onahole|CH|84",
       "2026-04-07T13:42|Return of The Frozen Player|TL|201",
       "2026-04-07T14:07|The Genius Blacksmith's Game|TL|43",
@@ -6493,6 +6604,7 @@ window.HUB = {
       "2026-04-12T15:09|Performance (Sex) Report|CH|27",
       "2026-04-12T23:10|Love Quest|TL|12",
       "2026-04-13T10:19|Teacher's Efforts|CH|83",
+      "2026-04-14T01:46|Omniscient Reader's Viewpoint|TL|306",
       "2026-04-14T11:45|Teacher's Efforts|CH|84",
       "2026-04-14T11:45|Teacher's Efforts|CH|85",
       "2026-04-16T00:40|Return of The Frozen Player|TL|205",
@@ -6519,6 +6631,8 @@ window.HUB = {
       "2026-04-20T08:55|Teacher's Efforts|CH|86",
       "2026-04-20T09:04|Teacher's Efforts|CH|87",
       "2026-04-20T14:35|The Heavenly Demon Can't Live a Normal Life|TL|195",
+      "2026-04-22T07:50|Omniscient Reader's Viewpoint|TL|307",
+      "2026-04-22T07:50|Omniscient Reader's Viewpoint|TL|308",
       "2026-04-22T17:10|The Heavenly Demon Can't Live a Normal Life|TL|196",
       "2026-04-23T12:35|Sand Mage of the Burnt Desert|TL|1",
       "2026-04-24T12:34|The Heavenly Demon Can't Live a Normal Life|TL|197",
@@ -6559,6 +6673,7 @@ window.HUB = {
       "2026-05-03T15:06|Love Quest|TL|15",
       "2026-05-04T09:39|The Professor's Secret Account|CH|32",
       "2026-05-04T10:07|Wireless Onahole|CH|90",
+      "2026-05-04T14:38|Omniscient Reader's Viewpoint|TL|309",
       "2026-05-05T12:40|Teacher's Efforts|CH|91",
       "2026-05-05T13:00|Teacher's Efforts|CH|92",
       "2026-05-06T07:22|Return of The Frozen Player|TL|208",
@@ -6585,6 +6700,7 @@ window.HUB = {
       "2026-05-11T09:28|The Professor's Secret Account|CH|33",
       "2026-05-14T03:46|The Heavenly Demon Can't Live a Normal Life|TL|199",
       "2026-05-14T05:49|The Heavenly Demon Can't Live a Normal Life|TL|200",
+      "2026-05-15T11:03|Omniscient Reader's Viewpoint|TL|310",
       "2026-05-16T08:21|Sand Mage of the Burnt Desert|TL|22",
       "2026-05-17T14:50|Love Quest|TL|17",
       "2026-05-18T08:38|The Professor's Secret Account|CH|34",
@@ -7088,7 +7204,14 @@ window.HUB = {
       "2026-11-18T14:57|The World After The End|TL|259",
       "2026-11-18T16:53|The Heavenly Demon Can't Live a Normal Life|TL|211",
       "2026-11-18T16:58|The Heavenly Demon Can't Live a Normal Life|TL|212",
-      "2026-11-18T17:41|The Heavenly Demon Can't Live a Normal Life|TL|210"
+      "2026-11-18T17:41|The Heavenly Demon Can't Live a Normal Life|TL|210",
+      "2026-11-19T22:10|Only I Have an EX-Grade Summon|TL|47",
+      "2026-11-22T11:49|Return of The Frozen Player|TL|235",
+      "2026-11-23T22:52|Logging Out Is Too Hard|TL|22",
+      "2026-11-23T23:53|Milf Hunting In Another World|CH|143",
+      "2026-11-23T23:53|Performance (Sex) Report|CH|57",
+      "2026-11-24T00:00|Love Quest|TL|41",
+      "2026-11-24T11:13|Omniscient Reader's Viewpoint|TL|311"
     ]
   }
 };
