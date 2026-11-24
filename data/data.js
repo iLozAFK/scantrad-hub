@@ -6063,7 +6063,9 @@ window.HUB = {
         "detail": "",
         "cover": "covers/logging-out-is-too-hard.webp",
         "ref": "logging-out-is-too-hard",
-        "jours": []
+        "jours": [
+          "Lundi"
+        ]
       },
       {
         "title": "Omniscient Reader's Viewpoint",
