@@ -6064,6 +6064,17 @@ window.HUB = {
         "cover": "covers/logging-out-is-too-hard.webp",
         "ref": "logging-out-is-too-hard",
         "jours": []
+      },
+      {
+        "title": "Omniscient Reader's Viewpoint",
+        "platform": "Naver Webtoon",
+        "heure": "23h01",
+        "detail": "Avances payantes annoncées",
+        "cover": "covers/omniscient-readers-viewpoint.webp",
+        "ref": "omniscient-readers-viewpoint",
+        "jours": [
+          "Mardi"
+        ]
       }
     ],
     "note": "Les heures affichées sont en heure de Paris (elles suivent l'heure d'été et d'hiver). Le bot, lui, est réglé sur l'heure de Corée : 22h01 pour Kakao Page, 23h01 pour Naver. Les jours de sortie sont ceux de Corée ; avec le décalage, ils tombent le même jour à Paris."
