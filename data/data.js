@@ -6004,7 +6004,8 @@ window.HUB = {
         "cover": "covers/sand-mage-of-the-burnt-desert.webp",
         "jours": [
           "Samedi"
-        ]
+        ],
+        "pause": true
       },
       {
         "title": "Only I Have an EX-Grade Summon",
@@ -6034,7 +6035,8 @@ window.HUB = {
         "cover": "covers/the-genius-blacksmiths-game.webp",
         "jours": [
           "Vendredi"
-        ]
+        ],
+        "pause": true
       },
       {
         "title": "Return of the Mount Hua Sect",

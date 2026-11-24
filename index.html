@@ -288,6 +288,7 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
 .nt-row { display: flex; align-items: center; gap: 14px; padding: 12px 16px; }
 .nt-row .cv { width: 40px; height: 60px; border-radius: 6px; flex: none; font-size: 16px; }
 .nt-t { flex: 1; min-width: 0; display: flex; flex-direction: column; } .nt-t small { color: var(--z400); }
+.nt-pause { opacity: .45; filter: grayscale(1); } .nt-pause:hover { opacity: .7; }
 .nt-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex: none; } .nt-h { font-weight: 600; font-size: 14px; }
 @media (max-width: 480px) { .nt-grid-g { grid-template-columns: minmax(0, 1fr); } }
 #notificateur [hidden] { display: none !important; }
@@ -302,6 +303,7 @@ details.autres { margin-top: 12px; } details.autres summary { cursor: pointer; c
 .nt-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } @media (max-width: 700px) { .nt-grid { grid-template-columns: minmax(0, 1fr); } }
 .nt-lrow { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); } .nt-lrow:last-child { border-bottom: 0; }
 .nt-lrow .nt-t { flex: 1 1 200px; min-width: 0; } .nt-lrow .btn { flex: none; } @media (max-width: 600px) { .nt-lrow { flex-wrap: wrap; } .nt-form .nt-lrow select { width: auto; flex: 1; } } .nt-lrow .btn { padding: 4px 12px; font-size: 13px; }
+.nt-pl { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--z400); flex: none; cursor: pointer; } .nt-form .nt-pl input { width: auto; }
 .nt-lrow .btn.sure { background: #b91c1c; border-color: #b91c1c; color: #fff; }
 
 /* Chapitres */
@@ -1142,9 +1144,9 @@ function ntRender() {   // la partie publique : aucune information privée (ni w
     const g = h("div", "nt-group"), titre = h("h3", "nt-day", jour || "Jour de sortie à confirmer"), grille = h("div", "nt-grid-g");
     titre.append(h("small", "", plural(liste.length, "série", "séries")));
     liste.forEach(s => {
-      const row = h("div", "panel nt-row"), t = h("div", "nt-t"), meta = h("div", "nt-meta");
+      const row = h("div", "panel nt-row" + (s.pause ? " nt-pause" : "")), t = h("div", "nt-t"), meta = h("div", "nt-meta");
       t.append(h("b", "", s.title), h("small", "", s.detail || ""));
-      const hh = h("span", "nt-h", s.heure ? "chaque jour dès " + ntParis(s.heure) : "vérifié régulièrement"); if (s.heure) hh.title = s.heure + " en Corée (heure à laquelle le bot est réglé)";
+      const hh = h("span", "nt-h", s.pause ? "en pause" : s.heure ? "chaque jour dès " + ntParis(s.heure) : "vérifié régulièrement"); if (s.heure && !s.pause) hh.title = s.heure + " en Corée (heure à laquelle le bot est réglé)";
       meta.append(h("span", "pill " + (/naver/i.test(s.platform) ? "s-cours" : "s-fin"), s.platform), hh);
       row.append(cover({ cover: s.cover, title: s.title }), t, meta);
       grille.append(row);
@@ -1332,12 +1334,19 @@ function ntList() {
       catch (err) { ntMsg(err.message, true); }
       sel.disabled = false;
     };
+    const pl = h("label", "nt-pl"), cb = h("input"); cb.type = "checkbox"; cb.checked = !!(aff[0] && aff[0].pause); pl.append(cb, " En pause");
+    cb.onchange = async () => {
+      ntMsg("Enregistrement..."); cb.disabled = true;
+      try { const siteMsg = await ntCommit(null, N => { pubRow(N).forEach(d => { if (cb.checked) d.pause = true; else delete d.pause; }); }); ntMsg(siteMsg || (cb.checked ? "Mise en pause : " : "Reprise : ") + e.title + ".", !!siteMsg); }
+      catch (err) { ntMsg(err.message, true); }
+      cb.disabled = false;
+    };
     const del = h("button", "btn ghost", "Retirer"); del.type = "button";
     del.onclick = () => {
       if (del.classList.contains("sure")) ntRemove(kind, e);
       else { del.classList.add("sure"); del.textContent = "Confirmer"; setTimeout(() => { if (del.isConnected) { del.classList.remove("sure"); del.textContent = "Retirer"; } }, 3500); }
     };
-    row.append(t, sel, del); box.append(row);
+    row.append(t, sel, pl, del); box.append(row);
   });
 }
 async function ntOpen() {
