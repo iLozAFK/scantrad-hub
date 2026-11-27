@@ -899,20 +899,34 @@ function stCheck(box) {
   wrap.append(reg, src, act);
   if (K.res) {
     const res = h("div", "panel"), lst = h("div", "st-diffs");
-    if (!K.res.length) lst.append(h("p", "empty", "Aucune erreur trouvée."));
-    K.res.forEach(c => {
+    const vue = K.vue || "complet", corr = {}; K.res.forEach(c => { corr[c.n] = c.corrigee; });
+    const seg = h("div", "st-seg"); seg.style.margin = "12px 18px 0";
+    [["complet", "Chapitre complet"], ["liste", "Corrections seulement"]].forEach(([k, l]) => { const b = h("button", "", l); b.type = "button"; b.setAttribute("aria-pressed", String(vue === k)); b.onclick = () => { K.vue = k; stRendre(); }; seg.append(b); });
+    if (!K.res.length && vue === "liste") lst.append(h("p", "empty", "Aucune erreur trouvée."));
+    if (vue === "liste") K.res.forEach(c => {
       const b = h("div", "st-diff"), a = h("div", "st-del"), n = h("div", "st-add");
       a.textContent = c.original; n.append(stGras(c.corrigee)); b.append(a, n); lst.append(b);
     });
+    else K.texte.split("\n").forEach((l, i) => {   // tout le chapitre, la ligne corrigée entière en rouge juste dessous
+      const o = h("div", "st-ln" + (corr[i + 1] !== undefined ? " st-ln-err" : ""), l || " "); lst.append(o);
+      if (corr[i + 1] !== undefined) lst.append(h("div", "st-ln st-ln-rouge", corr[i + 1].replace(/\*\*/g, "")));
+    });
     const foot = h("div", "st-foot"); foot.append(h("span", "gchip plain", plural(K.res.length, "ligne corrigée", "lignes corrigées")));
     const nm = K.num !== "" ? K.num : "chapitre";
-    const dx = h("button", "btn", "Télécharger " + nm + ".docx corrigé"); dx.type = "button"; dx.onclick = () => stDocxBouton(nm, stLignesCheck(), dx);
+    const dx = h("button", "btn", "Télécharger " + nm + ".docx (chapitre complet)"); dx.type = "button"; dx.onclick = () => stDocxBouton(nm, stLignesCheck(), dx);
     foot.append(dx);
+    const dt = h("button", "btn ghost", "Télécharger .txt complet"); dt.type = "button"; dt.onclick = () => stTelecharger(nm + " check.txt", stTexteCheck()); foot.append(dt);
     if (K.num !== "" && K.res.length) { const rp = h("button", "btn ghost", "Remplacer le chapitre " + K.num + " dans l'historique"); rp.type = "button"; rp.onclick = () => stRemplacer(rp); foot.append(rp); }
+    const cc = h("button", "btn ghost", "Copier le chapitre complet"); cc.type = "button"; cc.onclick = () => stCopier(stTexteCheck(), cc); foot.append(cc);
     const cp = h("button", "btn ghost", "Copier la liste"); cp.type = "button"; cp.onclick = () => stCopier(K.res.map(c => c.original + "\n" + c.corrigee.replace(/\*\*/g, "")).join("\n\n"), cp); foot.append(cp);
-    res.append(lst, foot); wrap.append(res);
+    res.append(seg, lst, foot); wrap.append(res);
   }
   box.append(wrap);
+}
+function stTexteCheck() {   // chapitre entier en texte : chaque ligne d'origine, puis « [CORRIGÉ] » + la ligne corrigée
+  const K = stCk, m = {}; (K.res || []).forEach(c => { m[c.n] = c.corrigee.replace(/\*\*/g, ""); });
+  const out = []; K.texte.split("\n").forEach((l, i) => { out.push(l); if (m[i + 1] !== undefined) out.push("[CORRIGÉ] " + m[i + 1]); });
+  return out.join("\n");
 }
 function stLignesCheck() {   // ligne d'origine, puis la ligne corrigée entière en rouge juste dessous (comme creer_docx.py)
   const K = stCk, m = {}; (K.res || []).forEach(c => { m[c.n] = c.corrigee.replace(/\*\*/g, ""); });
@@ -922,7 +936,7 @@ function stLignesCheck() {   // ligne d'origine, puis la ligne corrigée entièr
 async function stLancerCheck() {
   const K = stCk;
   if (!stCle()) { K.msg = "Colle ta clé API Claude d'abord."; K.etat = "erreur"; stRendre(); return; }
-  K.etat = "cours"; K.res = null; K.msg = "Vérification en cours..."; stRendre();
+  K.etat = "cours"; K.res = null; K.vue = "complet"; K.msg = "Vérification en cours..."; stRendre();
   try {
     const lignes = K.texte.split("\n"), ctx = stContexteTexte(K.texte + "\n" + K.raw);
     const num = lignes.map((l, i) => l.trim() ? "L" + (i + 1) + " | " + l : "").filter(Boolean).join("\n");
