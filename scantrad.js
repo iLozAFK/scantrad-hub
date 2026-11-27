@@ -1043,7 +1043,7 @@ function stPanneauImport(wrap) {
   dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) stImporterFichier(f); });
   p.append(dz, fi);
   if (I) {
-    const m = h("p", "st-msg" + (I.etat === "erreur" ? " err" : I.etat === "fini" ? " ok" : ""), I.msg); p.append(m);
+    if (I.msg) p.append(h("p", "st-msg" + (I.etat === "erreur" ? " err" : I.etat === "fini" ? " ok" : ""), I.msg));
     if (I.etat === "apercu" || I.etat === "ecriture") {
       const par = {}; I.nouveaux.forEach(t => { par[t.cat] = (par[t.cat] || 0) + 1; });
       p.append(h("p", "", I.nom + " : " + plural(I.total, "terme", "termes") + " lus, dont " + plural(I.nouveaux.length, "nouveau", "nouveaux") + " (" + (Object.keys(par).map(k => par[k] + " " + k).join(", ") || "aucun") + "), " + plural(I.nvR.length, "relation nouvelle", "relations nouvelles") + " sur " + I.rel + ", " + plural(I.nouveaux.filter(t => t._img).length, "portrait", "portraits") + ". Les termes déjà présents sont ignorés."));
