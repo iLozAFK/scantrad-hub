@@ -117,3 +117,8 @@
 
 /* Raw stocké */
 .st-actions select { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; color: var(--text); font: inherit; font-size: 13px; }
+
+/* Séries séparées par équipe */
+.st-team + .st-team { margin-top: 28px; }
+.st-team h2 { display: flex; align-items: baseline; gap: 10px; font-size: 15px; font-weight: 600; color: var(--z300); margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.st-team h2 small { font-size: 12px; font-weight: 500; color: var(--z600); }
