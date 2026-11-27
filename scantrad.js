@@ -916,7 +916,14 @@ function stCheck(box) {
   const go = h("button", "btn"); go.type = "button"; go.append(icon("pen"), document.createTextNode(occupe ? "Vérification..." : "Vérifier")); go.disabled = occupe || !K.texte.trim();
   ta.oninput = () => { K.texte = ta.value; go.disabled = !ta.value.trim(); K.res = null; }; tb.oninput = () => { K.raw = tb.value; };
   go.onclick = () => stLancerCheck();
-  const src = h("div", "panel pad st-f"); src.append(lt, ta, lr, tb);
+  const src = h("div", "panel pad st-f");
+  const dz = h("div", "st-drop"); dz.tabIndex = 0; dz.setAttribute("role", "button"); dz.append(stEl("b", "", "Glisse le chapitre traduit ici"), h("span", "", "Un .docx ou un .txt ; ajoute aussi le raw anglais (.txt) si tu veux de l'aide pour les contresens."));
+  const fi = h("input"); fi.type = "file"; fi.multiple = true; fi.accept = ".docx,.txt"; fi.hidden = true; fi.id = "st-ck-file"; fi.onchange = () => { if (fi.files.length) stDeposerCheck(fi.files); };
+  dz.onclick = () => fi.click(); dz.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fi.click(); } };
+  ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("over"); }));
+  dz.addEventListener("drop", e => { if (!occupe && e.dataTransfer.files.length) stDeposerCheck(e.dataTransfer.files); });
+  src.append(dz, fi, lt, ta, lr, tb);
   { const c = d.config; if (c.dossier && (c.novels || []).length) { const nv = h("button", "btn ghost", "Voir le novel"); nv.type = "button"; nv.onclick = () => { location.hash = "scantrad/" + st.slug + "/novel"; }; src.append(nv); } }
   const act = h("div", "st-actions"), msg = h("span", "st-msg" + (K.etat === "erreur" ? " err" : K.res ? " ok" : "")); msg.style.marginRight = "auto"; msg.textContent = K.msg; act.append(msg, go);
   wrap.append(reg, src, act);
@@ -941,7 +948,7 @@ function stCheck(box) {
     const dt = h("button", "btn ghost", "Télécharger .txt complet"); dt.type = "button"; dt.onclick = () => stTelecharger(nm + " check.txt", stTexteCheck()); foot.append(dt);
     { const ab = h("button", "btn", "Ajouter à la base"); ab.type = "button"; ab.title = "Enregistre le chapitre corrigé dans la base de la série (demande confirmation s'il existe déjà)";
       ab.onclick = async () => {
-        let num = K.num; if (num === "") { num = prompt("Numéro du chapitre à enregistrer dans la base ?", ""); if (num === null) return; }
+        let num = K.num; if (num === "") { num = prompt("Numéro du chapitre à enregistrer dans la base ?", K.numFichier || ""); if (num === null) return; }
         const corr = {}; K.res.forEach(c => { corr[c.n] = c.corrigee.replace(/\*\*/g, ""); });
         const texte = K.texte.split("\n").map((l, k) => corr[k + 1] !== undefined ? corr[k + 1] : l).join("\n");
         if (await stAjouterBase(ab, num, texte, K.raw, "check") && K.num === "") K.num = String(+num);
@@ -1145,4 +1152,46 @@ function stNovel(box) {
   const res = h("div", "panel"), out = h("div", "st-out");
   out.textContent = V.etat === "cours" ? "Chargement..." : V.texte || V.msg || "Choisis un chapitre du novel.";
   res.append(out); wrap.append(res); box.append(wrap);
+}
+
+/* ---------- Check : glisser le chapitre (.docx / .txt) et le raw anglais (.txt) ---------- */
+async function stLireDocx(file) {   // texte d'un .docx, sans les lignes entièrement en rouge (corrections d'un check précédent)
+  if (!window.JSZip) await chScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  const z = await JSZip.loadAsync(await file.arrayBuffer()), f = z.file("word/document.xml");
+  if (!f) throw new Error(file.name + " n'est pas un .docx valide.");
+  const d = new DOMParser().parseFromString(await f.async("string"), "application/xml"), lignes = [];
+  Array.from(d.getElementsByTagName("*")).filter(e => e.localName === "p").forEach(p => {
+    const runs = Array.from(p.getElementsByTagName("*")).filter(e => e.localName === "r"), vus = [];
+    let tout = "";
+    runs.forEach(r => {
+      const t = Array.from(r.getElementsByTagName("*")).map(e => e.localName === "t" ? e.textContent : e.localName === "tab" ? "\t" : e.localName === "br" ? "\n" : "").join("");
+      if (!t.trim()) { tout += t; return; }
+      const c = Array.from(r.getElementsByTagName("*")).find(e => e.localName === "color"), v = c ? (c.getAttribute("w:val") || "").toUpperCase() : "";
+      vus.push(/^(FF0000|C00000|EE0000)$/.test(v)); tout += t;
+    });
+    if (vus.length && vus.every(Boolean)) return;
+    lignes.push(tout);
+  });
+  return lignes.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+function stEstAnglais(t) {
+  const m = (t.toLowerCase().match(/\b[a-zàâçéèêëîïôûùüÿœ']+\b/g) || []).slice(0, 600);
+  const en = m.filter(w => /^(the|and|to|of|you|he|she|that|was|is|it|in|for|with|his|her|they)$/.test(w)).length;
+  const fr = m.filter(w => /^(le|la|les|des|et|je|tu|il|elle|que|est|une|un|pas|dans|pour|avec|qui|ce)$/.test(w)).length;
+  return en > fr;
+}
+async function stDeposerCheck(fichiers) {
+  const K = stCk; K.msg = ""; let trad = null, raw = null, num = "";
+  try {
+    for (const f of Array.from(fichiers)) {
+      const nom = f.name, m = nom.match(/\d+(?:\.\d+)?/); if (m && !num) num = m[0];
+      const t = /\.docx$/i.test(nom) ? await stLireDocx(f) : /\.txt$/i.test(nom) ? (await f.text()).replace(/^\uFEFF/, "") : null;
+      if (t === null) throw new Error(nom + " : seuls les .docx et les .txt sont acceptés.");
+      if (/\.docx$/i.test(nom)) trad = t; else if (/raw/i.test(nom) || stEstAnglais(t)) raw = t; else trad = trad === null ? t : trad;
+    }
+    if (trad !== null) { K.texte = trad; K.res = null; K.num = ""; K.etat = "pret"; K.numFichier = num; }
+    if (raw !== null) K.raw = raw;
+    K.msg = [trad !== null ? "Chapitre à vérifier chargé" : "", raw !== null ? "version anglaise chargée" : ""].filter(Boolean).join(", ") + ".";
+  } catch (e) { K.msg = e.message; K.etat = "erreur"; }
+  stRendre();
 }
