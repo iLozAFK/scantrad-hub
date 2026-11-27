@@ -10,8 +10,9 @@ const ST_PREF = "scantrad-hub-st", ST_KEY_API = "scantrad-hub-ocr-key";
 const ST_MODEL = "claude-opus-5-5";   // Claude Opus 5.5
 const ST_EFFORT = "medium";           // low | medium | high | xhigh | max
 const ST_BAND_H = 2500, ST_MAX_DIM = 7800, ST_MAX_IMG = 20;   // pages webtoon découpées en bandes lisibles
-const ST_CATS = ["Personnage", "Lieu", "Technique", "Faction", "Objet", "Autre"];
-const ST_VUES = { traduire: ["Traduire", "lang"], chapitres: ["Chapitres", "list"], glossaire: ["Glossaire", "open"] };
+const ST_CATS = ["Personnage", "Constellation", "Roi Démon", "Fable", "Vocabulaire", "Technique", "Lieu", "Faction", "Objet", "Autre"];
+function stCats() { const s = new Set(ST_CATS); ((st.data && st.data.termes) || []).forEach(t => t.cat && s.add(t.cat)); return Array.from(s); }
+const ST_VUES = { traduire: ["Traduire", "lang"], chapitres: ["Chapitres", "list"], check: ["Check", "pen"], glossaire: ["Glossaire", "open"] };
 const ST_LANGUES = ["anglais", "coréen", "japonais", "chinois"];
 
 let st = { slug: "", vue: "", serie: null, data: null, sha: null, chargement: null, err: "" };
@@ -23,7 +24,7 @@ function stPref() { try { return Object.assign({ prefixes: true, langue: "anglai
 function stSetPref(k, v) { try { const p = stPref(); p[k] = v; localStorage.setItem(ST_PREF, JSON.stringify(p)); } catch (e) {} }
 function stCle() { try { return localStorage.getItem(ST_KEY_API) || ""; } catch (e) { return ""; } }
 function stSerieDe(slug) { return SERIES.find(s => slugS(s.title) === slug) || null; }
-function stVide() { return { version: 1, regles: "", resume: "", resumeCh: null, termes: [], chapitres: [] }; }
+function stVide() { return { version: 1, regles: "", resume: "", resumeCh: null, termes: [], relations: [], chapitres: [], config: { source: "images", consignes: "" } }; }
 function stId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 function stNorm(x) { return String(x || "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim(); }
 function stDate(iso) { return iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" }) : ""; }
@@ -62,6 +63,11 @@ async function stEcrire(path, obj, sha, message) {
 function stSauver(message) {   // les écritures de serie.json passent l'une après l'autre
   const slug = st.slug, data = st.data;
   stFile = stFile.catch(() => {}).then(async () => {
+    for (const k of Object.keys(stImgPending).filter(k => k.indexOf(slug + "/") === 0)) {   // portraits ajoutés depuis le dernier enregistrement
+      const path = "traductions/" + k, av = await stGh(path);
+      await stGh(path, { method: "PUT", body: JSON.stringify({ message: "Portrait", content: stImgPending[k].b64, sha: av ? av.sha : undefined }) });
+      stImgCache[k] = Promise.resolve(stImgPending[k].url); delete stImgPending[k];
+    }
     const sha = await stEcrire(["traductions", slug, "serie.json"].join("/"), data, st.slug === slug ? st.sha : null, message);
     if (st.slug === slug) st.sha = sha;
   });
@@ -70,7 +76,7 @@ function stSauver(message) {   // les écritures de serie.json passent l'une apr
 async function stCharger(slug) {
   st.err = ""; st.data = null; st.sha = null;
   const p = (async () => {
-    try { const r = await stLire("traductions/" + slug + "/serie.json"); if (st.slug !== slug) return; st.data = Object.assign(stVide(), r ? r.json : {}); st.sha = r ? r.sha : null; }
+    try { const r = await stLire("traductions/" + slug + "/serie.json"); if (st.slug !== slug) return; st.data = Object.assign(stVide(), r ? r.json : {}); st.data.config = Object.assign({ source: "images", consignes: "" }, st.data.config); st.sha = r ? r.sha : null; }
     catch (e) { if (st.slug === slug) st.err = e.message; }
   })();
   st.chargement = p; await p;
@@ -154,7 +160,8 @@ function stRendre() {
   if (!stCtx()) { box.append(stConnexion()); return; }
   if (st.err) { const p = h("div", "panel pad st-stack"); p.append(h("p", "st-msg err", st.err)); const b = h("button", "btn ghost", "Réessayer"); b.type = "button"; b.onclick = () => { stRendre(); stCharger(st.slug); }; p.append(b); box.append(p); return; }
   if (!st.data) { box.append(h("p", "empty", "Chargement de la série...")); return; }
-  ({ traduire: stTraduire, chapitres: stChapitres, glossaire: stGlossaire })[st.vue](box);
+  if (st.vue === "traduire") stSourceToggle(box);
+  ({ traduire: st.data.config.source === "texte" ? stTraduireTexte : stTraduire, chapitres: stChapitres, check: stCheck, glossaire: stGlossaire })[st.vue](box);
 }
 function stConnexion() {
   const f = h("form", "panel pad st-f st-stack"); f.style.maxWidth = "520px"; f.autocomplete = "off";
@@ -244,7 +251,9 @@ function stTraduire(box) {
   cp.onclick = () => stCopier(J.texte, cp);
   const dl = h("button", "btn ghost", "Télécharger .txt"); dl.type = "button"; dl.disabled = !J.texte;
   dl.onclick = () => stTelecharger(st.serie.title + " - chapitre " + J.num + ".txt", J.texte);
-  foot.append(cp, dl);
+  const dx = h("button", "btn ghost", "Télécharger .docx"); dx.type = "button"; dx.disabled = !J.texte;
+  dx.onclick = () => stDocxBouton(J.num, J.texte.split("\n"), dx);
+  foot.append(cp, dl, dx);
   if (J.texte) foot.append(h("span", "gchip plain", plural(J.pages.filter(f => f.etat === "ok").length, "page traduite", "pages traduites") + " · " + plural(J.bulles, "bulle", "bulles")));
   if (J.etat === "a-sauver") { const r = h("button", "btn", "Réessayer l'enregistrement"); r.type = "button"; r.onclick = () => stFinir(); foot.append(r); }
   res.append(out, foot);
@@ -294,14 +303,14 @@ ${suite ? "FIN DE LA TRADUCTION DES PAGES PRÉCÉDENTES (pour la continuité, ne
 - Ignore les onomatopées purement sonores, les filigranes, les crédits et le texte illisible.
 - Regroupe dans un même bloc les bulles consécutives du même locuteur ; chaque bulle reste un élément séparé de "bulles".
 - "locuteur" : ${prefixes ? "les initiales du personnage qui parle (ex : Chung Myung → CM), seulement si tu en es sûr grâce au glossaire, au contexte ou à l'image ; sinon une chaîne vide. Narration : chaîne vide." : "laisse toujours une chaîne vide."}
-- "termes" : les noms propres et termes récurrents (personnages, lieux, techniques, factions, objets) qui apparaissent sur cette page et qui NE SONT PAS déjà dans le glossaire. Donne la forme source exacte, ta traduction, une catégorie parmi ${ST_CATS.join(", ")}, le genre si c'est un personnage (Homme, Femme ou vide), une note courte qui aidera la suite, et la citation source où il apparaît. Tableau vide s'il n'y en a pas.
+- "termes" : les noms propres et termes récurrents (personnages, lieux, techniques, factions, objets) qui apparaissent sur cette page et qui NE SONT PAS déjà dans le glossaire. Donne la forme source exacte, ta traduction, une catégorie parmi ${stCats().join(", ")}, le genre si c'est un personnage (Homme, Femme ou vide), une note courte qui aidera la suite, et la citation source où il apparaît. Tableau vide s'il n'y en a pas.
 - Si la page n'a aucun texte, "blocs" est un tableau vide.
 
 Réponds UNIQUEMENT avec ce JSON, sans texte autour :
 {"blocs":[{"locuteur":"CM","bulles":["Première bulle.","Deuxième bulle du même personnage."]}],"termes":[{"vo":"HWASAN SECT","fr":"secte du mont Hua","categorie":"Faction","genre":"","note":"La secte du héros","citation":"WE ARE THE HWASAN SECT!"}]}`;
 }
 
-async function stClaude(content, system, maxTokens) {
+async function stClaude(content, system, maxTokens, schema) {
   const key = stCle();
   if (!key) throw new Error("Clé API manquante : colle ta clé Claude dans le champ « Clé API Claude ».");
   const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -311,7 +320,7 @@ async function stClaude(content, system, maxTokens) {
       "anthropic-dangerous-direct-browser-access": "true", "x-api-key": key,
       "anthropic-beta": "server-side-fallback-2026-07-01"   // repli automatique si le modèle refuse une page
     },
-    body: JSON.stringify({ model: ST_MODEL, max_tokens: maxTokens || 16000, output_config: { effort: ST_EFFORT }, fallbacks: "default", system, messages: [{ role: "user", content }] })
+    body: JSON.stringify({ model: ST_MODEL, max_tokens: maxTokens || 16000, output_config: Object.assign({ effort: ST_EFFORT }, schema ? { format: { type: "json_schema", schema } } : {}), fallbacks: "default", system, messages: [{ role: "user", content }] })
   });
   if (!res.ok) {
     let m = "HTTP " + res.status; try { const e = await res.json(); m = (e.error && (e.error.message || e.error.type)) || m; } catch (e) {}
@@ -357,7 +366,7 @@ function stFormater(blocs, prefixes) {
   }).filter(Boolean).join("\n\n");
 }
 
-function stMaj() { if (stJob && st.slug === stJob.slug && st.vue === "traduire") stRendre(); }
+function stMaj() { if (st.vue === "traduire" && $("scantrad").classList.contains("on")) stRendre(); }
 async function stLancer() {
   const J = stJob, slug = st.slug, prefs = stPref();
   if (!stCle()) { J.msg = "Colle ta clé API Claude d'abord."; J.etat = "erreur"; stRendre(); return; }
@@ -394,21 +403,21 @@ async function stLancer() {
 }
 
 /* Enregistre le chapitre, propose les nouveaux termes, met à jour le résumé */
-async function stFinir() {
-  const J = stJob, slug = J.slug;
+async function stFinir(job) {
+  const J = job || stJob, slug = J.slug;
   if (st.slug !== slug || !st.data) { J.etat = "a-sauver"; J.msg = "Reviens sur la série pour enregistrer ce chapitre."; return; }
   J.etat = "cours"; J.msg = "Enregistrement du chapitre..."; stMaj();
   const d = st.data, ok = J.pages.filter(f => f.etat === "ok").length;
-  const entree = { num: J.num, date: new Date().toISOString(), pages: ok, bulles: J.bulles, traducteur: stPref().traducteur || "" };
+  const entree = { num: J.num, date: new Date().toISOString(), pages: ok, bulles: J.bulles, mots: J.mode === "texte" ? J.texte.split(/\s+/).filter(Boolean).length : 0, traducteur: stPref().traducteur || "" };
   try {
     const path = stChemin("chapitres", J.num + ".json"), avant = await stGh(path);
-    await stEcrire(path, Object.assign({}, entree, { modele: ST_MODEL, texte: J.texte }), avant && avant.sha, st.serie.title + " : traduction du chapitre " + J.num);
+    await stEcrire(path, Object.assign({}, entree, { modele: ST_MODEL, texte: J.texte }, J.mode === "texte" ? { raw: J.raw } : {}), avant && avant.sha, st.serie.title + " : traduction du chapitre " + J.num);
     d.chapitres = d.chapitres.filter(c => String(c.num) !== String(J.num)).concat([entree]).sort((a, b) => b.num - a.num);
     const connus = new Set(); d.termes.forEach(t => [t.vo].concat(t.variantes || []).forEach(v => connus.add(stNorm(v))));
     let n = 0;
     J.termes.forEach(t => {
       const k = stNorm(t.vo); if (!k || connus.has(k)) return; connus.add(k); n++;
-      d.termes.push({ id: stId(), vo: String(t.vo).trim(), fr: String(t.fr || "").trim(), cat: ST_CATS.includes(t.categorie) ? t.categorie : "Autre", genre: /^(Homme|Femme)$/.test(t.genre) ? t.genre : "", variantes: [], notes: String(t.note || "").trim(), citation: String(t.citation || "").trim(), vu: J.num, aValider: true });
+      d.termes.push({ id: stId(), vo: String(t.vo).trim(), fr: String(t.fr || "").trim(), cat: stCats().includes(t.categorie) ? t.categorie : "Autre", genre: /^(Homme|Femme)$/.test(t.genre) ? t.genre : "", variantes: [], notes: String(t.note || "").trim(), citation: String(t.citation || "").trim(), vu: J.num, aValider: true });
     });
     await stSauver(st.serie.title + " : chapitre " + J.num + (n ? ", " + n + " termes à valider" : ""));
     J.msg = "Chapitre " + J.num + " enregistré" + (n ? ", " + plural(n, "terme proposé", "termes proposés") + " dans le glossaire" : "") + (J.ko ? ". " + plural(J.ko, "page n'a pas pu être traduite", "pages n'ont pas pu être traduites") + " (en rouge)" : "") + ". Mise à jour du résumé...";
@@ -444,7 +453,7 @@ function stChapitres(box) {
     const row = h("div", "panel st-ch"), t = h("div", "st-t");
     const meta = h("div", "st-meta");
     const m = (ic, txt) => { const s = h("span"); s.append(icon(ic), document.createTextNode(txt)); return s; };
-    meta.append(m("book", plural(c.pages, "page", "pages")), m("lang", plural(c.bulles, "bulle", "bulles")));
+    if (c.pages) meta.append(m("book", plural(c.pages, "page", "pages")), m("lang", plural(c.bulles, "bulle", "bulles"))); else meta.append(m("book", plural(c.mots || 0, "mot", "mots")));
     if (c.traducteur) meta.append(m("users", c.traducteur));
     if (c.date) meta.append(m("clock", stDate(c.date)));
     t.append(h("b", "", "Chapitre " + c.num), meta);
@@ -469,13 +478,13 @@ function stGlossaire(box) {
   const d = st.data, wrap = h("div"); wrap.style.maxWidth = "980px";
   const att = d.termes.filter(t => t.aValider).length;
   const seg = h("div", "st-seg"); seg.style.marginBottom = "18px";
-  [["termes", "Termes (" + d.termes.length + ")"], ["fiche", "Fiche de la série"]].forEach(([k, l]) => {
+  [["termes", "Termes (" + d.termes.length + ")"], ["tutoiement", "Tutoiement (" + (d.relations || []).length + ")"], ["fiche", "Fiche de la série"]].forEach(([k, l]) => {
     const b = h("button", "", l); b.type = "button"; b.setAttribute("aria-pressed", String(stGl.sous === k));
     if (k === "termes" && att) b.append(document.createTextNode(" "), h("span", "st-badge", String(att)));
     b.onclick = () => { stGl.sous = k; stRendre(); }; seg.append(b);
   });
   wrap.append(seg);
-  (stGl.sous === "fiche" ? stFiche : stTermes)(wrap);
+  ({ fiche: stFiche, tutoiement: stTutoiement, termes: stTermes })[stGl.sous](wrap);
   box.append(wrap);
 }
 function stTermes(wrap) {
@@ -484,11 +493,11 @@ function stTermes(wrap) {
   const se = stEl("div", "search", '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>');
   const q = h("input"); q.type = "search"; q.placeholder = "Rechercher un terme..."; q.value = stGl.q; q.setAttribute("aria-label", "Rechercher un terme"); se.append(q);
   const nv = h("button", "btn", "Nouveau terme"); nv.type = "button";
-  nv.onclick = () => { stGl.edit = { id: "", vo: "", fr: "", cat: "Personnage", genre: "", variantes: [], garder: false, notes: "", citation: "", aValider: false }; stRendre(); };
+  nv.onclick = () => { stGl.edit = { id: "", vo: "", fr: "", cat: stGl.filtre !== "Tous" && stGl.filtre !== "À valider" ? stGl.filtre : "Personnage", genre: "", variantes: [], garder: false, notes: "", details: "", portrait: "", citation: "", aValider: false }; stRendre(); };
   tools.append(se, nv); wrap.append(tools);
   const chips = h("div", "chips");
   const cnt = { "Tous": d.termes.length, "À valider": d.termes.filter(t => t.aValider).length };
-  ST_CATS.forEach(c => { cnt[c] = d.termes.filter(t => t.cat === c).length; });
+  stCats().forEach(c => { cnt[c] = d.termes.filter(t => t.cat === c).length; });
   Object.keys(cnt).forEach(k => {
     if (!cnt[k] && k !== "Tous" && stGl.filtre !== k) return;
     const b = h("button", "chip", k + " " + cnt[k]); b.type = "button"; b.setAttribute("aria-pressed", String(stGl.filtre === k));
@@ -500,16 +509,17 @@ function stTermes(wrap) {
   const draw = () => {
     const t = stNorm(q.value); stGl.q = q.value;
     const xs = d.termes.filter(x => (stGl.filtre === "Tous" || (stGl.filtre === "À valider" ? x.aValider : x.cat === stGl.filtre)) &&
-      (!t || [x.vo, x.fr, x.notes].concat(x.variantes || []).some(v => stNorm(v).includes(t))))
+      (!t || [x.vo, x.fr, x.notes, x.details].concat(x.variantes || []).some(v => stNorm(v).includes(t))))
       .sort((a, b) => (b.aValider - a.aValider) || ((+b.vu || 0) - (+a.vu || 0)) || a.vo.localeCompare(b.vo));
     list.textContent = "";
     if (!xs.length) { list.append(h("p", "empty", d.termes.length ? "Aucun terme ne correspond." : "Le glossaire est vide. Les termes repérés pendant les traductions arriveront ici, à valider.")); return; }
     xs.forEach(x => {
       const row = h("div", "st-term"); row.tabIndex = 0;
+      if (x.portrait) row.append(stPortrait(x.portrait));
       const tt = h("div", "st-t"), l1 = h("div");
       l1.append(h("span", "vo", x.vo), h("span", "sep", "›"), h("span", "fr", x.garder ? x.vo : (x.fr || "à traduire")));
       tt.append(l1);
-      const info = [x.notes, x.citation ? "« " + x.citation + " »" : "", x.variantes && x.variantes.length ? "aussi : " + x.variantes.join(", ") : "", x.vu ? "vu au ch. " + x.vu : ""].filter(Boolean).join(" · ");
+      const info = [x.details, x.notes, x.citation ? "« " + x.citation + " »" : "", x.variantes && x.variantes.length ? "aussi : " + x.variantes.join(", ") : "", x.vu ? "vu au ch. " + x.vu : ""].filter(Boolean).join(" · ");
       if (info) tt.append(h("p", "", info));
       const pills = h("div", "st-pills");
       if (x.aValider) pills.append(h("span", "gchip wait", "À valider"));
@@ -529,18 +539,44 @@ function stTermes(wrap) {
   };
   q.oninput = draw; draw();
 }
+/* ---------- Portraits (affichage seulement, jamais envoyés à l'IA) ---------- */
+let stImgCache = {}, stImgPending = {};
+function stImgUrl(path) {
+  const k = st.slug + "/" + path;
+  if (stImgPending[k]) return Promise.resolve(stImgPending[k].url);
+  if (!stImgCache[k]) stImgCache[k] = (async () => {
+    const c = stCtx(), res = await fetch("https://api.github.com/repos/" + c.repo + "/contents/" + stChemin(path).split("/").map(encodeURIComponent).join("/"), { headers: { Authorization: "Bearer " + c.token, Accept: "application/vnd.github.raw+json" } });
+    if (!res.ok) throw new Error("portrait introuvable");
+    return URL.createObjectURL(await res.blob());
+  })();
+  return stImgCache[k];
+}
+function stPortrait(path) { const im = h("img", "st-pt"); im.alt = ""; im.loading = "lazy"; stImgUrl(path).then(u => { im.src = u; }).catch(() => im.remove()); return im; }
+async function stReduireImage(file, max) {
+  const img = await stChargerImage(file), sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+  const c = document.createElement("canvas"); c.width = Math.round(img.naturalWidth * sc); c.height = Math.round(img.naturalHeight * sc);
+  c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+  const url = c.toDataURL("image/jpeg", 0.85);
+  return { b64: url.split(",")[1], url };
+}
+
+/* ---------- Éditeur d'un terme ---------- */
 function stEditeur(x) {
   const f = h("form", "panel pad st-edit st-stack"); f.style.marginBottom = "16px"; f.autocomplete = "off";
   const champ = (lbl, el, id) => { const d = h("div", "st-f"); const l = h("label", "", lbl); el.id = "st-e-" + id; l.htmlFor = el.id; d.append(l, el); return d; };
+  const tid = x.id || stId();
+  let portrait = x.portrait || "";
   const vo = h("input"); vo.type = "text"; vo.value = x.vo; vo.required = true;
   const fr = h("input"); fr.type = "text"; fr.value = x.fr;
-  const cat = h("select"); ST_CATS.forEach(c => cat.append(h("option", "", c))); cat.value = x.cat;
-  const r1 = h("div", "st-row"); r1.append(champ("Terme source", vo, "vo"), champ("Traduction", fr, "fr"), champ("Catégorie", cat, "cat"));
+  const cat = h("input"); cat.type = "text"; cat.value = x.cat; cat.setAttribute("list", "st-cats"); cat.required = true;
+  const dl = h("datalist"); dl.id = "st-cats"; stCats().forEach(c => dl.append(h("option", "", c)));
+  const r1 = h("div", "st-row"); r1.append(champ("Terme source (VA)", vo, "vo"), champ("Traduction (VF)", fr, "fr"), champ("Catégorie", cat, "cat"));
+  const det = h("input"); det.type = "text"; det.value = x.details || ""; det.placeholder = "Ex : chap 314, nom de la constellation de Jeong Huiwon";
   const va = h("input"); va.type = "text"; va.value = (x.variantes || []).join(", "); va.placeholder = "séparées par des virgules";
   const gd = h("label", "st-check"), gc = h("input"); gc.type = "checkbox"; gc.checked = !!x.garder; gd.append(gc, document.createTextNode("Ne pas traduire (garder tel quel)"));
   gc.onchange = () => { fr.disabled = gc.checked; }; fr.disabled = gc.checked;
-  const r2 = h("div", "st-row"); const gdBox = h("div", "st-f"); gdBox.style.alignSelf = "end"; gdBox.style.paddingBottom = "8px"; gdBox.append(gd);
-  r2.append(champ("Autres écritures (variantes)", va, "va"), gdBox);
+  const gdBox = h("div", "st-f"); gdBox.style.alignSelf = "end"; gdBox.style.paddingBottom = "8px"; gdBox.append(gd);
+  const r2 = h("div", "st-row"); r2.append(champ("Détails", det, "det"), champ("Autres écritures (variantes)", va, "va"), gdBox);
   let genre = x.genre || "";
   const gs = h("div", "st-seg"); gs.setAttribute("role", "group"); gs.setAttribute("aria-label", "Genre");
   const drawG = () => { gs.textContent = ""; [["", "—"], ["Femme", "Femme"], ["Homme", "Homme"]].forEach(([v, l]) => { const b = h("button", "", l); b.type = "button"; b.setAttribute("aria-pressed", String(genre === v)); b.onclick = () => { genre = v; drawG(); }; gs.append(b); }); };
@@ -548,6 +584,17 @@ function stEditeur(x) {
   const gBox = h("div", "st-f"); gBox.append(h("span", "st-lbl", "Genre"), gs);
   const no = h("input"); no.type = "text"; no.value = x.notes || ""; no.placeholder = "Ce que l'IA doit savoir : rôle, registre, tutoiement...";
   const r3 = h("div", "st-row"); r3.style.gridTemplateColumns = "auto minmax(0, 1fr)"; r3.append(gBox, champ("Notes pour l'IA", no, "no"));
+  /* portrait */
+  const pb = h("div", "st-f"), pw = h("div", "st-pw"), pf = h("input"); pf.type = "file"; pf.accept = "image/*"; pf.hidden = true;
+  const drawP = () => { pw.textContent = ""; if (portrait) pw.append(stPortrait(portrait)); else pw.append(h("span", "st-pt st-pt0", "+")); };
+  drawP();
+  const pbtn = h("button", "btn ghost", "Portrait"); pbtn.type = "button"; pbtn.onclick = () => pf.click();
+  pf.onchange = async () => {
+    if (!pf.files[0]) return;
+    try { const r = await stReduireImage(pf.files[0], 160); portrait = "images/" + tid + ".jpg"; stImgPending[st.slug + "/" + portrait] = r; delete stImgCache[st.slug + "/" + portrait]; drawP(); } catch (e) { alert(e.message); }
+  };
+  pb.append(h("span", "st-lbl", "Portrait (affichage)"), pw, pbtn, pf);
+  const r4 = h("div", "st-row"); r4.style.gridTemplateColumns = "auto minmax(0, 1fr)"; r4.append(pb, h("div"));
   const act = h("div", "st-actions");
   if (x.id) {
     const del = h("button", "btn ghost", "Supprimer"); del.type = "button"; del.style.marginRight = "auto";
@@ -557,10 +604,10 @@ function stEditeur(x) {
   const an = h("button", "btn ghost", "Annuler"); an.type = "button"; an.onclick = () => { stGl.edit = null; stRendre(); };
   const ok = h("button", "btn", "Valider"); ok.type = "submit";
   act.append(an, ok);
-  f.append(r1, r2, r3, act);
+  f.append(dl, r1, r2, r3, r4, act);
   f.onsubmit = (e) => {
     e.preventDefault();
-    const n = { id: x.id || stId(), vo: vo.value.trim(), fr: fr.value.trim(), cat: cat.value, genre, variantes: va.value.split(",").map(s => s.trim()).filter(Boolean), garder: gc.checked, notes: no.value.trim(), citation: x.citation || "", vu: x.vu || "", aValider: false };
+    const n = { id: tid, vo: vo.value.trim(), fr: fr.value.trim(), cat: cat.value.trim() || "Autre", genre, variantes: va.value.split(",").map(s => s.trim()).filter(Boolean), garder: gc.checked, notes: no.value.trim(), details: det.value.trim(), portrait, citation: x.citation || "", vu: x.vu || "", aValider: false };
     if (!n.vo) return;
     const dup = st.data.termes.find(t => t.id !== n.id && [t.vo].concat(t.variantes || []).some(v => stNorm(v) === stNorm(n.vo)));
     if (dup && !confirm("« " + n.vo + " » existe déjà (" + dup.vo + "). Ajouter quand même ?")) return;
@@ -573,12 +620,41 @@ function stEditeur(x) {
   setTimeout(() => (x.id ? fr : vo).focus(), 0);
   return f;
 }
+
+/* ---------- Tutoiement / vouvoiement ---------- */
+const ST_REG = ["Tu / Tu", "Vous / Vous", "Vous / Tu", "Tu / Vous"];
+function stTutoiement(wrap) {
+  const d = st.data; d.relations = d.relations || [];
+  wrap.append(h("p", "sub", "Comment P1 parle à P2 / comment P2 parle à P1. Envoyé à l'IA pour les personnages présents dans le chapitre."));
+  const f = h("form", "panel pad st-f"); f.style.margin = "14px 0"; f.autocomplete = "off";
+  const row = h("div", "st-row"); row.style.gridTemplateColumns = "1fr 1fr 160px auto";
+  const p1 = h("input"), p2 = h("input"), reg = h("select"); p1.type = p2.type = "text"; p1.placeholder = "P1 (ex : Kim Dokja)"; p2.placeholder = "P2 (ex : Anna Croft)"; p1.required = p2.required = true;
+  p1.setAttribute("aria-label", "P1"); p2.setAttribute("aria-label", "P2"); reg.setAttribute("aria-label", "Registre");
+  ST_REG.forEach(x => reg.append(h("option", "", x)));
+  const add = h("button", "btn", "Ajouter"); add.type = "submit"; add.style.alignSelf = "center";
+  row.append(p1, p2, reg, add); f.append(row); wrap.append(f);
+  f.onsubmit = (e) => { e.preventDefault(); d.relations.push({ id: stId(), p1: p1.value.trim(), p2: p2.value.trim(), reg: reg.value }); stSauver(st.serie.title + " : tutoiement, " + p1.value.trim() + " et " + p2.value.trim()).catch(err => alert(err.message)); stRendre(); };
+  const list = h("div");
+  d.relations.slice().sort((a, b) => a.p1.localeCompare(b.p1) || a.p2.localeCompare(b.p2)).forEach(r => {
+    const row = h("div", "st-term"), t = h("div", "st-t");
+    t.append(h("span", "vo", r.p1), h("span", "sep", "↔"), h("span", "vo", r.p2));
+    const pills = h("div", "st-pills"); pills.append(h("span", "gchip " + (/Vous/.test(r.reg) ? "keep" : ""), r.reg));
+    const del = h("button", "st-ok", "×"); del.type = "button"; del.title = "Supprimer"; del.setAttribute("aria-label", "Supprimer " + r.p1 + " et " + r.p2); del.style.color = "#f87171"; del.style.background = "rgba(248,113,113,.1)";
+    del.onclick = () => { d.relations = d.relations.filter(x => x.id !== r.id); stSauver(st.serie.title + " : tutoiement supprimé").catch(err => alert(err.message)); stRendre(); };
+    pills.append(del); row.append(t, pills); row.style.cursor = "default"; list.append(row);
+  });
+  if (!d.relations.length) list.append(h("p", "empty", "Aucune relation pour l'instant."));
+  wrap.append(list);
+}
 function stFiche(wrap) {
   const d = st.data, f = h("form", "st-stack");
   const p1 = h("div", "panel pad st-f"), l1 = h("label", "", "Règles de la série"), rg = h("textarea");
   rg.id = "st-regles"; l1.htmlFor = rg.id; rg.value = d.regles;
   rg.placeholder = "Une règle par ligne, par exemple :\nLady → Dame\nSir → messire\nDiela et Derrick se tutoient\nLes noms de techniques restent en anglais";
   p1.append(l1, rg);
+  const p0 = h("div", "panel pad st-f"), l0 = h("label", "", "Consignes de traduction (ton CLAUDE.md)"), cg = h("textarea");
+  cg.id = "st-consignes"; l0.htmlFor = cg.id; cg.value = d.config.consignes || ST_CONSIGNES; cg.style.minHeight = "260px";
+  p0.append(l0, cg, h("p", "note", "Envoyées à l'IA pour chaque traduction et chaque check. Modèle repris de ton CLAUDE.md : modifie-le librement."));
   const p2 = h("div", "panel pad st-f"), hd = h("div", "st-sum-h"), l2 = h("label", "", "Résumé de l'histoire"), rs = h("textarea");
   rs.id = "st-resume"; l2.htmlFor = rs.id; rs.value = d.resume; rs.style.minHeight = "200px";
   rs.placeholder = "Mis à jour par l'IA après chaque chapitre traduit. Tu peux le corriger.";
@@ -586,16 +662,241 @@ function stFiche(wrap) {
   p2.append(hd, rs);
   const act = h("div", "st-actions"), msg = h("span", "st-msg"); msg.style.marginRight = "auto";
   const ok = h("button", "btn", "Enregistrer la fiche"); ok.type = "submit"; ok.disabled = true;
-  [rg, rs].forEach(t => { t.oninput = () => { ok.disabled = false; msg.textContent = ""; }; });
+  [rg, rs, cg].forEach(t => { t.oninput = () => { ok.disabled = false; msg.textContent = ""; }; });
   act.append(msg, ok);
-  f.append(p1, p2, act);
+  f.append(p0, p1, p2, act);
   f.onsubmit = async (e) => {
     e.preventDefault(); ok.disabled = true; msg.className = "st-msg"; msg.textContent = "Enregistrement...";
-    d.regles = rg.value; d.resume = rs.value;
+    d.regles = rg.value; d.resume = rs.value; d.config.consignes = cg.value.trim() === ST_CONSIGNES.trim() ? "" : cg.value;
     try { await stSauver(st.serie.title + " : fiche de la série"); msg.className = "st-msg ok"; msg.textContent = "Fiche enregistrée."; }
     catch (err) { msg.className = "st-msg err"; msg.textContent = err.message; ok.disabled = false; }
   };
   wrap.append(f);
+}
+
+/* ---------- Consignes (reprises du CLAUDE.md d'iLoza) ---------- */
+const ST_CONSIGNES = `GUILLEMETS : pour les dialogues et les citations, utilise toujours les guillemets droits "..." et jamais « » ni les guillemets courbes.
+STYLE : traduis à partir de la version anglaise avec une certaine liberté. Suis toujours le sens et le contenu : n'invente rien, ne retire rien d'important. Pas de mot à mot : une phrase naturelle, fluide, qui sonne comme du français parlé. Dans les dialogues, simplifie si besoin : remplace les inversions sujet-verbe par une tournure directe ("Peux-tu venir ?" devient "Tu peux venir ?") et supprime le "ne" des négations quand l'oral l'exige ("Je sais pas").
+REGISTRE : garde le registre propre à chaque personnage (tutoiement ou vouvoiement, niveau de langage) tel qu'il est établi dans le glossaire et les chapitres précédents.
+MAJUSCULES : si le texte source est en majuscules, écris la traduction en casse normale (majuscule en début de phrase et aux noms propres seulement). Aucune exception : les cris et les onomatopées non plus ("Basil !!" et "Gyuuu !", pas "BASIL !!"). Le cri passe par la ponctuation ou la répétition de lettres.
+LIGNES : si des lignes n'ont pas de saut de ligne entre elles dans le texte source, laisse-les telles quelles. Saute une ligne entre chaque retour à la ligne.
+FIN : si le texte se termine par "À suivre" ou "To be continued", supprime cette mention.
+Une phrase qui commence par HB, BB ou DB est normale : laisse-la.`;
+const ST_REG_PROMPT = "Respecte toujours le glossaire (traductions imposées) et les relations de tutoiement / vouvoiement indiquées.";
+
+/* ---------- Contexte ciblé : seulement ce qui apparaît dans le chapitre ---------- */
+function stCompact(t) { return " " + stNorm(t).replace(/[^a-z0-9]+/g, " ").trim() + " "; }
+function stContexteTexte(texte) {
+  const d = st.data, hay = stCompact(texte), lignes = [];
+  const present = (v) => { const k = stCompact(v); return k.trim().length > 2 && hay.includes(k); };
+  lignes.push("CONSIGNES DE TRADUCTION :\n" + (d.config.consignes || ST_CONSIGNES) + "\n" + ST_REG_PROMPT);
+  if (d.regles.trim()) lignes.push("RÈGLES DE LA SÉRIE :\n" + d.regles.trim());
+  if (d.resume.trim()) lignes.push("SYNOPSIS :\n" + d.resume.trim());
+  const ts = d.termes.filter(t => t.vo && [t.vo].concat(t.variantes || []).some(present));
+  if (ts.length) lignes.push("GLOSSAIRE (termes présents dans ce chapitre, traductions imposées) :\n" + ts.map(t => "- " + t.vo + " → " + (t.garder ? t.vo + " [ne pas traduire]" : (t.fr || "?")) + " [" + t.cat + "]" + ([t.details, t.notes].filter(Boolean).length ? " (" + [t.details, t.notes].filter(Boolean).join(" ; ") + ")" : "")).join("\n"));
+  const names = new Set(); ts.forEach(t => { names.add(stNorm(t.vo)); names.add(stNorm(t.fr)); });
+  const rs = (d.relations || []).filter(r => present(r.p1) || present(r.p2) || names.has(stNorm(r.p1)) || names.has(stNorm(r.p2)));
+  if (rs.length) lignes.push("TUTOIEMENT / VOUVOIEMENT (P1 parle à P2 / P2 parle à P1) :\n" + rs.map(r => "- " + r.p1 + " ↔ " + r.p2 + " : " + r.reg).join("\n"));
+  return { texte: lignes.join("\n\n"), nbTermes: ts.length, nbRel: rs.length };
+}
+const stChCache = {};
+async function stPrecedents(num, n) {
+  const xs = st.data.chapitres.filter(c => +c.num < +num).sort((a, b) => b.num - a.num).slice(0, n || 3).reverse(), out = [];
+  for (const c of xs) {
+    const k = st.slug + "/" + c.num;
+    if (stChCache[k] === undefined) { const r = await stLire(stChemin("chapitres", c.num + ".json")); stChCache[k] = r ? r.json : { texte: "", raw: "" }; }
+    if (stChCache[k].texte) out.push("--- Chapitre " + c.num + " ---\n" + stChCache[k].texte);
+  }
+  return out.join("\n\n");
+}
+
+/* ---------- Choix de la source : pages (images) ou texte anglais ---------- */
+function stSourceToggle(box) {
+  const d = st.data, seg = h("div", "st-seg"); seg.style.marginBottom = "16px";
+  seg.setAttribute("role", "group"); seg.setAttribute("aria-label", "Source du chapitre");
+  [["images", "Pages (images)"], ["texte", "Texte anglais"]].forEach(([k, l]) => {
+    const b = h("button", "", l); b.type = "button"; b.setAttribute("aria-pressed", String(d.config.source === k));
+    b.onclick = () => { if (d.config.source === k) return; d.config.source = k; stSauver(st.serie.title + " : source des chapitres, " + l).catch(e => alert(e.message)); stRendre(); };
+    seg.append(b);
+  });
+  box.append(seg);
+}
+
+/* ---------- Traduire à partir du texte anglais (trad N) ---------- */
+let stJobT = null;
+const ST_SCHEMA_TRAD = { type: "object", additionalProperties: false, required: ["texte", "termes"], properties: {
+  texte: { type: "string" },
+  termes: { type: "array", items: { type: "object", additionalProperties: false, required: ["vo", "fr", "categorie", "genre", "note", "citation"], properties: { vo: { type: "string" }, fr: { type: "string" }, categorie: { type: "string" }, genre: { type: "string" }, note: { type: "string" }, citation: { type: "string" } } } }
+} };
+function stTraduireTexte(box) {
+  const wrap = h("div", "st-stack");
+  const dernier = st.data.chapitres.reduce((m, c) => Math.max(m, +c.num || 0), 0);
+  if (!stJobT || stJobT.slug !== st.slug) stJobT = { slug: st.slug, mode: "texte", raw: "", pages: [], texte: "", etat: "pret", num: dernier ? dernier + 1 : (st.serie.chapitre ? st.serie.chapitre + 1 : 1), msg: "", bulles: 0, termes: [] };
+  const J = stJobT, occupe = J.etat === "cours", p = stPref();
+  const champ = (lbl, el) => { const d = h("div", "st-f"); const l = h("label", "", lbl); el.id = "st-" + lbl.replace(/\W+/g, "").toLowerCase(); l.htmlFor = el.id; d.append(l, el); return d; };
+  const reg = h("div", "panel pad st-f st-stack"), row = h("div", "st-row");
+  const num = h("input"); num.type = "number"; num.min = "0"; num.step = "0.1"; num.value = J.num; num.oninput = () => { J.num = num.value; };
+  const tr = h("input"); tr.type = "text"; tr.value = p.traducteur; tr.oninput = () => stSetPref("traducteur", tr.value.trim());
+  const cle = h("input"); cle.type = "password"; cle.placeholder = "sk-ant-..."; cle.value = stCle();
+  cle.onchange = () => { try { cle.value.trim() ? localStorage.setItem(ST_KEY_API, cle.value.trim()) : localStorage.removeItem(ST_KEY_API); } catch (e) {} };
+  row.append(champ("Chapitre", num), champ("Traducteur", tr), champ("Clé API Claude", cle));
+  reg.append(row); [num, tr, cle].forEach(x => { x.disabled = occupe; });
+
+  const src = h("div", "panel pad st-f"), ta = h("textarea"); ta.className = "st-raw"; ta.value = J.raw; ta.disabled = occupe;
+  ta.placeholder = "Colle ici le texte anglais du chapitre (le contenu de Raws/N.txt)...";
+  ta.oninput = () => { J.raw = ta.value; go.disabled = occupe || !ta.value.trim(); info.textContent = stInfoRaw(ta.value); };
+  const l = h("label", "", "Texte anglais du chapitre"); l.htmlFor = "st-raw"; ta.id = "st-raw";
+  const fi = h("input"); fi.type = "file"; fi.accept = ".txt,text/plain"; fi.hidden = true;
+  fi.onchange = async () => { if (!fi.files[0]) return; J.raw = await fi.files[0].text(); const m = fi.files[0].name.match(/^(\d+(?:\.\d+)?)\./); if (m) J.num = m[1]; stRendre(); };
+  const ob = h("button", "btn ghost", "Ouvrir un .txt"); ob.type = "button"; ob.disabled = occupe; ob.onclick = () => fi.click();
+  const info = h("span", "st-msg", stInfoRaw(J.raw)); info.style.marginRight = "auto";
+  const bar0 = h("div", "st-actions"); bar0.append(info, ob, fi);
+  src.append(l, ta, bar0);
+
+  const act = h("div", "st-actions");
+  const msg = h("span", "st-msg" + (J.etat === "erreur" ? " err" : J.etat === "fini" ? " ok" : "")); msg.style.marginRight = "auto"; msg.textContent = J.msg;
+  const go = h("button", "btn"); go.type = "button"; go.append(icon("lang"), document.createTextNode(occupe ? "Traduction en cours..." : "Traduire le chapitre " + (J.num !== "" ? J.num : "")));
+  go.disabled = occupe || !J.raw.trim(); go.onclick = () => stLancerTexte();
+  act.append(msg, go);
+
+  const res = h("div", "panel"), out = h("div", "st-out"); out.textContent = J.texte;
+  const foot = h("div", "st-foot");
+  const cp = h("button", "btn ghost", "Copier"); cp.type = "button"; cp.disabled = !J.texte; cp.onclick = () => stCopier(J.texte, cp);
+  const dt = h("button", "btn ghost", "Télécharger .txt"); dt.type = "button"; dt.disabled = !J.texte; dt.onclick = () => stTelecharger(J.num + ".txt", J.texte);
+  const dx = h("button", "btn", "Télécharger " + J.num + ".docx"); dx.type = "button"; dx.disabled = !J.texte; dx.onclick = () => stDocxBouton(J.num, J.texte.split("\n"), dx);
+  foot.append(cp, dt, dx);
+  if (J.texte && J.ctx) foot.append(h("span", "gchip plain", plural(J.ctx.nbTermes, "terme du glossaire", "termes du glossaire") + " · " + plural(J.ctx.nbRel, "relation", "relations") + " envoyés"));
+  if (J.etat === "a-sauver") { const r = h("button", "btn", "Réessayer l'enregistrement"); r.type = "button"; r.onclick = () => stFinir(stJobT); foot.append(r); }
+  res.append(out, foot);
+  wrap.append(reg, src, act, res); box.append(wrap);
+}
+function stInfoRaw(t) { const n = (t.match(/\S+/g) || []).length; return n ? plural(n, "mot", "mots") + " · " + plural(t.split("\n").filter(x => x.trim()).length, "ligne", "lignes") : ""; }
+async function stLancerTexte() {
+  const J = stJobT, slug = J.slug;
+  if (!stCle()) { J.msg = "Colle ta clé API Claude d'abord."; J.etat = "erreur"; stRendre(); return; }
+  if (!(J.num !== "" && +J.num >= 0)) { J.msg = "Indique le numéro du chapitre."; J.etat = "erreur"; stRendre(); return; }
+  if (st.data.chapitres.some(c => String(c.num) === String(+J.num)) && !confirm("Le chapitre " + (+J.num) + " est déjà dans l'historique. Le remplacer ?")) return;
+  J.num = +J.num; J.etat = "cours"; J.texte = ""; J.termes = []; J.msg = "Préparation du contexte..."; stMaj();
+  try {
+    const ctx = stContexteTexte(J.raw); J.ctx = ctx;
+    const prev = await stPrecedents(J.num, 3);
+    J.msg = "Traduction en cours..."; stMaj();
+    const prompt = `Tu traduis le chapitre ${J.num} de « ${st.serie.title} » en français, à partir de sa version anglaise.\n\n${ctx.texte}\n\n${prev ? "DERNIERS CHAPITRES TRADUITS (pour le ton, les tutoiements et les noms) :\n" + prev + "\n\n" : ""}TEXTE ANGLAIS DU CHAPITRE ${J.num} :\n<<<\n${J.raw.trim()}\n>>>\n\nRéponds en JSON : "texte" = la traduction complète du chapitre (mêmes lignes que la source, une ligne vide entre chaque retour à la ligne) ; "termes" = les noms propres et termes récurrents qui ne sont PAS dans le glossaire ci-dessus (forme source exacte "vo", traduction "fr", "categorie" parmi ${stCats().join(", ")}, "genre" Homme, Femme ou vide, "note" courte, "citation" source). Tableau vide s'il n'y en a pas.`;
+    const r = await stClaude([{ type: "text", text: prompt }], "Tu es traducteur, correcteur et bibliothécaire d'une œuvre pour une équipe de scantrad française. Tu réponds uniquement en JSON.", 16000, ST_SCHEMA_TRAD);
+    const j = stJson(r.texte); if (!j || !j.texte) throw new Error(r.tronque ? "Réponse coupée (chapitre trop long)" : "Réponse illisible");
+    J.texte = j.texte.replace(/[«“„][\s  ]*/g, '"').replace(/[\s  ]*[»”]/g, '"').trim(); J.termes = j.termes || [];
+  } catch (e) { J.etat = "erreur"; J.msg = e.message; stMaj(); return; }
+  await stFinir(J);
+}
+
+/* ---------- Export .docx fidèle à creer_docx.py (Arial 11, interligne simple, 0 pt, guillemets droits) ---------- */
+function stGuill(t) { return t.replace(/[«“„][\s  ]*/g, '"').replace(/[\s  ]*[»”]/g, '"'); }
+async function stDocx(lignes) {   // lignes : "texte" | "" | [["texte", rouge?], ...]
+  if (!window.JSZip) await chScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  const esc = (x) => x.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const run = (t, rouge) => '<w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:eastAsia="Arial" w:cs="Arial"/>' + (rouge ? '<w:color w:val="FF0000"/>' : "") + '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr><w:t xml:space="preserve">' + esc(stGuill(t)) + "</w:t></w:r>";
+  const PPR = '<w:pPr><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/><w:jc w:val="left"/></w:pPr>';
+  const paras = lignes.map(l => { const segs = typeof l === "string" ? (l.trim() ? [[l, false]] : []) : l; return "<w:p>" + PPR + segs.map(s => run(s[0], s[1])).join("") + "</w:p>"; });
+  if (paras.join("").match(/[«»“”„]/)) throw new Error("Guillemets français restants");
+  const NS = 'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+  const z = new window.JSZip();
+  z.file("[Content_Types].xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>');
+  z.file("_rels/.rels", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>');
+  z.file("word/_rels/document.xml.rels", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>');
+  z.file("word/styles.xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles ' + NS + '><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:eastAsia="Arial" w:cs="Arial"/><w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:before="0" w:after="0" w:line="240" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults><w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/><w:qFormat/></w:style></w:styles>');
+  z.file("word/document.xml", '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document ' + NS + "><w:body>" + paras.join("") + '<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1417" w:right="1417" w:bottom="1417" w:left="1417" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>');
+  return z.generateAsync({ type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+}
+async function stDocxBouton(num, lignes, btn) {
+  const old = btn.textContent; btn.disabled = true;
+  try {
+    const blob = await stDocx(lignes), a = h("a"); a.href = URL.createObjectURL(blob); a.download = num + ".docx";
+    document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  } catch (e) { alert(e.message); }
+  btn.textContent = old; btn.disabled = false;
+}
+
+/* ---------- Check (check N) : ne renvoie que les lignes fautives ---------- */
+let stCk = { slug: "", num: "", texte: "", raw: "", res: null, etat: "pret", msg: "", ctx: null };
+const ST_SCHEMA_CHECK = { type: "object", additionalProperties: false, required: ["corrections"], properties: { corrections: { type: "array", items: { type: "object", additionalProperties: false, required: ["n", "corrigee"], properties: { n: { type: "integer" }, corrigee: { type: "string" } } } } } };
+function stGras(t) { const f = document.createDocumentFragment(); t.split(/\*\*(.+?)\*\*/g).forEach((x, i) => { if (!x) return; if (i % 2) f.append(h("b", "", x)); else f.append(document.createTextNode(x)); }); return f; }
+function stCheck(box) {
+  const d = st.data;
+  if (stCk.slug !== st.slug) stCk = { slug: st.slug, num: "", texte: "", raw: "", res: null, etat: "pret", msg: "", ctx: null };
+  const K = stCk, occupe = K.etat === "cours", wrap = h("div", "st-stack");
+  const reg = h("div", "panel pad st-f st-stack"), row = h("div", "st-row");
+  const sel = h("select"); sel.id = "st-ck-n"; sel.disabled = occupe;
+  const o0 = h("option", "", "Texte collé"); o0.value = ""; sel.append(o0);
+  d.chapitres.slice().sort((a, b) => b.num - a.num).forEach(c => { const o = h("option", "", "Chapitre " + c.num); o.value = c.num; sel.append(o); });
+  sel.value = K.num;
+  sel.onchange = async () => {
+    K.num = sel.value; K.res = null; K.msg = "";
+    if (K.num !== "") { sel.disabled = true; try { const r = await stLire(stChemin("chapitres", K.num + ".json")); K.texte = r ? r.json.texte || "" : ""; K.raw = r ? r.json.raw || "" : ""; } catch (e) { K.msg = e.message; } }
+    stRendre();
+  };
+  const l = h("label", "", "Chapitre à vérifier"); l.htmlFor = sel.id; const dn = h("div", "st-f"); dn.append(l, sel);
+  const cle = h("input"); cle.type = "password"; cle.placeholder = "sk-ant-..."; cle.id = "st-ck-key"; cle.value = stCle(); cle.disabled = occupe;
+  cle.onchange = () => { try { cle.value.trim() ? localStorage.setItem(ST_KEY_API, cle.value.trim()) : localStorage.removeItem(ST_KEY_API); } catch (e) {} };
+  const lc = h("label", "", "Clé API Claude"); lc.htmlFor = cle.id; const dc = h("div", "st-f"); dc.append(lc, cle);
+  row.append(dn, dc); reg.append(row);
+  const ta = h("textarea"); ta.className = "st-raw"; ta.id = "st-ck-t"; ta.value = K.texte; ta.disabled = occupe; ta.placeholder = "Le chapitre traduit à vérifier...";
+  const tb = h("textarea"); tb.className = "st-raw st-raw-s"; tb.id = "st-ck-r"; tb.value = K.raw; tb.disabled = occupe; tb.placeholder = "Version anglaise (facultatif) : aide pour repérer contresens, oublis et ajouts";
+  const lt = h("label", "", "Texte traduit"); lt.htmlFor = ta.id; const lr = h("label", "", "Version anglaise (aide)"); lr.htmlFor = tb.id;
+  const go = h("button", "btn"); go.type = "button"; go.append(icon("pen"), document.createTextNode(occupe ? "Vérification..." : "Vérifier")); go.disabled = occupe || !K.texte.trim();
+  ta.oninput = () => { K.texte = ta.value; go.disabled = !ta.value.trim(); K.res = null; }; tb.oninput = () => { K.raw = tb.value; };
+  go.onclick = () => stLancerCheck();
+  const src = h("div", "panel pad st-f"); src.append(lt, ta, lr, tb);
+  const act = h("div", "st-actions"), msg = h("span", "st-msg" + (K.etat === "erreur" ? " err" : K.res ? " ok" : "")); msg.style.marginRight = "auto"; msg.textContent = K.msg; act.append(msg, go);
+  wrap.append(reg, src, act);
+  if (K.res) {
+    const res = h("div", "panel"), lst = h("div", "st-diffs");
+    if (!K.res.length) lst.append(h("p", "empty", "Aucune erreur trouvée."));
+    K.res.forEach(c => {
+      const b = h("div", "st-diff"), a = h("div", "st-del"), n = h("div", "st-add");
+      a.textContent = c.original; n.append(stGras(c.corrigee)); b.append(a, n); lst.append(b);
+    });
+    const foot = h("div", "st-foot"); foot.append(h("span", "gchip plain", plural(K.res.length, "ligne corrigée", "lignes corrigées")));
+    const nm = K.num !== "" ? K.num : "chapitre";
+    const dx = h("button", "btn", "Télécharger " + nm + ".docx corrigé"); dx.type = "button"; dx.onclick = () => stDocxBouton(nm, stLignesCheck(), dx);
+    foot.append(dx);
+    if (K.num !== "" && K.res.length) { const rp = h("button", "btn ghost", "Remplacer le chapitre " + K.num + " dans l'historique"); rp.type = "button"; rp.onclick = () => stRemplacer(rp); foot.append(rp); }
+    const cp = h("button", "btn ghost", "Copier la liste"); cp.type = "button"; cp.onclick = () => stCopier(K.res.map(c => c.original + "\n" + c.corrigee.replace(/\*\*/g, "")).join("\n\n"), cp); foot.append(cp);
+    res.append(lst, foot); wrap.append(res);
+  }
+  box.append(wrap);
+}
+function stLignesCheck() {   // ligne d'origine, puis la ligne corrigée entière en rouge juste dessous (comme creer_docx.py)
+  const K = stCk, m = {}; (K.res || []).forEach(c => { m[c.n] = c.corrigee.replace(/\*\*/g, ""); });
+  const out = []; K.texte.split("\n").forEach((l, i) => { out.push(l); if (m[i + 1] !== undefined) out.push([[m[i + 1], true]]); });
+  return out;
+}
+async function stLancerCheck() {
+  const K = stCk;
+  if (!stCle()) { K.msg = "Colle ta clé API Claude d'abord."; K.etat = "erreur"; stRendre(); return; }
+  K.etat = "cours"; K.res = null; K.msg = "Vérification en cours..."; stRendre();
+  try {
+    const lignes = K.texte.split("\n"), ctx = stContexteTexte(K.texte + "\n" + K.raw);
+    const num = lignes.map((l, i) => l.trim() ? "L" + (i + 1) + " | " + l : "").filter(Boolean).join("\n");
+    const prompt = `Tu vérifies (check) la traduction française d'un chapitre de « ${st.serie.title} ».\n\n${ctx.texte}\n\nCE QUE TU VÉRIFIES : la grammaire et l'orthographe des mots ; les contresens, oublis ou ajouts par rapport à la version anglaise (si elle est donnée). Les majuscules en début de phrase : s'il n'y en a pas, n'en tiens pas rigueur. Un français parlé et naturel n'est PAS une erreur : ne signale pas l'absence de "ne" dans une négation ni l'absence d'inversion sujet-verbe. Tu peux simplifier une phrase lourde (inversion sujet-verbe vers tournure directe, "ne" supprimé) sans changer le sens ni le registre du personnage : ces simplifications comptent comme des corrections. Ne compte pas comme erreurs : les guillemets (« » ou courbes, remplacés par "), la mention "À suivre", les phrases qui commencent par HB, BB ou DB.\n\nCHAPITRE TRADUIT (lignes numérotées L1, L2...) :\n${num}\n\n${K.raw.trim() ? "VERSION ANGLAISE (aide) :\n" + K.raw.trim() + "\n\n" : ""}Réponds en JSON : "corrections" = uniquement les lignes où il y a une erreur ; "n" = le numéro de la ligne ; "corrigee" = la ligne corrigée entière, avec les mots modifiés entourés de ** (ex : "Je suis **allé** au marché"). Tableau vide s'il n'y a aucune erreur.`;
+    const r = await stClaude([{ type: "text", text: prompt }], "Tu es correcteur d'une œuvre pour une équipe de scantrad française. Tu réponds uniquement en JSON.", 16000, ST_SCHEMA_CHECK);
+    const j = stJson(r.texte); if (!j || !Array.isArray(j.corrections)) throw new Error("Réponse illisible");
+    K.res = j.corrections.filter(c => lignes[c.n - 1] !== undefined && lignes[c.n - 1].trim()).map(c => ({ n: c.n, original: lignes[c.n - 1], corrigee: stGuill(c.corrigee) })).sort((a, b) => a.n - b.n);
+    K.etat = "fini"; K.msg = K.res.length ? plural(K.res.length, "ligne à corriger", "lignes à corriger") + "." : "Rien à corriger.";
+  } catch (e) { K.etat = "erreur"; K.msg = e.message; }
+  stRendre();
+}
+async function stRemplacer(btn) {
+  const K = stCk;
+  if (!confirm("Remplacer le texte du chapitre " + K.num + " par la version corrigée ? L'ancienne version reste dans l'historique Git.")) return;
+  btn.disabled = true;
+  try {
+    const path = stChemin("chapitres", K.num + ".json"), av = await stLire(path);
+    const corr = {}; K.res.forEach(c => { corr[c.n] = c.corrigee.replace(/\*\*/g, ""); });
+    const texte = K.texte.split("\n").map((l, i) => corr[i + 1] !== undefined ? corr[i + 1] : l).join("\n");
+    await stEcrire(path, Object.assign({}, av ? av.json : {}, { texte, check: new Date().toISOString() }), av && av.sha, st.serie.title + " : check du chapitre " + K.num);
+    delete stChCache[st.slug + "/" + K.num]; K.texte = texte; K.res = null; K.msg = "Chapitre " + K.num + " remplacé par la version corrigée.";
+  } catch (e) { K.msg = e.message; K.etat = "erreur"; }
+  stRendre();
 }
 
 /* index.html a déjà affiché l'onglet avant que ce fichier ne soit chargé */
