@@ -284,7 +284,9 @@ function stTraduire(box) {
   dl.onclick = () => stTelecharger(st.serie.title + " - chapitre " + J.num + ".txt", J.texte);
   const dx = h("button", "btn ghost", "Télécharger .docx"); dx.type = "button"; dx.disabled = !J.texte;
   dx.onclick = () => stDocxBouton(J.num, J.texte.split("\n"), dx);
-  foot.append(cp, dl, dx);
+  const ab = h("button", "btn", "Ajouter à la base"); ab.type = "button"; ab.disabled = !J.texte || J.etat === "cours"; ab.title = "Enregistre ce chapitre dans la base de la série (demande confirmation s'il existe déjà)";
+  ab.onclick = () => stAjouterBase(ab, J.num, J.texte, "", "trad");
+  foot.append(cp, dl, dx, ab);
   if (J.texte) foot.append(h("span", "gchip plain", plural(J.pages.filter(f => f.etat === "ok").length, "page traduite", "pages traduites") + " · " + plural(J.bulles, "bulle", "bulles")));
   if (J.etat === "a-sauver") { const r = h("button", "btn", "Réessayer l'enregistrement"); r.type = "button"; r.onclick = () => stFinir(); foot.append(r); }
   res.append(out, foot);
@@ -461,6 +463,25 @@ async function stFinir(job) {
     J.msg = J.msg.replace(" Mise à jour du résumé...", " Résumé mis à jour.");
   } catch (e) { J.msg = J.msg.replace(" Mise à jour du résumé...", " Le résumé n'a pas pu être mis à jour (" + e.message + ")."); }
   J.etat = "fini"; stMaj();
+}
+async function stAjouterBase(btn, num, texte, raw, quoi) {   // enregistre ce chapitre dans la base de la série, à la demande
+  const n = +num; if (!(String(num).trim() !== "" && n >= 0)) { alert("Indique le numéro du chapitre."); return false; }
+  if (!texte || !texte.trim()) { alert("Il n'y a pas de texte à enregistrer."); return false; }
+  const d = st.data, slug = st.slug, existe = d.chapitres.some(c => String(c.num) === String(n));
+  if (existe && !confirm("Le chapitre " + n + " est déjà dans la base. L'écraser avec cette version ?")) return false;
+  const old = btn.textContent; btn.disabled = true; btn.textContent = "Enregistrement...";
+  try {
+    const path = stChemin("chapitres", n + ".json"), av = await stLire(path);
+    const entree = { num: n, date: new Date().toISOString(), pages: (av && av.json.pages) || 0, bulles: texte.split("\n").filter(x => x.trim()).length, mots: texte.split(/\s+/).filter(Boolean).length, traducteur: stPref().traducteur || (av && av.json.traducteur) || "" };
+    const corps = Object.assign({}, av ? av.json : {}, entree, { texte }, raw ? { raw } : {}, quoi === "check" ? { check: entree.date } : {});
+    await stEcrire(path, corps, av && av.sha, st.serie.title + " : " + (existe ? "mise à jour" : "ajout") + " du chapitre " + n + " dans la base");
+    delete stChCache[slug + "/" + n];
+    d.chapitres = d.chapitres.filter(c => String(c.num) !== String(n)).concat([entree]).sort((a, b) => b.num - a.num);
+    stDerniers[slug] = Math.max(stDerniers[slug] || 0, n);
+    await stSauver(st.serie.title + " : chapitre " + n + " dans la base");
+    btn.textContent = existe ? "Chapitre " + n + " mis à jour" : "Chapitre " + n + " ajouté"; btn.disabled = false; setTimeout(() => { btn.textContent = old; }, 2200);
+    return true;
+  } catch (e) { btn.disabled = false; btn.textContent = old; alert(e.message); return false; }
 }
 async function stCopier(txt, btn) {
   try { await navigator.clipboard.writeText(txt); } catch (e) { const t = h("textarea"); t.value = txt; document.body.append(t); t.select(); document.execCommand("copy"); t.remove(); }
@@ -811,7 +832,9 @@ function stTraduireTexte(box) {
   const cp = h("button", "btn ghost", "Copier"); cp.type = "button"; cp.disabled = !J.texte; cp.onclick = () => stCopier(J.texte, cp);
   const dt = h("button", "btn ghost", "Télécharger .txt"); dt.type = "button"; dt.disabled = !J.texte; dt.onclick = () => stTelecharger(J.num + ".txt", J.texte);
   const dx = h("button", "btn", "Télécharger " + J.num + ".docx"); dx.type = "button"; dx.disabled = !J.texte; dx.onclick = () => stDocxBouton(J.num, J.texte.split("\n"), dx);
-  foot.append(cp, dt, dx);
+  const ab = h("button", "btn", "Ajouter à la base"); ab.type = "button"; ab.disabled = !J.texte || occupe; ab.title = "Enregistre ce chapitre dans la base de la série (demande confirmation s'il existe déjà)";
+  ab.onclick = () => stAjouterBase(ab, J.num, J.texte, J.raw, "trad");
+  foot.append(cp, dt, dx, ab);
   if (J.texte && J.ctx) foot.append(h("span", "gchip plain", plural(J.ctx.nbTermes, "terme du glossaire", "termes du glossaire") + " · " + plural(J.ctx.nbRel, "relation", "relations") + " envoyés"));
   if (J.etat === "a-sauver") { const r = h("button", "btn", "Réessayer l'enregistrement"); r.type = "button"; r.onclick = () => stFinir(stJobT); foot.append(r); }
   res.append(out, foot);
@@ -916,7 +939,13 @@ function stCheck(box) {
     const dx = h("button", "btn", "Télécharger " + nm + ".docx (chapitre complet)"); dx.type = "button"; dx.onclick = () => stDocxBouton(nm, stLignesCheck(), dx);
     foot.append(dx);
     const dt = h("button", "btn ghost", "Télécharger .txt complet"); dt.type = "button"; dt.onclick = () => stTelecharger(nm + " check.txt", stTexteCheck()); foot.append(dt);
-    if (K.num !== "" && K.res.length) { const rp = h("button", "btn ghost", "Remplacer le chapitre " + K.num + " dans l'historique"); rp.type = "button"; rp.onclick = () => stRemplacer(rp); foot.append(rp); }
+    { const ab = h("button", "btn", "Ajouter à la base"); ab.type = "button"; ab.title = "Enregistre le chapitre corrigé dans la base de la série (demande confirmation s'il existe déjà)";
+      ab.onclick = async () => {
+        let num = K.num; if (num === "") { num = prompt("Numéro du chapitre à enregistrer dans la base ?", ""); if (num === null) return; }
+        const corr = {}; K.res.forEach(c => { corr[c.n] = c.corrigee.replace(/\*\*/g, ""); });
+        const texte = K.texte.split("\n").map((l, k) => corr[k + 1] !== undefined ? corr[k + 1] : l).join("\n");
+        if (await stAjouterBase(ab, num, texte, K.raw, "check") && K.num === "") K.num = String(+num);
+      }; foot.append(ab); }
     const cc = h("button", "btn ghost", "Copier le chapitre complet"); cc.type = "button"; cc.onclick = () => stCopier(stTexteCheck(), cc); foot.append(cc);
     const cp = h("button", "btn ghost", "Copier la liste"); cp.type = "button"; cp.onclick = () => stCopier(K.res.map(c => c.original + "\n" + c.corrigee.replace(/\*\*/g, "")).join("\n\n"), cp); foot.append(cp);
     res.append(seg, lst, foot); wrap.append(res);
