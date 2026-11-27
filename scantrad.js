@@ -121,6 +121,20 @@ function stNav(route) {
 }
 
 /* ---------- Liste des séries ---------- */
+let stDerniers = {};   // série -> dernier chapitre traduit, lu dans serie.json
+function stChapLabel(s) { const n = Math.max(+s.chapitre || 0, stDerniers[slugS(s.title)] || 0); return n ? "ch. " + n : ""; }
+function stMajChapitres(zone, list) {   // met le nombre de chapitres à jour avec ce qui est traduit ou vérifié
+  if (!stCtx()) return;
+  list.forEach(async (s) => {
+    const sl = slugS(s.title);
+    try {
+      const r = await stGh("traductions/" + sl + "/serie.json"); if (!r) return;
+      const j = JSON.parse(ntB64d(r.content || "")), m = (j.chapitres || []).reduce((a, c) => Math.max(a, +c.num || 0), 0);
+      stDerniers[sl] = m;
+      zone.querySelectorAll('small[data-slug="' + sl + '"]').forEach(e => { e.textContent = stChapLabel(s); });
+    } catch (e) {}
+  });
+}
 function stListe() {
   const box = $("st-in"); box.textContent = "";
   const head = stEl("div", "head", '<div><h1>Scantrad</h1><p class="sub">Choisis une série : tu pourras traduire un chapitre, relire l\'historique et tenir le glossaire.</p></div>');
@@ -141,12 +155,13 @@ function stListe() {
       n.forEach(s => {
         const a = h("a", "panel st-card"); a.href = "#scantrad/" + slugS(s.title) + "/traduire";
         const t2 = h("div"); t2.style.minWidth = "0";
-        t2.append(h("b", "", s.title), h("small", "", s.chapitre ? "ch. " + s.chapitre : ""));
+        const sm = h("small", "", stChapLabel(s)); sm.dataset.slug = slugS(s.title); t2.append(h("b", "", s.title), sm);
         a.append(cover(s), t2); grid.append(a);
       });
       sec.append(grid); groupes.append(sec);
     });
     if (!list.length) groupes.append(h("p", "empty", "Aucune série ne correspond."));
+    stMajChapitres(groupes, list);
     note.textContent = t ? "" : "Tes séries en cours. Cherche pour en ouvrir une autre.";
   };
   q.oninput = draw; draw();
@@ -419,6 +434,7 @@ async function stFinir(job) {
   const J = job || stJob, slug = J.slug;
   if (st.slug !== slug || !st.data) { J.etat = "a-sauver"; J.msg = "Reviens sur la série pour enregistrer ce chapitre."; return; }
   J.etat = "cours"; J.msg = "Enregistrement du chapitre..."; stMaj();
+  stDerniers[slug] = Math.max(stDerniers[slug] || 0, +J.num || 0);   // la liste des séries suit tout de suite
   const d = st.data, ok = J.pages.filter(f => f.etat === "ok").length;
   const entree = { num: J.num, date: new Date().toISOString(), pages: ok, bulles: J.bulles, mots: J.mode === "texte" ? J.texte.split(/\s+/).filter(Boolean).length : 0, traducteur: stPref().traducteur || "" };
   try {
