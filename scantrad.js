@@ -121,24 +121,47 @@ function stNav(route) {
 }
 
 /* ---------- Liste des séries ---------- */
+let stDerniers = {};   // série -> dernier chapitre traduit, lu dans serie.json
+function stChapLabel(s) { const n = Math.max(+s.chapitre || 0, stDerniers[slugS(s.title)] || 0); return n ? "ch. " + n : ""; }
+function stMajChapitres(zone, list) {   // met le nombre de chapitres à jour avec ce qui est traduit ou vérifié
+  if (!stCtx()) return;
+  list.forEach(async (s) => {
+    const sl = slugS(s.title);
+    try {
+      const r = await stGh("traductions/" + sl + "/serie.json"); if (!r) return;
+      const j = JSON.parse(ntB64d(r.content || "")), m = (j.chapitres || []).reduce((a, c) => Math.max(a, +c.num || 0), 0);
+      stDerniers[sl] = m;
+      zone.querySelectorAll('small[data-slug="' + sl + '"]').forEach(e => { e.textContent = stChapLabel(s); });
+    } catch (e) {}
+  });
+}
 function stListe() {
   const box = $("st-in"); box.textContent = "";
   const head = stEl("div", "head", '<div><h1>Scantrad</h1><p class="sub">Choisis une série : tu pourras traduire un chapitre, relire l\'historique et tenir le glossaire.</p></div>');
   const se = stEl("div", "search", '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>');
   const q = h("input"); q.type = "search"; q.placeholder = "Chercher dans toutes les séries..."; q.setAttribute("aria-label", "Chercher une série"); se.append(q);
   head.append(se); box.append(head);
-  const grid = h("div", "st-grid"), note = h("p", "note"); box.append(grid, note);
+  const groupes = h("div"), note = h("p", "note"); box.append(groupes, note);
+  const ordre = ["Poséidon Scans", "Ortega Scans"];
   const draw = () => {
     const t = stNorm(q.value);
     const list = t ? SERIES.filter(s => stNorm(s.title).includes(t)) : actuelles;
-    grid.textContent = "";
-    list.forEach(s => {
-      const a = h("a", "panel st-card"); a.href = "#scantrad/" + slugS(s.title) + "/traduire";
-      const t2 = h("div"); t2.style.minWidth = "0";
-      t2.append(h("b", "", s.title), h("small", "", [s.team, s.chapitre ? "ch. " + s.chapitre : ""].filter(Boolean).join(" · ")));
-      a.append(cover(s), t2); grid.append(a);
+    groupes.textContent = "";
+    const equipes = Array.from(new Set(list.map(s => s.team || "Autres"))).sort((x, y) => (ordre.indexOf(x) + 1 || 99) - (ordre.indexOf(y) + 1 || 99) || x.localeCompare(y));
+    equipes.forEach(eq => {
+      const sec = h("div", "st-team"), n = list.filter(s => (s.team || "Autres") === eq);
+      sec.append(stEl("h2", "", eq + ' <small>' + n.length + '</small>'));
+      const grid = h("div", "st-grid");
+      n.forEach(s => {
+        const a = h("a", "panel st-card"); a.href = "#scantrad/" + slugS(s.title) + "/traduire";
+        const t2 = h("div"); t2.style.minWidth = "0";
+        const sm = h("small", "", stChapLabel(s)); sm.dataset.slug = slugS(s.title); t2.append(h("b", "", s.title), sm);
+        a.append(cover(s), t2); grid.append(a);
+      });
+      sec.append(grid); groupes.append(sec);
     });
-    if (!list.length) grid.append(h("p", "empty", "Aucune série ne correspond."));
+    if (!list.length) groupes.append(h("p", "empty", "Aucune série ne correspond."));
+    stMajChapitres(groupes, list);
     note.textContent = t ? "" : "Tes séries en cours. Cherche pour en ouvrir une autre.";
   };
   q.oninput = draw; draw();
@@ -411,6 +434,7 @@ async function stFinir(job) {
   const J = job || stJob, slug = J.slug;
   if (st.slug !== slug || !st.data) { J.etat = "a-sauver"; J.msg = "Reviens sur la série pour enregistrer ce chapitre."; return; }
   J.etat = "cours"; J.msg = "Enregistrement du chapitre..."; stMaj();
+  stDerniers[slug] = Math.max(stDerniers[slug] || 0, +J.num || 0);   // la liste des séries suit tout de suite
   const d = st.data, ok = J.pages.filter(f => f.etat === "ok").length;
   const entree = { num: J.num, date: new Date().toISOString(), pages: ok, bulles: J.bulles, mots: J.mode === "texte" ? J.texte.split(/\s+/).filter(Boolean).length : 0, traducteur: stPref().traducteur || "" };
   try {
@@ -498,7 +522,7 @@ function stTermes(wrap) {
   const q = h("input"); q.type = "search"; q.placeholder = "Rechercher un terme..."; q.value = stGl.q; q.setAttribute("aria-label", "Rechercher un terme"); se.append(q);
   const nv = h("button", "btn", "Nouveau terme"); nv.type = "button";
   nv.onclick = () => { stGl.edit = { id: "", vo: "", fr: "", cat: stGl.filtre !== "Tous" && stGl.filtre !== "À valider" ? stGl.filtre : "Personnage", genre: "", variantes: [], garder: false, notes: "", details: "", portrait: "", citation: "", aValider: false }; stRendre(); };
-  tools.append(se, nv); wrap.append(tools);
+  tools.append(se, nv); stPanneauImport(wrap); wrap.append(tools);
   const chips = h("div", "chips");
   const cnt = { "Tous": d.termes.length, "À valider": d.termes.filter(t => t.aValider).length };
   stCats().forEach(c => { cnt[c] = d.termes.filter(t => t.cat === c).length; });
@@ -920,3 +944,129 @@ async function stRemplacer(btn) {
 
 /* index.html a déjà affiché l'onglet avant que ce fichier ne soit chargé */
 (function () { const n = decodeURIComponent(location.hash.slice(1)); stAfficher(n === "scantrad" || n.indexOf("scantrad/") === 0 ? n.slice(9) : null); })();
+
+/* ---------- Import d'un glossaire .xlsx (termes, catégories, tutoiement, portraits) ---------- */
+const ST_XCATS = { "PERSONNAGES": "Personnage", "INVOCATIONS": "Invocation", "ENNEMIS / MONSTRES": "Monstre", "VOCABULAIRE": "Vocabulaire", "TECHNIQUES": "Technique", "LIEUX": "Lieu", "COMPETENCES": "Technique", "ARMES / OBJETS": "Objet", "QUETES": "Quête", "TARDUCTION TERMES": "Vocabulaire", "TECHNIQUE": "Technique" };
+let stImp = null;
+function stXCol(ref) { let n = 0; for (const ch of ref.replace(/\d+/g, "")) n = n * 26 + ch.charCodeAt(0) - 64; return n; }
+async function stXlsxLire(file) {
+  if (!window.JSZip) await chScript("https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js");
+  const z = await JSZip.loadAsync(await file.arrayBuffer());
+  const xml = async (p) => { const f = z.file(p); return f ? new DOMParser().parseFromString(await f.async("string"), "application/xml") : null; };
+  const rels = async (p) => { const d = await xml(p.replace(/([^/]+)$/, "_rels/$1.rels")); const m = {}; if (d) d.querySelectorAll("Relationship").forEach(r => { m[r.getAttribute("Id")] = r.getAttribute("Target"); }); return m; };
+  const rel = (base, t) => { if (t[0] === "/") return t.slice(1); const parts = base.split("/").slice(0, -1); t.split("/").forEach(s => { if (s === "..") parts.pop(); else if (s !== ".") parts.push(s); }); return parts.join("/"); };
+  const ss = [], sd = await xml("xl/sharedStrings.xml");
+  if (sd) sd.querySelectorAll("si").forEach(si => ss.push(Array.from(si.querySelectorAll("t")).map(t => t.textContent).join("")));
+  const wb = await xml("xl/workbook.xml"), wr = await rels("xl/workbook.xml");
+  if (!wb) throw new Error("Ce fichier n'est pas un classeur .xlsx.");
+  const termes = [], relations = [], images = {}; let blocsIgnores = 0;
+  for (const sh of Array.from(wb.querySelectorAll("sheet"))) {
+    const path = rel("xl/workbook.xml", wr[sh.getAttribute("r:id")] || wr[sh.getAttributeNS("http://schemas.openxmlformats.org/officeDocument/2006/relationships", "id")]);
+    if (/^formules$/i.test(sh.getAttribute("name"))) continue;
+    const sd2 = await xml(path); if (!sd2) continue;
+    const cell = {}; let maxC = 0, maxR = 0;
+    sd2.querySelectorAll("c").forEach(c => {
+      const ref = c.getAttribute("r"), t = c.getAttribute("t"), v = c.querySelector("v");
+      let val = ""; if (t === "inlineStr") val = Array.from(c.querySelectorAll("t")).map(x => x.textContent).join(""); else if (v) val = t === "s" ? (ss[+v.textContent] || "") : v.textContent;
+      val = String(val).trim(); if (!val) return;
+      const col = stXCol(ref), row = +ref.replace(/\D/g, ""); cell[row + "," + col] = val; maxC = Math.max(maxC, col); maxR = Math.max(maxR, row);
+    });
+    const g = (r, c) => cell[r + "," + c] || "";
+    // images ancrées (portraits)
+    const imgs = [], sr = await rels(path), dr = sd2.querySelector("drawing");
+    if (dr) {
+      const dp = rel(path, sr[dr.getAttribute("r:id")] || ""), dd = await xml(dp), drl = await rels(dp);
+      if (dd) for (const an of Array.from(dd.getElementsByTagName("*")).filter(e => /anchor$/i.test(e.localName))) {
+        const fr = Array.from(an.children).find(e => e.localName === "from"), bl = Array.from(an.getElementsByTagName("*")).find(e => e.localName === "blip");
+        if (!fr || !bl) continue;
+        const kids = (n) => +(Array.from(fr.children).find(e => e.localName === n) || {}).textContent;
+        const mp = rel(dp, drl[bl.getAttribute("r:embed")] || ""), mf = z.file(mp); if (!mf) continue;
+        imgs.push({ row: kids("row") + 1, col: kids("col") + 1, file: mf });
+      }
+    }
+    // en-têtes et blocs
+    const heads = ["image", "va", "nom", "aperçu", "apercu", "chapitre webtoon"];
+    let hr = 0; for (let r = 1; r <= 7 && !hr; r++) for (let c = 1; c <= maxC; c++) if (heads.includes(g(r, c).toLowerCase())) { hr = r; break; }
+    if (!hr) continue;
+    let tr = 0; for (const r of [hr - 1, hr - 2]) if (r >= 1 && !tr) for (let c = 1; c <= maxC; c++) if (g(r, c)) { tr = r; break; }
+    let starts = []; if (tr) for (let c = 1; c <= maxC; c++) if (g(tr, c)) starts.push([c, g(tr, c).toUpperCase()]);
+    for (let c = 1; c <= maxC; c++) if (/^vous\/tu entre/i.test(g(hr, c))) starts.push([c, "TUTOIEMENT LIBRE"]);
+    starts.sort((a, b) => a[0] - b[0]);
+    for (let i = 0; i < starts.length; i++) {
+      const [c0, t] = starts[i], c1 = i + 1 < starts.length ? starts[i + 1][0] : maxC + 1;
+      if (t.indexOf("HISTOIRE") === 0) continue;
+      const hdr = {}; for (let c = c0; c < c1; c++) if (g(hr, c)) hdr[g(hr, c).toLowerCase()] = c;
+      if (t.indexOf("TUTOIEMENT") === 0) {
+        const cp1 = hdr.p1 || c0, cp2 = hdr.p1 ? hdr.p2 : c0 + 1, cr = hdr.p1 ? hdr["vous/tu"] : c0 + 2; if (!cp2 || !cr) continue;
+        for (let r = hr + 1; r <= maxR; r++) if (g(r, cp1) && g(r, cp2) && g(r, cr)) relations.push({ p1: g(r, cp1), p2: g(r, cp2), reg: g(r, cr) });
+        continue;
+      }
+      const cat = ST_XCATS[t]; if (!cat) { blocsIgnores++; continue; }
+      let voC = hdr.va || hdr.nom; if (!voC && t === "ENNEMIS / MONSTRES") voC = hdr.description; if (!voC) continue;
+      const frC = hdr.vf, detC = t === "ENNEMIS / MONSTRES" ? 0 : (hdr["détails"] || hdr.details || (hdr.nom && voC !== hdr.description ? hdr.description : 0) || hdr.remarque || 0);
+      const apC = hdr.image || hdr["aperçu"] || hdr.apercu || 0;
+      const extra = ["titre", "rang", "origine", "type", "détenteur", "1ère apparition", "chapitre"].filter(k => hdr[k] && hdr[k] !== voC && hdr[k] !== frC && hdr[k] !== detC);
+      for (let r = hr + 1; r <= maxR; r++) {
+        const vo = g(r, voC); if (!vo) continue;
+        const t0 = { vo, fr: (frC && g(r, frC)) || vo, cat, genre: "", variantes: [], garder: false, notes: "", details: detC ? g(r, detC) : "", portrait: "", citation: "", vu: "", aValider: false };
+        const notes = [];
+        extra.forEach(k => { const v = g(r, hdr[k]); if (!v) return; if (k === "1ère apparition" || k === "chapitre") { const m = v.match(/\d+/); t0.vu = m ? String(+m[0]) : ""; } else notes.push(k.charAt(0).toUpperCase() + k.slice(1) + " : " + v); });
+        t0.notes = notes.join(" · ");
+        if (cat === "Personnage" && !frC && vo.indexOf("/") > -1) { const p = vo.split("/").map(x => x.trim()).filter(Boolean); t0.vo = t0.fr = p[0]; t0.variantes = p.slice(1); }
+        const im = imgs.find(i => i.row === r && i.col >= c0 && i.col < c1 && (!apC || i.col <= apC + 1)); if (im) t0._img = im.file;
+        termes.push(t0);
+      }
+    }
+  }
+  return { termes, relations, blocsIgnores };
+}
+async function stImporterFichier(file) {
+  stImp = { slug: st.slug, nom: file.name, etat: "lecture", msg: "Lecture du classeur..." }; stRendre();
+  try {
+    const r = await stXlsxLire(file), d = st.data, cle = (t) => stNorm(t.vo) + "|" + t.cat, ex = new Set(d.termes.map(cle));
+    const nouveaux = r.termes.filter((t, i, a) => !ex.has(cle(t)) && a.findIndex(u => cle(u) === cle(t)) === i);
+    const exR = new Set((d.relations || []).map(x => stNorm(x.p1) + "|" + stNorm(x.p2)));
+    const nvR = r.relations.filter((x, i, a) => !exR.has(stNorm(x.p1) + "|" + stNorm(x.p2)) && a.findIndex(u => stNorm(u.p1) === stNorm(x.p1) && stNorm(u.p2) === stNorm(x.p2)) === i);
+    stImp = { slug: st.slug, nom: file.name, etat: "apercu", msg: "", total: r.termes.length, nouveaux, nvR, rel: r.relations.length, ignores: r.blocsIgnores };
+  } catch (e) { stImp = { slug: st.slug, nom: file.name, etat: "erreur", msg: e.message || String(e) }; }
+  stRendre();
+}
+async function stValiderImport() {
+  const I = stImp, d = st.data; if (!I || I.etat !== "apercu") return;
+  I.etat = "ecriture"; I.msg = "Enregistrement..."; stRendre();
+  try {
+    let nbP = 0;
+    for (const t of I.nouveaux) {
+      const id = stId(); const x = Object.assign({}, t, { id }); delete x._img;
+      if (t._img) { try { const b = await t._img.async("blob"), r = await stReduireImage(b, 160); x.portrait = "images/" + id + ".jpg"; stImgPending[st.slug + "/" + x.portrait] = r; nbP++; } catch (e) {} }
+      d.termes.push(x);
+    }
+    d.relations = d.relations || [];
+    I.nvR.forEach(x => d.relations.push({ id: stId(), p1: x.p1, p2: x.p2, reg: x.reg }));
+    await stSauver(st.serie.title + " : import du glossaire " + I.nom + " (" + I.nouveaux.length + " termes, " + I.nvR.length + " relations)");
+    stImp = { slug: st.slug, etat: "fini", msg: "Importé : " + plural(I.nouveaux.length, "terme", "termes") + ", " + plural(I.nvR.length, "relation", "relations") + ", " + plural(nbP, "portrait", "portraits") + "." };
+  } catch (e) { stImp = Object.assign(I, { etat: "apercu", msg: e.message }); }
+  stRendre();
+}
+function stPanneauImport(wrap) {
+  const I = stImp && stImp.slug === st.slug ? stImp : null, p = h("div", "panel pad st-f st-stack"); p.style.marginBottom = "14px";
+  const fi = h("input"); fi.type = "file"; fi.accept = ".xlsx"; fi.hidden = true; fi.id = "st-xlsx";
+  fi.onchange = () => { if (fi.files[0]) stImporterFichier(fi.files[0]); };
+  const dz = h("div", "st-drop"); dz.append(stEl("b", "", "Importer un glossaire (.xlsx)"), h("span", "", "Glisse le fichier ici ou clique pour le choisir. Les termes existants ne sont jamais supprimés."));
+  dz.onclick = () => fi.click();
+  ["dragenter", "dragover"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.add("over"); }));
+  ["dragleave", "drop"].forEach(ev => dz.addEventListener(ev, e => { e.preventDefault(); dz.classList.remove("over"); }));
+  dz.addEventListener("drop", e => { const f = e.dataTransfer.files[0]; if (f) stImporterFichier(f); });
+  p.append(dz, fi);
+  if (I) {
+    if (I.msg) p.append(h("p", "st-msg" + (I.etat === "erreur" ? " err" : I.etat === "fini" ? " ok" : ""), I.msg));
+    if (I.etat === "apercu" || I.etat === "ecriture") {
+      const par = {}; I.nouveaux.forEach(t => { par[t.cat] = (par[t.cat] || 0) + 1; });
+      p.append(h("p", "", I.nom + " : " + plural(I.total, "terme", "termes") + " lus, dont " + plural(I.nouveaux.length, "nouveau", "nouveaux") + " (" + (Object.keys(par).map(k => par[k] + " " + k).join(", ") || "aucun") + "), " + plural(I.nvR.length, "relation nouvelle", "relations nouvelles") + " sur " + I.rel + ", " + plural(I.nouveaux.filter(t => t._img).length, "portrait", "portraits") + ". Les termes déjà présents sont ignorés."));
+      const a = h("div", "st-actions"), ok = h("button", "btn", "Importer " + plural(I.nouveaux.length, "terme", "termes")); ok.type = "button"; ok.disabled = I.etat === "ecriture" || (!I.nouveaux.length && !I.nvR.length); ok.onclick = stValiderImport;
+      const no = h("button", "btn ghost", "Annuler"); no.type = "button"; no.disabled = I.etat === "ecriture"; no.onclick = () => { stImp = null; stRendre(); };
+      a.append(no, ok); p.append(a);
+    }
+  }
+  wrap.append(p);
+}
