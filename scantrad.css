@@ -122,3 +122,8 @@
 .st-team + .st-team { margin-top: 28px; }
 .st-team h2 { display: flex; align-items: baseline; gap: 10px; font-size: 15px; font-weight: 600; color: var(--z300); margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
 .st-team h2 small { font-size: 12px; font-weight: 500; color: var(--z600); }
+
+/* Check : chapitre complet */
+.st-ln { white-space: pre-wrap; word-break: break-word; line-height: 1.6; padding: 1px 0; color: var(--z300); min-height: 1.6em; }
+.st-ln-err { color: var(--z400); }
+.st-ln-rouge { color: #f87171; }
