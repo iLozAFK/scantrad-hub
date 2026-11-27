@@ -12,7 +12,7 @@ const ST_EFFORT = "medium";           // low | medium | high | xhigh | max
 const ST_BAND_H = 2500, ST_MAX_DIM = 7800, ST_MAX_IMG = 20;   // pages webtoon découpées en bandes lisibles
 const ST_CATS = ["Personnage", "Constellation", "Roi Démon", "Fable", "Vocabulaire", "Technique", "Lieu", "Faction", "Objet", "Autre"];
 function stCats() { const s = new Set(ST_CATS); ((st.data && st.data.termes) || []).forEach(t => t.cat && s.add(t.cat)); return Array.from(s); }
-const ST_VUES = { traduire: ["Traduire", "lang"], chapitres: ["Chapitres", "list"], check: ["Check", "pen"], glossaire: ["Glossaire", "open"] };
+const ST_VUES = { traduire: ["Traduire", "lang"], chapitres: ["Chapitres", "list"], check: ["Check", "pen"], glossaire: ["Glossaire", "open"], novel: ["Novel", "book"] };
 const ST_LANGUES = ["anglais", "coréen", "japonais", "chinois"];
 
 let st = { slug: "", vue: "", serie: null, data: null, sha: null, chargement: null, err: "" };
@@ -52,7 +52,11 @@ async function stLire(path) {
   return { json: JSON.parse(ntB64d(r.content || "")), sha: r.sha };
 }
 async function stTexteRepo(path) {   // fichier texte du dépôt (raws, novels), lu tel quel
-  const r = await stGh(path); return r && r.content ? ntB64d(r.content) : "";
+  const r = await stGh(path); return r && r.content ? stReparer(ntB64d(r.content)) : "";
+}
+function stReparer(t) {   // certains fichiers ont été enregistrés en double encodage (« ã\u0080\u008c ») : on les remet d'aplomb
+  if (!/[ÃÂãâ][\u0080-\u00bf]/.test(t)) return t;
+  try { const b = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) { const c = t.charCodeAt(i); if (c > 255) return t; b[i] = c; } return new TextDecoder("utf-8", { fatal: true }).decode(b); } catch (e) { return t; }
 }
 function stRawsStockes() { const c = (st.data && st.data.config) || {}; return c.dossier && c.raws && c.raws.length ? c : null; }
 async function stEcrire(path, obj, sha, message) {
@@ -188,7 +192,7 @@ function stRendre() {
   if (st.err) { const p = h("div", "panel pad st-stack"); p.append(h("p", "st-msg err", st.err)); const b = h("button", "btn ghost", "Réessayer"); b.type = "button"; b.onclick = () => { stRendre(); stCharger(st.slug); }; p.append(b); box.append(p); return; }
   if (!st.data) { box.append(h("p", "empty", "Chargement de la série...")); return; }
   if (st.vue === "traduire") stSourceToggle(box);
-  ({ traduire: st.data.config.source === "texte" ? stTraduireTexte : stTraduire, chapitres: stChapitres, check: stCheck, glossaire: stGlossaire })[st.vue](box);
+  ({ traduire: st.data.config.source === "texte" ? stTraduireTexte : stTraduire, chapitres: stChapitres, check: stCheck, glossaire: stGlossaire, novel: stNovel })[st.vue](box);
 }
 function stConnexion() {
   const f = h("form", "panel pad st-f st-stack"); f.style.maxWidth = "520px"; f.autocomplete = "off";
@@ -792,6 +796,7 @@ function stTraduireTexte(box) {
     };
     bar0.append(sr);
   }
+  { const cf = st.data.config; if (cf.dossier && (cf.novels || []).length) { const nv = h("button", "btn ghost", "Voir le novel"); nv.type = "button"; nv.onclick = () => { location.hash = "scantrad/" + st.slug + "/novel"; }; bar0.append(nv); } }
   bar0.append(ob, fi);
   src.append(l, ta, bar0);
 
@@ -889,6 +894,7 @@ function stCheck(box) {
   ta.oninput = () => { K.texte = ta.value; go.disabled = !ta.value.trim(); K.res = null; }; tb.oninput = () => { K.raw = tb.value; };
   go.onclick = () => stLancerCheck();
   const src = h("div", "panel pad st-f"); src.append(lt, ta, lr, tb);
+  { const c = d.config; if (c.dossier && (c.novels || []).length) { const nv = h("button", "btn ghost", "Voir le novel"); nv.type = "button"; nv.onclick = () => { location.hash = "scantrad/" + st.slug + "/novel"; }; src.append(nv); } }
   const act = h("div", "st-actions"), msg = h("span", "st-msg" + (K.etat === "erreur" ? " err" : K.res ? " ok" : "")); msg.style.marginRight = "auto"; msg.textContent = K.msg; act.append(msg, go);
   wrap.append(reg, src, act);
   if (K.res) {
@@ -1069,4 +1075,31 @@ function stPanneauImport(wrap) {
     }
   }
   wrap.append(p);
+}
+
+/* ---------- Novel : lecture des chapitres du novel stockés dans le dépôt ---------- */
+let stNv = { slug: "", num: "", texte: "", etat: "", msg: "" };
+async function stOuvrirNovel(n) {
+  const c = st.data.config, v = stNv; v.slug = st.slug; v.num = String(n); v.etat = "cours"; v.msg = ""; v.texte = ""; stRendre();
+  try { v.texte = await stTexteRepo(c.dossier + "/novel/" + n + ".txt"); v.etat = "pret"; if (!v.texte) v.msg = "Ce chapitre est vide."; }
+  catch (e) { v.etat = "erreur"; v.msg = e.message; }
+  if (st.slug === v.slug && st.vue === "novel") stRendre();
+}
+function stNovel(box) {
+  const c = st.data.config, nums = (c.novels || []).slice().sort((a, b) => a - b), wrap = h("div", "st-stack");
+  if (stNv.slug !== st.slug) stNv = { slug: st.slug, num: "", texte: "", etat: "", msg: "" };
+  const V = stNv;
+  if (!c.dossier || !nums.length) { wrap.append(h("p", "empty", "Aucun chapitre de novel stocké pour cette série.")); box.append(wrap); return; }
+  const bar = h("div", "panel pad st-actions"); bar.style.justifyContent = "flex-start";
+  const sel = h("select"); sel.id = "st-nv-sel"; sel.setAttribute("aria-label", "Chapitre du novel");
+  const o0 = h("option", "", "Chapitre du novel (" + nums.length + ")..."); o0.value = ""; sel.append(o0);
+  nums.forEach(n => { const o = h("option", "", "Chapitre " + n); o.value = n; sel.append(o); });
+  sel.value = V.num; sel.onchange = () => { if (sel.value !== "") stOuvrirNovel(sel.value); };
+  const i = nums.indexOf(+V.num);
+  const pr = h("button", "btn ghost", "Précédent"); pr.type = "button"; pr.disabled = i < 1; pr.onclick = () => stOuvrirNovel(nums[i - 1]);
+  const nx = h("button", "btn ghost", "Suivant"); nx.type = "button"; nx.disabled = i < 0 || i >= nums.length - 1; nx.onclick = () => stOuvrirNovel(nums[i + 1]);
+  bar.append(sel, pr, nx); wrap.append(bar);
+  const res = h("div", "panel"), out = h("div", "st-out");
+  out.textContent = V.etat === "cours" ? "Chargement..." : V.texte || V.msg || "Choisis un chapitre du novel.";
+  res.append(out); wrap.append(res); box.append(wrap);
 }
