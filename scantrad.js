@@ -51,6 +51,10 @@ async function stLire(path) {
   const r = await stGh(path); if (!r) return null;
   return { json: JSON.parse(ntB64d(r.content || "")), sha: r.sha };
 }
+async function stTexteRepo(path) {   // fichier texte du dépôt (raws, novels), lu tel quel
+  const r = await stGh(path); return r && r.content ? ntB64d(r.content) : "";
+}
+function stRawsStockes() { const c = (st.data && st.data.config) || {}; return c.dossier && c.raws && c.raws.length ? c : null; }
 async function stEcrire(path, obj, sha, message) {
   const body = (s) => JSON.stringify({ message, content: ntB64e(JSON.stringify(obj, null, 2) + "\n"), sha: s || undefined });
   try { return (await stGh(path, { method: "PUT", body: body(sha) })).content.sha; }
@@ -750,7 +754,21 @@ function stTraduireTexte(box) {
   fi.onchange = async () => { if (!fi.files[0]) return; J.raw = await fi.files[0].text(); const m = fi.files[0].name.match(/^(\d+(?:\.\d+)?)\./); if (m) J.num = m[1]; stRendre(); };
   const ob = h("button", "btn ghost", "Ouvrir un .txt"); ob.type = "button"; ob.disabled = occupe; ob.onclick = () => fi.click();
   const info = h("span", "st-msg", stInfoRaw(J.raw)); info.style.marginRight = "auto";
-  const bar0 = h("div", "st-actions"); bar0.append(info, ob, fi);
+  const bar0 = h("div", "st-actions"); bar0.append(info);
+  const rs = stRawsStockes();
+  if (rs) {
+    const sr = h("select"); sr.id = "st-raw-sel"; sr.disabled = occupe; sr.setAttribute("aria-label", "Raw déjà stocké");
+    const o0 = h("option", "", "Raw stocké (" + rs.raws.length + ")..."); o0.value = ""; sr.append(o0);
+    rs.raws.slice().sort((a, b) => b - a).forEach(n => { const o = h("option", "", "Chapitre " + n); o.value = n; sr.append(o); });
+    sr.onchange = async () => {
+      if (sr.value === "") return;
+      sr.disabled = true; info.textContent = "Chargement du raw...";
+      try { J.raw = await stTexteRepo(rs.dossier + "/raws/" + sr.value + ".txt"); J.num = sr.value; stRendre(); }
+      catch (e) { info.textContent = e.message; sr.disabled = false; }
+    };
+    bar0.append(sr);
+  }
+  bar0.append(ob, fi);
   src.append(l, ta, bar0);
 
   const act = h("div", "st-actions");
@@ -831,7 +849,8 @@ function stCheck(box) {
   sel.value = K.num;
   sel.onchange = async () => {
     K.num = sel.value; K.res = null; K.msg = "";
-    if (K.num !== "") { sel.disabled = true; try { const r = await stLire(stChemin("chapitres", K.num + ".json")); K.texte = r ? r.json.texte || "" : ""; K.raw = r ? r.json.raw || "" : ""; } catch (e) { K.msg = e.message; } }
+    if (K.num !== "") { sel.disabled = true; try { const r = await stLire(stChemin("chapitres", K.num + ".json")); K.texte = r ? r.json.texte || "" : ""; K.raw = r ? r.json.raw || "" : "";
+      const rs = stRawsStockes(); if (!K.raw && rs && rs.raws.includes(+K.num)) K.raw = await stTexteRepo(rs.dossier + "/raws/" + K.num + ".txt"); } catch (e) { K.msg = e.message; } }
     stRendre();
   };
   const l = h("label", "", "Chapitre à vérifier"); l.htmlFor = sel.id; const dn = h("div", "st-f"); dn.append(l, sel);
